@@ -1,15 +1,13 @@
 package com.group7.fruitswebsite.config;
 
 
+import lombok.extern.log4j.Log4j;
 import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @SpringBootConfiguration
-@EnableWebMvc
+@Log4j
 public class WebConfiguration implements WebMvcConfigurer {
 	
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
@@ -26,11 +24,4 @@ public class WebConfiguration implements WebMvcConfigurer {
 		registry.addResourceHandler("/admin/vendor/**").addResourceLocations("classpath:/static/admin/vendor/");
 	}
 	
-	@Bean
-	public InternalResourceViewResolver jspViewResolver() {
-	    InternalResourceViewResolver resolver= new InternalResourceViewResolver();
-	    resolver.setPrefix("/WEB-INF/view/");
-	    resolver.setSuffix(".jsp");
-	    return resolver;
-	}
 }
