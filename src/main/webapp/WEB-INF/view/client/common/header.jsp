@@ -1,19 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 
 <c:set var="menu" value="${menu}" />
 <c:if test="${menu == 'menu'}">
-	<c:set var="display" value=""/>
+	<c:set var="display" value="" />
 </c:if>
 <c:if test="${menu != 'menu'}">
-	<c:set var="display" value="display:none"/>
+	<c:set var="display" value="display:none" />
 </c:if>
 
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 
 <head>
 <meta charset="UTF-8">
@@ -194,17 +194,9 @@
 							<i class="fa fa-bars"></i> <span>All departments</span>
 						</div>
 						<ul style="${display}">
-							<li><a href="#">Fresh Meat</a></li>
-							<li><a href="#">Vegetables</a></li>
-							<li><a href="#">Fruit & Nut Gifts</a></li>
-							<li><a href="#">Fresh Berries</a></li>
-							<li><a href="#">Ocean Foods</a></li>
-							<li><a href="#">Butter & Eggs</a></li>
-							<li><a href="#">Fastfood</a></li>
-							<li><a href="#">Fresh Onion</a></li>
-							<li><a href="#">Papayaya & Crisps</a></li>
-							<li><a href="#">Oatmeal</a></li>
-							<li><a href="#">Fresh Bananas</a></li>
+							<c:forEach var="cate" items="${categories}">
+								<li><a href="#">${cate.name}</a></li>
+							</c:forEach>
 						</ul>
 					</div>
 				</div>
@@ -229,18 +221,18 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<c:if test="${menu == 'menu'}">
 						<div class="hero__item set-bg" data-setbg="img/hero/banner.jpg">
-						<div class="hero__text">
-							<span>FRUIT FRESH</span>
-							<h2>
-								Vegetable <br />100% Organic
-							</h2>
-							<p>Free Pickup and Delivery Available</p>
-							<a href="#" class="primary-btn">SHOP NOW</a>
+							<div class="hero__text">
+								<span>FRUIT FRESH</span>
+								<h2>
+									Vegetable <br />100% Organic
+								</h2>
+								<p>Free Pickup and Delivery Available</p>
+								<a href="#" class="primary-btn">SHOP NOW</a>
+							</div>
 						</div>
-					</div>
 					</c:if>
 				</div>
 			</div>

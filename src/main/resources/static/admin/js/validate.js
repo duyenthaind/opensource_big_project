@@ -12,8 +12,8 @@ function addNewCate(){
 			
 			dataType : "json",
 			success : function(jsonResult){
-				if(jsonResult.status == 200){	
-					alert(jsonResult.result.name);
+				if(jsonResult.status == 200){
+					
 					alert("Success");
 				}else{
 					alert(jsonResult.result);

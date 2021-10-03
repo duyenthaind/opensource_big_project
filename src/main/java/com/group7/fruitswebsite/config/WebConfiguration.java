@@ -23,5 +23,4 @@ public class WebConfiguration implements WebMvcConfigurer {
 		registry.addResourceHandler("/admin/media/**").addResourceLocations("classpath:/static/admin/media/");
 		registry.addResourceHandler("/admin/vendor/**").addResourceLocations("classpath:/static/admin/vendor/");
 	}
-	
 }
