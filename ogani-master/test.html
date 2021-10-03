@@ -71,6 +71,7 @@
 	var data = {};
 	data["name"] = $("#cateName").val();
 	data["description"] = $("#summernote").val();
+	console.log(data["name"]);
 	if(validateCate()){
 		$.ajax({
 			url : "/admin/addcate",

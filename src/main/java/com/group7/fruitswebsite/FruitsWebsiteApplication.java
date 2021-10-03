@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Log4j
 public class FruitsWebsiteApplication {
 
-    public static void main(String[] args) {
-        Start.context = SpringApplication.run(FruitsWebsiteApplication.class, args);
-        log.info("Spring boot application run ok");
-    }
+	public static void main(String[] args) {
+		Start.context = SpringApplication.run(FruitsWebsiteApplication.class, args);
+		log.info("Spring boot application run ok");
+	}
 }
