@@ -10,7 +10,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 @Log4j
 public class Start {
     public static ConfigurableApplicationContext context;
-
+    
     public static void main(String[] args) {
         ApplicationConfig.loadConfig();
         FruitsWebsiteApplication.main(args);

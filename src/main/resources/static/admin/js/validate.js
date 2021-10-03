@@ -2,8 +2,7 @@
 function addNewCate(){
 	var data = {};
 	data["name"] = $("#cateName").val();
-	data["description"] = $("#summernote").val();
-	console.log(data["name"]);
+	data["description"] = $('#summernote').summernote('code');
 	if(validateCate()){
 		$.ajax({
 			url : "/admin/addcate",
@@ -13,9 +12,11 @@ function addNewCate(){
 			
 			dataType : "json",
 			success : function(jsonResult){
-				if(jsonResult.statusCode == 200){
+				if(jsonResult.status == 200){	
+					alert(jsonResult.result.name);
 					alert("Success");
 				}else{
+					alert(jsonResult.result);
 					alert("error");
 				}
 			},
@@ -27,10 +28,15 @@ function addNewCate(){
 	}
 }
 
+//function getAllCategory(){
+//	$.ajax({
+//		url:
+//	})
+//}
+
 function validateCate(){
 	var name = document.getElementById("cateName");
-	var description = document.getElementById("description");
-	
+	var description = $('#summernote').summernote('code');
 	if(name.value == ""){
 		alert("Invalid name");
 		return false;

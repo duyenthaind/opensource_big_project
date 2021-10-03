@@ -2,6 +2,9 @@ package com.group7.fruitswebsite.controller;
 
 import com.group7.fruitswebsite.common.Constants;
 import lombok.extern.log4j.Log4j;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.repository.CategoryRepository;
+import com.group7.fruitswebsite.service.CategoryService;
 import com.group7.fruitswebsite.util.DateUtil;
 import com.group7.fruitswebsite.util.StringUtil;
 
@@ -22,43 +26,44 @@ import com.group7.fruitswebsite.util.StringUtil;
 @Log4j
 public class AdminController {
 
-    private CategoryRepository categoryRepository;
+	private CategoryRepository categoryRepository;
+	private CategoryService categoryService;
 
-    @GetMapping(value = {"/index", "/", "/home", ""})
-    public String index() {
-        return "admin/index";
-    }
+	@GetMapping(value = { "/index", "/", "/home", "" })
+	public String index() {
+		return "admin/index";
+	}
 
-    @GetMapping("/table")
-    public String table(final Model model) {
-        return "admin/table";
-    }
+	@GetMapping("/table")
+	public String table(final Model model) {
+		return "admin/table";
+	}
 
-    @GetMapping("/form")
-    public String form() {
-        return "admin/form";
-    }
+	@GetMapping("/form")
+	public String form() {
+		return "admin/form";
+	}
 
-    @PostMapping("/addcate")
-    public ResponseEntity<ApiResponse> addNewCate(@RequestBody DhCategory category) {
-        log.info(category.toString());
-        ApiResponse apiResponse;
-        try {
-            category.setSeo(StringUtil.seo(category.getName()));
-            categoryRepository.save(category);
-            apiResponse = new ApiResponse(Constants.APIResponseStatus.SUCCESS_200.getStatus(),
-                    DateUtil.currentDate(), Constants.APIResponseStatus.SUCCESS_200.getMessage(), category);
-            return ResponseEntity.status(Constants.APIResponseStatus.SUCCESS_200.getStatus()).body(apiResponse);
-        } catch (Exception e) {
-            // TODO: handle exception
-            apiResponse = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(),
-                    DateUtil.currentDate(), Constants.APIResponseStatus.FAILURE.getMessage(), null);
-            return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(apiResponse);
-        }
-    }
+	@GetMapping("/getAllCate")
+	public List<DhCategory> getAllCate() {
+		return categoryRepository.findAll();
+	}
+	
+	@PostMapping("/addcate")
+	public ResponseEntity<ApiResponse> addNewCate(@RequestBody DhCategory category) {
+		log.info(category.toString());
+		return categoryService.saveOne(category);
+	}
+	
+	
 
-    @Autowired
-    public void setCategoryRepository(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+	@Autowired
+	public void setCategoryRepository(CategoryRepository categoryRepository) {
+		this.categoryRepository = categoryRepository;
+	}
+	
+	@Autowired
+	public void setCategoryService(CategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
 }

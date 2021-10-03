@@ -13,14 +13,14 @@ import java.util.logging.Logger;
 @Log4j
 public class ApplicationConfig {
 
-    private ApplicationConfig() {
-    }
+	private ApplicationConfig() {
+	}
 
-    private static final Logger LOGGER = Logger.getLogger("ApplicationConfig");
-    private static final String CONF_DIR = "config";
-    private static final String LOGGER_FILE = "log.properties";
+	private static final Logger LOGGER = Logger.getLogger("ApplicationConfig");
+	private static final String CONF_DIR = "config";
+	private static final String LOGGER_FILE = "log.properties";
 
-    public static void loadConfig() {
+	public static void loadConfig() {
         try {
             String logFilePath = System.getProperty("user.dir") + File.separator + CONF_DIR + File.separator + LOGGER_FILE;
             PropertyConfigurator.configure(logFilePath);
