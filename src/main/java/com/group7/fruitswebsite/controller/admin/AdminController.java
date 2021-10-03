@@ -1,4 +1,4 @@
-package com.group7.fruitswebsite.controller;
+package com.group7.fruitswebsite.controller.admin;
 
 import com.group7.fruitswebsite.common.Constants;
 import lombok.extern.log4j.Log4j;
