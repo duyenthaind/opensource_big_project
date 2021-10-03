@@ -1,7 +1,7 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.5'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.5.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
 }
 
 group = 'com.group7'
@@ -9,39 +9,41 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '8'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
-	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.5.2'
-	runtimeOnly 'mysql:mysql-connector-java'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
+    implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.5.2'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// https://mvnrepository.com/artifact/jstl/jstl
-	implementation group: 'jstl', name: 'jstl', version: '1.2'
+    // https://mvnrepository.com/artifact/jstl/jstl
+    implementation group: 'jstl', name: 'jstl', version: '1.2'
 
-	implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	// https://mvnrepository.com/artifact/com.github.slugify/slugify
-	implementation group: 'com.github.slugify', name: 'slugify', version: '2.1.2'
-	
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    // https://mvnrepository.com/artifact/com.github.slugify/slugify
+    implementation group: 'com.github.slugify', name: 'slugify', version: '2.1.2'
 
-	// https://mvnrepository.com/artifact/log4j/log4j
-	implementation group: 'log4j', name: 'log4j', version: '1.2.17'
+    // https://mvnrepository.com/artifact/log4j/log4j
+    implementation group: 'log4j', name: 'log4j', version: '1.2.17'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.0-rc2'
 
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

@@ -1,7 +1,5 @@
-package com.group7.fruitswebsite.model;
+package com.group7.fruitswebsite.entity;
 
-import java.awt.Image;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,23 +8,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "product")
-public class Product extends BaseModel{
+@Data
+@Table(name = "dh_product")
+public class DhProduct extends BaseEntity implements java.io.Serializable{
 	
 	@Column(name = "name",length = 1000,nullable = false)
 	private String name;
@@ -38,29 +29,29 @@ public class Product extends BaseModel{
 	private String shortDescription;
 	
 	@Column(name = "price",length = 1000,nullable = false)
-	private BigDecimal price;
+	private Long price;
 	
 	@Column(name = "price_sale",length = 1000,nullable = false)
-	private BigDecimal priceSale;
+	private Long priceSale;
 	
 	@Column(name = "seo",length = 1000,nullable = false)
 	private String seo;
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
-	private Category category;
+	private DhCategory category;
 	
-	@OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
-	private List<OrderProduct> orderProducts = new ArrayList<OrderProduct>();
+	@OneToMany(mappedBy = "dhProduct",cascade = CascadeType.ALL)
+	private List<DhOrderProduct> orderProducts = new ArrayList<DhOrderProduct>();
 	
-	public void addOrderProduct(OrderProduct orderProduct) {
+	public void addOrderProduct(DhOrderProduct orderProduct) {
 		this.orderProducts.add(orderProduct);
-		orderProduct.setProduct(this);
+		orderProduct.setDhProduct(this);
 	}
 	
-	public void removeOrderProduct(OrderProduct orderProduct) {
+	public void removeOrderProduct(DhOrderProduct orderProduct) {
 		this.orderProducts.remove(orderProduct);
-		orderProduct.setProduct(null);
+		orderProduct.setDhProduct(null);
 	}
 	
 	

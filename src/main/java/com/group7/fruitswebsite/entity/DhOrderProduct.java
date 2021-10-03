@@ -1,4 +1,4 @@
-package com.group7.fruitswebsite.model;
+package com.group7.fruitswebsite.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,27 +8,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "order_product")
-public class OrderProduct extends BaseModel{
+@Data
+@Table(name = "dh_order_product")
+public class DhOrderProduct extends BaseEntity implements java.io.Serializable{
 
 	@Column(name = "quantity",nullable = false)
 	private int quantity;
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
-	private Product product;
+	private DhProduct dhProduct;
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id")
-	private Order order;
+	private DhOrder order;
 }

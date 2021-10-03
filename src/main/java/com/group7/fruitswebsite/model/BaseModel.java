@@ -1,38 +1,7 @@
 package com.group7.fruitswebsite.model;
 
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-
-import lombok.Getter;
-import lombok.Setter;
-
-@MappedSuperclass
-@Getter
-@Setter
+/**
+ * @author duyenthai
+ */
 public abstract class BaseModel {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-
-	@Column(name = "status",nullable = true)
-	private boolean status = Boolean.TRUE;
-
-	@Column(name = "updated_by",nullable = true)
-	private Integer updatedBy;
-	
-	@Column(name = "created_by",nullable = true)
-	private Integer createdBy;
-
-	@Column(name = "updated_date",nullable = true)
-	private Date updatedDate;
-
-	@Column(name = "created_date",nullable = true)
-	private Date createdDate;
-
 }

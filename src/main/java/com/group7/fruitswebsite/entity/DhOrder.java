@@ -1,6 +1,5 @@
-package com.group7.fruitswebsite.model;
+package com.group7.fruitswebsite.entity;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,18 +12,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "orders")
-public class Order extends BaseModel{
+@Data
+@Table(name = "dh_user")
+public class DhOrder extends BaseEntity implements java.io.Serializable{
 	
 	@Column(name = "code_name",nullable = false,length = 50)
 	private String codeName;
@@ -45,21 +38,21 @@ public class Order extends BaseModel{
 	private String seo;
 	
 	@Column(name = "total",precision = 13,scale = 2)
-	private BigDecimal total;
+	private Long total;
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id",nullable = true)
-	private User user;
+	private DhUser dhUser;
 	
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "order")
-	private List<OrderProduct> orderProducts = new ArrayList<OrderProduct>();
+	private List<DhOrderProduct> orderProducts = new ArrayList<DhOrderProduct>();
 	
-	public void addOrderProduct(OrderProduct orderProduct) {
+	public void addOrderProduct(DhOrderProduct orderProduct) {
 		this.orderProducts.add(orderProduct);
 		orderProduct.setOrder(this);
 	}
 	
-	public void removeOrderProduct(OrderProduct orderProduct) {
+	public void removeOrderProduct(DhOrderProduct orderProduct) {
 		this.orderProducts.remove(orderProduct);
 		orderProduct.setOrder(null);
 	}
