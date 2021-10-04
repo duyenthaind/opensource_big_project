@@ -26,10 +26,14 @@ public class Constants {
         }
     }
 
-    public enum APIResponseStatus{
+    public enum APIResponseStatus {
         SUCCESS_200("success", 200),
-        FAILURE("failure", 400)
-        ;
+        FAILURE("failure", 400),
+        UN_AUTHORIZED("unauthorized", 401),
+        PAYMENT_REQUIRE("payment_required", 402),
+        FORBIDDEN("forbidden", 403),
+        NOT_FOUND("not_found", 404),
+        REQUEST_TIMEOUT("request_timeout", 408);
 
         private final String message;
         private final int status;

@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Entity
@@ -29,11 +30,13 @@ public class DhUser extends BaseEntity implements java.io.Serializable{
 	private String password;
 
 	@Column(name = "username", nullable = false, length = 50)
+	@JsonProperty(value = "username")
 	private String username;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "dh_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
+	@JsonProperty(value = "roles")
 	private Set<DhRole> dhRoles = new HashSet<>();
 
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "dhUser")

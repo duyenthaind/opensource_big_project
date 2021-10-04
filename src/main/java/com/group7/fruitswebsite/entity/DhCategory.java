@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Entity
@@ -21,6 +22,7 @@ public class DhCategory extends BaseEntity implements java.io.Serializable {
     private String seo;
 
     @Column(name = "parent_id", nullable = true)
+    @JsonProperty(value = "parent_id")
     private Integer parentId;
 
 }

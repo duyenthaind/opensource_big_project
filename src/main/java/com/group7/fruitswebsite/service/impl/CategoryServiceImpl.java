@@ -2,7 +2,9 @@ package com.group7.fruitswebsite.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.group7.fruitswebsite.service.CategoryService;
 import com.group7.fruitswebsite.util.DateUtil;
 import com.group7.fruitswebsite.util.StringUtil;
 
+@Log4j
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -56,6 +59,17 @@ public class CategoryServiceImpl implements CategoryService {
                     Constants.APIResponseStatus.FAILURE.getMessage(), null);
             return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(apiResponse);
         }
+    }
+
+    @Override
+    public Optional<DhCategory> getById(int id) {
+        try {
+            DhCategory category = categoryRepository.getById(id);
+            return Optional.of(category);
+        } catch (Exception ex) {
+            log.error("Error get category by id, ", ex);
+        }
+        return Optional.empty();
     }
 
 }

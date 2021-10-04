@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Entity
@@ -23,15 +24,18 @@ public class DhProduct extends BaseEntity implements java.io.Serializable{
 	private String name;
 	
 	@Column(name = "detail_description",length = 1000,nullable = false)
+	@JsonProperty(value = "detail_description")
 	private String detailDescription;
 	
 	@Column(name = "short_description",length = 1000,nullable = false)
+	@JsonProperty(value = "short_description")
 	private String shortDescription;
 	
 	@Column(name = "price",length = 1000,nullable = false)
 	private Long price;
 	
 	@Column(name = "price_sale",length = 1000,nullable = false)
+	@JsonProperty(value = "price_sale")
 	private Long priceSale;
 	
 	@Column(name = "seo",length = 1000,nullable = false)
@@ -42,7 +46,8 @@ public class DhProduct extends BaseEntity implements java.io.Serializable{
 	private DhCategory category;
 	
 	@OneToMany(mappedBy = "dhProduct",cascade = CascadeType.ALL)
-	private List<DhOrderProduct> orderProducts = new ArrayList<DhOrderProduct>();
+	@JsonProperty(value = "order_products")
+	private List<DhOrderProduct> orderProducts = new ArrayList<>();
 	
 	public void addOrderProduct(DhOrderProduct orderProduct) {
 		this.orderProducts.add(orderProduct);

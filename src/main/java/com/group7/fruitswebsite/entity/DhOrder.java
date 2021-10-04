@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Entity
@@ -20,18 +21,23 @@ import lombok.*;
 public class DhOrder extends BaseEntity implements java.io.Serializable{
 	
 	@Column(name = "code_name",nullable = false,length = 50)
+	@JsonProperty(value = "code_name")
 	private String codeName;
 	
 	@Column(name = "customer_name",nullable = false,length = 50)
+	@JsonProperty(value = "customer_name")
 	private String customerName;
 	
 	@Column(name = "customer_email",nullable = false,length = 50)
+	@JsonProperty(value = "customer_email")
 	private String customerEmail;
 	
 	@Column(name = "customer_phone",nullable = false,length = 14)
+	@JsonProperty(value = "customer_phone")
 	private String customerPhone;
 	
 	@Column(name = "customer_address",nullable = false,length = 200)
+	@JsonProperty(value = "customer_address")
 	private String customerAddress;
 	
 	@Column(name = "seo",nullable = true,length = 300)
@@ -42,10 +48,12 @@ public class DhOrder extends BaseEntity implements java.io.Serializable{
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id",nullable = true)
+	@JsonProperty(value = "user")
 	private DhUser dhUser;
 	
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "order")
-	private List<DhOrderProduct> orderProducts = new ArrayList<DhOrderProduct>();
+	@JsonProperty(value = "order_products")
+	private List<DhOrderProduct> orderProducts = new ArrayList<>();
 	
 	public void addOrderProduct(DhOrderProduct orderProduct) {
 		this.orderProducts.add(orderProduct);

@@ -43,9 +43,6 @@ public class ApiResponse {
         private String message;
         private ApiResponseResult result;
 
-        public Builder() {
-        }
-
         public Builder withStatus(int status) {
             this.status = status;
             return this;
