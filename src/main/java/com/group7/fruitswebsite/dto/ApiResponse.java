@@ -78,7 +78,7 @@ public class ApiResponse {
         private int total;
         @JsonProperty(value = "total_pages")
         private int totalPages;
-        private List<Object> data;
+        private List data;
 
         public ApiResponseResult() {
         }
@@ -115,11 +115,11 @@ public class ApiResponse {
             this.totalPages = totalPages;
         }
 
-        public List<Object> getData() {
+        public List getData() {
             return data;
         }
 
-        public void setData(List<Object> data) {
+        public void setData(List data) {
             this.data = data;
         }
     }
