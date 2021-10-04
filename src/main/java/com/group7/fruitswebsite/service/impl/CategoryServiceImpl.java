@@ -22,14 +22,14 @@ public class CategoryServiceImpl implements CategoryService{
 
 	private DhCategory setNewCategory(DhCategory category) {
 		category.setSeo(StringUtil.seo(category.getName()) + "-" + System.currentTimeMillis());
-		category.setCreatedDate(new Date());
+		category.setCreatedDate(System.currentTimeMillis());
 //		category.setCreatedBy(createdBy);
 		return category;
 	}
 	
 	private DhCategory setUpdateCategory(DhCategory category) {
 		category.setSeo(StringUtil.seo(category.getName()) + "-" + System.currentTimeMillis());
-		category.setUpdatedDate(new Date());
+		category.setUpdatedDate(System.currentTimeMillis());
 //		category.setUpdatedBy(updatedBy);
 		return category;
 	}

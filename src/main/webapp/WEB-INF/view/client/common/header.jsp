@@ -209,7 +209,7 @@
 								</div>
 								<input type="text" placeholder="What do yo u need?">
 								<button type="submit" class="site-btn">SEARCH</button>
-							</form>
+							</form>					
 						</div>
 						<div class="hero__search__phone">
 							<div class="hero__search__phone__icon">
