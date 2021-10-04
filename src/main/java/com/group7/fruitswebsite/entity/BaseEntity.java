@@ -1,7 +1,5 @@
 package com.group7.fruitswebsite.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,9 +26,9 @@ public abstract class BaseEntity {
 	private Integer createdBy;
 
 	@Column(name = "updated_date",nullable = true)
-	private Date updatedDate;
+	private Long updatedDate;
 
 	@Column(name = "created_date",nullable = true)
-	private Date createdDate;
+	private Long createdDate;
 
 }

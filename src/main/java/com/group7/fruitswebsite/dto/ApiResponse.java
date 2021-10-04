@@ -1,6 +1,5 @@
 package com.group7.fruitswebsite.dto;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
