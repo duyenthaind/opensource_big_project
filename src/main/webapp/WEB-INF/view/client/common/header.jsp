@@ -161,7 +161,7 @@
 				</div>
 				<div class="col-lg-6">
 
-					<jsp:include page="/WEB-INF/view/client/common/navbar.jsp"></jsp:include>
+					<jsp:include page="navbar.jsp"/>
 
 
 				</div>
