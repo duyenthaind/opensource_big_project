@@ -20,7 +20,7 @@ public class DhProductModel extends BaseModel {
     @JsonProperty(value = "price_sale")
     private Long priceSale;
     @JsonProperty(value = "category_id")
-    private Long categoryId;
+    private Integer categoryId;
     @JsonProperty(value = "image_path")
     private String imagePath;
     @JsonProperty(value = "image_name")

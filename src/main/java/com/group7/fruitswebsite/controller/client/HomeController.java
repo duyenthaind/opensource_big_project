@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.group7.fruitswebsite.repository.CategoryRepository;
 
 @Controller
-@RequestMapping(value = "/v1")
 public class HomeController {
 
 	private CategoryRepository categoryRepository;

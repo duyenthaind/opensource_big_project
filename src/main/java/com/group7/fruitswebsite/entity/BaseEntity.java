@@ -1,13 +1,14 @@
 package com.group7.fruitswebsite.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @MappedSuperclass
 @Data
@@ -35,5 +36,18 @@ public abstract class BaseEntity {
 	@Column(name = "created_date",nullable = true)
 	@JsonProperty(value = "created_date")
 	private Long createdDate;
+
+	@Transient
+	private Map<String, Object> map = new HashMap<>();
+
+	@JsonAnyGetter
+	public Map<String, Object> getMap() {
+		return map;
+	}
+
+	@JsonAnySetter
+	public void setMap(String key, Object value) {
+		map.put(key, value);
+	}
 
 }

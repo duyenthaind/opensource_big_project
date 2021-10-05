@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity<ApiResponse> save(DhProduct dhProduct) {
+    public ResponseEntity<ApiResponse> saveOne(DhProduct dhProduct) {
         try {
             long currentTimestamp = System.currentTimeMillis();
             dhProduct.setCreatedDate(currentTimestamp);
@@ -40,6 +40,7 @@ public class ProductServiceImpl implements ProductService {
                     .withDateTime(DateUtil.currentDate())
                     .withResult(null)
                     .build();
+            log.info(String.format("Save 1 new product, id=%d", dhProduct.getId()));
             return ResponseEntity.ok(response);
         } catch (Exception ex) {
             log.error("Error insert new product, ", ex);

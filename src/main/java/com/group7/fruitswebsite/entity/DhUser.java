@@ -1,9 +1,6 @@
 package com.group7.fruitswebsite.entity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +17,8 @@ import lombok.*;
 
 @Entity
 @Table(name = "dh_user")
-@Data
+@Setter
+@Getter
 public class DhUser extends BaseEntity implements java.io.Serializable{
 
 	@Column(name = "email", nullable = false, length = 50)
@@ -41,6 +39,18 @@ public class DhUser extends BaseEntity implements java.io.Serializable{
 
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "dhUser")
 	private List<DhOrder> orders = new ArrayList<>();
-	
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+		DhUser dhUser = (DhUser) o;
+		return Objects.equals(email, dhUser.email) && Objects.equals(password, dhUser.password) && Objects.equals(username, dhUser.username) && Objects.equals(dhRoles, dhUser.dhRoles) && Objects.equals(orders, dhUser.orders);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), email, password, username, dhRoles, orders);
+	}
 }

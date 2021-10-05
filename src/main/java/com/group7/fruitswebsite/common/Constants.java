@@ -51,4 +51,8 @@ public class Constants {
             return status;
         }
     }
+
+    public static class ApiMessage{
+        public static final String NOT_FOUND_CATEGORY = "category is not found";
+    }
 }

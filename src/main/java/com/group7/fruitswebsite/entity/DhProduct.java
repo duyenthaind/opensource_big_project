@@ -1,26 +1,22 @@
 package com.group7.fruitswebsite.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "dh_product")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DhProduct extends BaseEntity implements java.io.Serializable{
 	
 	@Column(name = "name",length = 1000,nullable = false)
+	@JsonProperty(value = "name")
+	@JsonAlias(value = "product_name")
 	private String name;
 	
 	@Column(name = "detail_description",length = 1000,nullable = false)
@@ -58,6 +54,18 @@ public class DhProduct extends BaseEntity implements java.io.Serializable{
 		this.orderProducts.remove(orderProduct);
 		orderProduct.setDhProduct(null);
 	}
-	
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+		DhProduct dhProduct = (DhProduct) o;
+		return Objects.equals(name, dhProduct.name) && Objects.equals(detailDescription, dhProduct.detailDescription) && Objects.equals(shortDescription, dhProduct.shortDescription) && Objects.equals(price, dhProduct.price) && Objects.equals(priceSale, dhProduct.priceSale) && Objects.equals(seo, dhProduct.seo) && Objects.equals(category, dhProduct.category) && Objects.equals(orderProducts, dhProduct.orderProducts);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), name, detailDescription, shortDescription, price, priceSale, seo, category, orderProducts);
+	}
 }

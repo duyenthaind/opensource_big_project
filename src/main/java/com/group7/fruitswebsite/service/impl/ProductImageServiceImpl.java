@@ -37,6 +37,7 @@ public class ProductImageServiceImpl implements ProductImageService {
                     .withDateTime(DateUtil.currentDate())
                     .withResult(null)
                     .build();
+            log.info(String.format("Save 1 new image product, id=%d", dhProductImage.getId()));
             return ResponseEntity.ok(res);
         } catch (Exception ex) {
             ApiResponse res = new ApiResponse.Builder()

@@ -2,6 +2,7 @@ package com.group7.fruitswebsite.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +17,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "dh_user")
 public class DhOrder extends BaseEntity implements java.io.Serializable{
 	
@@ -64,5 +66,18 @@ public class DhOrder extends BaseEntity implements java.io.Serializable{
 		this.orderProducts.remove(orderProduct);
 		orderProduct.setOrder(null);
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+		DhOrder dhOrder = (DhOrder) o;
+		return Objects.equals(codeName, dhOrder.codeName) && Objects.equals(customerName, dhOrder.customerName) && Objects.equals(customerEmail, dhOrder.customerEmail) && Objects.equals(customerPhone, dhOrder.customerPhone) && Objects.equals(customerAddress, dhOrder.customerAddress) && Objects.equals(seo, dhOrder.seo) && Objects.equals(total, dhOrder.total) && Objects.equals(dhUser, dhOrder.dhUser) && Objects.equals(orderProducts, dhOrder.orderProducts);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), codeName, customerName, customerEmail, customerPhone, customerAddress, seo, total, dhUser, orderProducts);
+	}
 }
