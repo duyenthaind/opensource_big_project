@@ -2,6 +2,7 @@ package com.group7.fruitswebsite.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,26 +13,33 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "dh_user")
 public class DhOrder extends BaseEntity implements java.io.Serializable{
 	
 	@Column(name = "code_name",nullable = false,length = 50)
+	@JsonProperty(value = "code_name")
 	private String codeName;
 	
 	@Column(name = "customer_name",nullable = false,length = 50)
+	@JsonProperty(value = "customer_name")
 	private String customerName;
 	
 	@Column(name = "customer_email",nullable = false,length = 50)
+	@JsonProperty(value = "customer_email")
 	private String customerEmail;
 	
 	@Column(name = "customer_phone",nullable = false,length = 14)
+	@JsonProperty(value = "customer_phone")
 	private String customerPhone;
 	
 	@Column(name = "customer_address",nullable = false,length = 200)
+	@JsonProperty(value = "customer_address")
 	private String customerAddress;
 	
 	@Column(name = "seo",nullable = true,length = 300)
@@ -42,10 +50,12 @@ public class DhOrder extends BaseEntity implements java.io.Serializable{
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id",nullable = true)
+	@JsonProperty(value = "user")
 	private DhUser dhUser;
 	
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "order")
-	private List<DhOrderProduct> orderProducts = new ArrayList<DhOrderProduct>();
+	@JsonProperty(value = "order_products")
+	private List<DhOrderProduct> orderProducts = new ArrayList<>();
 	
 	public void addOrderProduct(DhOrderProduct orderProduct) {
 		this.orderProducts.add(orderProduct);
@@ -56,5 +66,18 @@ public class DhOrder extends BaseEntity implements java.io.Serializable{
 		this.orderProducts.remove(orderProduct);
 		orderProduct.setOrder(null);
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+		DhOrder dhOrder = (DhOrder) o;
+		return Objects.equals(codeName, dhOrder.codeName) && Objects.equals(customerName, dhOrder.customerName) && Objects.equals(customerEmail, dhOrder.customerEmail) && Objects.equals(customerPhone, dhOrder.customerPhone) && Objects.equals(customerAddress, dhOrder.customerAddress) && Objects.equals(seo, dhOrder.seo) && Objects.equals(total, dhOrder.total) && Objects.equals(dhUser, dhOrder.dhUser) && Objects.equals(orderProducts, dhOrder.orderProducts);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), codeName, customerName, customerEmail, customerPhone, customerAddress, seo, total, dhUser, orderProducts);
+	}
 }

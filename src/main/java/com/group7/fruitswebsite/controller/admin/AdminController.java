@@ -1,6 +1,5 @@
 package com.group7.fruitswebsite.controller.admin;
 
-import com.group7.fruitswebsite.common.Constants;
 import lombok.extern.log4j.Log4j;
 
 import java.util.List;
@@ -18,8 +17,6 @@ import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.repository.CategoryRepository;
 import com.group7.fruitswebsite.service.CategoryService;
-import com.group7.fruitswebsite.util.DateUtil;
-import com.group7.fruitswebsite.util.StringUtil;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -54,8 +51,6 @@ public class AdminController {
 		log.info(category.toString());
 		return categoryService.saveOne(category);
 	}
-	
-	
 
 	@Autowired
 	public void setCategoryRepository(CategoryRepository categoryRepository) {
@@ -66,4 +61,6 @@ public class AdminController {
 	public void setCategoryService(CategoryService categoryService) {
 		this.categoryService = categoryService;
 	}
+	
+	
 }

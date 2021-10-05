@@ -8,10 +8,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.Objects;
+
 @Entity
-@Data
+@Setter
+@Getter
 @Table(name = "dh_product_image")
 public class DhProductImage extends BaseEntity implements java.io.Serializable{
 
@@ -23,5 +27,20 @@ public class DhProductImage extends BaseEntity implements java.io.Serializable{
 
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
+	@JsonProperty(value = "product")
 	private DhProduct dhProduct;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+		DhProductImage that = (DhProductImage) o;
+		return Objects.equals(path, that.path) && Objects.equals(name, that.name) && Objects.equals(dhProduct, that.dhProduct);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), path, name, dhProduct);
+	}
 }

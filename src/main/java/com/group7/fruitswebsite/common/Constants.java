@@ -26,10 +26,14 @@ public class Constants {
         }
     }
 
-    public enum APIResponseStatus{
+    public enum APIResponseStatus {
         SUCCESS_200("success", 200),
-        FAILURE("failure", 400)
-        ;
+        FAILURE("failure", 400),
+        UN_AUTHORIZED("unauthorized", 401),
+        PAYMENT_REQUIRE("payment_required", 402),
+        FORBIDDEN("forbidden", 403),
+        NOT_FOUND("not_found", 404),
+        REQUEST_TIMEOUT("request_timeout", 408);
 
         private final String message;
         private final int status;
@@ -46,5 +50,9 @@ public class Constants {
         public int getStatus() {
             return status;
         }
+    }
+
+    public static class ApiMessage{
+        public static final String NOT_FOUND_CATEGORY = "category is not found";
     }
 }

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- header -->
-<jsp:include page="/WEB-INF/view/client/common/header.jsp"></jsp:include>
+<jsp:include page="common/header.jsp"/>
 <!-- end header -->
 
 
@@ -510,5 +510,5 @@
 
 
 <!-- footer -->
-<jsp:include page="/WEB-INF/view/client/common/footer.jsp"></jsp:include>
+<jsp:include page="common/footer.jsp"/>
 <!-- end footer -->

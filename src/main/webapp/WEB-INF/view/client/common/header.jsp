@@ -161,7 +161,7 @@
 				</div>
 				<div class="col-lg-6">
 
-					<jsp:include page="/WEB-INF/view/client/common/navbar.jsp"></jsp:include>
+					<jsp:include page="navbar.jsp" />
 
 
 				</div>
@@ -209,7 +209,10 @@
 								</div>
 								<input type="text" placeholder="What do yo u need?">
 								<button type="submit" class="site-btn">SEARCH</button>
-							</form>					
+							</form>
+						</div>
+						<div id="myDropDown" class="dropdown-content">
+							<span>Home</span> <span>About</span> <span>Contact</span>
 						</div>
 						<div class="hero__search__phone">
 							<div class="hero__search__phone__icon">
