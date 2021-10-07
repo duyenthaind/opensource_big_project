@@ -27,7 +27,7 @@ public class DhComment extends BaseEntity implements Serializable{
 	private Integer parent_id;
 	
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name = "product_id")
+	@JoinColumn(name = "product_id",referencedColumnName = "id")
 	private DhProduct dhProduct;
 	
 	
