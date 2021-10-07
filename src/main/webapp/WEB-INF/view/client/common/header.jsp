@@ -44,6 +44,7 @@
 <link rel="stylesheet" href="${server}/css/slicknav.min.css"
 	type="text/css">
 <link rel="stylesheet" href="${server}/css/style.css" type="text/css">
+<link rel="stylesheet" href="${server}/css/main.css" type="text/css">
 </head>
 
 <body>
@@ -194,9 +195,17 @@
 							<i class="fa fa-bars"></i> <span>All departments</span>
 						</div>
 						<ul style="${display}">
-							<c:forEach var="cate" items="${categories}">
-								<li><a href="#">${cate.name}</a></li>
-							</c:forEach>
+							<li><a href="#">Fresh Meat</a></li>
+							<li><a href="#">Vegetables</a></li>
+							<li><a href="#">Fruit & Nut Gifts</a></li>
+							<li><a href="#">Fresh Berries</a></li>
+							<li><a href="#">Ocean Foods</a></li>
+							<li><a href="#">Butter & Eggs</a></li>
+							<li><a href="#">Fastfood</a></li>
+							<li><a href="#">Fresh Onion</a></li>
+							<li><a href="#">Papayaya & Crisps</a></li>
+							<li><a href="#">Oatmeal</a></li>
+							<li><a href="#">Fresh Bananas</a></li>
 						</ul>
 					</div>
 				</div>
@@ -205,7 +214,9 @@
 						<div class="hero__search__form">
 							<form action="#">
 								<div class="hero__search__categories">
-									All Categories <span class="arrow_carrot-down"></span>
+									All Categories <span onclick="myFunction();"
+										class="arrow_carrot-down dropdowncate"></span>
+
 								</div>
 								<input type="text" placeholder="What do yo u need?">
 								<button type="submit" class="site-btn">SEARCH</button>
