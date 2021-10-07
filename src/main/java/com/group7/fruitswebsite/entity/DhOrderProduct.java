@@ -23,6 +23,10 @@ public class DhOrderProduct extends BaseEntity implements java.io.Serializable{
 	private int quantity;
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinColumn(name = "coupon_id")
+	private DhCoupon dhCoupon;
+	
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
 	@JsonProperty(value = "product")
 	private DhProduct dhProduct;
