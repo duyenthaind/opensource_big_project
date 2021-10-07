@@ -38,10 +38,13 @@ public class DhProduct extends BaseEntity implements java.io.Serializable {
 	private Long available;
 
 	@Column(name = "weight", nullable = false)
-	private Double weight;
+	private Float weight;
 
 	@Column(name = "seo", length = 1000, nullable = false)
 	private String seo;
+	
+	@OneToOne(mappedBy = "dhProduct")
+	private DhComment dhComment;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
@@ -74,12 +77,14 @@ public class DhProduct extends BaseEntity implements java.io.Serializable {
 				&& Objects.equals(shortDescription, dhProduct.shortDescription)
 				&& Objects.equals(price, dhProduct.price) && Objects.equals(priceSale, dhProduct.priceSale)
 				&& Objects.equals(seo, dhProduct.seo) && Objects.equals(category, dhProduct.category)
-				&& Objects.equals(orderProducts, dhProduct.orderProducts);
+				&& Objects.equals(orderProducts, dhProduct.orderProducts)
+				&& Objects.equals(available, dhProduct.available)
+				&& Objects.equals(weight, dhProduct.weight);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), name, detailDescription, shortDescription, price, priceSale, seo,
-				category, orderProducts);
+				category, orderProducts,available,weight);
 	}
 }
