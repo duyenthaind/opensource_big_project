@@ -19,7 +19,7 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "dh_user")
+@Table(name = "dh_order")
 public class DhOrder extends BaseEntity implements java.io.Serializable{
 	
 	@Column(name = "code_name",nullable = false,length = 50)
