@@ -29,8 +29,8 @@ public class DhCoupon extends BaseEntity implements Serializable {
 	private int total;
 
 	@OneToMany(mappedBy = "dhCoupon", cascade = CascadeType.ALL)
-	@JsonProperty(value = "order_products")
-	private List<DhOrderProduct> orderProducts = new ArrayList<>();
+	@JsonProperty(value = "orders")
+	private List<DhOrder> dhOrders = new ArrayList<>();
 	
 	@Override
 	public int hashCode() {

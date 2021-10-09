@@ -11,9 +11,9 @@ function addNewCate(){
 			
 			dataType : "json",
 			success : function(jsonResult){
-				if(jsonResult.status == 200){
-					
+				if(jsonResult.status == 200){			
 					alert("Success");
+					getFirst();
 				}else{
 					alert(jsonResult.result);
 					alert("error");
@@ -54,6 +54,16 @@ function loadPage(total_pages,currentPage){
 			}			
 }
 
+function formatDate(current_datetime){
+	if(current_datetime == new Date(null)){
+		return null;
+	}
+	else{
+		return current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear() 
+		+ " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds();
+	} 
+}
+
 function getFirst(){
 	$.ajax({
 		url:"http://localhost:8080/admin/api/v1/getAll",
@@ -62,12 +72,13 @@ function getFirst(){
 			page:0
 		},
 		success : function(data){
-			loadPage(data.result.total_pages,0);
+				loadPage(data.result.total_pages,0);
+				$(".resultCategories").empty();
 				var html = "";
 				var dataArr = data.result.data;
 				for(var i = 0;i < dataArr.length; i++){
-					html = "<tr class='tr-shadow'><td>" + dataArr[i].name + "</td><td><span class='block-email'>" + new Date(dataArr[i].created_date) + "</span></td>"
-						+	"<td class='desc'>" + new Date(dataArr[i].updated_date) + "</td>"
+					html = "<tr class='tr-shadow'><td>" + dataArr[i].name + "</td><td><span class='block-email'>" + formatDate(new Date(dataArr[i].created_date)) + "</span></td>"
+						+	"<td><span class='block-email'>" + formatDate(new Date(dataArr[i].updated_date)) + "</span></td>"
 						+	"<td>" + dataArr[i].updated_by + "</td>"
 						+	"<td>"
 						+		"<div class='table-data-feature'>"
@@ -116,13 +127,18 @@ function loadData(currentPage){
 			page:currentPage
 		},
 		success : function(data){
-			loadPage(data.result.total_pages,currentPage);
+				loadPage(data.result.total_pages,currentPage);
+				var tag = document.getElementsByClassName("page-item");
+				for(a =0;a<tag.length;a++){
+					tag[a].className = tag[a].className.replace(" active", "");
+				}
+				tag[currentPage].className = "page-item active";
 				var html = "";
 				$(".resultCategories").empty();
 				var dataArr = data.result.data;
 				for(var i = 0;i < dataArr.length; i++){
-					html = "<tr class='tr-shadow'><td>" + dataArr[i].name + "</td><td><span class='block-email'>" + dataArr[i].created_date + "</span></td>"
-					+	"<td class='desc'>" + dataArr[i].updated_date + "</td>"
+					html = "<tr class='tr-shadow'><td>" + dataArr[i].name + "</td><td><span class='block-email'>" + formatDate(new Date(dataArr[i].created_date)) + "</span></td>"
+					+	"<td class='desc'>" + formatDate(new Date(dataArr[i].updated_date)) + "</td>"
 					+	"<td>" + dataArr[i].updated_by + "</td>"
 					+	"<td>"
 					+		"<div class='table-data-feature'>"

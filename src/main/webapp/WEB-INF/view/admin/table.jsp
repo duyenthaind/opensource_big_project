@@ -283,14 +283,7 @@
 								type="button" data-toggle="modal" data-target="#newCate">
 								<i class="zmdi zmdi-plus"></i>add item
 							</button>
-							<div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-								<select class="js-select2" name="type">
-									<option selected="selected">Export</option>
-									<option value="">Option 1</option>
-									<option value="">Option 2</option>
-								</select>
-								<div class="dropDownSelect2"></div>
-							</div>
+							
 						</div>
 					</div>
 					<div class="table-responsive table-responsive-data2">
@@ -350,14 +343,7 @@
 							<button class="au-btn au-btn-icon au-btn--green au-btn--small">
 								<i class="zmdi zmdi-plus"></i>add item
 							</button>
-							<div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-								<select class="js-select2" name="type">
-									<option selected="selected">Export</option>
-									<option value="">Option 1</option>
-									<option value="">Option 2</option>
-								</select>
-								<div class="dropDownSelect2"></div>
-							</div>
+							
 						</div>
 					</div>
 					<div class="table-responsive table-responsive-data2">
