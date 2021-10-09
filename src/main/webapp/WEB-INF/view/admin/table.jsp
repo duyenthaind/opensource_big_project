@@ -310,13 +310,16 @@
 
 							</tbody>
 						</table>
-						<ul class="pagination">
-
-						</ul>
+						
 					</div>
+					<ul class="pagination">
+
+					</ul>
 					<!-- END DATA TABLE -->
 				</div>
 			</div>
+			<br>
+			<br>
 			<div class="row">
 				<div class="col-md-12">
 					<!-- DATA TABLE -->
