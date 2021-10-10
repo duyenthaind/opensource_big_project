@@ -11,4 +11,6 @@ public interface CategoryService {
 	ResponseEntity<ApiResponse> saveOne(DhCategory category);
 
 	Optional<DhCategory> getById(int id);
+	
+	ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
 }

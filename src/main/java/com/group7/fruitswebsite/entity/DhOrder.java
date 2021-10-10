@@ -50,6 +50,10 @@ public class DhOrder extends BaseEntity implements java.io.Serializable{
 
 	@Column(name = "is_prepaid", nullable = false, columnDefinition = "tinyint")
 	private Boolean isPrepaid;
+	
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinColumn(name = "coupon_id")
+	private DhCoupon dhCoupon;
 
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id",nullable = true)

@@ -7,7 +7,6 @@ import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Entity
 @Table(name = "dh_comment")
 @Getter
@@ -27,5 +26,4 @@ public class DhComment extends BaseEntity implements Serializable{
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private DhUser dhUser;
-
 }

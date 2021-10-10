@@ -89,10 +89,8 @@
 								class="fas fa-tachometer-alt"></i>Dashboard
 						</a>
 							<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-								<li><a href="index.html">Dashboard 1</a></li>
-								<li><a href="index2.html">Dashboard 2</a></li>
-								<li><a href="index3.html">Dashboard 3</a></li>
-								<li><a href="index4.html">Dashboard 4</a></li>
+								<li><a href="${base}/admin/">Admin</a></li>
+								<li><a href="${base}/home">Home</a></li>
 							</ul></li>
 						<li><a href="chart.html"> <i class="fas fa-chart-bar"></i>Charts
 						</a></li>
@@ -138,7 +136,7 @@
 		<!-- MENU SIDEBAR-->
 		<aside class="menu-sidebar d-none d-lg-block">
 			<div class="logo">
-				<a href="#"> <img src="${base}/admin/images/icon/logo.png"
+				<a href="${base}/admin/"> <img src="${base}/admin/images/icon/logo.png"
 					alt="Cool Admin" />
 				</a>
 			</div>
@@ -149,15 +147,11 @@
 								<i class="fas fa-tachometer-alt"></i>Dashboard
 						</a>
 							<ul class="list-unstyled navbar__sub-list js-sub-list">
-								<li><a href="index.html">Dashboard 1</a></li>
-								<li><a href="index2.html">Dashboard 2</a></li>
-								<li><a href="index3.html">Dashboard 3</a></li>
-								<li><a href="index4.html">Dashboard 4</a></li>
+								<li><a href="${base}/admin/">Admin</a></li>
+								<li><a href="${base}/home">Home</a></li>
 							</ul></li>
 
-						<li><a href="table.html"> <i class="fas fa-table"></i>Tables
-						</a></li>
-						<li><a href="form.html"> <i class="far fa-check-square"></i>Forms
+						<li><a href="${base}/admin/table"> <i class="fas fa-table"></i>Tables
 						</a></li>
 					</ul>
 				</nav>

@@ -44,7 +44,6 @@
 <link rel="stylesheet" href="${server}/css/slicknav.min.css"
 	type="text/css">
 <link rel="stylesheet" href="${server}/css/style.css" type="text/css">
-<link rel="stylesheet" href="${server}/css/main.css" type="text/css">
 </head>
 
 <body>
