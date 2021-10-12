@@ -45,7 +45,7 @@ public class AdminController {
 	public String form() {
 		return "admin/form";
 	}
-	
+
 	@GetMapping("/getAllCate")
 	public List<DhCategory> getAllCate() {
 		return categoryRepository.findAll();
@@ -53,14 +53,18 @@ public class AdminController {
 
 	@PostMapping("/addcate")
 	public ResponseEntity<ApiResponse> addNewCate(@RequestBody DhCategory category) {
-		log.info(category.toString());
-		return categoryService.saveOne(category);
+		return categoryService.saveOrUpdate(category);
 	}
 
 	@GetMapping("/api/v1/getAll")
 	public ResponseEntity<ApiResponse> getAllCategoryWithPaging(@RequestParam(required = false) String name,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
 		return categoryService.getAllWithPaging(page, size);
+	}
+	
+	@GetMapping("/api/v1/getOne")
+	public ResponseEntity<ApiResponse> getOneCategory(@RequestParam Integer id){
+		return categoryService.getOne(id);
 	}
 
 	@Autowired

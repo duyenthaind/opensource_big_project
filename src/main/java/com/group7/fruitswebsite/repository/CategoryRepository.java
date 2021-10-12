@@ -12,4 +12,5 @@ public interface CategoryRepository extends JpaRepository<DhCategory, Integer>{
 
 	Page<DhCategory> findAll(Pageable pageable);
 	Page<DhCategory> findByName(String name,Pageable pageable);
+	
 }

@@ -23,6 +23,9 @@ public class DhCategory extends BaseEntity implements java.io.Serializable {
 
     @Column(name = "seo", nullable = false)
     private String seo;
+    
+    @Column(name = "avatar", nullable = false)
+    private String avatar;
 
     @Column(name = "parent_id", nullable = true)
     @JsonProperty(value = "parent_id")
@@ -34,11 +37,14 @@ public class DhCategory extends BaseEntity implements java.io.Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         DhCategory category = (DhCategory) o;
-        return Objects.equals(name, category.name) && Objects.equals(description, category.description) && Objects.equals(seo, category.seo) && Objects.equals(parentId, category.parentId);
+        return Objects.equals(name, category.name) && Objects.equals(description, category.description)
+        		&& Objects.equals(seo, category.seo) 
+        		&& Objects.equals(parentId, category.parentId)
+        		&& Objects.equals(avatar, category.avatar);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, description, seo, parentId);
+        return Objects.hash(super.hashCode(), name, description, seo,avatar, parentId);
     }
 }

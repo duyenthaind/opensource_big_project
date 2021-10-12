@@ -8,9 +8,11 @@ import com.group7.fruitswebsite.entity.DhCategory;
 import java.util.Optional;
 
 public interface CategoryService {
-	ResponseEntity<ApiResponse> saveOne(DhCategory category);
+	ResponseEntity<ApiResponse> saveOrUpdate(DhCategory category);
 
 	Optional<DhCategory> getById(int id);
+	
+	ResponseEntity<ApiResponse> getOne(Integer id);
 	
 	ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
 }
