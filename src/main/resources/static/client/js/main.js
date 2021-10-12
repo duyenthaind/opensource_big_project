@@ -223,8 +223,8 @@
 
 })(jQuery);
 
-function myFunction(){
-    document.getElementById("myDropDown").classList.toggle("show");
+function showAllCategory(){
+    document.getElementById("dropDownCategory").classList.toggle("show");
 }
 
 window.onclick = function(event) {

@@ -10,10 +10,8 @@
 				<li><a href="${base}/shop-grid">Shop</a></li>
 				<li><a href="#">Pages</a>
 					<ul class="header__menu__dropdown">
-						<li><a href="${base}/shop-details">Shop Details</a></li>
 						<li><a href="${base}/shoping-cart">Shoping Cart</a></li>
 						<li><a href="${base}/checkout">Check Out</a></li>
-						<li><a href="${base}/blog-details">Blog Details</a></li>
 					</ul></li>
 				<li><a href="${base}/blog">Blog</a></li>
 				<li><a href="${base}/contact">Contact</a></li>
@@ -27,10 +25,8 @@
 				<li><a href="${base}/shop-grid">Shop</a></li>
 				<li><a href="#">Pages</a>
 					<ul class="header__menu__dropdown">
-						<li><a href="${base}/shop-details">Shop Details</a></li>
 						<li><a href="${base}/shoping-cart">Shoping Cart</a></li>
 						<li><a href="${base}/checkout">Check Out</a></li>
-						<li><a href="${base}/blog-details">Blog Details</a></li>
 					</ul></li>
 				<li class="active"><a href="${base}/blog">Blog</a></li>
 				<li><a href="${base}/contact">Contact</a></li>
@@ -44,10 +40,8 @@
 				<li><a href="${base}/shop-grid">Shop</a></li>
 				<li><a href="#">Pages</a>
 					<ul class="header__menu__dropdown">
-						<li><a href="${base}/shop-details">Shop Details</a></li>
 						<li><a href="${base}/shoping-cart">Shoping Cart</a></li>
 						<li><a href="${base}/checkout">Check Out</a></li>
-						<li><a href="${base}/blog-details">Blog Details</a></li>
 					</ul></li>
 				<li><a href="${base}/blog">Blog</a></li>
 				<li class="active"><a href="${base}/contact">Contact</a></li>
@@ -61,10 +55,8 @@
 				<li class="active"><a href="${base}/shop-grid">Shop</a></li>
 				<li><a href="#">Pages</a>
 					<ul class="header__menu__dropdown">
-						<li><a href="${base}/shop-details">Shop Details</a></li>
 						<li><a href="${base}/shoping-cart">Shoping Cart</a></li>
 						<li><a href="${base}/checkout">Check Out</a></li>
-						<li><a href="${base}/blog-details">Blog Details</a></li>
 					</ul></li>
 				<li><a href="${base}/blog">Blog</a></li>
 				<li><a href="${base}/contact">Contact</a></li>
