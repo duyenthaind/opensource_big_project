@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-
 <c:set var="menu" value="${menu}" />
 <c:if test="${menu == 'menu'}">
 	<c:set var="display" value="" />
@@ -215,7 +214,6 @@
 								<div class="hero__search__categories">
 									All Categories <span onclick="myFunction();"
 										class="arrow_carrot-down dropdowncate"></span>
-
 								</div>
 								<input type="text" placeholder="What do yo u need?">
 								<button type="submit" class="site-btn">SEARCH</button>
