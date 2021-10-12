@@ -72,7 +72,6 @@
 				<div>English</div>
 				<span class="arrow_carrot-down"></span>
 				<ul>
-					<li><a href="#">Spanis</a></li>
 					<li><a href="#">English</a></li>
 				</ul>
 			</div>
@@ -86,10 +85,8 @@
 				<li><a href="./shop-grid.html">Shop</a></li>
 				<li><a href="#">Pages</a>
 					<ul class="header__menu__dropdown">
-						<li><a href="./shop-details.html">Shop Details</a></li>
-						<li><a href="./shoping-cart.html">Shoping Cart</a></li>
-						<li><a href="./checkout.html">Check Out</a></li>
-						<li><a href="./blog-details.html">Blog Details</a></li>
+						<li><a href="${server}/shoping-cart">Shoping Cart</a></li>
+						<li><a href="${server}/checkout">Check Out</a></li>
 					</ul></li>
 				<li><a href="./blog.html">Blog</a></li>
 				<li><a href="./contact.html">Contact</a></li>
@@ -103,7 +100,7 @@
 		</div>
 		<div class="humberger__menu__contact">
 			<ul>
-				<li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+				<li><i class="fa fa-envelope"></i> noreply@fruitshop.com</li>
 				<li>Free Shipping for all Order of $99</li>
 			</ul>
 		</div>
@@ -118,7 +115,7 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__left">
 							<ul>
-								<li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+								<li><i class="fa fa-envelope"></i> noreply@fruitshop.com</li>
 								<li>Free Shipping for all Order of $99</li>
 							</ul>
 						</div>
@@ -136,7 +133,6 @@
 								<div>English</div>
 								<span class="arrow_carrot-down"></span>
 								<ul>
-									<li><a href="#">Spanis</a></li>
 									<li><a href="#">English</a></li>
 								</ul>
 							</div>
@@ -155,7 +151,7 @@
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="header__logo">
-						<a href="./index.html"><img src="img/logo.png" alt=""></a>
+						<a href="${server}/home"><img src="img/logo.png" alt=""></a>
 					</div>
 				</div>
 				<div class="col-lg-6">
@@ -190,20 +186,14 @@
 				<div class="col-lg-3">
 					<div class="hero__categories">
 						<div class="hero__categories__all">
-							<i class="fa fa-bars"></i> <span>All departments</span>
+							<i class="fa fa-bars"></i> <span>Menu</span>
 						</div>
 						<ul style="${display}">
-							<li><a href="#">Fresh Meat</a></li>
-							<li><a href="#">Vegetables</a></li>
-							<li><a href="#">Fruit & Nut Gifts</a></li>
-							<li><a href="#">Fresh Berries</a></li>
-							<li><a href="#">Ocean Foods</a></li>
-							<li><a href="#">Butter & Eggs</a></li>
-							<li><a href="#">Fastfood</a></li>
-							<li><a href="#">Fresh Onion</a></li>
-							<li><a href="#">Papayaya & Crisps</a></li>
-							<li><a href="#">Oatmeal</a></li>
-							<li><a href="#">Fresh Bananas</a></li>
+							<li><a href="${server}/shop-grid">Shopping</a></li>
+							<li><a href="${server}/shoping-cart">Shopping Cart</a></li>
+							<li><a href="${server}/checkout">Check Out</a></li>
+							<li><a href="${server}/blog">Blog</a></li>
+							<li><a href="${server}/contact">Contact</a></li>
 						</ul>
 					</div>
 				</div>
@@ -212,15 +202,21 @@
 						<div class="hero__search__form">
 							<form action="#">
 								<div class="hero__search__categories">
-									All Categories <span onclick="myFunction();"
+									All Categories <span onclick="showAllCategory();"
 										class="arrow_carrot-down dropdowncate"></span>
 								</div>
 								<input type="text" placeholder="What do yo u need?">
 								<button type="submit" class="site-btn">SEARCH</button>
 							</form>
 						</div>
-						<div id="myDropDown" class="dropdown-content">
-							<span>Home</span> <span>About</span> <span>Contact</span>
+						<div id="dropDownCategory" class="dropdown-content">
+							<span>
+								<c:forEach items="${categories}" var="category">
+									<c:if test="${category.status = true}">
+										${category.name}
+									</c:if>
+								</c:forEach>
+							</span>
 						</div>
 						<div class="hero__search__phone">
 							<div class="hero__search__phone__icon">
