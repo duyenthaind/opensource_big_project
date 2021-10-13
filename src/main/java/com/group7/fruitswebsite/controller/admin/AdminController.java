@@ -2,6 +2,7 @@ package com.group7.fruitswebsite.controller.admin;
 
 import lombok.extern.log4j.Log4j;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +14,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.group7.fruitswebsite.dto.ApiResponse;
+import com.group7.fruitswebsite.dto.CategoryDTO;
 import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.repository.CategoryRepository;
 import com.group7.fruitswebsite.service.CategoryService;
+import com.group7.fruitswebsite.util.ImageUtil;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -52,8 +55,10 @@ public class AdminController {
 	}
 
 	@PostMapping("/addcate")
-	public ResponseEntity<ApiResponse> addNewCate(@RequestBody DhCategory category) {
-		return categoryService.saveOrUpdate(category);
+	public ResponseEntity<ApiResponse> addNewCate(@ModelAttribute CategoryDTO categoryDTO) throws IOException {
+		log.info("category : " + categoryDTO.toString());
+		log.info("path : " + ImageUtil.saveUploadedFiles(categoryDTO.getFile()));
+		return categoryService.save(categoryDTO);
 	}
 
 	@GetMapping("/api/v1/getAll")

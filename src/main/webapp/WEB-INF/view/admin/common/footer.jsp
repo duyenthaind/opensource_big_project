@@ -35,7 +35,12 @@
 <script src="${base}/admin/js/main.js" type="module"></script>
 <script>
 	$('#summernote').summernote({
-		placeholder : 'Hello Bootstrap 4',
+		placeholder : 'Description',
+		tabsize : 2,
+		height : 100
+	});
+	$('#summernote1').summernote({
+		placeholder : 'Description',
 		tabsize : 2,
 		height : 100
 	});

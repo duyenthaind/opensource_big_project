@@ -16,6 +16,7 @@
 									<h3 class="text-center title-2">Category</h3>
 								</div>
 								<hr>
+								<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
 								<div class="form-group">
 									<label for="cc-payment" class="control-label mb-1">Title</label>
 									<input id="cateName" name="name" type="text"
@@ -29,19 +30,22 @@
 									<span class="help-block field-validation-valid"
 										data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
 								</div>
+								
 								<div class="form-control has-success">
                                     <label for="cc-name" class="control-label mb-1"></label>
-                                    <img id="output" class="img-rounded" alt="" width="180" height="200" src="" />
+                                    <img id="output" class="img-rounded" alt="" width="250" height="200" src="" />
                                     <p><label for="ufile" style="cursor:pointer">chon file anh</label></p>
-                                    <input name="ImageFile" id="ufile" type="file" style="display:none" onchange="loadFile(event)" />
+                                    <input type="hidden" id="avatarName" name="avatarName" value=""/>
+                                    <input name="file" id="ufile" type="file" style="display:none" onchange="loadFile(event)" />
                                 </div>
 								<div>
-									<button onclick="addNewCate();" type="submit"
+									<button onclick="addNewCate(event);" type="submit"
 										class="btn btn-lg btn-info btn-block">
 										<span id="payment-button-amount">Submit</span> <span
-											id="payment-button-sending" style="display: none;">Sendingâ¦</span>
+											id="payment-button-sending" style="display: none;">Sending</span>
 									</button>
 								</div>
+								</form>
 							</div>
 						</div>
 					</div>
