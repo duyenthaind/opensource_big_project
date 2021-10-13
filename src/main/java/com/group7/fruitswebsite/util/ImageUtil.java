@@ -8,41 +8,62 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.group7.fruitswebsite.config.ApplicationConfig;
+import lombok.extern.log4j.Log4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+@Log4j
 public class ImageUtil {
+    private ImageUtil() {
 
-	private static String UPLOAD_DIR = System.getProperty("user.dir") + "\\uploads\\category";
+    }
 
-	public static String saveUploadedFiles(MultipartFile[] files) throws IOException {
+    public static String saveUploadedFiles(MultipartFile[] files) {
+        try{
+            return uploadFilesAndGetPath(files, ApplicationConfig.ROOT_UPLOAD_DIR);
+        } catch (Exception ex){
+            log.error("Error save uploaded file, ", ex);
+        }
+        return StringUtils.EMPTY;
+    }
 
-		String targetUploadDir = UPLOAD_DIR + File.separator + createPathFromCurrentDate();
-		File uploadDir = new File(targetUploadDir);
-		// Make sure directory exists!
-		uploadDir.mkdirs();
+    public static String saveUploadedFiles(MultipartFile[] files, String path) {
+        try {
+            return uploadFilesAndGetPath(files, path);
+        } catch (Exception ex) {
+            log.error("Error when upload file, ", ex);
+        }
+        return StringUtils.EMPTY;
+    }
 
-		StringBuilder sb = new StringBuilder();
+    private static String uploadFilesAndGetPath(MultipartFile[] files, String path) throws IOException {
+        StringBuilder result = new StringBuilder();
+        String targetUploadDir = path + File.separator + createPathFromCurrentDate();
+        File uploadDir = new File(targetUploadDir);
+        // Make sure directory exists!
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
 
-		for (MultipartFile file : files) {
+        for (MultipartFile file : files) {
+            if (file.isEmpty()) {
+                continue;
+            }
+            String uploadFilePath = targetUploadDir + File.separator + file.getOriginalFilename();
 
-			if (file.isEmpty()) {
-				continue;
-			}
-			String uploadFilePath = targetUploadDir + File.separator  + file.getOriginalFilename();
+            byte[] bytes = file.getBytes();
+            Path currentPath = Paths.get(uploadFilePath);
+            Files.write(currentPath, bytes);
 
-			byte[] bytes = file.getBytes();
-			Path path = Paths.get(uploadFilePath);
-			Files.write(path, bytes);
+            result.append(uploadFilePath);
+        }
+        return result.toString();
+    }
 
-			sb.append(uploadFilePath);
-		}
-		return sb.toString();
-	}
-
-	private static String createPathFromCurrentDate() {
-		Date date = new Date();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd/HH/mm");
-		String currentDate = simpleDateFormat.format(date);
-		return currentDate;
-	}
+    private static String createPathFromCurrentDate() {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd/HH/mm");
+        return simpleDateFormat.format(date);
+    }
 }
