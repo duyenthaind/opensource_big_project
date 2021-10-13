@@ -25,5 +25,9 @@ public class DhProductModel extends BaseModel {
     private String imagePath;
     @JsonProperty(value = "image_name")
     private String imageName;
+    @JsonProperty(value = "product_available")
+    private long available = 0;
+    @JsonProperty(value = "product_weight")
+    private float weight = 0.0f;
 
 }

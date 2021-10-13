@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import com.group7.fruitswebsite.util.ApiResponseUtil;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,13 +53,6 @@ public class CategoryServiceImpl implements CategoryService {
 		return category;
 	}
 
-	public void setResponseResult(List<DhCategory> categories, ApiResponseResult result, Page<DhCategory> pageCate) {
-		result.setData(categories);
-		result.setPage(pageCate.getNumber() + 1);
-		result.setPerPage(pageCate.getNumberOfElements());
-		result.setTotal(categoryRepository.findAll().size());
-	}
-
 	public ResponseEntity<ApiResponse> save(CategoryDTO categoryDTO) {
 		DhCategory category = setNewCategory(categoryDTO);
 		ApiResponse apiResponse;
@@ -77,71 +71,66 @@ public class CategoryServiceImpl implements CategoryService {
 			return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(apiResponse);
 		}
 	}
-	
-//	public ResponseEntity<ApiResponse> update(DhCategory category) {
-//		setUpdateCategory(category);
-//		ApiResponse apiResponse;
-//		try {
-//			categoryRepository.save(category);
-//			ApiResponse.ApiResponseResult result = new ApiResponse.ApiResponseResult();
-//			result.setData(new ArrayList<>(Collections.singletonList(category)));
-//			apiResponse = new ApiResponse.Builder().withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
-//					.withDateTime(DateUtil.currentDate())
-//					.withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage()).withResult(result).build();
-//			return ResponseEntity.ok(apiResponse);
-//		} catch (Exception e) {
-//			apiResponse = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(), DateUtil.currentDate(),
-//					Constants.APIResponseStatus.FAILURE.getMessage(), null);
-//			return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(apiResponse);
-//		}
-//	}
 
-	public ResponseEntity<ApiResponse> getAllWithPaging(int page, int size) {
-		ApiResponseResult result = null;
-		try {
-			List<DhCategory> categories = new ArrayList<DhCategory>();
-			Pageable paging = PageRequest.of(page, size);
+    public void setResponseResult(List<DhCategory> categories, ApiResponseResult result, Page<DhCategory> pageCate) {
+        result.setData(categories);
+        result.setPage(pageCate.getNumber() + 1);
+        result.setPerPage(pageCate.getNumberOfElements());
+        result.setTotal(categoryRepository.findAll().size());
+    }
 
-			Page<DhCategory> pageCate;
+    public ResponseEntity<ApiResponse> getAllWithPaging(int page, int size) {
+        ApiResponseResult result = null;
+        try {
+            List<DhCategory> categories = new ArrayList<DhCategory>();
+            Pageable paging = PageRequest.of(page, size);
 
-			pageCate = categoryRepository.findAll(paging);
+            Page<DhCategory> pageCate;
 
-			categories = pageCate.getContent();
+            pageCate = categoryRepository.findAll(paging);
 
-			result = new ApiResponseResult();
-			if (categoryRepository.findAll().size() % size == 0) {
-				result.setTotalPages(categoryRepository.findAll().size() / size);
-			} else {
-				result.setTotalPages((categoryRepository.findAll().size() / size) + 1);
-			}
-			setResponseResult(categories, result, pageCate);
-			return ResponseEntity.ok(new ApiResponse(Constants.APIResponseStatus.SUCCESS_200.getStatus(),
-					DateUtil.currentDate(), Constants.APIResponseStatus.SUCCESS_200.getMessage(), result));
-		} catch (Exception e) {
-			// TODO: handle exception
-			return ResponseEntity.badRequest().body(new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(),
-					DateUtil.currentDate(), Constants.APIResponseStatus.FAILURE.getMessage(), result));
-		}
-	}
+            categories = pageCate.getContent();
 
-	public ResponseEntity<ApiResponse> getOne(Integer id) {
-		DhCategory category = null;
-		ApiResponse apiResponse;
-		try {
-			category = categoryRepository.findById(id).get();
-			ApiResponse.ApiResponseResult result = new ApiResponse.ApiResponseResult();
-			result.setData(new ArrayList<>(Collections.singletonList(category)));
-			apiResponse = new ApiResponse.Builder().withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
-					.withDateTime(DateUtil.currentDate())
-					.withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage()).withResult(result).build();
-			return ResponseEntity.ok(apiResponse);
-		} catch (Exception e) {
-			apiResponse = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(), DateUtil.currentDate(),
-					Constants.APIResponseStatus.FAILURE.getMessage(), null);
-			return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(apiResponse);
-		}
-	}
+            result = new ApiResponseResult();
+            if (categoryRepository.findAll().size() % size == 0) {
+                result.setTotalPages(categoryRepository.findAll().size() / size);
+            } else {
+                result.setTotalPages((categoryRepository.findAll().size() / size) + 1);
+            }
+            setResponseResult(categories, result, pageCate);
+            return ResponseEntity.ok(new ApiResponse(Constants.APIResponseStatus.SUCCESS_200.getStatus(),
+                    DateUtil.currentDate(), Constants.APIResponseStatus.SUCCESS_200.getMessage(), result));
+        } catch (Exception e) {
+            // TODO: handle exception
+            return ResponseEntity.badRequest().body(new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(),
+                    DateUtil.currentDate(), Constants.APIResponseStatus.FAILURE.getMessage(), result));
+        }
+    }
 
+    public ResponseEntity<ApiResponse> getOne(Integer id) {
+        DhCategory category = null;
+        ApiResponse apiResponse;
+        try {
+            Optional<DhCategory> optional = categoryRepository.findById(id);
+            if (optional.isPresent()) {
+                category = optional.get();
+            } else {
+                return ApiResponseUtil.getStatusNotFoundCategory();
+            }
+            ApiResponse.ApiResponseResult result = new ApiResponse.ApiResponseResult();
+            result.setData(new ArrayList<>(Collections.singletonList(category)));
+            apiResponse = new ApiResponse.Builder().withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
+                    .withDateTime(DateUtil.currentDate())
+                    .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage())
+                    .withResult(result).build();
+            return ResponseEntity.ok(apiResponse);
+        } catch (Exception e) {
+            apiResponse = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(), DateUtil.currentDate(),
+                    Constants.APIResponseStatus.FAILURE.getMessage(), null);
+            return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(apiResponse);
+        }
+    }
+    
 	@Override
 	public Optional<DhCategory> getById(int id) {
 		try {

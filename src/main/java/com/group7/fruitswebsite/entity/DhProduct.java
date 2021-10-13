@@ -35,9 +35,13 @@ public class DhProduct extends BaseEntity implements java.io.Serializable {
 	private Long priceSale;
 
 	@Column(name = "available", nullable = false)
+	@JsonProperty(value = "available")
+	@JsonAlias(value = "product_available")
 	private Long available;
 
 	@Column(name = "weight", nullable = false)
+	@JsonProperty(value = "weight")
+	@JsonAlias(value = "product_weight")
 	private Float weight;
 
 	@Column(name = "seo", length = 1000, nullable = false)
