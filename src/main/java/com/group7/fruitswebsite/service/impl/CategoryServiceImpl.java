@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
+import com.group7.fruitswebsite.dto.CategoryDTO;
 import com.group7.fruitswebsite.dto.ApiResponse.ApiResponseResult;
 import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.repository.CategoryRepository;
@@ -33,14 +34,20 @@ public class CategoryServiceImpl implements CategoryService {
 		this.categoryRepository = categoryRepository;
 	}
 
-	private DhCategory setNewCategory(DhCategory category) {
-		category.setSeo(StringUtil.seo(category.getName()) + "-" + System.currentTimeMillis());
+	private DhCategory setNewCategory(CategoryDTO categoryDTO) {
+		DhCategory category = new DhCategory();
+		category.setName(categoryDTO.getName());
+		category.setDescription(categoryDTO.getDescription());
+		category.setSeo(StringUtil.seo(categoryDTO.getName()) + "-" + System.currentTimeMillis());
+		category.setAvatar(categoryDTO.getAvatarName());
 		category.setCreatedDate(System.currentTimeMillis());
+		log.info("category : " + category.toString());
 		return category;
 	}
 
-	private DhCategory setUpdateCategory(DhCategory category) {
-		category.setSeo(StringUtil.seo(category.getName()) + "-" + System.currentTimeMillis());
+	private DhCategory setUpdateCategory(CategoryDTO categoryDTO) {
+		DhCategory category = new DhCategory();
+		category.setSeo(StringUtil.seo(categoryDTO.getName()) + "-" + System.currentTimeMillis());
 		category.setUpdatedDate(System.currentTimeMillis());
 		return category;
 	}
@@ -52,11 +59,12 @@ public class CategoryServiceImpl implements CategoryService {
 		result.setTotal(categoryRepository.findAll().size());
 	}
 
-	public ResponseEntity<ApiResponse> saveOrUpdate(DhCategory category) {
-		setNewCategory(category);
+	public ResponseEntity<ApiResponse> save(CategoryDTO categoryDTO) {
+		DhCategory category = setNewCategory(categoryDTO);
 		ApiResponse apiResponse;
 		try {
 			categoryRepository.save(category);
+			log.info("category : " + category.toString());
 			ApiResponse.ApiResponseResult result = new ApiResponse.ApiResponseResult();
 			result.setData(new ArrayList<>(Collections.singletonList(category)));
 			apiResponse = new ApiResponse.Builder().withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
@@ -69,6 +77,24 @@ public class CategoryServiceImpl implements CategoryService {
 			return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(apiResponse);
 		}
 	}
+	
+//	public ResponseEntity<ApiResponse> update(DhCategory category) {
+//		setUpdateCategory(category);
+//		ApiResponse apiResponse;
+//		try {
+//			categoryRepository.save(category);
+//			ApiResponse.ApiResponseResult result = new ApiResponse.ApiResponseResult();
+//			result.setData(new ArrayList<>(Collections.singletonList(category)));
+//			apiResponse = new ApiResponse.Builder().withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
+//					.withDateTime(DateUtil.currentDate())
+//					.withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage()).withResult(result).build();
+//			return ResponseEntity.ok(apiResponse);
+//		} catch (Exception e) {
+//			apiResponse = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(), DateUtil.currentDate(),
+//					Constants.APIResponseStatus.FAILURE.getMessage(), null);
+//			return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(apiResponse);
+//		}
+//	}
 
 	public ResponseEntity<ApiResponse> getAllWithPaging(int page, int size) {
 		ApiResponseResult result = null;

@@ -1,20 +1,28 @@
-function addNewCate(){
-	var data = {};
-	data["name"] = $("#cateName").val();
-	data["description"] = $('#summernote').summernote('code');
-	data["avatar"] = $('#ufile').val().replace(/C:\\fakepath\\/i, '')
+
+
+function addNewCate(event){
+	 event.preventDefault();
+	var form = $('#fileUploadForm')[0];
+
+    var data = new FormData(form);
+    
+    $("#submitButtonCate").prop("disabled", true);
 	if(validateCate()){
 		$.ajax({
 			url : "/admin/addcate",
-			type:"post",
-			contentType: "application/json",
-			data : JSON.stringify(data),
+			type:"POST",
+			enctype: 'multipart/form-data',
+			data : data,
 			
-			dataType : "json",
+			processData: false,
+		    contentType: false,
+		    cache: false,
+		    timeout: 1000000,
 			success : function(jsonResult){
 				if(jsonResult.status == 200){			
 					alert("Success");
-					getFirst();
+					console.log(jsonResult);
+					 getFirst();
 				}else{
 					alert(jsonResult.result);
 					alert("error");
@@ -31,44 +39,8 @@ function addNewCate(){
 var loadFile = function (event) {
     var image = document.getElementById("output");
     image.src = URL.createObjectURL(event.target.files[0]);
-    console.log(image);
-    console.log(image.src);
+    document.getElementById("avatarName").value = $('#ufile').val().replace(/C:\\fakepath\\/i, '');
 }
-
-//function updateCate(){
-//	var data = {};
-//	data["name"] = $("#cateName").val();
-//	data["description"] = $('#summernote').summernote('code');
-//	if(validateCate()){
-//		$.ajax({
-//			url : "/admin/addcate",
-//			type:"post",
-//			contentType: "application/json",
-//			data : JSON.stringify(data),
-//			
-//			dataType : "json",
-//			success : function(jsonResult){
-//				if(jsonResult.status == 200){			
-//					alert("Success");
-//					getFirst();
-//				}else{
-//					alert(jsonResult.result);
-//					alert("error");
-//				}
-//			},
-//			error : function(jqXhr, textStatus, errorMessage) { // error
-//				// callback
-//
-//			} 
-//		});
-//	}
-//}
-
-//function getAllCategory(){
-//	$.ajax({
-//		url:
-//	})
-//}
 
 function validateCate(){
 	var name = document.getElementById("cateName");
@@ -163,8 +135,15 @@ function detailsCategory(id,currentPage){
 			var object = data.result.data;
 			if(object){
 				$(".modal-body").empty();
-				var html = '<div class="row">'+		
-					'<div class="col-lg-12">'+
+				var html = '<div class="row">'+	
+					'<div class="col-lg-4">'+
+						'<div class="card" style="width: 200px">'+
+						'<img class="card-img-top img-thumbnail"'+
+							'src="${base}/uploads/category' + "//////////" + '" alt="Card image"'+
+							'style="width: 100%" />'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-lg-8">'+
 						'<h5>Detail Information</h5>'+
 						'<div class="table-responsive">'+
 							'<table class="table table-sm table-borderless mb-0">'+
@@ -174,14 +153,14 @@ function detailsCategory(id,currentPage){
 												' name</strong></th>'+
 										'<td><input id="cateName" name="name" type="text"'+
 											'class="form-control" aria-required="true" data-val="true"'+
-											'data-val-required="Please enter the name" aria-invalid="false">' + object[0].name + '</input></td>'+
+											'data-val-required="Please enter the name" aria-invalid="false" value="' + object[0].name + '"></input></td>'+
 									'</tr>'+
 									'<tr>'+
 										'<th class="pl-0 w-25" scope="row"><strong>Description'+
 										'</strong></th>'+
 										'<td>'+
 									'<div class="form-group has-success">'+
-									'<textarea id="summernote" name="description" type="text">' + object[0].description + '</textarea>'+
+									'<textarea id="summernote1" name="description" type="text">' + object[0].description + '</textarea>'+
 									'<span class="help-block field-validation-valid"'+
 										'data-valmsg-for="cc-name" data-valmsg-replace="true"></span>'+
 									'</div>'+
@@ -248,10 +227,8 @@ function loadData(currentPage){
 					+	"<td>" + dataArr[i].updated_by + "</td>"
 					+	"<td>"
 					+		"<div class='table-data-feature'>"
-					+			"<button class='item' data-toggle='tooltip'"
-					+				"data-placement='top' title='Detail'>"
-					+				"<i class='zmdi zmdi-more'></i></button>"
-					+			"<button class='item' data-toggle='tooltip'"
+					+			"<div class='table-data-feature'>"
+					+			"<button class='item linkDetail' onclick='detailsCategory(" + dataArr[i].id + "," + data.result.page + ");' data-toggle='tooltip'"
 					+				"data-placement='top' title='Edit'>"
 					+				"<i class='zmdi zmdi-edit'></i>"
 					+			"</button>"

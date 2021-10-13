@@ -12,6 +12,7 @@ import java.util.Objects;
 @Entity
 @Setter
 @Getter
+@ToString
 @Table(name = "dh_category")
 public class DhCategory extends BaseEntity implements java.io.Serializable {
 
