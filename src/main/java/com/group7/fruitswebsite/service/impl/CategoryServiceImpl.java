@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
-import com.group7.fruitswebsite.dto.CategoryDTO;
+import com.group7.fruitswebsite.model.DhCategoryModel;
 import com.group7.fruitswebsite.dto.ApiResponse.ApiResponseResult;
 import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.repository.CategoryRepository;
@@ -38,29 +38,29 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    private DhCategory setNewCategory(CategoryDTO categoryDTO) {
+    private DhCategory setNewCategory(DhCategoryModel dhCategoryModel) {
         DhCategory category = new DhCategory();
-        category.setName(categoryDTO.getName());
-        category.setDescription(categoryDTO.getDescription());
-        category.setSeo(StringUtil.seo(categoryDTO.getName()) + "-" + System.currentTimeMillis());
+        category.setName(dhCategoryModel.getName());
+        category.setDescription(dhCategoryModel.getDescription());
+        category.setSeo(StringUtil.seo(dhCategoryModel.getName()) + "-" + System.currentTimeMillis());
 //		category.setAvatar(categoryDTO.getAvatarName());
         category.setCreatedDate(System.currentTimeMillis());
-        if (!StringUtil.isNullOrEmpty(categoryDTO.getPathUploadedAvatar())) {
-            String avatar = categoryDTO.getPathUploadedAvatar();
+        if (!StringUtil.isNullOrEmpty(dhCategoryModel.getPathUploadedAvatar())) {
+            String avatar = dhCategoryModel.getPathUploadedAvatar();
             category.setAvatar(avatar.replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY));
         }
         return category;
     }
 
-    private DhCategory setUpdateCategory(CategoryDTO categoryDTO) {
+    private DhCategory setUpdateCategory(DhCategoryModel dhCategoryModel) {
         DhCategory category = new DhCategory();
-        category.setSeo(StringUtil.seo(categoryDTO.getName()) + "-" + System.currentTimeMillis());
+        category.setSeo(StringUtil.seo(dhCategoryModel.getName()) + "-" + System.currentTimeMillis());
         category.setUpdatedDate(System.currentTimeMillis());
         return category;
     }
 
-    public ResponseEntity<ApiResponse> save(CategoryDTO categoryDTO) {
-        DhCategory category = setNewCategory(categoryDTO);
+    public ResponseEntity<ApiResponse> save(DhCategoryModel dhCategoryModel) {
+        DhCategory category = setNewCategory(dhCategoryModel);
         ApiResponse apiResponse;
         try {
             categoryRepository.save(category);
