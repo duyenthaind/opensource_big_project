@@ -1,5 +1,6 @@
 package com.group7.fruitswebsite.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -15,4 +16,6 @@ public class CategoryDTO {
 	private String description;
 	private MultipartFile[] file;
 	private String avatarName;
+	@JsonIgnore
+	private String pathUploadedAvatar;
 }

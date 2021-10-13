@@ -54,5 +54,6 @@ public class Constants {
 
     public static class ApiMessage{
         public static final String NOT_FOUND_CATEGORY = "category is not found";
+        public static final String AVATAR_DEFINED_BUT_NOT_FOUND = "image may not be uploaded correctly";
     }
 }

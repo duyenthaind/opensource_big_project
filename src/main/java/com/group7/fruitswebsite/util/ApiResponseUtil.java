@@ -2,6 +2,7 @@ package com.group7.fruitswebsite.util;
 
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -28,5 +29,15 @@ public class ApiResponseUtil {
                 .withResult(null)
                 .build();
         return ResponseEntity.status(Constants.APIResponseStatus.FORBIDDEN.getStatus()).body(response);
+    }
+
+    public static ResponseEntity<ApiResponse> getCustomStatusWithMessage(String msg, HttpStatus status){
+        ApiResponse response = new ApiResponse.Builder()
+                .withStatus(status.value())
+                .withMessage(msg)
+                .withDateTime(DateUtil.currentDate())
+                .withResult(null)
+                .build();
+        return ResponseEntity.status(status.value()).body(response);
     }
 }
