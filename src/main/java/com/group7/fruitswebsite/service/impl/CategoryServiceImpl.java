@@ -49,7 +49,6 @@ public class CategoryServiceImpl implements CategoryService {
             String avatar = categoryDTO.getPathUploadedAvatar();
             category.setAvatar(avatar.replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY));
         }
-        log.info("category : " + category);
         return category;
     }
 
@@ -109,7 +108,6 @@ public class CategoryServiceImpl implements CategoryService {
             return ResponseEntity.ok(new ApiResponse(Constants.APIResponseStatus.SUCCESS_200.getStatus(),
                     DateUtil.currentDate(), Constants.APIResponseStatus.SUCCESS_200.getMessage(), result));
         } catch (Exception e) {
-            // TODO: handle exception
             return ResponseEntity.badRequest().body(new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(),
                     DateUtil.currentDate(), Constants.APIResponseStatus.FAILURE.getMessage(), result));
         }
