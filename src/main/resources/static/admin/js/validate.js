@@ -75,7 +75,7 @@ function formatDate(current_datetime){
 
 function getFirst(){
 	$.ajax({
-		url:"http://localhost:8080/admin/api/v1/getAll",
+		url:"/admin/api/v1/getAll",
 		type:"GET",
 		data: {
 			page:0
@@ -126,7 +126,7 @@ $(function(){
 
 function detailsCategory(id,currentPage){
 	$.ajax({
-		url : "http://localhost:8080/admin/api/v1/getOne",
+		url : "/admin/api/v1/getOne",
 		type : "GET",
 		data : {
 			id : id
@@ -206,7 +206,7 @@ function detailsCategory(id,currentPage){
 
 function loadData(currentPage){
 		$.ajax({
-		url:"http://localhost:8080/admin/api/v1/getAll",
+		url:"/admin/api/v1/getAll",
 		type:"GET",
 		data: {
 			page:currentPage
@@ -250,4 +250,33 @@ function loadData(currentPage){
 			console.log(errorThrown);
 		}
 	});
-	}
+}
+
+function addNewContactMessage(event){
+	event.preventDefault();
+	var form = $('#sendContactMessageForm')[0];
+
+	var data = new FormData(form);
+
+	$.ajax({
+		url:"/api/v1/send_contact",
+		type: "POST",
+		enctype: 'multipart/form-data',
+		cache: false,
+		dataType: 'json',
+		processData: false,
+		contentType: false,
+		data:{
+			data
+		},
+		success : function(data){
+			console.log("Send data ok". data)
+		},
+		error: function (jqXHR,testStatus,errorThrown){
+			console.log(jqXHR);
+			console.log(testStatus);
+			console.log(errorThrown);
+			alert("Cannot send message now");
+		}
+	});
+}

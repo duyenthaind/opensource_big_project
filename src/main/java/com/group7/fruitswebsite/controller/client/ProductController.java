@@ -26,7 +26,7 @@ import java.util.Optional;
  */
 @Log4j
 @RestController
-@RequestMapping(value = "/v1")
+@RequestMapping(value = "/api/v1")
 public class ProductController {
     private ProductService productService;
     private CategoryService categoryService;

@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="../variable.jsp"%>
 
 <!-- header -->
-<jsp:include page="/WEB-INF/view/client/common/header.jsp"></jsp:include>
+<jsp:include page="common/header.jsp"/>
 <!-- end header -->
 
 <!-- container -->
@@ -13,7 +14,7 @@
                     <div class="breadcrumb__text">
                         <h2>Contact Us</h2>
                         <div class="breadcrumb__option">
-                            <a href="./index.html">Home</a>
+                            <a href="${server}/home">Home</a>
                             <span>Contact Us</span>
                         </div>
                     </div>
@@ -52,7 +53,7 @@
                     <div class="contact__widget">
                         <span class="icon_mail_alt"></span>
                         <h4>Email</h4>
-                        <p>hello@colorlib.com</p>
+                        <p>noreply@fruitshop.com</p>
                     </div>
                 </div>
             </div>
@@ -88,25 +89,27 @@
                     </div>
                 </div>
             </div>
-            <form action="#">
+            <form id="sendContactMessageForm" method="post">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
-                        <input type="text" placeholder="Your name">
+                        <input type="text" name="name" placeholder="Your name"/>
                     </div>
                     <div class="col-lg-6 col-md-6">
-                        <input type="text" placeholder="Your Email">
+                        <input type="text" name="email" placeholder="Your Email"/>
                     </div>
                     <div class="col-lg-12 text-center">
-                        <textarea placeholder="Your message"></textarea>
-                        <button type="submit" class="site-btn">SEND MESSAGE</button>
+                        <textarea placeholder="Your message" name="message"></textarea>
+                        <button type="submit" class="site-btn" onclick="addNewContactMessage(event)">SEND MESSAGE</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
+<script src="${server}/admin/js/validate.js"></script>
+
 <!-- end container -->
 
 <!-- footer -->
-<jsp:include page="/WEB-INF/view/client/common/footer.jsp"></jsp:include>
+<jsp:include page="common/footer.jsp"/>
 <!-- end footer -->
