@@ -19,9 +19,13 @@ public class ContactController {
     private ContactService contactService;
 
 
-    @PostMapping(value = "/send_contact", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    @PostMapping(value = "/send_contact", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {
+            MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.TEXT_PLAIN_VALUE,
+            MediaType.MULTIPART_FORM_DATA_VALUE
+    })
     public ResponseEntity<ApiResponse> saveOne(@ModelAttribute DhContactModel contactModel){
-        log.info(contactModel);
         return contactService.saveOne(contactModel);
     }
 
