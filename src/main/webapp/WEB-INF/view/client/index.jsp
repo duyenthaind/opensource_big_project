@@ -2,6 +2,7 @@
 
 <!-- header -->
 <jsp:include page="common/header.jsp"/>
+<%@ include file="../variable.jsp"%>
 <!-- end header -->
 
 
@@ -15,7 +16,7 @@
 					<c:if test="${category.status = true}">
 						<div class="col-lg-3">
 							<div class="categories__item set-bg"
-								 data-setbg="uploads/2733025.png">
+								 data-setbg="${uploadsDir}/${category.avatar}">
 								<h5>
 									<a href="#">${category.name}</a>
 								</h5>
