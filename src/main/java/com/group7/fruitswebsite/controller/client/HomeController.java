@@ -31,6 +31,8 @@ public class HomeController {
 
 	@GetMapping("/shop-grid")
 	public String shop(Model model) {
+		model.addAttribute("categories",categoryRepository.findAll());
+
 		return "client/shop-grid";
 	}
 
