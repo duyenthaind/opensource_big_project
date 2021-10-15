@@ -55,5 +55,33 @@ public class Constants {
     public static class ApiMessage{
         public static final String NOT_FOUND_CATEGORY = "category is not found";
         public static final String AVATAR_DEFINED_BUT_NOT_FOUND = "image may not be uploaded correctly";
+        public static final String DATA_IS_NOT_VALID = "data is not valid";
+    }
+
+    public enum CustomMessage{
+        FILE_EXCEED_LIMIT(1,"image exceeded limit")
+        ;
+
+        private final int errorCode;
+        private final String message;
+
+        CustomMessage(int errorCode, String message) {
+            this.errorCode = errorCode;
+            this.message = message;
+        }
+
+        public int getErrorCode() {
+            return errorCode;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
+
+    public static class CustomMessageField{
+        public static final String ERROR_CODE = "errorCode";
+        public static final String MESSAGE = "message";
+        public static final String CUSTOM_DATA = "customData";
     }
 }

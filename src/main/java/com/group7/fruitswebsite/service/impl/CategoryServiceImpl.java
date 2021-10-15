@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private DhCategory setUpdateCategory(DhCategoryModel dhCategoryModel) {
-        DhCategory category = new DhCategory();
+        DhCategory category = categoryRepository.findById(dhCategoryModel.getId()).get();
         category.setName(dhCategoryModel.getName());
         category.setSeo(StringUtil.seo(dhCategoryModel.getName()) + "-" + System.currentTimeMillis());
         category.setDescription(dhCategoryModel.getDescription());
@@ -86,11 +86,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
     
     public ResponseEntity<ApiResponse> update(DhCategoryModel dhCategoryModel) {
-        DhCategory category = setNewCategory(dhCategoryModel);
+        DhCategory category = setUpdateCategory(dhCategoryModel);
         ApiResponse apiResponse;
         try {
             categoryRepository.save(category);
-            log.info("category after saved: " + category.getId());
+            log.info("category after update: " + category.getId());
             ApiResponse.ApiResponseResult result = new ApiResponse.ApiResponseResult();
             result.setData(new ArrayList<>(Collections.singletonList(category)));
             apiResponse = new ApiResponse.Builder().withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
@@ -98,7 +98,7 @@ public class CategoryServiceImpl implements CategoryService {
                     .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage()).withResult(result).build();
             return ResponseEntity.ok(apiResponse);
         } catch (Exception e) {
-            log.error("Save category error ", e);
+            log.error("update category error ", e);
             apiResponse = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(), DateUtil.currentDate(),
                     Constants.APIResponseStatus.FAILURE.getMessage(), null);
             return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(apiResponse);

@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface CategoryService {
 	ResponseEntity<ApiResponse> save(DhCategoryModel dhCategoryModel);
 	
-//	ResponseEntity<ApiResponse> update(DhCategory category);
+	ResponseEntity<ApiResponse> update(DhCategoryModel dhCategoryModel);
 
 	Optional<DhCategory> getById(int id);
 	

@@ -1,15 +1,14 @@
 
 
 function addNewCate(event){
-	 event.preventDefault();
+	event.preventDefault();
 	var form = $('#fileUploadForm')[0];
 
     var data = new FormData(form);
     
-    $("#submitButtonCate").prop("disabled", true);
 	if(validateCate()){
 		$.ajax({
-			url : "/admin/addcate",
+			url : "/api/v1/addcate",
 			type:"POST",
 			enctype: 'multipart/form-data',
 			data : data,
@@ -36,27 +35,6 @@ function addNewCate(event){
 	}
 }
 
-var loadFile = function (event) {
-    var image = document.getElementById("output");
-    image.src = URL.createObjectURL(event.target.files[0]);
-    document.getElementById("avatarName").value = $('#ufile').val().replace(/C:\\fakepath\\/i, '');
-}
-
-var loadFileUpdateCate = function (event) {
-    var image = document.getElementById("outputCateImage");
-    image.src = URL.createObjectURL(event.target.files[0]);
-    document.getElementById("avatarNameUpdating").value = $('#ufile').val().replace(/C:\\fakepath\\/i, '');
-}
-
-function validateCate(){
-	var name = document.getElementById("cateName");
-	var description = $('#summernote').summernote('code');
-	if(name.value == ""){
-		alert("Invalid name");
-		return false;
-	}
-	return true;
-}
 
 function loadPage(total_pages,currentPage){
 			$(".pagination").empty();
@@ -81,7 +59,7 @@ function formatDate(current_datetime){
 
 function getFirst(){
 	$.ajax({
-		url:"http://localhost:8080/admin/api/v1/getAll",
+		url:"/api/v1/getAll",
 		type:"GET",
 		data: {
 			page:0
@@ -98,9 +76,12 @@ function getFirst(){
 						+	"<td>"
 						+		"<div class='table-data-feature'>"
 						+			"<button class='item linkDetail' onclick='detailsCategory(" + dataArr[i].id + "," + data.result.page + ");' data-toggle='tooltip'"
-						+				"data-placement='top' title='Edit'>"
-						+				"<i class='zmdi zmdi-edit'></i>"
+						+				"data-placement='top' title='Detail'>"
+						+				"<i class='zmdi zmdi-receipt'></i>"
 						+			"</button>"
+						+			"<button class='item' data-toggle='modal' onclick='showUpdateCategory(" + dataArr[i].id + "," + data.result.page + ");' data-toggle='tooltip' data-target='#updateCate' data-placement='top' title='Edit'>"
+                        +				"<i class='zmdi zmdi-edit'></i>"
+                        +			"</button>"
 						+			"<button class='item' data-toggle='tooltip'"
 						+				"data-placement='top' title='Delete'>"
 						+				"<i class='zmdi zmdi-delete'></i>"
@@ -129,10 +110,11 @@ $(function(){
 
 });
 
-
-function detailsCategory(id,currentPage){
+function showUpdateCategory(id,currentPage){
+	
+	
 	$.ajax({
-		url : "http://localhost:8080/admin/api/v1/getOne",
+		url : "/api/v1/getOne",
 		type : "GET",
 		data : {
 			id : id
@@ -140,16 +122,74 @@ function detailsCategory(id,currentPage){
 		success : function(data){
 			var object = data.result.data;
 			if(object){
-				$(".modal-body").empty();
+				document.getElementById("updateCateName").value = object[0].name;
+				document.getElementById("cateId").value = object[0].id;
+				$("#description").summernote("code", object[0].description);
+				document.getElementById("currentPageCate").value = currentPage;
+				document.getElementById("outputUpdateCate").src = "/uploads/" + object[0].avatar;
+				document.getElementById("avatarNameUpdating").value =  object[0].avatar.substring(object[0].avatar.lastIndexOf('/')+4);
+			}
+			
+		},
+		error : function(jqXHR,testStatus,errorThrown){
+			console.log(jqXHR);
+			console.log(testStatus);
+			console.log(errorThrown);
+		}
+	});
+	
+}
+
+function updateCategory(event){
+	 event.preventDefault();
+	 var form = $('#updateCateForm')[0];
+
+	 var data = new FormData(form);
+	
+	$.ajax({
+		url : "/api/v1/updateCate",
+		type:"POST",
+		enctype: 'multipart/form-data',
+		data : data,
+		
+		processData: false,
+	    contentType: false,
+	    cache: false,
+	    timeout: 1000000,
+	    success : function(jsonResult){
+			if(jsonResult.status == 200){			
+				alert("Success");
+				console.log(jsonResult);
+			}else{
+				alert(jsonResult.result);
+				alert("error");
+			}
+		},
+		error : function(jqXhr, textStatus, errorMessage) { // error
+			// callback
+
+		} 
+	});
+}
+
+function detailsCategory(id){
+	
+	$.ajax({
+		url : "/api/v1/getOne",
+		type : "GET",
+		data : {
+			id : id
+		},
+		success : function(data){
+			var object = data.result.data;
+			if(object){
+				$("#modal-body").empty();
 				var html = '<div class="row">'+	
 					'<div class="col-lg-4">'+
 						'<div class="card" style="width: 200px">'+
 						'<img id="outputCateImage" class="card-img-top img-thumbnail"'+
 							'src="/uploads/' + object[0].avatar + '" alt="Card image"'+
 							'style="width: 100%" />'+
-							'<p><label for="ufile" style="cursor: pointer">chon file anh</label></p>'+
-							'<input type="hidden" id="avatarNameUpdating" name="avatarName" value="" /> <input name="file" id="ufile" type="file"'+
-								'style="display: none" onchange="loadFileUpdateCate(event)" />'+
 						'</div>'+
 					'</div>'+
 					'<div class="col-lg-8">'+
@@ -160,16 +200,14 @@ function detailsCategory(id,currentPage){
 									'<tr>'+
 										'<th class="pl-0 w-25" scope="row"><strong>Category'+
 												' name</strong></th>'+
-										'<td><input id="cateName" name="name" type="text"'+
-											'class="form-control" aria-required="true" data-val="true"'+
-											'data-val-required="Please enter the name" aria-invalid="false" value="' + object[0].name + '"></input></td>'+
+										'<td>' + object[0].name + '</td>'+
 									'</tr>'+
 									'<tr>'+
 										'<th class="pl-0 w-25" scope="row"><strong>Description'+
 										'</strong></th>'+
 										'<td>'+
 									'<div class="form-group has-success">'+
-									'<textarea id="summernote1" name="description" type="text">' + object[0].description + '</textarea>'+
+									'<textarea class="summernote" rows="4" cols="50" name="description" type="text">' + object[0].description + '</textarea>'+
 									'<span class="help-block field-validation-valid"'+
 										'data-valmsg-for="cc-name" data-valmsg-replace="true"></span>'+
 									'</div>'+
@@ -198,11 +236,10 @@ function detailsCategory(id,currentPage){
 							'</table>'+
 						'</div>'+
 						'<br>'+
-						'<button style="float:right;" type="button" class="btn btn-primary">Update</button>'+
 						'<button style="float:right;" type="button"  class="btn btn-default" data-dismiss="modal">Close</button>'+
 					'</div>'+
 				'</div>';
-				$(".modal-body").html(html);
+				$("#modal-body").html(html);
 				$("#detailsCategory").modal("show");
 			}
 		},
@@ -218,7 +255,7 @@ function detailsCategory(id,currentPage){
 
 function loadData(currentPage){
 		$.ajax({
-		url:"http://localhost:8080/admin/api/v1/getAll",
+		url:"/api/v1/getAll",
 		type:"GET",
 		data: {
 			page:currentPage
@@ -242,8 +279,11 @@ function loadData(currentPage){
 					+			"<div class='table-data-feature'>"
 					+			"<button class='item linkDetail' onclick='detailsCategory(" + dataArr[i].id + "," + data.result.page + ");' data-toggle='tooltip'"
 					+				"data-placement='top' title='Edit'>"
-					+				"<i class='zmdi zmdi-edit'></i>"
+					+				"<i class='zmdi zmdi-receipt'></i>"
 					+			"</button>"
+					+			"<button class='item' data-toggle='modal' onclick='showUpdateCategory(" + dataArr[i].id + "," + data.result.page + ");' data-toggle='tooltip' data-target='#updateCate' data-placement='top' title='Edit'>"
+                    +				"<i class='zmdi zmdi-edit'></i>"
+                    +			"</button>"
 					+			"<button class='item' data-toggle='tooltip'"
 					+				"data-placement='top' title='Delete'>"
 					+				"<i class='zmdi zmdi-delete'></i>"
@@ -262,4 +302,82 @@ function loadData(currentPage){
 			console.log(errorThrown);
 		}
 	});
+}
+
+function addNewContactMessage(event){
+	event.preventDefault();
+	var form = $('#sendContactMessageForm')[0];
+
+	var data = new FormData(form);
+
+	var rawData = {};
+
+	data.forEach(function(value, key){
+		rawData[key]= value;
+	});
+
+	if(!rawData["name"] && !rawData["email"]){
+		alert("Please fill in at least your name or your email")
+		return
 	}
+
+	if(!validateEmail(rawData["email"])){
+		alert("Please give us a valid email address")
+		return
+	}
+
+	if(!rawData["message"]){
+		alert("Please give us a message")
+		return
+	}
+
+	$.ajax({
+		url:"/api/v1/send_contact",
+		type: "POST",
+		enctype: 'multipart/form-data',
+		// dataType: 'json',
+		cache: false,
+		processData: false,
+		contentType: false,
+		data: data,
+		timeout: 5000,
+		success : function(data){
+			if(data.status === 200){
+				console.log("Send data ok");
+				alert("Thanks for your submission, we appreciated that")
+			}
+		},
+		error: function (jqXHR,textStatus,errorThrown){
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(errorThrown);
+			alert("Cannot send message now");
+		}
+	});
+}
+
+var loadFile = function (event) {
+    var image = document.getElementById("output");
+    image.src = URL.createObjectURL(event.target.files[0]);
+    document.getElementById("avatarName").value = $('#ufile').val().replace(/C:\\fakepath\\/i, '');
+}
+
+var loadFileUpdateCate = function (event) {
+    var imageUpdate = document.getElementById("outputUpdateCate");
+    imageUpdate.src = URL.createObjectURL(event.target.files[0]);
+    document.getElementById("avatarNameUpdating").value = $('#ufile1').val().replace(/C:\\fakepath\\/i, '');
+}
+
+function validateEmail(email) {
+	const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(String(email).toLowerCase());
+}
+
+function validateCate(){
+	var name = document.getElementById("cateName");
+	if(name.value == ""){
+		alert("Invalid name");
+		return false;
+	}
+	return true;
+}

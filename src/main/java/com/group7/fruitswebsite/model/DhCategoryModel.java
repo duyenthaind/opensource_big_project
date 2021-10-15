@@ -16,6 +16,7 @@ public class DhCategoryModel extends BaseModel {
 	private String description;
 	private MultipartFile[] file;
 	private String avatarName;
+	private String currentPageCate;
 	@JsonIgnore
 	private String pathUploadedAvatar;
 }
