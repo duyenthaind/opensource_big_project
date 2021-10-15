@@ -17,5 +17,7 @@ public interface CategoryService {
 	
 	ResponseEntity<ApiResponse> getOne(Integer id);
 	
+	ResponseEntity<ApiResponse> deleteById(Integer id);
+	
 	ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
 }

@@ -173,5 +173,34 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return Optional.empty();
     }
+    
+    public ResponseEntity<ApiResponse> deleteById(Integer id) {
+    	DhCategory category = null;
+        ApiResponse apiResponse;
+    	try {
+    		 Optional<DhCategory> optional = categoryRepository.findById(id);
+             if (optional.isPresent()) {
+                 category = optional.get();
+                 log.info("Deleting :" + category);
+             } else {
+                 return ApiResponseUtil.getStatusNotFoundCategory();
+             }
+             
+             categoryRepository.deleteById(id);
+             
+             ApiResponse.ApiResponseResult result = new ApiResponse.ApiResponseResult();
+             result.setData(new ArrayList<>(Collections.singletonList(category)));
+             apiResponse = new ApiResponse.Builder().withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
+                     .withDateTime(DateUtil.currentDate())
+                     .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage())
+                     .withResult(result).build();
+             return ResponseEntity.ok(apiResponse);
+		} catch (Exception e) {
+			// TODO: handle exception
+			apiResponse = new ApiResponse(Constants.APIResponseStatus.INTERNAL_SERVER.getStatus(), DateUtil.currentDate(),
+                    Constants.APIResponseStatus.INTERNAL_SERVER.getMessage(), null);
+            return ResponseEntity.status(Constants.APIResponseStatus.INTERNAL_SERVER.getStatus()).body(apiResponse);
+		}
+    }
 
 }

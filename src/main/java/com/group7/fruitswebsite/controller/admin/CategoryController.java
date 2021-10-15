@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -27,7 +29,7 @@ import com.group7.fruitswebsite.util.StringUtil;
 import lombok.extern.log4j.Log4j;
 
 @Controller(value = "categoryAdminController")
-@RequestMapping(value = "/api/v1")
+@RequestMapping(value = "/api/category/v1")
 @Log4j
 public class CategoryController {
 	
@@ -51,11 +53,10 @@ public class CategoryController {
 		return categoryService.save(dhCategoryModel);
 	}
 	
-	@PostMapping("/updateCate")
+	@PutMapping("/updateCate")
 	public ResponseEntity<ApiResponse> updateCate(@ModelAttribute DhCategoryModel dhCategoryModel) throws IOException {		
 		ImageService imageService = new ImageCategoryServiceImpl();
 		String avatarPath = imageService.saveUploadFiles(dhCategoryModel.getFile());
-		log.info(avatarPath);
 		if(!StringUtil.isNullOrEmpty(avatarPath)){
 			dhCategoryModel.setPathUploadedAvatar(avatarPath);
 			log.info(String.format("uploaded image to system: %s", avatarPath));
@@ -72,6 +73,11 @@ public class CategoryController {
 	@GetMapping("/getOne")
 	public ResponseEntity<ApiResponse> getOneCategory(@RequestParam Integer id){
 		return categoryService.getOne(id);
+	}
+	
+	@DeleteMapping("/delete")
+	public ResponseEntity<ApiResponse> deleteCategory(@RequestParam Integer id){
+		return categoryService.deleteById(id);
 	}
 
 	@Autowired

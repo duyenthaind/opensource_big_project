@@ -33,8 +33,9 @@ public class Constants {
         PAYMENT_REQUIRE("payment_required", 402),
         FORBIDDEN("forbidden", 403),
         NOT_FOUND("not_found", 404),
-        REQUEST_TIMEOUT("request_timeout", 408);
-
+        REQUEST_TIMEOUT("request_timeout", 408),
+    	INTERNAL_SERVER("internal_server",500);
+    	
         private final String message;
         private final int status;
 

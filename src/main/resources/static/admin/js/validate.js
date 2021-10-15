@@ -8,7 +8,7 @@ function addNewCate(event){
     
 	if(validateCate()){
 		$.ajax({
-			url : "/api/v1/addcate",
+			url : "/api/category/v1/addcate",
 			type:"POST",
 			enctype: 'multipart/form-data',
 			data : data,
@@ -59,7 +59,7 @@ function formatDate(current_datetime){
 
 function getFirst(){
 	$.ajax({
-		url:"/api/v1/getAll",
+		url:"/api/category/v1/getAll",
 		type:"GET",
 		data: {
 			page:0
@@ -82,7 +82,7 @@ function getFirst(){
 						+			"<button class='item' data-toggle='modal' onclick='showUpdateCategory(" + dataArr[i].id + "," + data.result.page + ");' data-toggle='tooltip' data-target='#updateCate' data-placement='top' title='Edit'>"
                         +				"<i class='zmdi zmdi-edit'></i>"
                         +			"</button>"
-						+			"<button class='item' data-toggle='tooltip'"
+						+			"<button class='item' data-toggle='tooltip' onclick='showModalDeleteCategory(" + dataArr[i].id + ")'"
 						+				"data-placement='top' title='Delete'>"
 						+				"<i class='zmdi zmdi-delete'></i>"
 						+			"</button>"
@@ -110,11 +110,42 @@ $(function(){
 
 });
 
+function showModalDeleteCategory(id){
+	$("#confirmDeleteCategory").modal("show");
+	document.getElementById("idForDelete").value = id;
+}
+
+$(document).ready(function(){
+	$("#buttonDeleteCategory").on("click",function(){
+		var id = document.getElementById("idForDelete").value;
+		$.ajax({
+			url : "/api/category/v1/delete",
+			type : "DELETE",
+			data : {
+				id : id
+			},
+			success : function(data){
+				var object = data.result.data;
+				if(object){
+					alert("success");
+					getFirst();
+				}	
+			},
+			error : function(jqXHR,testStatus,errorThrown){
+				alert("cannot delete this category, because it has a dependency with the product !")
+				console.log(jqXHR);
+				console.log(testStatus);
+				console.log(errorThrown);
+			}
+		});
+	});	
+});
+
 function showUpdateCategory(id,currentPage){
 	
 	
 	$.ajax({
-		url : "/api/v1/getOne",
+		url : "/api/category/v1/getOne",
 		type : "GET",
 		data : {
 			id : id
@@ -147,8 +178,8 @@ function updateCategory(event){
 	 var data = new FormData(form);
 	
 	$.ajax({
-		url : "/api/v1/updateCate",
-		type:"POST",
+		url : "/api/category/v1/updateCate",
+		type:"PUT",
 		enctype: 'multipart/form-data',
 		data : data,
 		
@@ -160,6 +191,7 @@ function updateCategory(event){
 			if(jsonResult.status == 200){			
 				alert("Success");
 				console.log(jsonResult);
+				getFirst();
 			}else{
 				alert(jsonResult.result);
 				alert("error");
@@ -175,7 +207,7 @@ function updateCategory(event){
 function detailsCategory(id){
 	
 	$.ajax({
-		url : "/api/v1/getOne",
+		url : "/api/category/v1/getOne",
 		type : "GET",
 		data : {
 			id : id
@@ -220,7 +252,7 @@ function detailsCategory(id){
 									'</tr>'+
 									'<tr>'+
 										'<th class="pl-0 w-25" scope="row"><strong>Update date</strong></th>'+
-										'<td>' + object[0].update_date + '</td>'+
+										'<td>' + formatDate(new Date(object[0].updated_date)) + '</td>'+
 									'</tr>'+
 									'<tr>'+
 										'<th class="pl-0 w-25" scope="row"><strong>created '+
@@ -255,7 +287,7 @@ function detailsCategory(id){
 
 function loadData(currentPage){
 		$.ajax({
-		url:"/api/v1/getAll",
+		url:"/api/category/v1/getAll",
 		type:"GET",
 		data: {
 			page:currentPage
