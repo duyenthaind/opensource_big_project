@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Log4j
 @RestController
-@RequestMapping(value = "/api/v1")
+@RequestMapping(value = "/api/client_contact/v1")
 public class ContactController {
     private ContactService contactService;
 

@@ -27,6 +27,7 @@ import java.util.Optional;
 @Log4j
 @RestController
 @RequestMapping(value = "/api/v1")
+// todo refactor to admin controller
 public class ProductController {
     private ProductService productService;
     private CategoryService categoryService;
