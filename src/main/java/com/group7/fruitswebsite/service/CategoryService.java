@@ -11,11 +11,13 @@ import java.util.Optional;
 public interface CategoryService {
 	ResponseEntity<ApiResponse> save(DhCategoryModel dhCategoryModel);
 	
-//	ResponseEntity<ApiResponse> update(DhCategory category);
+	ResponseEntity<ApiResponse> update(DhCategoryModel dhCategoryModel);
 
 	Optional<DhCategory> getById(int id);
 	
 	ResponseEntity<ApiResponse> getOne(Integer id);
+	
+	ResponseEntity<ApiResponse> deleteById(Integer id);
 	
 	ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
 }

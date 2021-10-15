@@ -34,13 +34,8 @@
 <script src="${base}/admin/js/validate.js"></script>
 <script src="${base}/admin/js/main.js" type="module"></script>
 <script>
-	$('#summernote').summernote({
-		placeholder : 'Description',
-		tabsize : 2,
-		height : 100
-	});
-	$('#summernote1').summernote({
-		placeholder : 'Description',
+	$('.summernote').summernote({
+		placeholder : '',
 		tabsize : 2,
 		height : 100
 	});

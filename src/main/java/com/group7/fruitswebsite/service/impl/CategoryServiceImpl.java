@@ -53,9 +53,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private DhCategory setUpdateCategory(DhCategoryModel dhCategoryModel) {
-        DhCategory category = new DhCategory();
+        DhCategory category = categoryRepository.findById(dhCategoryModel.getId()).get();
+        category.setName(dhCategoryModel.getName());
         category.setSeo(StringUtil.seo(dhCategoryModel.getName()) + "-" + System.currentTimeMillis());
+        category.setDescription(dhCategoryModel.getDescription());
         category.setUpdatedDate(System.currentTimeMillis());
+        if (!StringUtil.isNullOrEmpty(dhCategoryModel.getPathUploadedAvatar())) {
+            String avatar = dhCategoryModel.getPathUploadedAvatar();
+            category.setAvatar(avatar.replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY));
+        }
         return category;
     }
 
@@ -73,6 +79,26 @@ public class CategoryServiceImpl implements CategoryService {
             return ResponseEntity.ok(apiResponse);
         } catch (Exception e) {
             log.error("Save category error ", e);
+            apiResponse = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(), DateUtil.currentDate(),
+                    Constants.APIResponseStatus.FAILURE.getMessage(), null);
+            return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(apiResponse);
+        }
+    }
+    
+    public ResponseEntity<ApiResponse> update(DhCategoryModel dhCategoryModel) {
+        DhCategory category = setUpdateCategory(dhCategoryModel);
+        ApiResponse apiResponse;
+        try {
+            categoryRepository.save(category);
+            log.info("category after update: " + category.getId());
+            ApiResponse.ApiResponseResult result = new ApiResponse.ApiResponseResult();
+            result.setData(new ArrayList<>(Collections.singletonList(category)));
+            apiResponse = new ApiResponse.Builder().withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
+                    .withDateTime(DateUtil.currentDate())
+                    .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage()).withResult(result).build();
+            return ResponseEntity.ok(apiResponse);
+        } catch (Exception e) {
+            log.error("update category error ", e);
             apiResponse = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(), DateUtil.currentDate(),
                     Constants.APIResponseStatus.FAILURE.getMessage(), null);
             return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(apiResponse);
@@ -146,6 +172,35 @@ public class CategoryServiceImpl implements CategoryService {
             log.error("Error get category by id, ", ex);
         }
         return Optional.empty();
+    }
+    
+    public ResponseEntity<ApiResponse> deleteById(Integer id) {
+    	DhCategory category = null;
+        ApiResponse apiResponse;
+    	try {
+    		 Optional<DhCategory> optional = categoryRepository.findById(id);
+             if (optional.isPresent()) {
+                 category = optional.get();
+                 log.info("Deleting :" + category);
+             } else {
+                 return ApiResponseUtil.getStatusNotFoundCategory();
+             }
+             
+             categoryRepository.deleteById(id);
+             
+             ApiResponse.ApiResponseResult result = new ApiResponse.ApiResponseResult();
+             result.setData(new ArrayList<>(Collections.singletonList(category)));
+             apiResponse = new ApiResponse.Builder().withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
+                     .withDateTime(DateUtil.currentDate())
+                     .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage())
+                     .withResult(result).build();
+             return ResponseEntity.ok(apiResponse);
+		} catch (Exception e) {
+			// TODO: handle exception
+			apiResponse = new ApiResponse(Constants.APIResponseStatus.INTERNAL_SERVER.getStatus(), DateUtil.currentDate(),
+                    Constants.APIResponseStatus.INTERNAL_SERVER.getMessage(), null);
+            return ResponseEntity.status(Constants.APIResponseStatus.INTERNAL_SERVER.getStatus()).body(apiResponse);
+		}
     }
 
 }

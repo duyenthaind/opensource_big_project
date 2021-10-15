@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,4 +20,5 @@ public class DhBlog extends BaseEntity implements Serializable{
 	
 	@Column(name = "details",nullable = false)
 	private String details;
+	
 }
