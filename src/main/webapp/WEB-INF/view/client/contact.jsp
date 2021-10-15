@@ -106,7 +106,7 @@
         </div>
     </div>
 
-<script src="${server}/admin/js/validate.js"></script>
+<script src="${server}/client/js/contact.js"></script>
 
 <!-- end container -->
 
