@@ -66,6 +66,18 @@ public class AdminController {
 		dhCategoryModel.setPathUploadedAvatar(avatarPath);
 		return categoryService.save(dhCategoryModel);
 	}
+	
+	@PostMapping("/update")
+	public ResponseEntity<ApiResponse> updateCate(@ModelAttribute DhCategoryModel dhCategoryModel) throws IOException {
+		ImageService imageService = new ImageCategoryServiceImpl();
+		String avatarPath = imageService.saveUploadFiles(dhCategoryModel.getFile());
+		if(StringUtil.isNullOrEmpty(avatarPath)){
+			return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.AVATAR_DEFINED_BUT_NOT_FOUND, HttpStatus.EXPECTATION_FAILED);
+		}
+		log.info(String.format("uploaded image to system: %s", avatarPath));
+		dhCategoryModel.setPathUploadedAvatar(avatarPath);
+		return categoryService.save(dhCategoryModel);
+	}
 
 	@GetMapping("/api/v1/getAll")
 	public ResponseEntity<ApiResponse> getAllCategoryWithPaging(@RequestParam(required = false) String name,

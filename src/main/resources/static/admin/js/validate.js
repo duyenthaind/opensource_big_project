@@ -42,6 +42,12 @@ var loadFile = function (event) {
     document.getElementById("avatarName").value = $('#ufile').val().replace(/C:\\fakepath\\/i, '');
 }
 
+var loadFileUpdateCate = function (event) {
+    var image = document.getElementById("outputCateImage");
+    image.src = URL.createObjectURL(event.target.files[0]);
+    document.getElementById("avatarNameUpdating").value = $('#ufile').val().replace(/C:\\fakepath\\/i, '');
+}
+
 function validateCate(){
 	var name = document.getElementById("cateName");
 	var description = $('#summernote').summernote('code');
@@ -138,9 +144,12 @@ function detailsCategory(id,currentPage){
 				var html = '<div class="row">'+	
 					'<div class="col-lg-4">'+
 						'<div class="card" style="width: 200px">'+
-						'<img class="card-img-top img-thumbnail"'+
-							'src="${base}/uploads/category' + "//////////" + '" alt="Card image"'+
+						'<img id="outputCateImage" class="card-img-top img-thumbnail"'+
+							'src="/uploads/' + object[0].avatar + '" alt="Card image"'+
 							'style="width: 100%" />'+
+							'<p><label for="ufile" style="cursor: pointer">chon file anh</label></p>'+
+							'<input type="hidden" id="avatarNameUpdating" name="avatarName" value="" /> <input name="file" id="ufile" type="file"'+
+								'style="display: none" onchange="loadFileUpdateCate(event)" />'+
 						'</div>'+
 					'</div>'+
 					'<div class="col-lg-8">'+
@@ -188,6 +197,9 @@ function detailsCategory(id,currentPage){
 								'</tbody>'+
 							'</table>'+
 						'</div>'+
+						'<br>'+
+						'<button style="float:right;" type="button" class="btn btn-primary">Update</button>'+
+						'<button style="float:right;" type="button"  class="btn btn-default" data-dismiss="modal">Close</button>'+
 					'</div>'+
 				'</div>';
 				$(".modal-body").html(html);
