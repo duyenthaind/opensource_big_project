@@ -69,6 +69,8 @@ public class ContactServiceImpl implements ContactService {
         try {
             String json = objectMapper.writeValueAsString(dhContactModel);
             DhContact dhContact = objectMapper.readValue(json, DhContact.class);
+            dhContact.setCreatedDate(System.currentTimeMillis());
+            dhContact.setUpdatedDate(0L);
             return saveOne(dhContact);
         } catch (Exception ex) {
             log.error("Error save contact message, ", ex);
