@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController(value = "categoryClientController")
-@RequestMapping(value = "/api/client_category/v1")
+@RequestMapping(value = "/api/client-category/v1")
 public class CategoryController {
 	
 }
