@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 /**
  * @author duyenthai
@@ -43,6 +45,7 @@ public class ContactServiceImpl implements ContactService {
             log.info(String.format("Save 1 new contact message, id=%d", dhContact.getId()));
             return ResponseEntity.ok(response);
         } catch (Exception ex) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             log.error("Error insert new contact message, ", ex);
             ApiResponse response = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(), DateUtil.currentDate(),
                     Constants.APIResponseStatus.FAILURE.getMessage(), null);
@@ -51,6 +54,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
+    @Transactional
     public DhContact saveContact(DhContact dhContact) {
         try {
             contactRepository.save(dhContact);
