@@ -338,13 +338,15 @@ function loadData(currentPage){
 var loadFile = function (event) {
     var image = document.getElementById("output");
     image.src = URL.createObjectURL(event.target.files[0]);
-    document.getElementById("avatarName").value = $('#ufile').val().replace(/C:\\fakepath\\/i, '');
+	var uploadedFilePath = $('#ufile').val();
+    document.getElementById("avatarName").value = uploadedFilePath.substring(uploadedFilePath.lastIndexOf("/"));
 }
 
 var loadFileUpdateCate = function (event) {
     var imageUpdate = document.getElementById("outputUpdateCate");
     imageUpdate.src = URL.createObjectURL(event.target.files[0]);
-    document.getElementById("avatarNameUpdating").value = $('#ufile1').val().replace(/C:\\fakepath\\/i, '');
+	var uploadedFilePath = $('#ufile1').val();
+    document.getElementById("avatarNameUpdating").value = uploadedFilePath.substring(uploadedFilePath.lastIndexOf("/"));
 }
 
 function validateCate(){

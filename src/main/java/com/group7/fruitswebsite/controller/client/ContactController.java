@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
  */
 @Log4j
 @RestController
-@RequestMapping(value = "/api/client_contact/v1")
+@RequestMapping(value = "/v1/api/client-contact")
 public class ContactController {
     private ContactService contactService;
 
 
-    @PostMapping(value = "/send_contact", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {
+    @PostMapping(value = "/contacts", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {
             MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.TEXT_PLAIN_VALUE,

@@ -26,7 +26,7 @@ function addNewContactMessage(event){
     }
 
     $.ajax({
-        url:"/api/client_contact/v1/send_contact",
+        url:"/v1/api/client-contact/contacts",
         type: "POST",
         enctype: 'multipart/form-data',
         // dataType: 'json',
