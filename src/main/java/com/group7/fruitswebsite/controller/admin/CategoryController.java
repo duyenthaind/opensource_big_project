@@ -41,7 +41,7 @@ public class CategoryController {
 		return categoryRepository.findAll();
 	}
 
-	@PostMapping("/addcate")
+	@PostMapping("/add")
 	public ResponseEntity<ApiResponse> addNewCate(@ModelAttribute DhCategoryModel dhCategoryModel) throws IOException {
 		ImageService imageService = new ImageCategoryServiceImpl();
 		String avatarPath = imageService.saveUploadFiles(dhCategoryModel.getFile());
@@ -53,7 +53,7 @@ public class CategoryController {
 		return categoryService.save(dhCategoryModel);
 	}
 	
-	@PutMapping("/updateCate")
+	@PutMapping("/update")
 	public ResponseEntity<ApiResponse> updateCate(@ModelAttribute DhCategoryModel dhCategoryModel) throws IOException {		
 		ImageService imageService = new ImageCategoryServiceImpl();
 		String avatarPath = imageService.saveUploadFiles(dhCategoryModel.getFile());

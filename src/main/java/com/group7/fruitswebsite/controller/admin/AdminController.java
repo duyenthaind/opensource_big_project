@@ -42,6 +42,7 @@ public class AdminController {
 
 	@GetMapping("/table")
 	public String table(final Model model) {
+		model.addAttribute("category",categoryRepository.findAll());
 		return "admin/table";
 	}
 

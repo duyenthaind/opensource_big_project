@@ -7,6 +7,7 @@ import com.group7.fruitswebsite.util.ImageUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * @author duyenthai
@@ -18,5 +19,10 @@ public class ImageProductServiceImpl implements ImageService<DhProductImage> {
     @Override
     public String saveUploadFiles(MultipartFile[] files) {
         return ImageUtil.saveUploadedFiles(files, PRODUCT_UPLOAD_PATH);
+    }
+    
+    @Override
+    public List<String> saveUploadedMultilFiles(MultipartFile[] files) {
+        return ImageUtil.saveUploadedMultilFiles(files, PRODUCT_UPLOAD_PATH);
     }
 }

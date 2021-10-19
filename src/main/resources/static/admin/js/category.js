@@ -5,10 +5,9 @@ function addNewCate(event){
 	var form = $('#fileUploadForm')[0];
 
     var data = new FormData(form);
-    
 	if(validateCate()){
 		$.ajax({
-			url : "/api/category/v1/addcate",
+			url : "/api/category/v1/add",
 			type:"POST",
 			enctype: 'multipart/form-data',
 			data : data,
@@ -178,7 +177,7 @@ function updateCategory(event){
 	 var data = new FormData(form);
 	
 	$.ajax({
-		url : "/api/category/v1/updateCate",
+		url : "/api/category/v1/update",
 		type:"PUT",
 		enctype: 'multipart/form-data',
 		data : data,

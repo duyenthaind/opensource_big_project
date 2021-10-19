@@ -31,7 +31,8 @@
 </script>
 
 <!-- Main JS-->
-<script src="${base}/admin/js/validate.js"></script>
+<script src="${base}/admin/js/category.js"></script>
+<script src="${base}/admin/js/product.js"></script>
 <script src="${base}/admin/js/main.js" type="module"></script>
 <script>
 	$('.summernote').summernote({
