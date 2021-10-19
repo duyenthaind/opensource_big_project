@@ -283,7 +283,7 @@
 								type="button" data-toggle="modal" data-target="#newCate">
 								<i class="zmdi zmdi-plus"></i>add item
 							</button>
-							
+
 						</div>
 					</div>
 					<div class="table-responsive table-responsive-data2">
@@ -303,7 +303,7 @@
 
 							</tbody>
 						</table>
-						
+
 					</div>
 					<ul class="pagination">
 
@@ -311,8 +311,7 @@
 					<!-- END DATA TABLE -->
 				</div>
 			</div>
-			<br>
-			<br>
+			<br> <br>
 			<div class="row">
 				<div class="col-md-12">
 					<!-- DATA TABLE -->
@@ -340,10 +339,11 @@
 							</button>
 						</div>
 						<div class="table-data__tool-right">
-							<button class="au-btn au-btn-icon au-btn--green au-btn--small">
+							<button class="au-btn au-btn-icon au-btn--green au-btn--small"
+								type="button" data-toggle="modal" data-target="#newProduct">
 								<i class="zmdi zmdi-plus"></i>add item
 							</button>
-							
+
 						</div>
 					</div>
 					<div class="table-responsive table-responsive-data2">
