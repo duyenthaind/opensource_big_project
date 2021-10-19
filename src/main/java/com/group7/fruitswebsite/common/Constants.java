@@ -85,4 +85,8 @@ public class Constants {
         public static final String MESSAGE = "message";
         public static final String CUSTOM_DATA = "customData";
     }
+
+    public static class SystemUser{
+        public static final int SYSTEM_USER_ID = -999;
+    }
 }

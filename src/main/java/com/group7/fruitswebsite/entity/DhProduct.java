@@ -16,32 +16,32 @@ public class DhProduct extends BaseEntity implements java.io.Serializable {
 
 	@Column(name = "name", length = 1000, nullable = false)
 	@JsonProperty(value = "name")
-	@JsonAlias(value = "product_name")
+	@JsonAlias(value = "productName")
 	private String name;
 
 	@Column(name = "detail_description", length = 1000, nullable = false)
-	@JsonProperty(value = "detail_description")
+	@JsonProperty(value = "detailDescription")
 	private String detailDescription;
 
 	@Column(name = "short_description", length = 1000, nullable = false)
-	@JsonProperty(value = "short_description")
+	@JsonProperty(value = "shortDescription")
 	private String shortDescription;
 
 	@Column(name = "price", length = 1000, nullable = false)
 	private Long price;
 
 	@Column(name = "price_sale", length = 1000, nullable = false)
-	@JsonProperty(value = "price_sale")
+	@JsonProperty(value = "priceSale")
 	private Long priceSale;
 
 	@Column(name = "available", nullable = false)
 	@JsonProperty(value = "available")
-	@JsonAlias(value = "product_available")
+	@JsonAlias(value = "productAvailable")
 	private Long available;
 
 	@Column(name = "weight", nullable = false)
 	@JsonProperty(value = "weight")
-	@JsonAlias(value = "product_weight")
+	@JsonAlias(value = "productWeight")
 	private Float weight;
 
 	@Column(name = "seo", length = 1000, nullable = false)
@@ -52,7 +52,6 @@ public class DhProduct extends BaseEntity implements java.io.Serializable {
 	private DhCategory category;
 
 	@OneToMany(mappedBy = "dhProduct", cascade = CascadeType.ALL)
-	@JsonProperty(value = "order_products")
 	private List<DhOrderProduct> orderProducts = new ArrayList<>();
 
 	public void addOrderProduct(DhOrderProduct orderProduct) {

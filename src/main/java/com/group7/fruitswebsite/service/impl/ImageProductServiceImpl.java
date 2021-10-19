@@ -22,7 +22,7 @@ public class ImageProductServiceImpl implements ImageService<DhProductImage> {
     }
     
     @Override
-    public List<String> saveUploadedMultilFiles(MultipartFile[] files) {
-        return ImageUtil.saveUploadedMultilFiles(files, PRODUCT_UPLOAD_PATH);
+    public List<String> saveUploadedMultiFiles(MultipartFile[] files) {
+        return ImageUtil.saveUploadedMultiFiles(files, PRODUCT_UPLOAD_PATH);
     }
 }

@@ -34,23 +34,23 @@ function addNewProduct(event){
 	event.preventDefault();
 	var productCategory = document.getElementById("productCategory").value;
 	var productName = document.getElementById("productName").value;
-	var productAvailble = document.getElementById("productAvailble").value;	
+	var productAvailable = document.getElementById("productAvailable").value;
 	var productPrice = document.getElementById("productPrice").value;
 	var productPriceSale = document.getElementById("productPriceSale").value;
 	var productWeight = document.getElementById("productWeight").value;
 	var productShortDescription = document.getElementById("productShortDescription").value;
-	var productDetaiDescription = document.getElementById("productDetaiDescription").value;
+	var productDetailDescription = document.getElementById("productDetailDescription").value;
 	
     var data = new FormData();
     
     data.set("productName",productName);
-    data.set("available",productAvailble);
-    data.set("price",productAvailble);
+    data.set("available",productAvailable);
+    data.set("price",productPrice);
     data.set("priceSale",productPriceSale);
     data.set("categoryId",productCategory);
     data.set("weight",productWeight);
     data.set("shortDescription",productShortDescription);
-    data.set("detailDescription",productDetaiDescription);
+    data.set("detailDescription",productDetailDescription);
     
 	var files = document.getElementById('ufileProduct').files;
 	
@@ -60,7 +60,7 @@ function addNewProduct(event){
 	
 	if(validateProduct()){
 		$.ajax({
-			url : "/api/product/v1/add",
+			url : "/api/product/v1/products",
 			type:"POST",
 			enctype: 'multipart/form-data',
 			data : data,
@@ -70,7 +70,7 @@ function addNewProduct(event){
 		    cache: false,
 		    timeout: 1000000,
 			success : function(jsonResult){
-				if(jsonResult.status == 200){			
+				if(jsonResult.status >= 200 && jsonResult.status < 300){
 					alert("Success");
 					console.log(jsonResult);
 				}else{
@@ -86,43 +86,43 @@ function addNewProduct(event){
 }
 
 function validateProduct(){
-	var numberPattern = /\d+/g;
-	var floatNumberPattern = /^\d{0,2}(?:\.\d{0,2}){0,1}$/;
+	let numberPattern = /\d+/g;
+	let floatNumberPattern = /^\d{0,2}(?:\.\d{0,2}){0,1}$/;
 	
-	var productCategory = document.getElementById("productCategory");
-	var productName = document.getElementById("productName");
-	var productAvailble = document.getElementById("productAvailble");	
-	var productPrice = document.getElementById("productPrice");
-	var productPriceSale = document.getElementById("productPriceSale");
-	var productWeight = document.getElementById("productWeight");
-	var productShortDescription = document.getElementById("productShortDescription");
-	var productDetaiDescription = document.getElementById("productDetaiDescription");
-	
-	if(productName.value == ""){
+	let productCategory = document.getElementById("productCategory");
+	let productName = document.getElementById("productName");
+	let productAvailable = document.getElementById("productAvailable");
+	let productPrice = document.getElementById("productPrice");
+	let productPriceSale = document.getElementById("productPriceSale");
+	let productWeight = document.getElementById("productWeight");
+	let productShortDescription = document.getElementById("productShortDescription");
+	let productDetailDescription = document.getElementById("productDetailDescription");
+
+	if(!productName.value){
 		alert("Invalid name");
 		return false;
 	}
-	if(productAvailble.value == "" || !productAvailble.value.match(numberPattern)){
+	if(!productAvailable.value || isNaN(parseInt(productAvailable.value))){
 		alert("Available is not number");
 		return false;
 	}
-	if(productPrice.value == "" || !productPrice.value.match(floatNumberPattern)){
+	if(!productPrice.value || !productPrice.value.match(numberPattern)){
 		alert("Price is not number");
 		return false;
 	}
-	if(productPriceSale.value == "" || !productPriceSale.value.match(floatNumberPattern)){
+	if(!productPriceSale.value  || !productPriceSale.value.match(numberPattern)){
 		alert("Price sale is not number");
 		return false;
 	}
-	if(productWeight.value == "" || !productWeight.value.match(floatNumberPattern)){
+	if(!productWeight.value  || isNaN(parseInt(productWeight.value))){
 		alert("Weight is wrong format");
 		return false;
 	}
-	if(productShortDescription.value == ""){
+	if(!productShortDescription.value ){
 		alert("Invalid short description");
 		return false;
 	}
-	if(productDetaiDescription.value == ""){
+	if(!productDetailDescription.value ){
 		alert("Invalid detail description");
 		return false;
 	}

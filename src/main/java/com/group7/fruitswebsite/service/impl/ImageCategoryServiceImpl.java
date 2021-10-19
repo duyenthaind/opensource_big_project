@@ -22,8 +22,7 @@ public class ImageCategoryServiceImpl implements ImageService<DhCategory> {
     }
 
 	@Override
-	public List<String> saveUploadedMultilFiles(MultipartFile[] files) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> saveUploadedMultiFiles(MultipartFile[] files) {
+		return ImageUtil.saveUploadedMultiFiles(files, CATEGORY_UPLOAD_PATH);
 	}
 }
