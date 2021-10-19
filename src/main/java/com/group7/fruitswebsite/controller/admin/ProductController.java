@@ -33,12 +33,11 @@ public class ProductController {
 	
     private ProductService productService;
 	
-	@PostMapping("/add")
-	public ResponseEntity<ApiResponse> addNewCate(@ModelAttribute DhProductModel dhProductModel){
+	@PostMapping("/products")
+	public ResponseEntity<ApiResponse> addNewProduct(@ModelAttribute DhProductModel dhProductModel){
 		log.info(dhProductModel.toString());
 		ImageService imageService = new ImageProductServiceImpl();
-		List<String> imagePath = imageService.saveUploadedMultilFiles(dhProductModel.getFiles());
-		imagePath.stream().forEach(System.out::println);
+		List<String> imagePath = imageService.saveUploadedMultiFiles(dhProductModel.getFiles());
 		dhProductModel.setPathUploadedAvatar(imagePath);
 		return productService.saveOne(dhProductModel);
 	}

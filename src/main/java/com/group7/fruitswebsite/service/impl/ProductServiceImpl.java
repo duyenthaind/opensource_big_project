@@ -1,8 +1,11 @@
 package com.group7.fruitswebsite.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.config.ApplicationConfig;
 import com.group7.fruitswebsite.dto.ApiResponse;
+import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.entity.DhProductImage;
 import com.group7.fruitswebsite.model.DhProductModel;
@@ -23,8 +26,8 @@ import com.group7.fruitswebsite.repository.ProductRepository;
 import com.group7.fruitswebsite.service.ProductService;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Log4j
 @Service
@@ -33,43 +36,36 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
     private ProductImageRepository productImageRepository;
-    
-	public DhProduct setNewProduct(DhProductModel dhProductModel) {
-    	DhProduct dhProduct = new DhProduct();
-    	DhProductImage dhProductImage = null;
-    	dhProduct.setName(dhProductModel.getProductName());
-    	dhProduct.setAvailable(dhProductModel.getAvailable());
-    	
-    	log.info(categoryRepository.findById(dhProductModel.getCategoryId()).get().toString());
-    	dhProduct.setCategory(categoryRepository.findById(dhProductModel.getCategoryId()).get());
-    	
-    	dhProduct.setCreatedDate(System.currentTimeMillis());
-    	dhProduct.setDetailDescription(dhProductModel.getDetailDescription());
-    	dhProduct.setShortDescription(dhProductModel.getShortDescription());
-    	dhProduct.setPrice(dhProductModel.getPrice());
-    	dhProduct.setPriceSale(dhProductModel.getPriceSale());
-    	dhProduct.setSeo(StringUtil.seo(dhProductModel.getProductName()) + "-" + System.currentTimeMillis());
-    //	dhProduct.setCreatedBy(createdBy);
-    	if (dhProductModel.getPathUploadedAvatar() != null) {
-    		List<String> imagePath = dhProductModel.getPathUploadedAvatar();
-            for(int i=0;i<dhProductModel.getFiles().length;i++) {
-            	dhProductImage = new DhProductImage();
-            	//dhProductImage.setCreatedBy(createdBy);
-            	dhProductImage.setCreatedDate(System.currentTimeMillis());
-            	dhProductImage.setName(dhProductModel.getFiles()[i].getName());
-            	dhProductImage.setPath(imagePath.get(i).replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY));
-            	dhProductImage.setDhProduct(dhProduct);
-            	productImageRepository.save(dhProductImage);
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    public DhProduct setNewProduct(DhProductModel dhProductModel) throws JsonProcessingException {
+        String modelJson = objectMapper.writeValueAsString(dhProductModel);
+        DhProduct dhProduct = objectMapper.readValue(modelJson, DhProduct.class);
+
+        Optional<DhCategory> optionalDhCategory = categoryRepository.findById(dhProductModel.getCategoryId());
+        optionalDhCategory.ifPresent(dhProduct::setCategory);
+
+        dhProduct.setCreatedDate(System.currentTimeMillis());
+        dhProduct.setSeo(StringUtil.seo(dhProductModel.getProductName()) + "-" + System.currentTimeMillis());
+        if (dhProductModel.getPathUploadedAvatar() != null && !dhProductModel.getPathUploadedAvatar().isEmpty()) {
+            List<String> imagePath = dhProductModel.getPathUploadedAvatar();
+            for (int i = 0; i < dhProductModel.getFiles().length; i++) {
+                DhProductImage dhProductImage = new DhProductImage();
+                dhProductImage.setCreatedBy(Constants.SystemUser.SYSTEM_USER_ID);
+                dhProductImage.setCreatedDate(System.currentTimeMillis());
+                dhProductImage.setName(dhProductModel.getFiles()[i].getName());
+                dhProductImage.setPath(imagePath.get(i).replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY));
+                dhProductImage.setDhProduct(dhProduct);
+                productImageRepository.save(dhProductImage);
             }
         }
-    	return dhProduct;
+        return dhProduct;
     }
 
 
     public ResponseEntity<ApiResponse> saveOne(DhProductModel dhProductModel) {
-    	DhProduct dhProduct = new DhProduct();
         try {
-            dhProduct = setNewProduct(dhProductModel);
+            DhProduct dhProduct = setNewProduct(dhProductModel);
             productRepository.save(dhProduct);
             ApiResponse response = new ApiResponse.Builder()
                     .withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
@@ -84,18 +80,21 @@ public class ProductServiceImpl implements ProductService {
             ApiResponse response = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(), DateUtil.currentDate(),
                     Constants.APIResponseStatus.FAILURE.getMessage(), null);
             return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(response);
-            
         }
     }
 
     @Autowired
-	public void setProductRepository(ProductRepository productRepository) {
-		this.productRepository = productRepository;
-	}
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @Autowired
-	public void setProductImageRepository(ProductImageRepository productImageRepository) {
-		this.productImageRepository = productImageRepository;
-	}
-    
+    public void setProductImageRepository(ProductImageRepository productImageRepository) {
+        this.productImageRepository = productImageRepository;
+    }
+
+    @Autowired
+    public void setCategoryRepository(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 }

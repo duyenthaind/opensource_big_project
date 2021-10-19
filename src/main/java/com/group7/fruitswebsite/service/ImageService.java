@@ -9,5 +9,5 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface ImageService<T> {
     String saveUploadFiles(MultipartFile[] files);
-    List<String> saveUploadedMultilFiles(MultipartFile[] files);
+    List<String> saveUploadedMultiFiles(MultipartFile[] files);
 }
