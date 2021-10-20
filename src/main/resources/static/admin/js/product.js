@@ -28,6 +28,8 @@ $(function() {
 				$(".gallery").empty();
 				imagesPreview(this, 'div.gallery');
 			});
+
+			prodGetFirst();
 		});
 
 function addNewProduct(event){
@@ -129,4 +131,113 @@ function validateProduct(){
 
 	return true;
 	
+}
+
+function prodGetFirst(){
+	$.ajax({
+			url: "/api/product/v1/products",
+			type: "GET",
+			data: {
+				page: 0
+			},
+
+			success: function (response){
+				prodLoadPage(response.result.total_pages, 0);
+				if(response.status >= 200 && response.status < 300){
+					$("#resultProducts").empty();
+					let products = response.result.data;
+					for(let index = -1; ++index < products.length;){
+						let html = "<tr class='tr-shadow'>"
+						+ "<td><label class='au-checkbox'> <input type='checkbox'> <span class='au-checkmark'></span>"
+						+ "</label></td>"
+						+ "<td>" + products[index].name + "</td>"
+						+ "<td><span class='block-email'>" + formatDate(new Date(products[index].created_date)) + "</span></td>"
+						+ "<td class='desc'>" + formatDate(new Date(products[index].updated_date)) + "</td>"
+						+ "<td>" + products[index].price + "</td>"
+						// + "<td><span class='status--process'>Processed</span></td>"
+						+ "<td>" + products[index].priceSale + "</td>"
+						+ "<td>"
+						+ "<div class='table-data-feature'>"
+						+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Detail'>"
+						+ "<i class='zmdi zmdi-more'></i>"
+						+ "</button>"
+						+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Edit'>"
+						+ "<i class='zmdi zmdi-edit'></i>"
+						+ "</button>"
+						+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Delete'>"
+						+ "<i class='zmdi zmdi-delete'></i>"
+						+ "</button>"
+						+ "</div>"
+						+ "</td>"
+						+ "</tr>"
+						$("#resultProducts").append(html);
+					}
+				}
+			},
+			error: function(jqXhr, textStatus, errorMessage){
+
+			}
+		}
+	)
+}
+
+function prodloadData(currentPage){
+	$.ajax({
+			url: "/api/product/v1/products",
+			type: "GET",
+			data: {
+				page: currentPage
+			},
+
+			success: function (response){
+				prodLoadPage(response.result.total_pages, currentPage);
+				if(response.status >= 200 && response.status < 300){
+					$("#resultProducts").empty();
+					let products = response.result.data;
+					for(let index = -1; ++index < products.length;){
+						let html = "<tr class='tr-shadow'>"
+							+ "<td><label class='au-checkbox'> <input type='checkbox'> <span class='au-checkmark'></span>"
+							+ "</label></td>"
+							+ "<td>" + products[index].name + "</td>"
+							+ "<td><span class='block-email'>" + formatDate(new Date(products[index].created_date)) + "</span></td>"
+							+ "<td class='desc'>" + formatDate(new Date(products[index].updated_date)) + "</td>"
+							+ "<td>" + products[index].price + "</td>"
+							// + "<td><span class='status--process'>Processed</span></td>"
+							+ "<td>" + products[index].priceSale + "</td>"
+							+ "<td>"
+							+ "<div class='table-data-feature'>"
+							+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Detail'>"
+							+ "<i class='zmdi zmdi-more'></i>"
+							+ "</button>"
+							+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Edit'>"
+							+ "<i class='zmdi zmdi-edit'></i>"
+							+ "</button>"
+							+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Delete'>"
+							+ "<i class='zmdi zmdi-delete'></i>"
+							+ "</button>"
+							+ "</div>"
+							+ "</td>"
+							+ "</tr>"
+						$("#resultProducts").append(html);
+					}
+				}
+			},
+			error: function(jqXhr, textStatus, errorMessage){
+
+			}
+		}
+	)
+}
+
+
+function prodLoadPage(total_pages,currentPage){
+	let paginationEntityProd = $("#paginationProd");
+	paginationEntityProd.empty();
+	for(var i = 0;i<total_pages;i++){
+		if(i==0){
+			paginationEntityProd.append('<li class="page-item active"><span class="page-link" onclick="prodloadData('+ (i) +');">'+ (i+1) +'</span></li>');
+		}else{
+			paginationEntityProd.append('<li class="page-item"><span class="page-link" onclick="prodloadData('+ (i) +');">'+ (i+1)+'</span></li>');
+		}
+	}
 }
