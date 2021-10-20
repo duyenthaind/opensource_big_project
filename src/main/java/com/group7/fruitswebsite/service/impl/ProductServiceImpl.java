@@ -5,17 +5,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.config.ApplicationConfig;
 import com.group7.fruitswebsite.dto.ApiResponse;
+import com.group7.fruitswebsite.dto.DhProductDto;
 import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.entity.DhProductImage;
 import com.group7.fruitswebsite.model.DhProductModel;
+import com.group7.fruitswebsite.util.ApiResponseUtil;
 import com.group7.fruitswebsite.util.DateUtil;
+import com.group7.fruitswebsite.util.DtoUtil;
 import com.group7.fruitswebsite.util.StringUtil;
 
 import lombok.extern.log4j.Log4j;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,8 +32,11 @@ import com.group7.fruitswebsite.repository.ProductRepository;
 import com.group7.fruitswebsite.service.ProductService;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Log4j
 @Service
@@ -80,6 +89,67 @@ public class ProductServiceImpl implements ProductService {
             ApiResponse response = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(), DateUtil.currentDate(),
                     Constants.APIResponseStatus.FAILURE.getMessage(), null);
             return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(response);
+        }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> getAll() {
+        try {
+            List<DhProductDto> listAllProducts = getAllProductsAsDto();
+            ApiResponse.ApiResponseResult apiResponseResult = new ApiResponse.ApiResponseResult();
+            apiResponseResult.setData(listAllProducts);
+            ApiResponse response = new ApiResponse.Builder()
+                    .withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
+                    .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage())
+                    .withDateTime(DateUtil.currentDate())
+                    .withResult(apiResponseResult)
+                    .build();
+            return ResponseEntity.ok(response);
+
+        } catch (Exception ex) {
+            log.error("Error get all product, ", ex);
+            return ApiResponseUtil.getBaseFailureStatus();
+        }
+    }
+
+    @Override
+    public List<DhProductDto> getAllProductsAsDto() {
+        try {
+            List<DhProductDto> result = new ArrayList<>();
+            List<DhProduct> listAllProducts = productRepository.findAll();
+            for (DhProduct dhProduct : listAllProducts) {
+                result.add(DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository));
+            }
+            return result;
+        } catch (Exception ex) {
+            log.error("Get all product as dto error, ", ex);
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> getAllWithPaging(int page, int size) {
+        try {
+            Pageable paging = PageRequest.of(page, size);
+            Page<DhProduct> pageProducts = productRepository.findAll(paging);
+            List<DhProductDto> productDtos = pageProducts.getContent().stream()
+                    .map(val -> DtoUtil.getDtoFromProduct(val, objectMapper, productImageRepository)).collect(Collectors.toList());
+            ApiResponse.ApiResponseResult responseResult = new ApiResponse.ApiResponseResult();
+            int totalProducts = productRepository.findAll().size();
+            int totalPages = totalProducts % size == 0 ? totalProducts / size : totalProducts / size + 1;
+            responseResult.setData(productDtos);
+            responseResult.setPage(pageProducts.getNumber() + 1);
+            responseResult.setPerPage(pageProducts.getNumberOfElements());
+            responseResult.setTotalPages(totalPages);
+            responseResult.setTotal(productDtos.size());
+            return ResponseEntity.ok(new ApiResponse.Builder()
+                    .withDateTime(DateUtil.currentDate())
+                    .withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
+                    .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage())
+                    .withResult(responseResult).build());
+        } catch (Exception ex) {
+            log.error("Get all products with paging error ", ex);
+            return ApiResponseUtil.getBaseFailureStatus();
         }
     }
 

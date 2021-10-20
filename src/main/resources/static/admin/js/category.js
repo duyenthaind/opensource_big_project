@@ -36,12 +36,12 @@ function addNewCate(event){
 
 
 function loadPage(total_pages,currentPage){
-			$(".pagination").empty();
+			$("#paginationCate").empty();
 			for(var i = 0;i<total_pages;i++){
 				if(i==0){
-					$(".pagination").append('<li class="page-item active"><span class="page-link" onclick="loadData('+ (i) +');">'+ (i+1) +'</span></li>');
+					$("#paginationCate").append('<li class="page-item active"><span class="page-link" onclick="loadData('+ (i) +');">'+ (i+1) +'</span></li>');
 				}else{
-					$(".pagination").append('<li class="page-item"><span class="page-link" onclick="loadData('+ (i) +');">'+ (i+1)+'</span></li>');
+					$("#paginationCate").append('<li class="page-item"><span class="page-link" onclick="loadData('+ (i) +');">'+ (i+1)+'</span></li>');
 				}
 			}			
 }
@@ -219,7 +219,7 @@ function detailsCategory(id){
 					'<div class="col-lg-4">'+
 						'<div class="card" style="width: 200px">'+
 						'<img id="outputCateImage" class="card-img-top img-thumbnail"'+
-							'src="/uploads/' + object[0].avatar + '" alt="Card image"'+
+							'src=' + object[0].avatar + '" alt="Card image"'+
 							'style="width: 100%" />'+
 						'</div>'+
 					'</div>'+

@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.common.Constants;
@@ -35,11 +33,16 @@ public class ProductController {
 	
 	@PostMapping("/products")
 	public ResponseEntity<ApiResponse> addNewProduct(@ModelAttribute DhProductModel dhProductModel){
-		log.info(dhProductModel.toString());
+		log.debug(dhProductModel.toString());
 		ImageService imageService = new ImageProductServiceImpl();
 		List<String> imagePath = imageService.saveUploadedMultiFiles(dhProductModel.getFiles());
 		dhProductModel.setPathUploadedAvatar(imagePath);
 		return productService.saveOne(dhProductModel);
+	}
+
+	@GetMapping("/products")
+	public ResponseEntity<ApiResponse> getAllProducts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size){
+		return productService.getAllWithPaging(page, size);
 	}
 
 	@Autowired

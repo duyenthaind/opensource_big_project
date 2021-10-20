@@ -30,10 +30,9 @@ public class ApiResponseUtil {
                 .build();
         return ResponseEntity.status(Constants.APIResponseStatus.FORBIDDEN.getStatus()).body(response);
     }
-    
-    
 
-    public static ResponseEntity<ApiResponse> getCustomStatusWithMessage(String msg, HttpStatus status){
+
+    public static ResponseEntity<ApiResponse> getCustomStatusWithMessage(String msg, HttpStatus status) {
         ApiResponse response = new ApiResponse.Builder()
                 .withStatus(status.value())
                 .withMessage(msg)
@@ -41,5 +40,11 @@ public class ApiResponseUtil {
                 .withResult(null)
                 .build();
         return ResponseEntity.status(status.value()).body(response);
+    }
+
+    public static ResponseEntity<ApiResponse> getBaseFailureStatus() {
+        ApiResponse response = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(), DateUtil.currentDate(),
+                Constants.APIResponseStatus.FAILURE.getMessage(), null);
+        return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(response);
     }
 }
