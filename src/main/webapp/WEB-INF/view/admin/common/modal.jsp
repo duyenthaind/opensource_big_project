@@ -182,6 +182,7 @@
 
 		<!-- Modal content-->
 		<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+			<input type="hidden" id="productId" name="prodId" />
 			<div class="modal-content">
 				<div class="modal-header"></div>
 				<div class="modal-body">
@@ -202,7 +203,7 @@
 												<c:forEach var="cate" items="${category}">
 													<option value="${cate.id}">${cate.name}</option>
 												</c:forEach>
-											<select>
+											<select/>
 										</div>
 									</div>
 
