@@ -63,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity<ApiResponse> saveOne(DhProductModel dhProductModel) {
         try {
             DhProduct dhProduct = setNewProduct(dhProductModel);
-            DhProduct newProduct = productRepository.save(dhProduct);
+            productRepository.save(dhProduct);
             if (dhProductModel.getPathUploadedAvatar() != null && !dhProductModel.getPathUploadedAvatar().isEmpty()) {
                 List<String> imagePath = dhProductModel.getPathUploadedAvatar();
                 for (int i = 0; i < dhProductModel.getFiles().length; i++) {
@@ -72,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
                     dhProductImage.setCreatedDate(System.currentTimeMillis());
                     dhProductImage.setName(dhProductModel.getFiles()[i].getOriginalFilename());
                     dhProductImage.setPath(imagePath.get(i).replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY));
-                    dhProductImage.setDhProduct(newProduct);
+                    dhProductImage.setDhProduct(dhProduct);
                     productImageRepository.save(dhProductImage);
                 }
             }
