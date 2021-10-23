@@ -89,6 +89,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Autowired
+	public void setCategoryRepository(CategoryRepository categoryRepository) {
+		this.categoryRepository = categoryRepository;
+	}
+
+	@Autowired
 	public void setProductRepository(ProductRepository productRepository) {
 		this.productRepository = productRepository;
 	}
