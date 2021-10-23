@@ -6,12 +6,14 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @MappedSuperclass
 @Data
+@ToString
 public abstract class BaseEntity {
 
 	@Id

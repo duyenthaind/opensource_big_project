@@ -88,4 +88,13 @@ public class DhProduct extends BaseEntity implements java.io.Serializable {
 		return Objects.hash(super.hashCode(), name, detailDescription, shortDescription, price, priceSale, seo,
 				category, orderProducts,available,weight);
 	}
+
+	@Override
+	public String toString() {
+		return "DhProduct [name=" + name + ", detailDescription=" + detailDescription + ", shortDescription="
+				+ shortDescription + ", price=" + price + ", priceSale=" + priceSale + ", available=" + available
+				+ ", weight=" + weight + ", seo=" + seo + ", category=" + category + ", orderProducts=" + orderProducts
+				+ ", getId()=" + getId() + "]";
+	}
+
 }

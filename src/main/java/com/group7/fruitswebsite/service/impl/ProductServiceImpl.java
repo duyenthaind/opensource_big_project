@@ -24,7 +24,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.group7.fruitswebsite.repository.CategoryRepository;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
@@ -56,18 +55,7 @@ public class ProductServiceImpl implements ProductService {
 
         dhProduct.setCreatedDate(System.currentTimeMillis());
         dhProduct.setSeo(StringUtil.seo(dhProductModel.getProductName()) + "-" + System.currentTimeMillis());
-        if (dhProductModel.getPathUploadedAvatar() != null && !dhProductModel.getPathUploadedAvatar().isEmpty()) {
-            List<String> imagePath = dhProductModel.getPathUploadedAvatar();
-            for (int i = 0; i < dhProductModel.getFiles().length; i++) {
-                DhProductImage dhProductImage = new DhProductImage();
-                dhProductImage.setCreatedBy(Constants.SystemUser.SYSTEM_USER_ID);
-                dhProductImage.setCreatedDate(System.currentTimeMillis());
-                dhProductImage.setName(dhProductModel.getFiles()[i].getName());
-                dhProductImage.setPath(imagePath.get(i).replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY));
-                dhProductImage.setDhProduct(dhProduct);
-                productImageRepository.save(dhProductImage);
-            }
-        }
+        
         return dhProduct;
     }
 
@@ -76,6 +64,18 @@ public class ProductServiceImpl implements ProductService {
         try {
             DhProduct dhProduct = setNewProduct(dhProductModel);
             productRepository.save(dhProduct);
+            if (dhProductModel.getPathUploadedAvatar() != null && !dhProductModel.getPathUploadedAvatar().isEmpty()) {
+                List<String> imagePath = dhProductModel.getPathUploadedAvatar();
+                for (int i = 0; i < dhProductModel.getFiles().length; i++) {
+                    DhProductImage dhProductImage = new DhProductImage();
+                    dhProductImage.setCreatedBy(Constants.SystemUser.SYSTEM_USER_ID);
+                    dhProductImage.setCreatedDate(System.currentTimeMillis());
+                    dhProductImage.setName(dhProductModel.getFiles()[i].getOriginalFilename());
+                    dhProductImage.setPath(imagePath.get(i).replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY));
+                    dhProductImage.setDhProduct(dhProduct);
+                    productImageRepository.save(dhProductImage);
+                }
+            }
             ApiResponse response = new ApiResponse.Builder()
                     .withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
                     .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage())
@@ -159,12 +159,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Autowired
+	public void setCategoryRepository(CategoryRepository categoryRepository) {
+		this.categoryRepository = categoryRepository;
+	}
+
+    @Autowired
     public void setProductImageRepository(ProductImageRepository productImageRepository) {
         this.productImageRepository = productImageRepository;
     }
 
-    @Autowired
-    public void setCategoryRepository(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 }

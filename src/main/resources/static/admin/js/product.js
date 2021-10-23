@@ -74,6 +74,7 @@ function addNewProduct(event){
 			success : function(jsonResult){
 				if(jsonResult.status >= 200 && jsonResult.status < 300){
 					alert("Success");
+					prodGetFirst();
 					console.log(jsonResult);
 				}else{
 					alert("error");
@@ -159,7 +160,7 @@ function prodGetFirst(){
 						+ "<td>"
 						+ "<div class='table-data-feature'>"
 						+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Detail'>"
-						+ "<i class='zmdi zmdi-more'></i>"
+						+ "<i class='zmdi zmdi-receipt'></i>"
 						+ "</button>"
 						+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Edit'>"
 						+ "<i class='zmdi zmdi-edit'></i>"
@@ -191,6 +192,11 @@ function prodloadData(currentPage){
 
 			success: function (response){
 				prodLoadPage(response.result.total_pages, currentPage);
+				var tag = document.getElementsByClassName("prod");
+				for(a =0;a<tag.length;a++){
+					tag[a].className = tag[a].className.replace("prod active", "prod");
+				}
+				tag[currentPage].className = "page-item prod active";
 				if(response.status >= 200 && response.status < 300){
 					$("#resultProducts").empty();
 					let products = response.result.data;
@@ -235,9 +241,9 @@ function prodLoadPage(total_pages,currentPage){
 	paginationEntityProd.empty();
 	for(var i = 0;i<total_pages;i++){
 		if(i==0){
-			paginationEntityProd.append('<li class="page-item active"><span class="page-link" onclick="prodloadData('+ (i) +');">'+ (i+1) +'</span></li>');
+			paginationEntityProd.append('<li class="page-item prod active"><span class="page-link" onclick="prodloadData('+ (i) +');">'+ (i+1) +'</span></li>');
 		}else{
-			paginationEntityProd.append('<li class="page-item"><span class="page-link" onclick="prodloadData('+ (i) +');">'+ (i+1)+'</span></li>');
+			paginationEntityProd.append('<li class="page-item prod"><span class="page-link" onclick="prodloadData('+ (i) +');">'+ (i+1)+'</span></li>');
 		}
 	}
 }
