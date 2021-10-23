@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -39,13 +40,13 @@ public class ImageUtil {
         return StringUtils.EMPTY;
     }
     
-    public static List<String> saveUploadedMultilFiles(MultipartFile[] files, String path) {
+    public static List<String> saveUploadedMultiFiles(MultipartFile[] files, String path) {
         try {
-            return uploadMultilFilesAndGetPath(files, path);
+            return uploadMultiFilesAndGetPath(files, path);
         } catch (Exception ex) {
             log.error("Error when upload file, ", ex);
         }
-        return null;
+        return Collections.emptyList();
     }
 
     private static String uploadFilesAndGetPath(MultipartFile[] files, String path) throws IOException {
@@ -72,8 +73,8 @@ public class ImageUtil {
         return result.toString();
     }
 
-    private static List<String> uploadMultilFilesAndGetPath(MultipartFile[] files, String path) throws IOException {
-        List<String> results = new ArrayList<String>();
+    private static List<String> uploadMultiFilesAndGetPath(MultipartFile[] files, String path) throws IOException {
+        List<String> results = new ArrayList<>();
         String targetUploadDir = path + File.separator + createPathFromCurrentDate();
         File uploadDir = new File(targetUploadDir);
         // Make sure directory exists!

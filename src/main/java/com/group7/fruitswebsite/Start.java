@@ -10,11 +10,11 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 @Log4j
 public class Start {
-	public static ConfigurableApplicationContext context;
+    public static ConfigurableApplicationContext context;
 
-	public static void main(String[] args) {
-		ApplicationConfig.loadConfig();
-		context = SpringApplication.run(FruitsWebsiteApplication.class, args);
-		log.info("Application start ok");
-	}
+    public static void main(String[] args) {
+        ApplicationConfig.loadConfig();
+        context = SpringApplication.run(FruitsWebsiteApplication.class, args);
+        log.info("Application start ok");
+    }
 }

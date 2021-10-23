@@ -16,6 +16,7 @@ import java.util.Objects;
 @Entity
 @Setter
 @Getter
+@ToString
 @Table(name = "dh_product_image")
 public class DhProductImage extends BaseEntity implements java.io.Serializable{
 

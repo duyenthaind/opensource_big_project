@@ -182,6 +182,7 @@
 
 		<!-- Modal content-->
 		<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+			<input type="hidden" id="productId" name="prodId" />
 			<div class="modal-content">
 				<div class="modal-header"></div>
 				<div class="modal-body">
@@ -202,7 +203,7 @@
 												<c:forEach var="cate" items="${category}">
 													<option value="${cate.id}">${cate.name}</option>
 												</c:forEach>
-											<select>
+											<select/>
 										</div>
 									</div>
 
@@ -215,7 +216,7 @@
 									</div>
 									<div class="form-group">
 										<label for="cc-payment" class="control-label mb-1">Available</label>
-										<input id="productAvailble" name="available" type="text"
+										<input id="productAvailable" name="available" type="text"
 											class="form-control" aria-required="true" data-val="true"
 											data-val-required="Please enter the name"
 											aria-invalid="false" placeholder="0">
@@ -256,7 +257,7 @@
 
 							<div class="form-group has-success">
 								<label for="cc-name" class="control-label mb-1">Description</label>
-								<textarea id="productDetaiDescription" class="summernote" name="detail_description"
+								<textarea id="productDetailDescription" class="summernote" name="detail_description"
 									type="text"></textarea>
 								<span class="help-block field-validation-valid"
 									data-valmsg-for="cc-name" data-valmsg-replace="true"></span>

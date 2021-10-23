@@ -35,16 +35,7 @@ function addNewCate(event){
 }
 
 
-function loadPage(total_pages,currentPage){
-			$(".pagination").empty();
-			for(var i = 0;i<total_pages;i++){
-				if(i==0){
-					$(".pagination").append('<li class="page-item active"><span class="page-link" onclick="loadData('+ (i) +');">'+ (i+1) +'</span></li>');
-				}else{
-					$(".pagination").append('<li class="page-item"><span class="page-link" onclick="loadData('+ (i) +');">'+ (i+1)+'</span></li>');
-				}
-			}			
-}
+
 
 function formatDate(current_datetime){
 	if(current_datetime == new Date(null)){
@@ -219,7 +210,7 @@ function detailsCategory(id){
 					'<div class="col-lg-4">'+
 						'<div class="card" style="width: 200px">'+
 						'<img id="outputCateImage" class="card-img-top img-thumbnail"'+
-							'src="/uploads/' + object[0].avatar + '" alt="Card image"'+
+							'src=' + object[0].avatar + '" alt="Card image"'+
 							'style="width: 100%" />'+
 						'</div>'+
 					'</div>'+
@@ -293,11 +284,11 @@ function loadData(currentPage){
 		},
 		success : function(data){
 				loadPage(data.result.total_pages,currentPage);
-				var tag = document.getElementsByClassName("page-item");
+				var tag = document.getElementsByClassName("cate");
 				for(a =0;a<tag.length;a++){
-					tag[a].className = tag[a].className.replace(" active", "");
+					tag[a].className = tag[a].className.replace("cate active", "cate");
 				}
-				tag[currentPage].className = "page-item active";
+				tag[currentPage].className = "page-item cate active";
 				var html = "";
 				$(".resultCategories").empty();
 				var dataArr = data.result.data;
@@ -333,6 +324,17 @@ function loadData(currentPage){
 			console.log(errorThrown);
 		}
 	});
+}
+
+function loadPage(total_pages,currentPage){
+	$("#paginationCate").empty();
+	for(var i = 0;i<total_pages;i++){
+		if(i==0){
+			$("#paginationCate").append('<li class="page-item cate active"><span class="page-link" onclick="loadData('+ (i) +');">'+ (i+1) +'</span></li>');
+		}else{
+			$("#paginationCate").append('<li class="page-item cate"><span class="page-link" onclick="loadData('+ (i) +');">'+ (i+1)+'</span></li>');
+		}
+	}			
 }
 
 var loadFile = function (event) {

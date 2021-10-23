@@ -2,6 +2,7 @@ package com.group7.fruitswebsite.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,26 +18,28 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DhProductModel extends BaseModel {
-    @JsonProperty(value = "product_name")
+    @JsonProperty(value = "productName")
     private String productName;
-    @JsonProperty(value = "detail_description")
+    @JsonProperty(value = "detailDescription")
     private String detailDescription;
-    @JsonProperty(value = "short_description")
+    @JsonProperty(value = "shortDescription")
     private String shortDescription;
     private Long price;
-    @JsonProperty(value = "price_sale")
+    @JsonProperty(value = "priceSale")
     private Long priceSale;
-    @JsonProperty(value = "category_id")
+    @JsonProperty(value = "categoryId")
     private Integer categoryId;
     @JsonProperty(value = "image_path")
     private String imagePath;
-    
+    @JsonIgnore
     private MultipartFile[] files;
     @JsonProperty(value = "image_name")
     private String imageName;
-    @JsonProperty(value = "product_available")
+    @JsonProperty(value = "productAvailable")
+    @JsonAlias(value = "available")
     private long available = 0;
-    @JsonProperty(value = "product_weight")
+    @JsonProperty(value = "productWeight")
+    @JsonAlias(value = "weight")
     private float weight = 0.0f;
     @JsonIgnore
     private List<String> pathUploadedAvatar;
