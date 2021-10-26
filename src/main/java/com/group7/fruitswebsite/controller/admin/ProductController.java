@@ -45,6 +45,11 @@ public class ProductController {
 		return productService.getAllWithPaging(page, size);
 	}
 
+	@GetMapping("/products/{id}")
+	public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id){
+		return productService.getOne(id);
+	}
+
 	@Autowired
     public void setProductRepository(ProductService productService) {
         this.productService = productService;

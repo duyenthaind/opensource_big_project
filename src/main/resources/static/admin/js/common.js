@@ -1,5 +1,5 @@
 function formatDate(current_datetime){
-    if(current_datetime == new Date(null)){
+    if(current_datetime == null || isNaN(current_datetime) || current_datetime === 0){
         return null;
     }
     else{

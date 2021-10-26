@@ -139,7 +139,7 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header"></div>
-			<div class="modal-body" id="modal-body"></div>
+			<div class="modal-body modal-body-details"></div>
 			<div class="modal-footer">
 				<button style="float: right;" type="button" class="btn btn-default"
 					data-dismiss="modal">Close</button>
@@ -163,6 +163,20 @@
 				<button type="button" id="buttonDeleteCategory"
 					class="btn btn-primary">Delete</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="modal fade" id="detailsProduct" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header"></div>
+			<div class="modal-body modal-body-details"></div>
+			<div class="modal-footer">
+				<button style="float: right;" type="button" class="btn btn-default"
+					data-dismiss="modal">Close</button>
 			</div>
 		</div>
 

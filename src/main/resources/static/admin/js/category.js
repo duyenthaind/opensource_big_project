@@ -212,11 +212,7 @@ function detailsCategory(id){
 						'<img id="outputCateImage" class="card-img-top img-thumbnail"'+
 							'src="/uploads/' + object[0].avatar + '" alt="Card image"'+
 							'style="width: 100%" />'+	
-							'<img id="outputCateImage" class="card-img-top img-thumbnail"'+
-							'src="/uploads/' + object[0].avatar + '" alt="Card image"'+
-							'style="width: 100%" />'+
-						'</div>'+	
-						
+						'</div>'+						
 					'</div>'+
 					'<div class="col-lg-8">'+
 						'<h5>Detail Information</h5>'+
@@ -264,7 +260,7 @@ function detailsCategory(id){
 						'<br>'+
 					'</div>'+
 				'</div>';
-				$("#modal-body").html(html);
+				$(".modal-body-details").html(html);
 				$("#detailsCategory").modal("show");
 			}
 		},

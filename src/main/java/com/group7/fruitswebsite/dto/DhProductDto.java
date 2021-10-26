@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * @author duyenthai
  */
-@JsonIgnoreProperties({"categoryId", "productImages"})
+@JsonIgnoreProperties({"categoryId"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Setter
 @Getter

@@ -149,8 +149,6 @@ function prodGetFirst(){
 					let products = response.result.data;
 					for(let index = -1; ++index < products.length;){
 						let html = "<tr class='tr-shadow'>"
-						+ "<td><label class='au-checkbox'> <input type='checkbox'> <span class='au-checkmark'></span>"
-						+ "</label></td>"
 						+ "<td>" + products[index].name + "</td>"
 						+ "<td><span class='block-email'>" + formatDate(new Date(products[index].created_date)) + "</span></td>"
 						+ "<td class='desc'>" + formatDate(new Date(products[index].updated_date)) + "</td>"
@@ -159,7 +157,7 @@ function prodGetFirst(){
 						+ "<td>" + products[index].priceSale + "</td>"
 						+ "<td>"
 						+ "<div class='table-data-feature'>"
-						+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Detail'>"
+						+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Detail' onclick='detailsProduct(" + products[index].id + ")'>"
 						+ "<i class='zmdi zmdi-receipt'></i>"
 						+ "</button>"
 						+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Edit'>"
@@ -202,8 +200,6 @@ function prodloadData(currentPage){
 					let products = response.result.data;
 					for(let index = -1; ++index < products.length;){
 						let html = "<tr class='tr-shadow'>"
-							+ "<td><label class='au-checkbox'> <input type='checkbox'> <span class='au-checkmark'></span>"
-							+ "</label></td>"
 							+ "<td>" + products[index].name + "</td>"
 							+ "<td><span class='block-email'>" + formatDate(new Date(products[index].created_date)) + "</span></td>"
 							+ "<td class='desc'>" + formatDate(new Date(products[index].updated_date)) + "</td>"
@@ -212,7 +208,7 @@ function prodloadData(currentPage){
 							+ "<td>" + products[index].priceSale + "</td>"
 							+ "<td>"
 							+ "<div class='table-data-feature'>"
-							+ "<button class='item linkDetail' data-toggle='tooltip' data-placement='top' title='Detail'>"
+							+ "<button class='item linkDetail' data-toggle='tooltip' data-placement='top' title='Detail' onclick='detailsProduct(" + products[index].id + ")'>"
 							+ "<i class='zmdi zmdi-receipt'></i>"
 							+ "</button>"
 							+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Edit'>"
@@ -239,11 +235,105 @@ function prodloadData(currentPage){
 function prodLoadPage(total_pages,currentPage){
 	let paginationEntityProd = $("#paginationProd");
 	paginationEntityProd.empty();
-	for(var i = 0;i<total_pages;i++){
-		if(i==0){
+	for(let i = 0;i<total_pages;i++){
+		if(i===0){
 			paginationEntityProd.append('<li class="page-item prod active"><span class="page-link" onclick="prodloadData('+ (i) +');">'+ (i+1) +'</span></li>');
 		}else{
 			paginationEntityProd.append('<li class="page-item prod"><span class="page-link" onclick="prodloadData('+ (i) +');">'+ (i+1)+'</span></li>');
 		}
 	}
+}
+
+function detailsProduct(id){
+	$.ajax({
+		url: "/api/product/v1/products/" + id,
+		type: "GET",
+		data:{
+
+		},
+
+		success: function(response){
+			if(response.status >= 200 && response.status < 300){
+				console.log(response)
+				let objects = response.result.data;
+				let listImages = objects[0].productImages;
+				let images = "<div style='width: 210px'>";
+
+				for(let image of listImages){
+					images += '<div class="col-lg-4" style="position: relative"><div class="card" style="width: 200px " >'
+								+ '<img class="card-img-top img-thumbnail" src="/uploads/' + image + '" alt="Product Detail image"'
+								+ 'style="width:100%"/></div></div><br/>'
+				}
+				images += "</div>";
+				let html = '<div class="row">'+ images +
+					'<div class="col-lg-8">'+
+					'<h5>Detail Information</h5>'+
+					'<div class="table-responsive">'+
+					'<table class="table table-sm table-borderless mb-0">'+
+					'<tbody>'+
+					'<tr>'+
+					'<th class="pl-0 w-25" scope="row"><strong>Name</strong></th>'+
+					'<td>' + objects[0].name + '</td>'+
+					'</tr>'+
+					'<tr>'+
+					'<th class="pl-0 w-25" scope="row"><strong>Available</strong></th>'+
+					'<td>' + objects[0].available + '</td>'+
+					'</tr>'+
+					'<tr>'+
+					'<th class="pl-0 w-25" scope="row"><strong>Price</strong></th>'+
+					'<td>' + objects[0].price + '</td>'+
+					'</tr>'+
+					'<tr>'+
+					'<th class="pl-0 w-25" scope="row"><strong>Price sale</strong></th>'+
+					'<td>' + objects[0].priceSale + '</td>'+
+					'</tr>'+
+					'<tr>'+
+					'<th class="pl-0 w-25" scope="row"><strong>Weight</strong></th>'+
+					'<td>' + objects[0].weight + '</td>'+
+					'</tr>'+
+					'<tr>'+
+					'<th class="pl-0 w-25" scope="row"><strong>Description'+
+					'</strong></th>'+
+					'<td>'+
+					'<div class="form-group has-success">'+
+					'<textarea class="summernote" rows="4" cols="50" name="description" type="text">' + objects[0].detailDescription + '</textarea>'+
+					'<span class="help-block field-validation-valid"'+
+					'data-valmsg-for="cc-name" data-valmsg-replace="true"></span>'+
+					'</div>'+
+					'</td>'+
+					'</tr>'+
+					'<tr>'+
+					'<th class="pl-0 w-25" scope="row"><strong>Created'+
+					' date</strong></th>'+
+					'<td>' + formatDate(new Date(objects[0].created_date)) + '</td>'+
+					'</tr>'+
+					'<tr>'+
+					'<th class="pl-0 w-25" scope="row"><strong>Update date</strong></th>'+
+					'<td>' + formatDate(new Date(objects[0].updated_date)) + '</td>'+
+					'</tr>'+
+					'<tr>'+
+					'<th class="pl-0 w-25" scope="row"><strong>Created '+
+					'by</strong></th>'+
+					'<td>' + objects[0].created_by + '</td>'+
+					'</tr>'+
+					'<tr>'+
+					'<th class="pl-0 w-25" scope="row"><strong>Updated '+
+					'by</strong></th>'+
+					'<td>' + objects[0].update_by + '</td>'+
+					'</tr>'+
+					'</tbody>'+
+					'</table>'+
+					'</div>'+
+					'<br>'+
+					'</div>'+
+					'</div>';
+				$(".modal-body-details").html(html);
+				$("#detailsProduct").modal("show");
+			}
+		},
+		error: function(jqXhr, textStatus, errorMessage){
+			console.log(textStatus);
+			console.log(errorMessage);
+		}
+	});
 }
