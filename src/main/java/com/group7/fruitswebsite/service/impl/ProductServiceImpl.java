@@ -163,6 +163,9 @@ public class ProductServiceImpl implements ProductService {
             if (optional.isPresent()) {
                 DhProduct product = optional.get();
                 DhProductDto dto = DtoUtil.getDtoFromProduct(product, objectMapper, productImageRepository);
+                if (dto != null) {
+                    dto.setCategoryId(product.getCategory() == null ? -1 : product.getCategory().getId());
+                }
                 ApiResponse.ApiResponseResult apiResponseResult = new ApiResponse.ApiResponseResult();
                 apiResponseResult.setData(Collections.singletonList(dto));
                 return ApiResponseUtil.getBaseSuccessStatus(apiResponseResult);
