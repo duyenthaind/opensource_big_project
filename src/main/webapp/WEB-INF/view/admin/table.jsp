@@ -350,9 +350,6 @@
 						<table class="table table-data2">
 							<thead>
 								<tr>
-									<th><label class="au-checkbox"> <input
-											type="checkbox"> <span class="au-checkmark"></span>
-									</label></th>
 									<th>name</th>
 									<th>created date</th>
 									<th>updated date</th>

@@ -211,8 +211,8 @@ function detailsCategory(id){
 						'<div class="card" style="width: 200px">'+
 						'<img id="outputCateImage" class="card-img-top img-thumbnail"'+
 							'src="/uploads/' + object[0].avatar + '" alt="Card image"'+
-							'style="width: 100%" />'+
-						'</div>'+
+							'style="width: 100%" />'+	
+						'</div>'+						
 					'</div>'+
 					'<div class="col-lg-8">'+
 						'<h5>Detail Information</h5>'+
@@ -258,7 +258,6 @@ function detailsCategory(id){
 							'</table>'+
 						'</div>'+
 						'<br>'+
-						'<button style="float:right;" type="button"  class="btn btn-default" data-dismiss="modal">Close</button>'+
 					'</div>'+
 				'</div>';
 				$(".modal-body-details").html(html);
@@ -306,7 +305,7 @@ function loadData(currentPage){
 					+			"<button class='item' data-toggle='modal' onclick='showUpdateCategory(" + dataArr[i].id + "," + data.result.page + ");' data-toggle='tooltip' data-target='#updateCate' data-placement='top' title='Edit'>"
                     +				"<i class='zmdi zmdi-edit'></i>"
                     +			"</button>"
-					+			"<button class='item' data-toggle='tooltip'"
+					+			"<button class='item' data-toggle='tooltip' onclick='showModalDeleteCategory(" + dataArr[i].id + ")'"
 					+				"data-placement='top' title='Delete'>"
 					+				"<i class='zmdi zmdi-delete'></i>"
 					+			"</button>"

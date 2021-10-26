@@ -149,8 +149,6 @@ function prodGetFirst(){
 					let products = response.result.data;
 					for(let index = -1; ++index < products.length;){
 						let html = "<tr class='tr-shadow'>"
-						+ "<td><label class='au-checkbox'> <input type='checkbox'> <span class='au-checkmark'></span>"
-						+ "</label></td>"
 						+ "<td>" + products[index].name + "</td>"
 						+ "<td><span class='block-email'>" + formatDate(new Date(products[index].created_date)) + "</span></td>"
 						+ "<td class='desc'>" + formatDate(new Date(products[index].updated_date)) + "</td>"
@@ -202,8 +200,6 @@ function prodloadData(currentPage){
 					let products = response.result.data;
 					for(let index = -1; ++index < products.length;){
 						let html = "<tr class='tr-shadow'>"
-							+ "<td><label class='au-checkbox'> <input type='checkbox'> <span class='au-checkmark'></span>"
-							+ "</label></td>"
 							+ "<td>" + products[index].name + "</td>"
 							+ "<td><span class='block-email'>" + formatDate(new Date(products[index].created_date)) + "</span></td>"
 							+ "<td class='desc'>" + formatDate(new Date(products[index].updated_date)) + "</td>"
@@ -329,7 +325,6 @@ function detailsProduct(id){
 					'</table>'+
 					'</div>'+
 					'<br>'+
-					'<button style="float:right;" type="button"  class="btn btn-default" data-dismiss="modal">Close</button>'+
 					'</div>'+
 					'</div>';
 				$(".modal-body-details").html(html);
