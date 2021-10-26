@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -60,36 +61,47 @@ public class ProductServiceImpl implements ProductService {
         return dhProduct;
     }
 
+    public DhProduct mapProductFromModel(DhProductModel dhProductModel) throws JsonProcessingException {
+        String modelJson = objectMapper.writeValueAsString(dhProductModel);
+        DhProduct dhProduct = objectMapper.readValue(modelJson, DhProduct.class);
+
+        Optional<DhCategory> optionalDhCategory = categoryRepository.findById(dhProductModel.getCategoryId());
+        optionalDhCategory.ifPresent(dhProduct::setCategory);
+
+        dhProduct.setUpdatedDate(System.currentTimeMillis());
+
+        return dhProduct;
+    }
+
+    private void saveImageProduct(DhProductModel dhProductModel, DhProduct dhProduct) {
+        if (dhProductModel.getPathUploadedAvatar() != null && !dhProductModel.getPathUploadedAvatar().isEmpty()) {
+            List<String> imagePath = dhProductModel.getPathUploadedAvatar();
+            for (int i = 0; i < dhProductModel.getFiles().length; i++) {
+                DhProductImage dhProductImage = new DhProductImage();
+                dhProductImage.setCreatedBy(Constants.SystemUser.SYSTEM_USER_ID);
+                dhProductImage.setCreatedDate(System.currentTimeMillis());
+                dhProductImage.setName(dhProductModel.getFiles()[i].getOriginalFilename());
+                dhProductImage.setPath(imagePath.get(i).replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY));
+                dhProductImage.setDhProduct(dhProduct);
+                productImageRepository.save(dhProductImage);
+            }
+        }
+    }
+
 
     public ResponseEntity<ApiResponse> saveOne(DhProductModel dhProductModel) {
         try {
             DhProduct dhProduct = setNewProduct(dhProductModel);
-            productRepository.save(dhProduct);
-            if (dhProductModel.getPathUploadedAvatar() != null && !dhProductModel.getPathUploadedAvatar().isEmpty()) {
-                List<String> imagePath = dhProductModel.getPathUploadedAvatar();
-                for (int i = 0; i < dhProductModel.getFiles().length; i++) {
-                    DhProductImage dhProductImage = new DhProductImage();
-                    dhProductImage.setCreatedBy(Constants.SystemUser.SYSTEM_USER_ID);
-                    dhProductImage.setCreatedDate(System.currentTimeMillis());
-                    dhProductImage.setName(dhProductModel.getFiles()[i].getOriginalFilename());
-                    dhProductImage.setPath(imagePath.get(i).replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY));
-                    dhProductImage.setDhProduct(dhProduct);
-                    productImageRepository.save(dhProductImage);
-                }
+            if (dhProduct.getCategory() == null) {
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.NOT_FOUND_CATEGORY, HttpStatus.EXPECTATION_FAILED);
             }
-            ApiResponse response = new ApiResponse.Builder()
-                    .withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
-                    .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage())
-                    .withDateTime(DateUtil.currentDate())
-                    .withResult(null)
-                    .build();
+            productRepository.save(dhProduct);
+            saveImageProduct(dhProductModel, dhProduct);
             log.info(String.format("Save 1 new product, id=%d", dhProduct.getId()));
-            return ResponseEntity.ok(response);
+            return ApiResponseUtil.getBaseSuccessStatus(null);
         } catch (Exception ex) {
             log.error("Error insert new product, ", ex);
-            ApiResponse response = new ApiResponse(Constants.APIResponseStatus.FAILURE.getStatus(), DateUtil.currentDate(),
-                    Constants.APIResponseStatus.FAILURE.getMessage(), null);
-            return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(response);
+            return ApiResponseUtil.getBaseFailureStatus();
         }
     }
 
@@ -99,13 +111,7 @@ public class ProductServiceImpl implements ProductService {
             List<DhProductDto> listAllProducts = getAllProductsAsDto();
             ApiResponse.ApiResponseResult apiResponseResult = new ApiResponse.ApiResponseResult();
             apiResponseResult.setData(listAllProducts);
-            ApiResponse response = new ApiResponse.Builder()
-                    .withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
-                    .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage())
-                    .withDateTime(DateUtil.currentDate())
-                    .withResult(apiResponseResult)
-                    .build();
-            return ResponseEntity.ok(response);
+            return ApiResponseUtil.getBaseSuccessStatus(apiResponseResult);
 
         } catch (Exception ex) {
             log.error("Error get all product, ", ex);
@@ -143,11 +149,7 @@ public class ProductServiceImpl implements ProductService {
             responseResult.setPerPage(pageProducts.getNumberOfElements());
             responseResult.setTotalPages(totalPages);
             responseResult.setTotal(productDtos.size());
-            return ResponseEntity.ok(new ApiResponse.Builder()
-                    .withDateTime(DateUtil.currentDate())
-                    .withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
-                    .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage())
-                    .withResult(responseResult).build());
+            return ApiResponseUtil.getBaseSuccessStatus(responseResult);
         } catch (Exception ex) {
             log.error("Get all products with paging error ", ex);
             return ApiResponseUtil.getBaseFailureStatus();
@@ -163,15 +165,41 @@ public class ProductServiceImpl implements ProductService {
                 DhProductDto dto = DtoUtil.getDtoFromProduct(product, objectMapper, productImageRepository);
                 ApiResponse.ApiResponseResult apiResponseResult = new ApiResponse.ApiResponseResult();
                 apiResponseResult.setData(Collections.singletonList(dto));
-                return ResponseEntity.ok(new ApiResponse.Builder()
-                        .withDateTime(DateUtil.currentDate())
-                        .withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
-                        .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage())
-                        .withResult(apiResponseResult).build());
+                return ApiResponseUtil.getBaseSuccessStatus(apiResponseResult);
             }
             return ResponseEntity.ok(new ApiResponse());
         } catch (Exception ex) {
             log.error(String.format("Get one product with id %s error", id), ex);
+            return ApiResponseUtil.getBaseFailureStatus();
+        }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> update(DhProductModel dhProductModel) {
+        try {
+            DhProduct dhProduct = mapProductFromModel(dhProductModel);
+            if (dhProduct.getCategory() == null) {
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.NOT_FOUND_CATEGORY, HttpStatus.EXPECTATION_FAILED);
+            }
+            productRepository.save(dhProduct);
+            saveImageProduct(dhProductModel, dhProduct);
+
+            log.info(String.format("update 1 product, id=%d", dhProduct.getId()));
+            return ApiResponseUtil.getBaseSuccessStatus(null);
+        } catch (Exception ex) {
+            log.error(String.format("Update product with id %s error , ", dhProductModel.getId()), ex);
+            return ApiResponseUtil.getBaseFailureStatus();
+        }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> delete(int id) {
+        try {
+            productRepository.deleteById(id);
+            log.info(String.format("Delete 1 product, id=%d", id));
+            return ApiResponseUtil.getBaseSuccessStatus(null);
+        } catch (Exception ex) {
+            log.error(String.format("Delete product with id %s error , ", id), ex);
             return ApiResponseUtil.getBaseFailureStatus();
         }
     }

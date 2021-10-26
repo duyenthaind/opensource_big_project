@@ -47,4 +47,15 @@ public class ApiResponseUtil {
                 Constants.APIResponseStatus.FAILURE.getMessage(), null);
         return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(response);
     }
+
+    public static ResponseEntity<ApiResponse> getBaseSuccessStatus(ApiResponse.ApiResponseResult responseResult) {
+        ApiResponse response = new ApiResponse.Builder()
+                .withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
+                .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage())
+                .withDateTime(DateUtil.currentDate())
+                .withResult(responseResult)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
 }

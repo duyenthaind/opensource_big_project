@@ -1,8 +1,10 @@
 package com.group7.fruitswebsite.controller.admin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,37 +24,60 @@ import com.group7.fruitswebsite.util.ApiResponseUtil;
 import com.group7.fruitswebsite.util.StringUtil;
 
 import lombok.extern.log4j.Log4j;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller(value = "productAdminController")
 @Log4j
 @RequestMapping(value = "/api/product/v1")
 public class ProductController {
-	
+
     private ProductService productService;
-	
-	@PostMapping("/products")
-	public ResponseEntity<ApiResponse> addNewProduct(@ModelAttribute DhProductModel dhProductModel){
-		log.debug(dhProductModel.toString());
-		ImageService imageService = new ImageProductServiceImpl();
-		List<String> imagePath = imageService.saveUploadedMultiFiles(dhProductModel.getFiles());
-		dhProductModel.setPathUploadedAvatar(imagePath);
-		return productService.saveOne(dhProductModel);
-	}
 
-	@GetMapping("/products")
-	public ResponseEntity<ApiResponse> getAllProducts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size){
-		return productService.getAllWithPaging(page, size);
-	}
+    @PostMapping("/products")
+    public ResponseEntity<ApiResponse> addNewProduct(@ModelAttribute DhProductModel dhProductModel) {
+        log.debug(dhProductModel.toString());
+        ImageService imageService = new ImageProductServiceImpl();
+        List<String> imagePath = imageService.saveUploadedMultiFiles(dhProductModel.getFiles());
+        dhProductModel.setPathUploadedAvatar(imagePath);
+        return productService.saveOne(dhProductModel);
+    }
 
-	@GetMapping("/products/{id}")
-	public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id){
-		return productService.getOne(id);
-	}
+    @GetMapping("/products")
+    public ResponseEntity<ApiResponse> getAllProducts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
+        return productService.getAllWithPaging(page, size);
+    }
 
-	@Autowired
+    @PutMapping("/products")
+    public ResponseEntity<ApiResponse> updateProduct(@ModelAttribute DhProductModel dhProductModel) {
+        log.debug(dhProductModel.toString());
+        ImageService imageService = new ImageProductServiceImpl();
+        List<Integer> existedFiles = new ArrayList<>();
+        MultipartFile[] files = dhProductModel.getFiles();
+        for (int index = -1; ++index < files.length; ) {
+            if (imageService.checkExists(files[index]).isPresent()) {
+                existedFiles.add(index);
+            }
+        }
+        existedFiles.forEach(index -> ArrayUtils.remove(files, index));
+        List<String> imagePath = imageService.saveUploadedMultiFiles(files);
+        dhProductModel.setPathUploadedAvatar(imagePath);
+        return productService.update(dhProductModel);
+    }
+
+    @DeleteMapping("/products")
+    public ResponseEntity<ApiResponse> deleteProduct(@RequestParam int id){
+        return productService.delete(id);
+    }
+
+    @GetMapping("/products/{id}")
+    public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id) {
+        return productService.getOne(id);
+    }
+
+    @Autowired
     public void setProductRepository(ProductService productService) {
         this.productService = productService;
     }
-	
+
 }

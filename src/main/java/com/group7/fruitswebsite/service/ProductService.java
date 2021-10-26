@@ -19,4 +19,8 @@ public interface ProductService {
 	ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
 
 	ResponseEntity<ApiResponse> getOne(int id);
+
+	ResponseEntity<ApiResponse> update(DhProductModel dhProductModel);
+
+	ResponseEntity<ApiResponse> delete(int id);
 }

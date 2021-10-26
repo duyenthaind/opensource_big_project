@@ -54,6 +54,9 @@ public class Constants {
     }
 
     public static class ApiMessage{
+        private ApiMessage(){
+        }
+
         public static final String NOT_FOUND_CATEGORY = "category is not found";
         public static final String AVATAR_DEFINED_BUT_NOT_FOUND = "image may not be uploaded correctly";
         public static final String DATA_IS_NOT_VALID = "data is not valid";
@@ -81,12 +84,18 @@ public class Constants {
     }
 
     public static class CustomMessageField{
+        private CustomMessageField(){
+        }
+
         public static final String ERROR_CODE = "errorCode";
         public static final String MESSAGE = "message";
         public static final String CUSTOM_DATA = "customData";
     }
 
     public static class SystemUser{
+        private SystemUser(){
+        }
+
         public static final int SYSTEM_USER_ID = -999;
     }
 }
