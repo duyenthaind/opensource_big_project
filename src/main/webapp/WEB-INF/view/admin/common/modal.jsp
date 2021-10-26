@@ -140,7 +140,10 @@
 		<div class="modal-content">
 			<div class="modal-header"></div>
 			<div class="modal-body" id="modal-body"></div>
-			<div class="modal-footer"></div>
+			<div class="modal-footer">
+				<button style="float: right;" type="button" class="btn btn-default"
+					data-dismiss="modal">Close</button>
+			</div>
 		</div>
 
 	</div>
@@ -203,14 +206,14 @@
 												<c:forEach var="cate" items="${category}">
 													<option value="${cate.id}">${cate.name}</option>
 												</c:forEach>
-											<select/>
+												<select />
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label for="cc-payment" class="control-label mb-1">Name</label>
 										<input id="productName" name="name" type="text"
-											class="form-control" aria-required="true" 
+											class="form-control" aria-required="true"
 											data-val-required="Please enter the name"
 											aria-invalid="false" placeholder="name">
 									</div>
@@ -244,8 +247,8 @@
 									</div>
 									<div class="form-group has-success">
 										<label for="cc-name" class="control-label mb-1">Description</label>
-										<textarea id="productShortDescription" class="summernote" name="short_description"
-											type="text"></textarea>
+										<textarea id="productShortDescription" class="summernote"
+											name="short_description" type="text"></textarea>
 										<span class="help-block field-validation-valid"
 											data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
 									</div>
@@ -257,8 +260,8 @@
 
 							<div class="form-group has-success">
 								<label for="cc-name" class="control-label mb-1">Description</label>
-								<textarea id="productDetailDescription" class="summernote" name="detail_description"
-									type="text"></textarea>
+								<textarea id="productDetailDescription" class="summernote"
+									name="detail_description" type="text"></textarea>
 								<span class="help-block field-validation-valid"
 									data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
 							</div>

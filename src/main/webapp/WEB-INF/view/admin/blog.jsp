@@ -12,14 +12,13 @@
 <jsp:include page="/WEB-INF/view/admin/common/navbar.jsp"></jsp:include>
 
 <!-- end narbar -->
+    
 
-<!-- main containter -->
-
-
-
-<!-- end main containter -->
-
-
+    
+    
+    
+    
+    
 <!-- narbar -->
 
 <jsp:include page="/WEB-INF/view/admin/common/footer.jsp"></jsp:include>
