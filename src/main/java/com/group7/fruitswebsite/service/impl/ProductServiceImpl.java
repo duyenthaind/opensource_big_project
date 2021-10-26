@@ -54,8 +54,9 @@ public class ProductServiceImpl implements ProductService {
         optionalDhCategory.ifPresent(dhProduct::setCategory);
 
         dhProduct.setCreatedDate(System.currentTimeMillis());
+        dhProduct.setUpdatedDate(0L);
         dhProduct.setSeo(StringUtil.seo(dhProductModel.getProductName()) + "-" + System.currentTimeMillis());
-        
+
         return dhProduct;
     }
 
@@ -153,15 +154,37 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public ResponseEntity<ApiResponse> getOne(int id) {
+        try {
+            Optional<DhProduct> optional = productRepository.findById(id);
+            if (optional.isPresent()) {
+                DhProduct product = optional.get();
+                DhProductDto dto = DtoUtil.getDtoFromProduct(product, objectMapper, productImageRepository);
+                ApiResponse.ApiResponseResult apiResponseResult = new ApiResponse.ApiResponseResult();
+                apiResponseResult.setData(Collections.singletonList(dto));
+                return ResponseEntity.ok(new ApiResponse.Builder()
+                        .withDateTime(DateUtil.currentDate())
+                        .withStatus(Constants.APIResponseStatus.SUCCESS_200.getStatus())
+                        .withMessage(Constants.APIResponseStatus.SUCCESS_200.getMessage())
+                        .withResult(apiResponseResult).build());
+            }
+            return ResponseEntity.ok(new ApiResponse());
+        } catch (Exception ex) {
+            log.error(String.format("Get one product with id %s error", id), ex);
+            return ApiResponseUtil.getBaseFailureStatus();
+        }
+    }
+
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
     @Autowired
-	public void setCategoryRepository(CategoryRepository categoryRepository) {
-		this.categoryRepository = categoryRepository;
-	}
+    public void setCategoryRepository(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
     @Autowired
     public void setProductImageRepository(ProductImageRepository productImageRepository) {

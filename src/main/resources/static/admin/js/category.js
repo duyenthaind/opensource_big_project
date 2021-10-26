@@ -210,7 +210,7 @@ function detailsCategory(id){
 					'<div class="col-lg-4">'+
 						'<div class="card" style="width: 200px">'+
 						'<img id="outputCateImage" class="card-img-top img-thumbnail"'+
-							'src=' + object[0].avatar + '" alt="Card image"'+
+							'src="/uploads/' + object[0].avatar + '" alt="Card image"'+
 							'style="width: 100%" />'+
 						'</div>'+
 					'</div>'+
@@ -261,7 +261,7 @@ function detailsCategory(id){
 						'<button style="float:right;" type="button"  class="btn btn-default" data-dismiss="modal">Close</button>'+
 					'</div>'+
 				'</div>';
-				$("#modal-body").html(html);
+				$(".modal-body-details").html(html);
 				$("#detailsCategory").modal("show");
 			}
 		},

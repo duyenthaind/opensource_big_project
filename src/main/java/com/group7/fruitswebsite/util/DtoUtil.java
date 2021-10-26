@@ -8,6 +8,7 @@ import com.group7.fruitswebsite.entity.DhProductImage;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
 import lombok.extern.log4j.Log4j;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,8 @@ public class DtoUtil {
             List<DhProductImage> listCurrentProductImage = productImageRepository.getByDhProductId(dhProduct.getId());
             if (!listCurrentProductImage.isEmpty()) {
                 productDto.setProductImages(listCurrentProductImage.stream().map(DhProductImage::getPath).collect(Collectors.toList()));
+            } else {
+                productDto.setProductImages(Collections.emptyList());
             }
             return productDto;
         } catch (Exception ex){
