@@ -3,7 +3,9 @@ package com.group7.fruitswebsite.controller.admin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
+import com.group7.fruitswebsite.entity.DhProductImage;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,23 +52,30 @@ public class ProductController {
 
     @PutMapping("/products")
     public ResponseEntity<ApiResponse> updateProduct(@ModelAttribute DhProductModel dhProductModel) {
-        log.debug(dhProductModel.toString());
+        log.info(dhProductModel.toString());
+        if (dhProductModel.getId() == null) {
+            log.error(String.format("Drop all action with model %s because it has no id", dhProductModel));
+            return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.PRODUCT_ID_IS_NOT_DEFINED, HttpStatus.FORBIDDEN);
+        }
         ImageService imageService = new ImageProductServiceImpl();
         List<Integer> existedFiles = new ArrayList<>();
         MultipartFile[] files = dhProductModel.getFiles();
         for (int index = -1; ++index < files.length; ) {
-            if (imageService.checkExists(files[index]).isPresent()) {
+            Optional<DhProductImage> optional = imageService.checkExists(files[index], dhProductModel.getId());
+            if (optional.isPresent()) {
                 existedFiles.add(index);
+                dhProductModel.addProductImages(optional.get());
             }
         }
         existedFiles.forEach(index -> ArrayUtils.remove(files, index));
         List<String> imagePath = imageService.saveUploadedMultiFiles(files);
         dhProductModel.setPathUploadedAvatar(imagePath);
+        dhProductModel.setFiles(files);
         return productService.update(dhProductModel);
     }
 
     @DeleteMapping("/products")
-    public ResponseEntity<ApiResponse> deleteProduct(@RequestParam int id){
+    public ResponseEntity<ApiResponse> deleteProduct(@RequestParam Integer id) {
         return productService.delete(id);
     }
 

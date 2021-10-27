@@ -11,5 +11,5 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ImageService<T> {
     String saveUploadFiles(MultipartFile[] files);
     List<String> saveUploadedMultiFiles(MultipartFile[] files);
-    Optional<T> checkExists(MultipartFile file);
+    Optional<T> checkExists(MultipartFile file, int entityId);
 }

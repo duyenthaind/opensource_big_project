@@ -28,7 +28,7 @@ public class ImageCategoryServiceImpl implements ImageService<DhCategory> {
 	}
 
     @Override
-    public Optional<DhCategory> checkExists(MultipartFile file) {
+    public Optional<DhCategory> checkExists(MultipartFile file, int entityId) {
         return Optional.empty();
     }
 }

@@ -32,12 +32,13 @@ public class ImageProductServiceImpl implements ImageService<DhProductImage> {
     }
 
     @Override
-    public Optional<DhProductImage> checkExists(MultipartFile file) {
+    public Optional<DhProductImage> checkExists(MultipartFile file, int entityId) {
         Session session = ApplicationContextProvider.getApplicationContext().getBean(Session.class);
         try {
             return Optional.ofNullable((DhProductImage)
-                    session.createQuery("from DhProductImage where name like :name")
+                    session.createQuery("from DhProductImage where name = :name and dhProduct.id=:entityId")
                             .setParameter("name", "%" + file.getName())
+                            .setParameter("entityId", entityId)
                             .uniqueResult()
             );
         } catch (Exception ex) {

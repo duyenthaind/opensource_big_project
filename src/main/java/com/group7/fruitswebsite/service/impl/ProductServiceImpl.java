@@ -10,6 +10,7 @@ import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.entity.DhProductImage;
 import com.group7.fruitswebsite.model.DhProductModel;
+import com.group7.fruitswebsite.service.ProductImageService;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
 import com.group7.fruitswebsite.util.DateUtil;
 import com.group7.fruitswebsite.util.DtoUtil;
@@ -45,6 +46,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
     private ProductImageRepository productImageRepository;
+    private ProductImageService productImageService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public DhProduct setNewProduct(DhProductModel dhProductModel) throws JsonProcessingException {
@@ -80,12 +82,20 @@ public class ProductServiceImpl implements ProductService {
                 DhProductImage dhProductImage = new DhProductImage();
                 dhProductImage.setCreatedBy(Constants.SystemUser.SYSTEM_USER_ID);
                 dhProductImage.setCreatedDate(System.currentTimeMillis());
-                dhProductImage.setName(dhProductModel.getFiles()[i].getOriginalFilename());
+                dhProductImage.setName(dhProductModel.getFiles()[i].getName());
                 dhProductImage.setPath(imagePath.get(i).replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY));
                 dhProductImage.setDhProduct(dhProduct);
                 productImageRepository.save(dhProductImage);
+                dhProductModel.addProductImages(dhProductImage);
             }
         }
+    }
+
+    private void dropOldImageProduct(DhProductModel dhProductModel, DhProduct dhProduct) {
+        if (dhProductModel.getDhProductImages().isEmpty()) {
+            return;
+        }
+        productImageService.deleteOldImageFromProduct(dhProductModel.getDhProductImages(), dhProduct.getId());
     }
 
 
@@ -186,6 +196,7 @@ public class ProductServiceImpl implements ProductService {
             }
             productRepository.save(dhProduct);
             saveImageProduct(dhProductModel, dhProduct);
+            dropOldImageProduct(dhProductModel, dhProduct);
 
             log.info(String.format("update 1 product, id=%d", dhProduct.getId()));
             return ApiResponseUtil.getBaseSuccessStatus(null);
@@ -222,4 +233,8 @@ public class ProductServiceImpl implements ProductService {
         this.productImageRepository = productImageRepository;
     }
 
+    @Autowired
+    public void setProductImageService(ProductImageService productImageService) {
+        this.productImageService = productImageService;
+    }
 }

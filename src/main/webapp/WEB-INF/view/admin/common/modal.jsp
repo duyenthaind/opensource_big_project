@@ -306,3 +306,133 @@
 </div>
 
 
+<div class="modal fade" id="modalUpdateProduct" role="dialog">
+	<div class="modal-dialog modal-lg">
+
+		<!-- Modal content-->
+		<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+			<input type="hidden" id="productIdUpdate" name="prodId" />
+			<div class="modal-content">
+				<div class="modal-header"></div>
+				<div class="modal-body">
+					<div class="row">
+
+						<div class="col-lg-6">
+							<div class="card">
+								<div class="card-header">New</div>
+								<div class="card-body">
+									<div class="card-title">
+										<h3 class="text-center title-2">Product</h3>
+									</div>
+									<hr>
+									<div class="form-group">
+										<label class="control-label" for="email">Categories:</label>
+										<div class="col-sm-12">
+											<select id="productCategoryUpdate" class="form-control">
+												<c:forEach var="cate" items="${category}">
+												<option value="${cate.id}">${cate.name}</option>
+												</c:forEach>
+												<select />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="cc-payment" class="control-label mb-1">Name</label>
+										<input id="productNameUpdate" name="name" type="text"
+											   class="form-control" aria-required="true"
+											   data-val-required="Please enter the name"
+											   aria-invalid="false" placeholder="name">
+									</div>
+									<div class="form-group">
+										<label for="cc-payment" class="control-label mb-1">Available</label>
+										<input id="productAvailableUpdate" name="available" type="text"
+											   class="form-control" aria-required="true" data-val="true"
+											   data-val-required="Please enter the name"
+											   aria-invalid="false" placeholder="0">
+									</div>
+									<div class="form-group">
+										<label for="cc-payment" class="control-label mb-1">Price($)</label>
+										<input id="productPriceUpdate" name="price" type="text"
+											   class="form-control" aria-required="true" data-val="true"
+											   data-val-required="Please enter the name"
+											   aria-invalid="false" placeholder="20">
+									</div>
+									<div class="form-group">
+										<label for="cc-payment" class="control-label mb-1">Price
+											sale($)</label> <input id="productPriceSaleUpdate" name="price_sale"
+																   type="text" class="form-control" aria-required="true"
+																   data-val="true" data-val-required="Please enter the name"
+																   aria-invalid="false" placeholder="20">
+									</div>
+									<div class="form-group">
+										<label for="cc-payment" class="control-label mb-1">weight
+											(kg)</label> <input id="productWeightUpdate" name="weight" type="text"
+																class="form-control" aria-required="true" data-val="true"
+																data-val-required="Please enter the name"
+																aria-invalid="false" placeholder="0.5">
+									</div>
+									<div class="form-group has-success">
+										<label for="cc-name" class="control-label mb-1">Description</label>
+										<textarea id="productShortDescriptionUpdate" class="summernote"
+												  name="short_description" type="text"></textarea>
+										<span class="help-block field-validation-valid"
+											  data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+
+
+							<div class="form-group has-success">
+								<label for="cc-name" class="control-label mb-1">Description</label>
+								<textarea id="productDetailDescriptionUpdate" class="summernote"
+										  name="detail_description" type="text"></textarea>
+								<span class="help-block field-validation-valid"
+									  data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+							</div>
+
+							<div class="form-control has-success">
+								<label for="cc-name" class="control-label mb-1"></label>
+								<div class="gallery"></div>
+								<input type="hidden" id="avatarName" name="avatarName" value="" />
+								<input name="file" id="ufileProductUpdate" type="file" multiple />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div>
+						<button onclick="updateProduct(event);" type="submit"
+								class="btn btn-lg btn-info btn-block">
+							<span id="payment-button-amount">Submit</span> <span
+								id="payment-button-sending" style="display: none;">Sending</span>
+						</button>
+					</div>
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="modal fade" id="confirmDeleteProduct" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Modal title</h5>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure</p>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" id="idForDeleteProduct" />
+				<button type="button" id="buttonDeleteProduct"
+						class="btn btn-primary">Delete</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>

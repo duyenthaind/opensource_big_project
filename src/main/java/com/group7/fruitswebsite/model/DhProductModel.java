@@ -1,5 +1,6 @@
 package com.group7.fruitswebsite.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -45,6 +46,9 @@ public class DhProductModel extends BaseModel {
     @JsonIgnore
     private List<String> pathUploadedAvatar;
     @JsonIgnore
-    private List<DhProductImage> dhProductImages;
+    private List<DhProductImage> dhProductImages = new ArrayList<>();
 
+    public void addProductImages(DhProductImage productImage){
+        dhProductImages.add(productImage);
+    }
 }

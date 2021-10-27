@@ -2,6 +2,7 @@ package com.group7.fruitswebsite.service.impl;
 
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
+import com.group7.fruitswebsite.entity.BaseEntity;
 import com.group7.fruitswebsite.entity.DhProductImage;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
 import com.group7.fruitswebsite.service.ProductImageService;
@@ -10,8 +11,12 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author duyenthai
@@ -22,9 +27,16 @@ public class ProductImageServiceImpl implements ProductImageService {
 
     private ProductImageRepository productImageRepository;
 
+    private EntityManager entityManager;
+
     @Autowired
     public void setProductImageRepository(ProductImageRepository productImageRepository) {
         this.productImageRepository = productImageRepository;
+    }
+
+    @Autowired
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -70,5 +82,20 @@ public class ProductImageServiceImpl implements ProductImageService {
             log.error("Error get product by path, ", ex);
         }
         return Optional.empty();
+    }
+
+    @Override
+    @Transactional
+    public void deleteOldImageFromProduct(List<DhProductImage> productImages, int productId) {
+        try{
+            List<Integer> listProductImagesId = productImages.stream().map(BaseEntity::getId).collect(Collectors.toList());
+            /*entityManager.createQuery("delete from DhProductImage where id not in :listId and dhProduct.id = :productId")
+                    .setParameter("listId", listProductImagesId)
+                    .setParameter("productId", productId)
+                    .executeUpdate();*/
+            productImageRepository.deleteOldImageFromProduct(listProductImagesId, productId);
+        }catch (Exception ex){
+            log.error("Error drop old image product");
+        }
     }
 }
