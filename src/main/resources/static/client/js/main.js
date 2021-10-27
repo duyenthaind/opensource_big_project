@@ -36,7 +36,8 @@
     --------------------*/
     $('.set-bg').each(function () {
         var bg = $(this).data('setbg');
-        $(this).css('background-image', 'url(' + bg + ')');
+        var formatBg = bg.replace(/\\/g,"/");
+        $(this).css('background-image', 'url(' + formatBg + ')');
     });
 
     //Humberger Menu
