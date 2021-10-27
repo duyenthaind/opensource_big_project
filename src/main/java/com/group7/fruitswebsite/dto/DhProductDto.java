@@ -1,7 +1,6 @@
 package com.group7.fruitswebsite.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +12,6 @@ import java.util.Map;
 /**
  * @author duyenthai
  */
-@JsonIgnoreProperties({"categoryId"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Setter
 @Getter
@@ -27,6 +25,7 @@ public class DhProductDto extends BaseDto {
     private Float weight;
     private Integer categoryId;
     private List<String> productImages;
+    private List<DhProductImageDto> listProductImages;
     @JsonAnySetter
     private Map<String, Object> any = new HashMap<>();
 }

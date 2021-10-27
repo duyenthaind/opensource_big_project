@@ -26,7 +26,7 @@ public class DhProductImage extends BaseEntity implements java.io.Serializable{
 	@Column(name = "name", nullable = true, length = 50)
 	private String name;
 
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
 	@JsonProperty(value = "product")
 	private DhProduct dhProduct;

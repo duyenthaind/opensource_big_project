@@ -340,7 +340,7 @@
 						</div>
 						<div class="table-data__tool-right">
 							<button class="au-btn au-btn-icon au-btn--green au-btn--small"
-								type="button" data-toggle="modal" data-target="#newProduct">
+								type="button" data-toggle="modal" data-target="#newProduct" onclick="emptyGallery()">
 								<i class="zmdi zmdi-plus"></i>add item
 							</button>
 
