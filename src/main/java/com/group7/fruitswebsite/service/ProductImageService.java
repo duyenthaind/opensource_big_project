@@ -5,6 +5,7 @@ import com.group7.fruitswebsite.entity.DhProductImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -16,4 +17,8 @@ public interface ProductImageService {
     Optional<DhProductImage> getById(int id);
 
     Optional<DhProductImage> getByPath(String path);
+
+    void deleteOldImageFromProduct(List<DhProductImage> productImages, int productId);
+
+    ResponseEntity<ApiResponse> delete(int id);
 }

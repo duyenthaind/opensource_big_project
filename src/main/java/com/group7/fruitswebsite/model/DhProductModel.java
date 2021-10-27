@@ -1,8 +1,10 @@
 package com.group7.fruitswebsite.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.group7.fruitswebsite.entity.DhProductImage;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -43,5 +45,10 @@ public class DhProductModel extends BaseModel {
     private float weight = 0.0f;
     @JsonIgnore
     private List<String> pathUploadedAvatar;
+    @JsonIgnore
+    private List<DhProductImage> dhProductImages = new ArrayList<>();
 
+    public void addProductImages(DhProductImage productImage){
+        dhProductImages.add(productImage);
+    }
 }

@@ -48,7 +48,7 @@ public class DhProduct extends BaseEntity implements java.io.Serializable {
 	@Column(name = "seo", length = 1000, nullable = false)
 	private String seo;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private DhCategory category;
 

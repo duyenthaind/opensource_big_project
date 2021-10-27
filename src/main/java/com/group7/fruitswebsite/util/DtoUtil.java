@@ -1,8 +1,8 @@
 package com.group7.fruitswebsite.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.dto.DhProductDto;
+import com.group7.fruitswebsite.dto.DhProductImageDto;
 import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.entity.DhProductImage;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 @Log4j
 public class DtoUtil {
 
-    private  DtoUtil(){
+    private DtoUtil() {
 
     }
 
-    public static DhProductDto getDtoFromProduct(DhProduct dhProduct, ObjectMapper objectMapper, ProductImageRepository productImageRepository)  {
-        try{
+    public static DhProductDto getDtoFromProduct(DhProduct dhProduct, ObjectMapper objectMapper, ProductImageRepository productImageRepository) {
+        try {
             DhProductDto productDto = objectMapper.readValue(objectMapper.writeValueAsString(dhProduct), DhProductDto.class);
             if (dhProduct.getCategory() != null) {
                 productDto.setCategoryId(dhProduct.getCategory().getId());
@@ -32,12 +32,26 @@ public class DtoUtil {
             List<DhProductImage> listCurrentProductImage = productImageRepository.getByDhProductId(dhProduct.getId());
             if (!listCurrentProductImage.isEmpty()) {
                 productDto.setProductImages(listCurrentProductImage.stream().map(DhProductImage::getPath).collect(Collectors.toList()));
+                List<DhProductImageDto> listProductImageDtos = listCurrentProductImage.stream().map(val -> getProductImageDtoFromProduct(val, objectMapper)).collect(Collectors.toList());
+                productDto.setListProductImages(listProductImageDtos);
             } else {
                 productDto.setProductImages(Collections.emptyList());
+                productDto.setListProductImages(Collections.emptyList());
             }
             return productDto;
-        } catch (Exception ex){
+        } catch (Exception ex) {
             log.error("Map error, ", ex);
+        }
+        return null;
+    }
+
+    public static DhProductImageDto getProductImageDtoFromProduct(DhProductImage dhProductImage, ObjectMapper objectMapper) {
+        try {
+            DhProductImageDto productImageDto = objectMapper.readValue(objectMapper.writeValueAsString(dhProductImage), DhProductImageDto.class);
+            productImageDto.setProductId(dhProductImage.getDhProduct() == null ? -1 : dhProductImage.getDhProduct().getId());
+            return productImageDto;
+        } catch (Exception ex) {
+            log.error("Map error, ex");
         }
         return null;
     }
