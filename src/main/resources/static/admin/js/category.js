@@ -119,6 +119,7 @@ $(document).ready(function(){
 				if(object){
 					alert("success");
 					getFirst();
+					$("#confirmDeleteCategory").modal("hide");
 				}	
 			},
 			error : function(jqXHR,testStatus,errorThrown){

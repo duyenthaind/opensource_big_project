@@ -20,7 +20,7 @@ public class DhProduct extends BaseEntity implements java.io.Serializable {
 	@JsonAlias(value = "productName")
 	private String name;
 
-	@Column(name = "detail_description", length = 1000, nullable = false)
+	@Column(name = "detail_description", columnDefinition = "LONGTEXT", nullable = false)
 	@JsonProperty(value = "detailDescription")
 	private String detailDescription;
 
@@ -28,10 +28,10 @@ public class DhProduct extends BaseEntity implements java.io.Serializable {
 	@JsonProperty(value = "shortDescription")
 	private String shortDescription;
 
-	@Column(name = "price", length = 1000, nullable = false)
+	@Column(name = "price",  nullable = false)
 	private Long price;
 
-	@Column(name = "price_sale", length = 1000, nullable = false)
+	@Column(name = "price_sale",  nullable = false)
 	@JsonProperty(value = "priceSale")
 	private Long priceSale;
 

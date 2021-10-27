@@ -51,8 +51,10 @@ public class ProductController {
 	}
 
 	@Autowired
-    public void setProductRepository(ProductService productService) {
-        this.productService = productService;
-    }
+	public void setProductService(ProductService productService) {
+		this.productService = productService;
+	}
+
+	
 	
 }

@@ -3,6 +3,8 @@ package com.group7.fruitswebsite.dto;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.group7.fruitswebsite.entity.DhCategory;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +28,7 @@ public class DhProductDto extends BaseDto {
     private Long available;
     private Float weight;
     private Integer categoryId;
+    private DhCategory category;
     private List<String> productImages;
     @JsonAnySetter
     private Map<String, Object> any = new HashMap<>();

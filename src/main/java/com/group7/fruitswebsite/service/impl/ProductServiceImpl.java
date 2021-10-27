@@ -127,6 +127,21 @@ public class ProductServiceImpl implements ProductService {
         }
         return Collections.emptyList();
     }
+    
+    @Override
+    public DhProductDto getOneProductsAsDto(Integer id) {
+        try {
+            DhProductDto result = new DhProductDto();
+            DhProduct dhProduct = productRepository.findById(id).get();
+            
+            result = DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository);
+            
+            return result;
+        } catch (Exception ex) {
+            log.error("Get all product as dto error, ", ex);
+            return null;
+        }      
+    }
 
     @Override
     public ResponseEntity<ApiResponse> getAllWithPaging(int page, int size) {

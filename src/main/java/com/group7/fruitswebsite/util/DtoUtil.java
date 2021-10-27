@@ -27,6 +27,7 @@ public class DtoUtil {
             DhProductDto productDto = objectMapper.readValue(objectMapper.writeValueAsString(dhProduct), DhProductDto.class);
             if (dhProduct.getCategory() != null) {
                 productDto.setCategoryId(dhProduct.getCategory().getId());
+                productDto.setCategory(dhProduct.getCategory());
             }
             List<DhProductImage> listCurrentProductImage = productImageRepository.getByDhProductId(dhProduct.getId());
             if (!listCurrentProductImage.isEmpty()) {

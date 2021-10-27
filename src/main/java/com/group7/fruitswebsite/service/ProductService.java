@@ -19,4 +19,6 @@ public interface ProductService {
 	ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
 
 	ResponseEntity<ApiResponse> getOne(int id);
+	
+	DhProductDto getOneProductsAsDto(Integer id);
 }
