@@ -50,6 +50,11 @@ public class AdminController {
 	public String form() {
 		return "admin/form";
 	}
+	
+	@GetMapping("/blog")
+	public String blog() {
+		return "admin/blog";
+	}
 
 	@Autowired
 	public void setCategoryRepository(CategoryRepository categoryRepository) {
