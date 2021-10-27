@@ -305,6 +305,39 @@
 	</div>
 </div>
 
+<div class="modal fade" id="detailUpdateBlog" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header"></div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-header">Detail</div>
+							<div class="card-body">
+								<div class="card-title">
+									<h3 class="text-center title-2">Blog</h3>
+								</div>
+								<hr>
+								<form enctype="multipart/form-data"
+									id="updateBlogForm">
+									<input type="hidden" id="blogId" name="id" />
+									<div class="form-group">
+										<label for="cc-payment" class="control-label mb-1">Title</label>
+										<input id="updateNameBlog" name="name" type="text"
+											class="form-control" aria-required="true" data-val="true"
+											data-val-required="Please enter the name"
+											aria-invalid="false" placeholder="name" value="">
+									</div>
+									<div class="form-group has-success">
+										<label for="cc-name" class="control-label mb-1">Description</label>
+										<textarea id="updateShortDescriptionBlog" class="summernote" rows="4"
+											cols="40" name="description"></textarea>
+										<span class="help-block field-validation-valid"
+											data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+									</div>
 
 <div class="modal fade" id="modalUpdateProduct" role="dialog">
 	<div class="modal-dialog modal-lg">
