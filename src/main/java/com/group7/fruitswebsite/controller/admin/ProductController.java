@@ -57,20 +57,22 @@ public class ProductController {
             log.error(String.format("Drop all action with model %s because it has no id", dhProductModel));
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.PRODUCT_ID_IS_NOT_DEFINED, HttpStatus.FORBIDDEN);
         }
-        ImageService imageService = new ImageProductServiceImpl();
-        List<Integer> existedFiles = new ArrayList<>();
         MultipartFile[] files = dhProductModel.getFiles();
-        for (int index = -1; ++index < files.length; ) {
-            Optional<DhProductImage> optional = imageService.checkExists(files[index], dhProductModel.getId());
-            if (optional.isPresent()) {
-                existedFiles.add(index);
-                dhProductModel.addProductImages(optional.get());
+        if (files != null && files.length > 0) {
+            ImageService imageService = new ImageProductServiceImpl();
+            List<Integer> existedFiles = new ArrayList<>();
+            for (int index = -1; ++index < files.length; ) {
+                Optional<DhProductImage> optional = imageService.checkExists(files[index], dhProductModel.getId());
+                if (optional.isPresent()) {
+                    existedFiles.add(index);
+                    dhProductModel.addProductImages(optional.get());
+                }
             }
+            existedFiles.forEach(index -> ArrayUtils.remove(files, index));
+            List<String> imagePath = imageService.saveUploadedMultiFiles(files);
+            dhProductModel.setPathUploadedAvatar(imagePath);
+            dhProductModel.setFiles(files);
         }
-        existedFiles.forEach(index -> ArrayUtils.remove(files, index));
-        List<String> imagePath = imageService.saveUploadedMultiFiles(files);
-        dhProductModel.setPathUploadedAvatar(imagePath);
-        dhProductModel.setFiles(files);
         return productService.update(dhProductModel);
     }
 

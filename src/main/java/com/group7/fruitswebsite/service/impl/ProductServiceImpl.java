@@ -31,6 +31,7 @@ import com.group7.fruitswebsite.repository.CategoryRepository;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
 import com.group7.fruitswebsite.repository.ProductRepository;
 import com.group7.fruitswebsite.service.ProductService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
         optionalDhCategory.ifPresent(dhProduct::setCategory);
 
         dhProduct.setCreatedDate(System.currentTimeMillis());
-        dhProduct.setUpdatedDate(0L);
+//        dhProduct.setUpdatedDate(0L);
         dhProduct.setSeo(StringUtil.seo(dhProductModel.getProductName()) + "-" + System.currentTimeMillis());
 
         return dhProduct;
@@ -191,6 +192,7 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity<ApiResponse> update(DhProductModel dhProductModel) {
         try {
             DhProduct dhProduct = mapProductFromModel(dhProductModel);
+            dhProduct.setSeo(StringUtil.seo(dhProductModel.getProductName()) + "-" + System.currentTimeMillis());
             if (dhProduct.getCategory() == null) {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.NOT_FOUND_CATEGORY, HttpStatus.EXPECTATION_FAILED);
             }
@@ -209,6 +211,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<ApiResponse> delete(int id) {
         try {
+            productImageRepository.deleteByDhProductId(id);
+            log.info(String.format("Delete all product image with product_id=%s", id));
             productRepository.deleteById(id);
             log.info(String.format("Delete 1 product, id=%d", id));
             return ApiResponseUtil.getBaseSuccessStatus(null);

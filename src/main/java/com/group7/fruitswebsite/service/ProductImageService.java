@@ -19,4 +19,6 @@ public interface ProductImageService {
     Optional<DhProductImage> getByPath(String path);
 
     void deleteOldImageFromProduct(List<DhProductImage> productImages, int productId);
+
+    ResponseEntity<ApiResponse> delete(int id);
 }

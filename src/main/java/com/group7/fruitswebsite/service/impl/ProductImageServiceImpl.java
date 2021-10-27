@@ -6,6 +6,7 @@ import com.group7.fruitswebsite.entity.BaseEntity;
 import com.group7.fruitswebsite.entity.DhProductImage;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
 import com.group7.fruitswebsite.service.ProductImageService;
+import com.group7.fruitswebsite.util.ApiResponseUtil;
 import com.group7.fruitswebsite.util.DateUtil;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,18 @@ public class ProductImageServiceImpl implements ProductImageService {
             productImageRepository.deleteOldImageFromProduct(listProductImagesId, productId);
         }catch (Exception ex){
             log.error("Error drop old image product");
+        }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> delete(int id) {
+        try{
+            productImageRepository.deleteById(id);
+            log.info(String.format("Delete on product image with id %s", id));
+            return ApiResponseUtil.getBaseSuccessStatus(null);
+        }catch (Exception ex){
+            log.error("Error delete product image, ", ex);
+            return ApiResponseUtil.getBaseFailureStatus();
         }
     }
 }

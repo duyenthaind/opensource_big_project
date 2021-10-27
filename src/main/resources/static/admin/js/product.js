@@ -503,10 +503,16 @@ function showModalUpdateProduct(id){
                 $('#productDetailDescriptionUpdate').val(data.detailDescription)
 
                 let images = "";
-				for(let image of data.productImages){
-                    images += '<div class="col-lg-4" style="position: relative"><div class="card" style="width: 200px " >'
-                        + '<img class="card-img-top img-thumbnail" src="/uploads/' + image + '" alt="Product Detail image"'
-                        + 'style="width:100%"/></div></div>'
+				let index = 0;
+				for(let image of data.listProductImages){
+                    images += '<div class="col-lg-4" style="position: relative" id="imageProduct'+ index +'"><div class="card" style="width: 200px " >'
+                        + '<img class="card-img-top img-thumbnail" src="/uploads/' + image.path + '" alt="Product Detail image"'
+                        + 'style="width:100%"/></div>'
+						+ "<button type='button' class='item' data-toggle='tooltip' data-placement='top' title='Delete' onclick='showModalDeleteProductImage(" + image.id + ", event, " + index + ")'>"
+						+ "<i class='zmdi zmdi-block'></i>"
+						+ "</button>"
+						+ '</div>'
+					index++
                 }
                 let galleryElement = $(".gallery")
                 galleryElement.empty()
