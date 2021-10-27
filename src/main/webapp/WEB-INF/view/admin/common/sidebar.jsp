@@ -62,7 +62,7 @@
 
 <!-- Main CSS-->
 <link href="${base}/admin/css/theme.css" rel="stylesheet" media="all">
-
+<link href="/admin/css/style.css" rel="stylesheet" media="all">
 </head>
 
 <body class="animsition">
@@ -152,6 +152,8 @@
 							</ul></li>
 
 						<li><a href="${base}/admin/table"> <i class="fas fa-table"></i>Tables
+						</a></li>
+						<li><a href="${base}/admin/blog"> <i class="fa fa-newspaper-o" aria-hidden="true"></i>Blogs
 						</a></li>
 					</ul>
 				</nav>
