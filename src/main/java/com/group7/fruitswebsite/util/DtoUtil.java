@@ -1,6 +1,5 @@
 package com.group7.fruitswebsite.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.dto.DhProductDto;
 import com.group7.fruitswebsite.dto.DhProductImageDto;
@@ -28,6 +27,7 @@ public class DtoUtil {
             DhProductDto productDto = objectMapper.readValue(objectMapper.writeValueAsString(dhProduct), DhProductDto.class);
             if (dhProduct.getCategory() != null) {
                 productDto.setCategoryId(dhProduct.getCategory().getId());
+                productDto.setCategory(dhProduct.getCategory());
             }
             List<DhProductImage> listCurrentProductImage = productImageRepository.getByDhProductId(dhProduct.getId());
             if (!listCurrentProductImage.isEmpty()) {
