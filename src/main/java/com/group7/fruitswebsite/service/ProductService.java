@@ -22,7 +22,6 @@ public interface ProductService {
 	
 	DhProductDto getOneProductsAsDto(Integer id);
 
-
 	ResponseEntity<ApiResponse> update(DhProductModel dhProductModel);
 
 	ResponseEntity<ApiResponse> delete(int id);

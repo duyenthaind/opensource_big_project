@@ -151,7 +151,7 @@ public class ProductServiceImpl implements ProductService {
             DhProduct dhProduct = optional.orElseGet(DhProduct::new);
             return DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository);
         } catch (Exception ex) {
-            log.error("Get all product as dto error, ", ex);
+            log.error("Get one product as dto error, ", ex);
         }
         return null;
     }

@@ -1,6 +1,8 @@
 package com.group7.fruitswebsite.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.group7.fruitswebsite.entity.DhCategory;
 
@@ -26,6 +28,7 @@ public class DhProductDto extends BaseDto {
     private Long available;
     private Float weight;
     private Integer categoryId;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private DhCategory category;
     private List<String> productImages;
     private List<DhProductImageDto> listProductImages;
