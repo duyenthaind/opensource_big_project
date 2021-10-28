@@ -338,6 +338,15 @@
 										<span class="help-block field-validation-valid"
 											data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
 									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div class="modal fade" id="modalUpdateProduct" role="dialog">
 	<div class="modal-dialog modal-lg">

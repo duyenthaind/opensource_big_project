@@ -18,7 +18,7 @@ public class DhBlog extends BaseEntity implements Serializable{
 	@Column(name ="name",nullable = false,length = 200)
 	private String name;
 	
-	@Column(name = "details",nullable = false)
+	@Column(name = "details",nullable = false, columnDefinition = "LONGTEXT")
 	private String details;
 	
 	@Column(name = "short_description", nullable = false, columnDefinition = "LONGTEXT")
