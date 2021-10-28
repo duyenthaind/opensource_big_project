@@ -35,30 +35,25 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductController {
 
     private ProductService productService;
-	
-	@PostMapping("/products")
-	public ResponseEntity<ApiResponse> addNewProduct(@ModelAttribute DhProductModel dhProductModel){
-		log.debug(dhProductModel.toString());
-		ImageService imageService = new ImageProductServiceImpl();
-		List<String> imagePath = imageService.saveUploadedMultiFiles(dhProductModel.getFiles());
-		dhProductModel.setPathUploadedAvatar(imagePath);
-		return productService.saveOne(dhProductModel);
-	}
 
-	@GetMapping("/products")
-	public ResponseEntity<ApiResponse> getAllProducts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size){
-		return productService.getAllWithPaging(page, size);
-	}
+    @PostMapping("/products")
+    public ResponseEntity<ApiResponse> addNewProduct(@ModelAttribute DhProductModel dhProductModel) {
+        log.debug(dhProductModel.toString());
+        ImageService imageService = new ImageProductServiceImpl();
+        List<String> imagePath = imageService.saveUploadedMultiFiles(dhProductModel.getFiles());
+        dhProductModel.setPathUploadedAvatar(imagePath);
+        return productService.saveOne(dhProductModel);
+    }
 
-	@GetMapping("/products/{id}")
-	public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id){
-		return productService.getOne(id);
-	}
+    @GetMapping("/products")
+    public ResponseEntity<ApiResponse> getAllProducts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
+        return productService.getAllWithPaging(page, size);
+    }
 
-	@Autowired
-	public void setProductService(ProductService productService) {
-		this.productService = productService;
-	}
+    @GetMapping("/products/{id}")
+    public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id) {
+        return productService.getOne(id);
+    }
 
     @PutMapping("/products")
     public ResponseEntity<ApiResponse> updateProduct(@ModelAttribute DhProductModel dhProductModel) {
@@ -92,8 +87,7 @@ public class ProductController {
     }
 
     @Autowired
-    public void setProductRepository(ProductService productService) {
+    public void setProductService(ProductService productService) {
         this.productService = productService;
     }
-
 }

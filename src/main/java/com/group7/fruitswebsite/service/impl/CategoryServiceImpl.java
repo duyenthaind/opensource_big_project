@@ -139,6 +139,11 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
+    @Override
+    public List<DhCategory> getAllEntity() {
+        return categoryRepository.findAll();
+    }
+
     public ResponseEntity<ApiResponse> getOne(Integer id) {
         DhCategory category = null;
         ApiResponse apiResponse;

@@ -58,7 +58,6 @@ public class ProductServiceImpl implements ProductService {
         optionalDhCategory.ifPresent(dhProduct::setCategory);
 
         dhProduct.setCreatedDate(System.currentTimeMillis());
-//        dhProduct.setUpdatedDate(0L);
         dhProduct.setSeo(StringUtil.seo(dhProductModel.getProductName()) + "-" + System.currentTimeMillis());
 
         return dhProduct;
@@ -144,20 +143,17 @@ public class ProductServiceImpl implements ProductService {
         }
         return Collections.emptyList();
     }
-    
+
     @Override
     public DhProductDto getOneProductsAsDto(Integer id) {
         try {
-            DhProductDto result = new DhProductDto();
-            DhProduct dhProduct = productRepository.findById(id).get();
-            
-            result = DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository);
-            
-            return result;
+            Optional<DhProduct> optional = productRepository.findById(id);
+            DhProduct dhProduct = optional.orElseGet(DhProduct::new);
+            return DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository);
         } catch (Exception ex) {
             log.error("Get all product as dto error, ", ex);
-            return null;
-        }      
+        }
+        return null;
     }
 
     @Override

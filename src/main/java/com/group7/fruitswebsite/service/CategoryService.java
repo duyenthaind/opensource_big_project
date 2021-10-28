@@ -6,6 +6,7 @@ import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.model.DhCategoryModel;
 import com.group7.fruitswebsite.entity.DhCategory;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CategoryService {
@@ -20,4 +21,6 @@ public interface CategoryService {
 	ResponseEntity<ApiResponse> deleteById(Integer id);
 	
 	ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
+
+	List<DhCategory> getAllEntity();
 }
