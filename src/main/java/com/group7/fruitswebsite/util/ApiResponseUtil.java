@@ -2,8 +2,11 @@ package com.group7.fruitswebsite.util;
 
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 /**
  * @author duyenthai
@@ -56,6 +59,16 @@ public class ApiResponseUtil {
                 .withResult(responseResult)
                 .build();
         return ResponseEntity.ok(response);
+    }
+
+    public static ApiResponse.ApiResponseResult mapResultFromList(List data, Page page, int total, int size) {
+        ApiResponse.ApiResponseResult responseResult = new ApiResponse.ApiResponseResult();
+        int totalPages = data.isEmpty() ? total / size : total / size + 1;
+        responseResult.setData(data);
+        responseResult.setPage(page.getNumber() + 1);
+        responseResult.setTotalPages(totalPages);
+        responseResult.setTotal(total);
+        return responseResult;
     }
 
 }

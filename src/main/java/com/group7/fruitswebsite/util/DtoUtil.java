@@ -1,8 +1,10 @@
 package com.group7.fruitswebsite.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.group7.fruitswebsite.dto.DhBlogDto;
 import com.group7.fruitswebsite.dto.DhProductDto;
 import com.group7.fruitswebsite.dto.DhProductImageDto;
+import com.group7.fruitswebsite.entity.DhBlog;
 import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.entity.DhProductImage;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
@@ -52,6 +54,15 @@ public class DtoUtil {
             return productImageDto;
         } catch (Exception ex) {
             log.error("Map error, ex");
+        }
+        return null;
+    }
+
+    public static DhBlogDto getBlogDtoFromDhBlog(DhBlog dhBlog, ObjectMapper objectMapper) {
+        try {
+            return objectMapper.readValue(objectMapper.writeValueAsString(dhBlog), DhBlogDto.class);
+        } catch (Exception ex) {
+            log.error("Map blog to dto error, ", ex);
         }
         return null;
     }
