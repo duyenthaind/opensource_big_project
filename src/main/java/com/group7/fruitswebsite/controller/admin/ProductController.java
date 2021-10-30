@@ -1,7 +1,6 @@
 package com.group7.fruitswebsite.controller.admin;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,17 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.model.DhProductModel;
-import com.group7.fruitswebsite.service.CategoryService;
 import com.group7.fruitswebsite.service.ImageService;
-import com.group7.fruitswebsite.service.ProductImageService;
 import com.group7.fruitswebsite.service.ProductService;
-import com.group7.fruitswebsite.service.impl.ImageProductServiceImpl;
+import com.group7.fruitswebsite.service.image.impl.ImageProductServiceImpl;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
-import com.group7.fruitswebsite.util.StringUtil;
 
 import lombok.extern.log4j.Log4j;
 import org.springframework.web.multipart.MultipartFile;

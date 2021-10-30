@@ -1,8 +1,8 @@
-package com.group7.fruitswebsite.service.impl;
+package com.group7.fruitswebsite.service.image.impl;
 
 import com.group7.fruitswebsite.common.ApplicationContextProvider;
 import com.group7.fruitswebsite.config.ApplicationConfig;
-import com.group7.fruitswebsite.entity.DhProductImage;
+import com.group7.fruitswebsite.entity.DhBlog;
 import com.group7.fruitswebsite.service.ImageService;
 import com.group7.fruitswebsite.util.ImageUtil;
 import lombok.extern.log4j.Log4j;
@@ -17,31 +17,30 @@ import java.util.Optional;
  * @author duyenthai
  */
 @Log4j
-public class ImageProductServiceImpl implements ImageService<DhProductImage> {
+public class ImageBlogServiceImpl implements ImageService<DhBlog> {
 
-    private static final String PRODUCT_UPLOAD_PATH = ApplicationConfig.ROOT_UPLOAD_DIR + File.separator + ApplicationConfig.PRODUCT_UPLOAD_RELATIVE_DIR;
+    private static final String BLOG_UPLOAD_PATH = ApplicationConfig.ROOT_UPLOAD_DIR + File.separator + ApplicationConfig.BLOG_UPLOAD_RELATIVE_DIR;
 
     @Override
     public String saveUploadFiles(MultipartFile[] files) {
-        return ImageUtil.saveUploadedFiles(files, PRODUCT_UPLOAD_PATH);
+        return ImageUtil.saveUploadedFiles(files, BLOG_UPLOAD_PATH);
     }
 
     @Override
     public List<String> saveUploadedMultiFiles(MultipartFile[] files) {
-        return ImageUtil.saveUploadedMultiFiles(files, PRODUCT_UPLOAD_PATH);
+        return ImageUtil.saveUploadedMultiFiles(files, BLOG_UPLOAD_PATH);
     }
 
     @Override
-    public Optional<DhProductImage> checkExists(MultipartFile file, int entityId) {
+    public Optional<DhBlog> checkExists(MultipartFile file, int entityId) {
         try (Session session = ApplicationContextProvider.getApplicationContext().getBean(Session.class)) {
-            return Optional.ofNullable((DhProductImage)
-                    session.createQuery("from DhProductImage where name = :name and dhProduct.id=:entityId")
-                            .setParameter("name", "%" + file.getName())
+            return Optional.ofNullable((DhBlog)
+                    session.createQuery("from DhBlog  where id = :entityId")
                             .setParameter("entityId", entityId)
                             .uniqueResult()
             );
         } catch (Exception ex) {
-            log.error("Check exists file error, ", ex);
+            log.error(String.format("Check exists file error for entity id %s, ", entityId), ex);
         }
         return Optional.empty();
     }

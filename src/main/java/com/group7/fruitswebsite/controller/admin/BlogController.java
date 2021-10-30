@@ -6,7 +6,7 @@ import com.group7.fruitswebsite.entity.DhBlog;
 import com.group7.fruitswebsite.model.DhBlogModel;
 import com.group7.fruitswebsite.service.BlogService;
 import com.group7.fruitswebsite.service.ImageService;
-import com.group7.fruitswebsite.service.impl.ImageBlogServiceImpl;
+import com.group7.fruitswebsite.service.image.impl.ImageBlogServiceImpl;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.StringUtils;
