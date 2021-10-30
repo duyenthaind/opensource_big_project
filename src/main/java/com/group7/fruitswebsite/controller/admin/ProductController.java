@@ -17,7 +17,7 @@ import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.model.DhProductModel;
 import com.group7.fruitswebsite.service.ImageService;
 import com.group7.fruitswebsite.service.ProductService;
-import com.group7.fruitswebsite.service.image.impl.ImageProductServiceImpl;
+import com.group7.fruitswebsite.service.impl.img.ImageProductServiceImpl;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
 
 import lombok.extern.log4j.Log4j;
