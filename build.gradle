@@ -44,6 +44,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.json/json
     implementation group: 'org.json', name: 'json', version: '20210307'
+
+    // https://github.com/momo-wallet/java
+    implementation group: 'io.github.momo-wallet', name: 'momopayment', version: '1.0'
 }
 
 test {
