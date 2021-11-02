@@ -35,7 +35,7 @@ public class BlogController {
 
     @PostMapping("/blogs")
     public ResponseEntity<ApiResponse> add(@ModelAttribute DhBlogModel dhBlogModel) {
-        log.info(dhBlogModel);
+        log.debug(dhBlogModel);
         ImageService imageService = new ImageBlogServiceImpl();
         String imagePath = imageService.saveUploadFiles(dhBlogModel.getFiles());
         log.info(String.format("uploaded image to system: %s", imagePath));

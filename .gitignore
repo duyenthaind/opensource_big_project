@@ -40,3 +40,4 @@ out/
 log/
 config/
 uploads/
+log4j2/
