@@ -63,7 +63,7 @@ public class ApiResponseUtil {
 
     public static ApiResponse.ApiResponseResult mapResultFromList(List data, Page page, int total, int size) {
         ApiResponse.ApiResponseResult responseResult = new ApiResponse.ApiResponseResult();
-        int totalPages = data.isEmpty() ? total / size : total / size + 1;
+        int totalPages = !data.isEmpty() && (total % size) == 0 ? total / size : total / size + 1;
         responseResult.setData(data);
         responseResult.setPage(page.getNumber() + 1);
         responseResult.setPerPage(size);

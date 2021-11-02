@@ -20,7 +20,7 @@ function addNewCate(event){
 				if(jsonResult.status == 200){			
 					alert("Success");
 					console.log(jsonResult);
-					 getFirst();
+					getFirst();
 				}else{
 					alert(jsonResult.result);
 					alert("error");
@@ -48,6 +48,7 @@ function formatDate(current_datetime){
 }
 
 function getFirst(){
+	document.getElementById("currentPageCate").value = 0;
 	$.ajax({
 		url:"/api/category/v1/getAll",
 		type:"GET",
@@ -134,6 +135,9 @@ $(document).ready(function(){
 
 function showUpdateCategory(id,currentPage){
 	
+	if(currentPage > 0){
+		currentPage = currentPage - 1;
+	}
 	
 	$.ajax({
 		url : "/api/category/v1/getOne",
@@ -165,7 +169,7 @@ function showUpdateCategory(id,currentPage){
 function updateCategory(event){
 	 event.preventDefault();
 	 var form = $('#updateCateForm')[0];
-
+	 var currentPage = document.getElementById("currentPageCate").value;
 	 var data = new FormData(form);
 	
 	$.ajax({
@@ -182,7 +186,7 @@ function updateCategory(event){
 			if(jsonResult.status == 200){			
 				alert("Success");
 				console.log(jsonResult);
-				getFirst();
+				loadData(currentPage);
 			}else{
 				alert(jsonResult.result);
 				alert("error");
@@ -276,6 +280,9 @@ function detailsCategory(id){
 
 
 function loadData(currentPage){
+	
+		document.getElementById("currentPageCate").value = currentPage;
+	
 		$.ajax({
 		url:"/api/category/v1/getAll",
 		type:"GET",

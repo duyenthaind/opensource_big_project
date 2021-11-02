@@ -321,8 +321,7 @@
 									<h3 class="text-center title-2">Blog</h3>
 								</div>
 								<hr>
-								<form enctype="multipart/form-data"
-									id="updateBlogForm">
+								<form enctype="multipart/form-data" id="updateBlogForm">
 									<input type="hidden" id="blogId" name="id" />
 									<div class="form-group">
 										<label for="cc-payment" class="control-label mb-1">Title</label>
@@ -333,8 +332,8 @@
 									</div>
 									<div class="form-group has-success">
 										<label for="cc-name" class="control-label mb-1">Description</label>
-										<textarea id="updateShortDescriptionBlog" class="summernote" rows="4"
-											cols="40" name="description"></textarea>
+										<textarea id="updateShortDescriptionBlog" class="summernote"
+											rows="4" cols="40" name="description"></textarea>
 										<span class="help-block field-validation-valid"
 											data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
 									</div>
@@ -372,7 +371,7 @@
 										<div class="col-sm-12">
 											<select id="productCategoryUpdate" class="form-control">
 												<c:forEach var="cate" items="${category}">
-												<option value="${cate.id}">${cate.name}</option>
+													<option value="${cate.id}">${cate.name}</option>
 												</c:forEach>
 												<select />
 										</div>
@@ -381,44 +380,44 @@
 									<div class="form-group">
 										<label for="cc-payment" class="control-label mb-1">Name</label>
 										<input id="productNameUpdate" name="name" type="text"
-											   class="form-control" aria-required="true"
-											   data-val-required="Please enter the name"
-											   aria-invalid="false" placeholder="name">
+											class="form-control" aria-required="true"
+											data-val-required="Please enter the name"
+											aria-invalid="false" placeholder="name">
 									</div>
 									<div class="form-group">
 										<label for="cc-payment" class="control-label mb-1">Available</label>
-										<input id="productAvailableUpdate" name="available" type="text"
-											   class="form-control" aria-required="true" data-val="true"
-											   data-val-required="Please enter the name"
-											   aria-invalid="false" placeholder="0">
+										<input id="productAvailableUpdate" name="available"
+											type="text" class="form-control" aria-required="true"
+											data-val="true" data-val-required="Please enter the name"
+											aria-invalid="false" placeholder="0">
 									</div>
 									<div class="form-group">
 										<label for="cc-payment" class="control-label mb-1">Price($)</label>
 										<input id="productPriceUpdate" name="price" type="text"
-											   class="form-control" aria-required="true" data-val="true"
-											   data-val-required="Please enter the name"
-											   aria-invalid="false" placeholder="20">
+											class="form-control" aria-required="true" data-val="true"
+											data-val-required="Please enter the name"
+											aria-invalid="false" placeholder="20">
 									</div>
 									<div class="form-group">
 										<label for="cc-payment" class="control-label mb-1">Price
 											sale($)</label> <input id="productPriceSaleUpdate" name="price_sale"
-																   type="text" class="form-control" aria-required="true"
-																   data-val="true" data-val-required="Please enter the name"
-																   aria-invalid="false" placeholder="20">
+											type="text" class="form-control" aria-required="true"
+											data-val="true" data-val-required="Please enter the name"
+											aria-invalid="false" placeholder="20">
 									</div>
 									<div class="form-group">
 										<label for="cc-payment" class="control-label mb-1">weight
-											(kg)</label> <input id="productWeightUpdate" name="weight" type="text"
-																class="form-control" aria-required="true" data-val="true"
-																data-val-required="Please enter the name"
-																aria-invalid="false" placeholder="0.5">
+											(kg)</label> <input id="productWeightUpdate" name="weight"
+											type="text" class="form-control" aria-required="true"
+											data-val="true" data-val-required="Please enter the name"
+											aria-invalid="false" placeholder="0.5">
 									</div>
 									<div class="form-group has-success">
 										<label for="cc-name" class="control-label mb-1">Description</label>
-										<textarea id="productShortDescriptionUpdate" class="summernote"
-												  name="short_description" type="text"></textarea>
+										<textarea id="productShortDescriptionUpdate"
+											class="summernote" name="short_description" type="text"></textarea>
 										<span class="help-block field-validation-valid"
-											  data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+											data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
 									</div>
 								</div>
 							</div>
@@ -429,9 +428,9 @@
 							<div class="form-group has-success">
 								<label for="cc-name" class="control-label mb-1">Description</label>
 								<textarea id="productDetailDescriptionUpdate" class="summernote"
-										  name="detail_description" type="text"></textarea>
+									name="detail_description" type="text"></textarea>
 								<span class="help-block field-validation-valid"
-									  data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+									data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
 							</div>
 
 							<div class="form-control has-success">
@@ -446,7 +445,7 @@
 				<div class="modal-footer">
 					<div>
 						<button onclick="updateProduct(event);" type="submit"
-								class="btn btn-lg btn-info btn-block">
+							class="btn btn-lg btn-info btn-block">
 							<span id="payment-button-amount">Submit</span> <span
 								id="payment-button-sending" style="display: none;">Sending</span>
 						</button>
@@ -471,8 +470,8 @@
 			<div class="modal-footer">
 				<input type="hidden" id="idForDeleteProduct" />
 				<button type="button" id="buttonDeleteProduct"
-						class="btn btn-primary">Delete</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+					class="btn btn-primary">Delete</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 
@@ -489,13 +488,199 @@
 				<p>Are you sure</p>
 			</div>
 			<div class="modal-footer">
-				<input type="hidden" id="idForDeleteProductImage" />
-				<input type="hidden" id="indexForDeleteProductImage" />
+				<input type="hidden" id="idForDeleteProductImage" /> <input
+					type="hidden" id="indexForDeleteProductImage" />
 				<button type="button" id="buttonDeleteProductImage"
-						class="btn btn-primary" onclick="deleteProductImage()">Delete</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+					class="btn btn-primary" onclick="deleteProductImage()">Delete</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 
 	</div>
 </div>
+
+<div class="modal fade" id="newBlog" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<form enctype="multipart/form-data" id="blogUploadForm">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header"></div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="card">
+								<div class="card-header">New</div>
+								<div class="card-body">
+									<div class="card-title">
+										<h3 class="text-center title-2">Blog</h3>
+									</div>
+									<hr>
+
+									<div class="form-group">
+										<label for="cc-payment" class="control-label mb-1">Thumbnail</label>
+										<input id="blogThumbnail" name="thumbnail" type="text"
+											class="form-control" aria-required="true" data-val="true"
+											data-val-required="Please enter the name"
+											aria-invalid="false"
+											placeholder="6 ways to prepare breakfast for 30">
+									</div>
+									<div class="form-group has-success">
+										<label for="cc-name" class="control-label mb-1">Short
+											description</label>
+										<textarea class="form-control" id="shortDescription"
+											name="shortDescription"></textarea>
+										<span class="help-block field-validation-valid"
+											data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+									</div>
+
+
+
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="card">
+								<label for="cc-name" class="control-label mb-1"></label> <img
+									id="outputBlog" class="img-rounded" alt="" width="230"
+									height="200" src="" />
+								<p>
+									<label for="blogFile" style="cursor: pointer">choose file</label>
+								</p>
+								<input name="files" id="blogFile" type="file"
+									style="display: none" onchange="loadBlogFile(event)" />
+								<div></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="form-group has-success">
+								<label for="cc-name" class="control-label mb-1">Detail
+									description</label>
+								<textarea class="summernote" id="detailsBlog" name="details"
+									type="text"></textarea>
+								<span class="help-block field-validation-valid"
+									data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button onclick="addNewBlog(event);" type="submit"
+								class="btn btn-lg btn-info btn-block">
+								<span id="payment-button-amount">Submit</span> <span
+									id="payment-button-sending" style="display: none;">Sending</span>
+							</button>
+						</div>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="modal fade" id="detailBlog" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<form enctype="multipart/form-data" id="blogDetailForm">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header"></div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="card">
+								<div class="card-header">Detail</div>
+								<div class="card-body">
+									<div class="card-title">
+										<h3 class="text-center title-2">Blog</h3>
+									</div>
+									<hr>
+									<input type="hidden" id="updateBlogId" name="id"/>
+									<div class="form-group">
+										<label for="cc-payment" class="control-label mb-1">Thumbnail</label>
+										<input id="detailBlogThumbnail" name="thumbnail" type="text"
+											class="form-control" aria-required="true" data-val="true"
+											data-val-required="Please enter the name"
+											aria-invalid="false"
+											placeholder="6 ways to prepare breakfast for 30">
+									</div>
+									<div class="form-group has-success">
+										<label for="cc-name" class="control-label mb-1">Short
+											description</label>
+										<textarea class="form-control" id="detailShortDescription"
+											name="shortDescription"></textarea>
+										<span class="help-block field-validation-valid"
+											data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+									</div>
+
+
+
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="card">
+								<label for="cc-name" class="control-label mb-1"></label> <img
+									id="detailOutputBlog" class="img-rounded" alt="" width="230"
+									height="200" src="" />
+								<p>
+									<label for="blogFileDetail" style="cursor: pointer">choose file</label>
+								</p>
+								<input name="file" id="blogFileDetail" type="file"
+									style="display: none" onchange="loadDetailBlogFile(event)" />
+								<div></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+						<input type="hidden" id="currentPageBlog"
+											name="currentPageBlog" />
+							<div class="form-group has-success">
+								<label for="cc-name" class="control-label mb-1">Detail
+									description</label>
+								<textarea class="summernote" id="updateDetailsBlog" name="details"
+									type="text"></textarea>
+								<span class="help-block field-validation-valid"
+									data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button onclick="updateBlog(event);" type="submit"
+								class="btn btn-lg btn-info btn-block">
+								<span id="payment-button-amount">Submit</span> <span
+									id="payment-button-sending" style="display: none;">Sending</span>
+							</button>
+						</div>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="modal fade" id="confirmDeleteBlog" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Modal title</h5>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure</p>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" id="idForDeleteBlog" />
+				<button type="button" id="buttonDeleteBlog"
+					class="btn btn-primary">Delete</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
