@@ -1,4 +1,4 @@
-package com.group7.fruitswebsite.service.impl;
+package com.group7.fruitswebsite.service.impl.img;
 
 import com.group7.fruitswebsite.common.ApplicationContextProvider;
 import com.group7.fruitswebsite.config.ApplicationConfig;
@@ -33,8 +33,7 @@ public class ImageProductServiceImpl implements ImageService<DhProductImage> {
 
     @Override
     public Optional<DhProductImage> checkExists(MultipartFile file, int entityId) {
-        Session session = ApplicationContextProvider.getApplicationContext().getBean(Session.class);
-        try {
+        try (Session session = ApplicationContextProvider.getApplicationContext().getBean(Session.class)) {
             return Optional.ofNullable((DhProductImage)
                     session.createQuery("from DhProductImage where name = :name and dhProduct.id=:entityId")
                             .setParameter("name", "%" + file.getName())
@@ -43,8 +42,6 @@ public class ImageProductServiceImpl implements ImageService<DhProductImage> {
             );
         } catch (Exception ex) {
             log.error("Check exists file error, ", ex);
-        } finally {
-            session.close();
         }
         return Optional.empty();
     }

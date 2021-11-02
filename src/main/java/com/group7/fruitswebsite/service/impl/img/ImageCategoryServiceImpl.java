@@ -1,4 +1,4 @@
-package com.group7.fruitswebsite.service.impl;
+package com.group7.fruitswebsite.service.impl.img;
 
 import com.group7.fruitswebsite.config.ApplicationConfig;
 import com.group7.fruitswebsite.entity.DhCategory;

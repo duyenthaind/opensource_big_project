@@ -15,8 +15,8 @@ import lombok.Setter;
 @Setter
 public class DhBlog extends BaseEntity implements Serializable{
 	
-	@Column(name ="name",nullable = false,length = 200)
-	private String name;
+	@Column(name ="thumbnail",nullable = false,length = 200)
+	private String thumbnail;
 	
 	@Column(name = "details",nullable = false, columnDefinition = "LONGTEXT")
 	private String details;

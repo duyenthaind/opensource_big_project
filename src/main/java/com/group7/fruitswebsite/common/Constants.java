@@ -61,6 +61,7 @@ public class Constants {
         public static final String AVATAR_DEFINED_BUT_NOT_FOUND = "image may not be uploaded correctly";
         public static final String DATA_IS_NOT_VALID = "data is not valid";
         public static final String PRODUCT_ID_IS_NOT_DEFINED = "product id is not defined";
+        public static final String BLOG_ID_IS_NOT_DEFINED = "blog id is not defined";
     }
 
     public enum CustomMessage{

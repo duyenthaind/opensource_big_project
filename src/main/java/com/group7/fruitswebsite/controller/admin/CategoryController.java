@@ -22,7 +22,7 @@ import com.group7.fruitswebsite.model.DhCategoryModel;
 import com.group7.fruitswebsite.repository.CategoryRepository;
 import com.group7.fruitswebsite.service.CategoryService;
 import com.group7.fruitswebsite.service.ImageService;
-import com.group7.fruitswebsite.service.impl.ImageCategoryServiceImpl;
+import com.group7.fruitswebsite.service.impl.img.ImageCategoryServiceImpl;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
 import com.group7.fruitswebsite.util.StringUtil;
 
