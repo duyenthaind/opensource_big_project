@@ -66,6 +66,7 @@ public class ApiResponseUtil {
         int totalPages = data.isEmpty() ? total / size : total / size + 1;
         responseResult.setData(data);
         responseResult.setPage(page.getNumber() + 1);
+        responseResult.setPerPage(size);
         responseResult.setTotalPages(totalPages);
         responseResult.setTotal(total);
         return responseResult;

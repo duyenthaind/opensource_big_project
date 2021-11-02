@@ -23,9 +23,9 @@ public class ImageUtil {
     }
 
     public static String saveUploadedFiles(MultipartFile[] files) {
-        try{
+        try {
             return uploadFilesAndGetPath(files, ApplicationConfig.ROOT_UPLOAD_DIR);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             log.error("Error save uploaded file, ", ex);
         }
         return StringUtils.EMPTY;
@@ -39,7 +39,7 @@ public class ImageUtil {
         }
         return StringUtils.EMPTY;
     }
-    
+
     public static List<String> saveUploadedMultiFiles(MultipartFile[] files, String path) {
         try {
             return uploadMultiFilesAndGetPath(files, path);
@@ -59,7 +59,7 @@ public class ImageUtil {
         }
 
         for (MultipartFile file : files) {
-            if (file.isEmpty()) {
+            if (file == null || file.isEmpty()) {
                 continue;
             }
             String uploadFilePath = targetUploadDir + File.separator + file.getOriginalFilename();
@@ -68,6 +68,7 @@ public class ImageUtil {
             Path currentPath = Paths.get(uploadFilePath);
             Files.write(currentPath, bytes);
 
+            uploadFilePath = uploadFilePath.replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY);
             result.append(uploadFilePath);
         }
         return result.toString();
@@ -83,7 +84,7 @@ public class ImageUtil {
         }
 
         for (MultipartFile file : files) {
-            if (file.isEmpty()) {
+            if (file == null || file.isEmpty()) {
                 continue;
             }
             String uploadFilePath = targetUploadDir + File.separator + file.getOriginalFilename();
@@ -92,11 +93,12 @@ public class ImageUtil {
             Path currentPath = Paths.get(uploadFilePath);
             Files.write(currentPath, bytes);
 
+            uploadFilePath = uploadFilePath.replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY);
             results.add(uploadFilePath);
         }
         return results;
     }
-    
+
     private static String createPathFromCurrentDate() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd/HH/mm");

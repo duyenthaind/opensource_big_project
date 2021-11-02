@@ -39,6 +39,7 @@ public class BlogServiceImpl implements BlogService {
             DhBlog dhBlog = mapBlogFromModel(dhBlogModel);
             dhBlog.setCreatedDate(System.currentTimeMillis());
             blogRepository.save(dhBlog);
+            log.info(String.format("Save 1 new blogs to system id=%s ", dhBlog.getId()));
             return ApiResponseUtil.getBaseSuccessStatus(null);
         } catch (Exception ex) {
             log.error("Error insert new blog, ", ex);
