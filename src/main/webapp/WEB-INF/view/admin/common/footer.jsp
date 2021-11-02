@@ -35,6 +35,7 @@
 <script src="${base}/admin/js/product.js"></script>
 <script src="${base}/admin/js/main.js" type="module"></script>
 <script src="${server}/admin/js/common.js"></script>
+<script src="${server}/admin/js/blog.js"></script>
 <script src="${server}/admin/js/product-image.js"></script>
 <script>
 	$('.summernote').summernote({
