@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * @author duyenthai
  */
 @Log4j
-@RestController
+@RestController(value = "clientSubscriberController")
 @RequestMapping("/v1/api/client-subscriber/")
 public class SubscriberController {
     private SubscriberService subscriberService;
