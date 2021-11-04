@@ -2,6 +2,7 @@ package com.group7.fruitswebsite.controller.client;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.group7.fruitswebsite.service.BlogService;
 import com.group7.fruitswebsite.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ public class HomeController {
 
     private CategoryService categoryService;
     private ProductService productService;
+    private BlogService blogService;
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -34,13 +36,20 @@ public class HomeController {
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
+    
+    @Autowired
+    public void setBlogService(BlogService blogService) {
+		this.blogService = blogService;
+	}
 
-    @RequestMapping(value = {"/", "index", "home"}, method = RequestMethod.GET)
-    public String home(Model model) {
+	@RequestMapping(value = {"/", "index", "home"}, method = RequestMethod.GET)
+    public String home(Model model,HttpServletRequest request) {
         model.addAttribute("action", "index");
         model.addAttribute("menu", "menu");
         model.addAttribute("categories", categoryService.getAllEntity());
         model.addAttribute("products", productService.getAllProductsAsDto());
+//        model.addAttribute("blogs",blogService.getTop3BlogsAsDto());
+        request.setAttribute("blogs", blogService.getTop3BlogsAsDto());
         return "client/index";
     }
 

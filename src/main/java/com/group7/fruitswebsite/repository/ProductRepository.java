@@ -16,4 +16,7 @@ public interface ProductRepository extends JpaRepository<DhProduct, Integer>{
     
     @Query(value = "SELECT * FROM DhProduct WHERE category_id =: categoryId",nativeQuery = true)
     List<DhProduct> findAllByCategoryId(Integer categoryId);
+    
+    @Query("select p from DhProduct p order by RAND()")
+    public List<DhProduct> findRandamQuestions();
 }

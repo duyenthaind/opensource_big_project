@@ -13,4 +13,8 @@ public class DateUtil {
         Date date = new Date();
         return formatter.format(date);
     }
+    
+    public static Date timeStampFormat(Long timeStamp) {
+    	return new Date(timeStamp);
+    }
 }

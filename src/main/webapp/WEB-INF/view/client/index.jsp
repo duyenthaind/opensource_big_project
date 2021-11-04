@@ -1,7 +1,10 @@
+<%@page import="java.util.List"%>
+<%@page import="com.group7.fruitswebsite.util.DateUtil"%>
+<%@page import="com.group7.fruitswebsite.dto.DhBlogDto"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- header -->
-<jsp:include page="common/header.jsp"/>
+<jsp:include page="common/header.jsp" />
 <%@ include file="../variable.jsp"%>
 <!-- end header -->
 
@@ -16,7 +19,7 @@
 					<c:if test="${category.status = true}">
 						<div class="col-lg-3">
 							<div class="categories__item set-bg"
-								 data-setbg="${uploadsDir}/${category.avatar}">
+								data-setbg="${uploadsDir}/${category.avatar}">
 								<h5>
 									<a href="${server}/shop-grid?categoryId=${category.id}">${category.name}</a>
 								</h5>
@@ -44,7 +47,7 @@
 						<c:forEach var="category" items="${categories}">
 							<li data-filter=".${category.name}">${category.name}</li>
 						</c:forEach>
-					<!--  	<li data-filter=".oranges">Oranges</li>
+						<!--  	<li data-filter=".oranges">Oranges</li>
 						<li data-filter=".fresh-meat">Fresh Meat</li>
 						<li data-filter=".vegetables">Vegetables</li>
 						<li data-filter=".fastfood">Fastfood</li>-->
@@ -54,25 +57,26 @@
 		</div>
 		<div class="row featured__filter">
 			<c:forEach var="product" items="${products}">
-				<div class="col-lg-3 col-md-4 col-sm-6 mix ${product.category.name} fresh-meat">
-				<div class="featured__item">
-					<div class="featured__item__pic set-bg"
-						data-setbg="${uploadsDir}/${product.productImages[0]}">
-						<ul class="featured__item__pic__hover">
-							<li><a href="#"><i class="fa fa-heart"></i></a></li>
-							<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-							<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-						</ul>
-					</div>
-					<div class="featured__item__text">
-						<h6>
-							<a href="${server}/shop-details?productId=${product.id}">${product.name}</a>
-						</h6>
-						<h5>$ ${product.price}</h5>
+				<div
+					class="col-lg-3 col-md-4 col-sm-6 mix ${product.category.name} fresh-meat">
+					<div class="featured__item">
+						<div class="featured__item__pic set-bg"
+							data-setbg="${uploadsDir}/${product.productImages[0]}">
+							<ul class="featured__item__pic__hover">
+								<li><a href="#"><i class="fa fa-heart"></i></a></li>
+								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
+								<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+							</ul>
+						</div>
+						<div class="featured__item__text">
+							<h6>
+								<a href="${server}/shop-details?productId=${product.id}">${product.name}</a>
+							</h6>
+							<h5>$ ${product.price}</h5>
+						</div>
 					</div>
 				</div>
-			</div>	
-			</c:forEach>	
+			</c:forEach>
 		</div>
 	</div>
 </section>
@@ -300,60 +304,25 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-4 col-md-4 col-sm-6">
-				<div class="blog__item">
-					<div class="blog__item__pic">
-						<img src="img/blog/blog-1.jpg" alt="">
-					</div>
-					<div class="blog__item__text">
-						<ul>
-							<li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-							<li><i class="fa fa-comment-o"></i> 5</li>
-						</ul>
-						<h5>
-							<a href="#">Cooking tips make cooking simple</a>
-						</h5>
-						<p>Sed quia non numquam modi tempora indunt ut labore et
-							dolore magnam aliquam quaerat</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-4 col-sm-6">
-				<div class="blog__item">
-					<div class="blog__item__pic">
-						<img src="img/blog/blog-2.jpg" alt="">
-					</div>
-					<div class="blog__item__text">
-						<ul>
-							<li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-							<li><i class="fa fa-comment-o"></i> 5</li>
-						</ul>
-						<h5>
-							<a href="#">6 ways to prepare breakfast for 30</a>
-						</h5>
-						<p>Sed quia non numquam modi tempora indunt ut labore et
-							dolore magnam aliquam quaerat</p>
+			<c:forEach var="blog" items="${blogs}">
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<div class="blog__item">
+						<div class="blog__item__pic">
+							<img src="${uploadsDir}/${blog.avatar}" alt="">
+						</div>
+						
+						<div class="blog__item__text">
+							<ul>
+								<li class="blogFormatDate" data-value="${blog.createdDate}">${blog.createdDate}</li>
+							</ul>
+							<h5>
+								<a href="#">${blog.thumbnail}</a>
+							</h5>
+							<p>${blog.shortDescription}</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-lg-4 col-md-4 col-sm-6">
-				<div class="blog__item">
-					<div class="blog__item__pic">
-						<img src="img/blog/blog-3.jpg" alt="">
-					</div>
-					<div class="blog__item__text">
-						<ul>
-							<li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-							<li><i class="fa fa-comment-o"></i> 5</li>
-						</ul>
-						<h5>
-							<a href="#">Visit the clean farm in the US</a>
-						</h5>
-						<p>Sed quia non numquam modi tempora indunt ut labore et
-							dolore magnam aliquam quaerat</p>
-					</div>
-				</div>
-			</div>
+			</c:forEach>
 		</div>
 	</div>
 </section>
@@ -362,5 +331,5 @@
 
 
 <!-- footer -->
-<jsp:include page="common/footer.jsp"/>
+<jsp:include page="common/footer.jsp" />
 <!-- end footer -->
