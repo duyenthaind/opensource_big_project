@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController(value = "commentClientController")
 @RequestMapping("/v1/api/client-comment")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Log4j
 public class CommentController {
 
