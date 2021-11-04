@@ -103,7 +103,8 @@ function updateProduct(event){
     let productWeight = $("#productWeightUpdate").val()
     let productShortDescription = $("#productShortDescriptionUpdate").val()
     let productDetailDescription = $("#productDetailDescriptionUpdate").val()
-	let id = $("#productIdUpdate").val()
+	let id = $("#productIdUpdate").val();
+    let createdDate = $("#createdDateProd").val();
 
     let data = new FormData();
 
@@ -115,15 +116,17 @@ function updateProduct(event){
 	data.set("weight",productWeight);
 	data.set("shortDescription",productShortDescription);
 	data.set("detailDescription",productDetailDescription);
-	data.set("id", id)
+	data.set("id", id);
+	data.set("createdDate",createdDate);
 
 	var files = document.getElementById('ufileProductUpdate').files;
-
+	var currentPage = document.getElementById("currentPageUpdateProd").value;
 	for(var i=0;i<files.length;i++){
 		data.append("files",files[i]);
 	}
 
 	if(validateProduct2(data)){
+		
 		$.ajax({
 			url : "/api/product/v1/products",
 			type:"PUT",
@@ -136,9 +139,9 @@ function updateProduct(event){
 			timeout: 1000000,
 			success : function(jsonResult){
 				if(jsonResult.status >= 200 && jsonResult.status < 300){
-					alert("Success");
-					prodGetFirst();
-					console.log(jsonResult);
+					alert("Success");				
+					prodloadData(currentPage);
+					$("#modalUpdateProduct").modal("hide");
 				}else{
 					alert("error");
 				}
@@ -252,6 +255,7 @@ function validateProduct2(data){
 }
 
 function prodGetFirst(){
+	document.getElementById("currentPageUpdateProd").value = 0;
 	$.ajax({
 			url: "/api/product/v1/products",
 			type: "GET",
@@ -277,7 +281,7 @@ function prodGetFirst(){
 						+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Detail' onclick='detailsProduct(" + products[index].id + ")'>"
 						+ "<i class='zmdi zmdi-receipt'></i>"
 						+ "</button>"
-						+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Edit' onclick='showModalUpdateProduct(" + products[index].id + ")'>"
+						+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Edit' onclick='showModalUpdateProduct(" + products[index].id + "," + response.result.page + ")'>"
 						+ "<i class='zmdi zmdi-edit'></i>"
 						+ "</button>"
 						+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Delete' onclick='showModalDeleteProduct(" + products[index].id + ")'>"
@@ -328,7 +332,7 @@ function prodloadData(currentPage){
 							+ "<button class='item linkDetail' data-toggle='tooltip' data-placement='top' title='Detail' onclick='detailsProduct(" + products[index].id + ")'>"
 							+ "<i class='zmdi zmdi-receipt'></i>"
 							+ "</button>"
-							+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Edit' onclick='showModalUpdateProduct(" + products[index].id + ")'>"
+							+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Edit' onclick='showModalUpdateProduct(" + products[index].id + "," + response.result.page + ")'>"
 							+ "<i class='zmdi zmdi-edit'></i>"
 							+ "</button>"
 							+ "<button class='item' data-toggle='tooltip' data-placement='top' title='Delete' onclick='showModalDeleteProduct(" + products[index].id + ")'>"
@@ -480,7 +484,12 @@ function showModalDeleteProduct(id){
 	document.getElementById("idForDeleteProduct").value = id;
 }
 
-function showModalUpdateProduct(id){
+function showModalUpdateProduct(id,currentPage){
+	
+	if(currentPage > 0){
+		currentPage = currentPage - 1;
+	}
+	
 	$.ajax({
 		url: "/api/product/v1/products/" + id,
 		type: "GET",
@@ -501,7 +510,8 @@ function showModalUpdateProduct(id){
                 $('#productWeightUpdate').val(data.weight)
                 $('#productShortDescriptionUpdate').val(data.shortDescription)
                 $('#productDetailDescriptionUpdate').val(data.detailDescription)
-
+                $("#currentPageUpdateProd").val(currentPage);
+                $("#createdDateProd").val(data.created_date);
                 let images = "";
 				let index = 0;
 				for(let image of data.listProductImages){

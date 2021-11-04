@@ -422,6 +422,8 @@
 								</div>
 							</div>
 						</div>
+						<input type="hidden" id="createdDateProd" />
+						<input type="hidden" id="currentPageUpdateProd" />
 						<div class="col-lg-6">
 
 

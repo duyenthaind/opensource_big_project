@@ -14,10 +14,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public abstract class BaseModel {
-    private Integer id;
-    private boolean status;
-    @JsonProperty(value = "updated_by")
-    private Integer updatedBy;
-    @JsonProperty(value = "created_by")
-    private Integer createdBy; 
+	private Integer id;
+	private boolean status;
+	@JsonProperty(value = "updated_by")
+	private Integer updatedBy;
+	@JsonProperty(value = "created_by")
+	private Integer createdBy;
+	@JsonProperty(value = "updated_date")
+	private Long updatedDate;
+
+	@JsonProperty(value = "created_date")
+	private Long createdDate;
 }

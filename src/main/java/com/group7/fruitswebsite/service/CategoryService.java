@@ -23,4 +23,6 @@ public interface CategoryService {
 	ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
 
 	List<DhCategory> getAllEntity();
+	
+	List<Integer> getAllId();
 }

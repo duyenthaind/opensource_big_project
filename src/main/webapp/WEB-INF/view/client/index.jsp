@@ -47,10 +47,6 @@
 						<c:forEach var="category" items="${categories}">
 							<li data-filter=".${category.name}">${category.name}</li>
 						</c:forEach>
-						<!--  	<li data-filter=".oranges">Oranges</li>
-						<li data-filter=".fresh-meat">Fresh Meat</li>
-						<li data-filter=".vegetables">Vegetables</li>
-						<li data-filter=".fastfood">Fastfood</li>-->
 					</ul>
 				</div>
 			</div>
@@ -110,58 +106,30 @@
 					<h4>Latest Products</h4>
 					<div class="latest-product__slider owl-carousel">
 						<div class="latest-prdouct__slider__item">
-							<a href="#" class="latest-product__item">
+							<c:forEach var="top9Product" items="${top9Products}">
+								<a href="#" class="latest-product__item">
 								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-1.jpg" alt="">
+									<img src="${uploadsDir}/${top9Product.productImages[0]}" alt="">
 								</div>
 								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
-								</div>
-							</a> <a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-2.jpg" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
-								</div>
-							</a> <a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-3.jpg" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
+									<h6>${top9Product.name}</h6>
+									<span>$${top9Product.price}</span>
 								</div>
 							</a>
+							</c:forEach> 
 						</div>
 						<div class="latest-prdouct__slider__item">
-							<a href="#" class="latest-product__item">
+							<c:forEach var="top9Product" items="${top9Products1}">
+								<a href="#" class="latest-product__item">
 								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-1.jpg" alt="">
+									<img src="${uploadsDir}/${top9Product.productImages[0]}" alt="">
 								</div>
 								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
-								</div>
-							</a> <a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-2.jpg" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
-								</div>
-							</a> <a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-3.jpg" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
+									<h6>${top9Product.name}</h6>
+									<span>$${top9Product.price}</span>
 								</div>
 							</a>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -171,58 +139,30 @@
 					<h4>Top Rated Products</h4>
 					<div class="latest-product__slider owl-carousel">
 						<div class="latest-prdouct__slider__item">
-							<a href="#" class="latest-product__item">
+							<c:forEach var="top9Product" items="${top9Products1}">
+								<a href="#" class="latest-product__item">
 								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-1.jpg" alt="">
+									<img src="${uploadsDir}/${top9Product.productImages[0]}" alt="">
 								</div>
 								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
-								</div>
-							</a> <a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-2.jpg" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
-								</div>
-							</a> <a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-3.jpg" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
+									<h6>${top9Product.name}</h6>
+									<span>$${top9Product.price}</span>
 								</div>
 							</a>
+							</c:forEach>
 						</div>
 						<div class="latest-prdouct__slider__item">
-							<a href="#" class="latest-product__item">
+							<c:forEach var="top9Product" items="${top9Products2}">
+								<a href="#" class="latest-product__item">
 								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-1.jpg" alt="">
+									<img src="${uploadsDir}/${top9Product.productImages[0]}" alt="">
 								</div>
 								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
-								</div>
-							</a> <a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-2.jpg" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
-								</div>
-							</a> <a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-3.jpg" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
+									<h6>${top9Product.name}</h6>
+									<span>$${top9Product.price}</span>
 								</div>
 							</a>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -232,58 +172,30 @@
 					<h4>Review Products</h4>
 					<div class="latest-product__slider owl-carousel">
 						<div class="latest-prdouct__slider__item">
-							<a href="#" class="latest-product__item">
+							<c:forEach var="top9Product" items="${top9Products2}">
+								<a href="#" class="latest-product__item">
 								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-1.jpg" alt="">
+									<img src="${uploadsDir}/${top9Product.productImages[0]}" alt="">
 								</div>
 								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
-								</div>
-							</a> <a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-2.jpg" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
-								</div>
-							</a> <a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-3.jpg" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
+									<h6>${top9Product.name}</h6>
+									<span>$${top9Product.price}</span>
 								</div>
 							</a>
+							</c:forEach>
 						</div>
 						<div class="latest-prdouct__slider__item">
-							<a href="#" class="latest-product__item">
+							<c:forEach var="top9Product" items="${top9Products}">
+								<a href="#" class="latest-product__item">
 								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-1.jpg" alt="">
+									<img src="${uploadsDir}/${top9Product.productImages[0]}" alt="">
 								</div>
 								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
-								</div>
-							</a> <a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-2.jpg" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
-								</div>
-							</a> <a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="img/latest-product/lp-3.jpg" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>Crab Pool Security</h6>
-									<span>$30.00</span>
+									<h6>${top9Product.name}</h6>
+									<span>$${top9Product.price}</span>
 								</div>
 							</a>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
