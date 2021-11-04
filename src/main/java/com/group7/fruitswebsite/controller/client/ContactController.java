@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @author duyenthai
  */
 @Log4j
-@RestController
+@RestController(value = "contactClientController")
 @RequestMapping(value = "/v1/api/client-contact")
 public class ContactController {
     private ContactService contactService;
@@ -25,7 +25,7 @@ public class ContactController {
             MediaType.TEXT_PLAIN_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE
     })
-    public ResponseEntity<ApiResponse> saveOne(@ModelAttribute DhContactModel contactModel){
+    public ResponseEntity<ApiResponse> saveOne(@ModelAttribute DhContactModel contactModel) {
         return contactService.saveOne(contactModel);
     }
 

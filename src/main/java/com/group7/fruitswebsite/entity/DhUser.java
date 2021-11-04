@@ -35,6 +35,9 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 	@JsonProperty(value = "avatar")
 	private String avatar;
 
+	@Column(name = "name", nullable = false, length = 100)
+	private String name;
+
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "dh_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
