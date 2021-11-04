@@ -70,6 +70,17 @@ public class BlogServiceImpl implements BlogService {
         }
         return Collections.emptyList();
     }
+    
+    @Override
+    public List<DhBlogDto> getTop3BlogsAsDto() {
+        try {
+            List<DhBlog> list3Blogs = blogRepository.getLimit(3);
+            return list3Blogs.stream().map(t -> DtoUtil.getBlogDtoFromDhBlog(t, objectMapper)).collect(Collectors.toList());
+        } catch (Exception ex) {
+            log.error("Error get all blogs as dto, ", ex);
+        }
+        return Collections.emptyList();
+    }
 
     @Override
     public ResponseEntity<ApiResponse> getAllWithPaging(int page, int size) {

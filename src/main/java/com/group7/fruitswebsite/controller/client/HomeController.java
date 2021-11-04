@@ -2,6 +2,7 @@ package com.group7.fruitswebsite.controller.client;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.group7.fruitswebsite.service.BlogService;
 import com.group7.fruitswebsite.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.group7.fruitswebsite.dto.DhProductDto;
+import com.group7.fruitswebsite.model.DhProductModel;
 import com.group7.fruitswebsite.repository.CategoryRepository;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
 import com.group7.fruitswebsite.repository.ProductRepository;
@@ -24,6 +27,7 @@ public class HomeController {
 
     private CategoryService categoryService;
     private ProductService productService;
+    private BlogService blogService;
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -34,13 +38,22 @@ public class HomeController {
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
+    
+    @Autowired
+    public void setBlogService(BlogService blogService) {
+		this.blogService = blogService;
+	}
 
-    @RequestMapping(value = {"/", "index", "home"}, method = RequestMethod.GET)
-    public String home(Model model) {
+	@RequestMapping(value = {"/", "index", "home"}, method = RequestMethod.GET)
+    public String home(Model model,HttpServletRequest request) {
         model.addAttribute("action", "index");
         model.addAttribute("menu", "menu");
         model.addAttribute("categories", categoryService.getAllEntity());
-        model.addAttribute("products", productService.getAllProductsAsDto());
+        model.addAttribute("products", productService.getProductsInListCategoryAsDto(4));
+        model.addAttribute("blogs",blogService.getTop3BlogsAsDto());
+        model.addAttribute("top9Products",productService.getTop3RandomProductsAsDto());
+        model.addAttribute("top9Products1",productService.getTop3RandomProductsAsDto());
+        model.addAttribute("top9Products2",productService.getTop3RandomProductsAsDto());
         return "client/index";
     }
 
@@ -49,7 +62,9 @@ public class HomeController {
         model.addAttribute("categories", categoryService.getAllEntity());
         if (request.getParameter("categoryId") != null) {
             Integer categoryId = Integer.parseInt(request.getParameter("categoryId"));
-
+            model.addAttribute("top9Products",productService.getTop3RandomProductsAsDto());
+            
+            model.addAttribute("top9Products1",productService.getTop3RandomProductsAsDto());
         } else {
         }
         return "client/shop-grid";

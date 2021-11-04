@@ -25,5 +25,9 @@ public interface ProductService {
 	ResponseEntity<ApiResponse> update(DhProductModel dhProductModel);
 
 	ResponseEntity<ApiResponse> delete(int id);
+	
+	List<DhProductDto> getTop3RandomProductsAsDto();
+	
+	List<DhProductDto> getProductsInListCategoryAsDto(int total);
 
 }

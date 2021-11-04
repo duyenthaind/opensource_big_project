@@ -167,6 +167,11 @@ public class CategoryServiceImpl implements CategoryService {
             return ResponseEntity.status(Constants.APIResponseStatus.FAILURE.getStatus()).body(apiResponse);
         }
     }
+    
+    @Override
+    public List<Integer> getAllId(){
+    	return categoryRepository.findAllId();
+    }
 
     @Override
     public Optional<DhCategory> getById(int id) {

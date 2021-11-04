@@ -26,4 +26,6 @@ public interface BlogService {
     ResponseEntity<ApiResponse> update(DhBlogModel dhBlogModel);
 
     ResponseEntity<ApiResponse> delete(int id);
+    
+    List<DhBlogDto> getTop3BlogsAsDto();
 }

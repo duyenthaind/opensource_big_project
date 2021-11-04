@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
 
         Optional<DhCategory> optionalDhCategory = categoryRepository.findById(dhProductModel.getCategoryId());
         optionalDhCategory.ifPresent(dhProduct::setCategory);
-
+        
         dhProduct.setUpdatedDate(System.currentTimeMillis());
 
         return dhProduct;
@@ -135,6 +135,36 @@ public class ProductServiceImpl implements ProductService {
             List<DhProductDto> result = new ArrayList<>();
             List<DhProduct> listAllProducts = productRepository.findAll();
             for (DhProduct dhProduct : listAllProducts) {
+                result.add(DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository));
+            }
+            return result;
+        } catch (Exception ex) {
+            log.error("Get all product as dto error, ", ex);
+        }
+        return Collections.emptyList();
+    }
+    
+    @Override
+    public List<DhProductDto> getTop3RandomProductsAsDto() {
+        try {
+            List<DhProductDto> result = new ArrayList<>();
+            List<DhProduct> listTop9Products = productRepository.getTop9Random();
+            for (DhProduct dhProduct : listTop9Products) {
+                result.add(DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository));
+            }
+            return result;
+        } catch (Exception ex) {
+            log.error("Get all product as dto error, ", ex);
+        }
+        return Collections.emptyList();
+    }
+    
+    @Override
+    public List<DhProductDto> getProductsInListCategoryAsDto(int total) {
+        try {
+            List<DhProductDto> result = new ArrayList<>();
+            List<DhProduct> listProductsInListCate = productRepository.getProductByListCategoryId(categoryRepository.findAllId(), total);
+            for (DhProduct dhProduct : listProductsInListCate) {
                 result.add(DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository));
             }
             return result;

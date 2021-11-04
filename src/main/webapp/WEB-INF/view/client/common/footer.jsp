@@ -85,7 +85,9 @@
 <script src="${server}/js/jquery.slicknav.js"></script>
 <script src="${server}/js/mixitup.min.js"></script>
 <script src="${server}/js/owl.carousel.min.js"></script>
+<script src="${server}/admin/js/common.js"></script>
 <script src="${server}/js/main.js"></script>
+
 
 </body>
 

@@ -11,9 +11,10 @@ import org.springframework.stereotype.Repository;
 import com.group7.fruitswebsite.entity.DhProduct;
 
 @Repository
-public interface ProductRepository extends JpaRepository<DhProduct, Integer>{
+public interface ProductRepository extends JpaRepository<DhProduct, Integer>,CustomProductRepository{
     Page<DhProduct> findAll(Pageable pageable);
     
     @Query(value = "SELECT * FROM DhProduct WHERE category_id =: categoryId",nativeQuery = true)
     List<DhProduct> findAllByCategoryId(Integer categoryId);
+    
 }
