@@ -27,5 +27,5 @@ public interface BlogService {
 
     ResponseEntity<ApiResponse> delete(int id);
     
-    List<DhBlogDto> getTop3BlogsAsDto();
+    List<DhBlogDto> getTopBlogsAsDto(int limit);
 }

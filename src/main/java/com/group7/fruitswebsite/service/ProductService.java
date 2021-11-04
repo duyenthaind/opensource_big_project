@@ -26,7 +26,7 @@ public interface ProductService {
 
 	ResponseEntity<ApiResponse> delete(int id);
 	
-	List<DhProductDto> getTop3RandomProductsAsDto();
+	List<DhProductDto> getTopRandomProductsAsDto(int limit);
 	
 	List<DhProductDto> getProductsInListCategoryAsDto(int total);
 

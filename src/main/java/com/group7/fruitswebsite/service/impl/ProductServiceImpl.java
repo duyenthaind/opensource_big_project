@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
 
         Optional<DhCategory> optionalDhCategory = categoryRepository.findById(dhProductModel.getCategoryId());
         optionalDhCategory.ifPresent(dhProduct::setCategory);
-        
+
         dhProduct.setUpdatedDate(System.currentTimeMillis());
 
         return dhProduct;
@@ -143,12 +143,12 @@ public class ProductServiceImpl implements ProductService {
         }
         return Collections.emptyList();
     }
-    
+
     @Override
-    public List<DhProductDto> getTop3RandomProductsAsDto() {
+    public List<DhProductDto> getTopRandomProductsAsDto(int limit) {
         try {
             List<DhProductDto> result = new ArrayList<>();
-            List<DhProduct> listTop9Products = productRepository.getTop9Random();
+            List<DhProduct> listTop9Products = productRepository.getTopRandom(limit);
             for (DhProduct dhProduct : listTop9Products) {
                 result.add(DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository));
             }
@@ -158,7 +158,7 @@ public class ProductServiceImpl implements ProductService {
         }
         return Collections.emptyList();
     }
-    
+
     @Override
     public List<DhProductDto> getProductsInListCategoryAsDto(int total) {
         try {

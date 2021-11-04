@@ -72,9 +72,9 @@ public class BlogServiceImpl implements BlogService {
     }
     
     @Override
-    public List<DhBlogDto> getTop3BlogsAsDto() {
+    public List<DhBlogDto> getTopBlogsAsDto(int limit) {
         try {
-            List<DhBlog> list3Blogs = blogRepository.getLimit(3);
+            List<DhBlog> list3Blogs = blogRepository.getLimit(limit);
             return list3Blogs.stream().map(t -> DtoUtil.getBlogDtoFromDhBlog(t, objectMapper)).collect(Collectors.toList());
         } catch (Exception ex) {
             log.error("Error get all blogs as dto, ", ex);

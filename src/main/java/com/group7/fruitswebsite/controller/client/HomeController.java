@@ -38,22 +38,22 @@ public class HomeController {
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
-    
+
     @Autowired
     public void setBlogService(BlogService blogService) {
-		this.blogService = blogService;
-	}
+        this.blogService = blogService;
+    }
 
-	@RequestMapping(value = {"/", "index", "home"}, method = RequestMethod.GET)
-    public String home(Model model,HttpServletRequest request) {
+    @RequestMapping(value = {"/", "index", "home"}, method = RequestMethod.GET)
+    public String home(Model model) {
         model.addAttribute("action", "index");
         model.addAttribute("menu", "menu");
         model.addAttribute("categories", categoryService.getAllEntity());
         model.addAttribute("products", productService.getProductsInListCategoryAsDto(4));
-        model.addAttribute("blogs",blogService.getTop3BlogsAsDto());
-        model.addAttribute("top9Products",productService.getTop3RandomProductsAsDto());
-        model.addAttribute("top9Products1",productService.getTop3RandomProductsAsDto());
-        model.addAttribute("top9Products2",productService.getTop3RandomProductsAsDto());
+        model.addAttribute("blogs", blogService.getTopBlogsAsDto(3));
+        model.addAttribute("top9Products", productService.getTopRandomProductsAsDto(3));
+        model.addAttribute("top9Products1", productService.getTopRandomProductsAsDto(3));
+        model.addAttribute("top9Products2", productService.getTopRandomProductsAsDto(3));
         return "client/index";
     }
 
@@ -61,10 +61,9 @@ public class HomeController {
     public String shop(Model model, HttpServletRequest request) {
         model.addAttribute("categories", categoryService.getAllEntity());
         if (request.getParameter("categoryId") != null) {
-            Integer categoryId = Integer.parseInt(request.getParameter("categoryId"));
-            model.addAttribute("top9Products",productService.getTop3RandomProductsAsDto());
-            
-            model.addAttribute("top9Products1",productService.getTop3RandomProductsAsDto());
+            model.addAttribute("top9Products", productService.getTopRandomProductsAsDto(3));
+
+            model.addAttribute("top9Products1", productService.getTopRandomProductsAsDto(3));
         } else {
         }
         return "client/shop-grid";

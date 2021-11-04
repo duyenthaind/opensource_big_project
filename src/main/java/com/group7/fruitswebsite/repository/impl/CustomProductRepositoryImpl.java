@@ -21,12 +21,12 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 	private EntityManager entityManager;
 
 	@Override
-	public List<DhProduct> getTop9Random() {
+	public List<DhProduct> getTopRandom(int limit) {
 		// TODO Auto-generated method stub
 		String jpql = "SELECT p FROM DhProduct p order by RAND()";
 		List<DhProduct> dhProducts = null;
 		try {
-			dhProducts = entityManager.createQuery(jpql, DhProduct.class).setMaxResults(3).getResultList();
+			dhProducts = entityManager.createQuery(jpql, DhProduct.class).setMaxResults(limit).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
 			log.error("Error get top 9 random", e.getMessage());
