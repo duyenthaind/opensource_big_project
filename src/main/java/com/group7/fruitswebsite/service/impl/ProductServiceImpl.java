@@ -6,11 +6,13 @@ import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.config.ApplicationConfig;
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.DhProductDto;
+import com.group7.fruitswebsite.dto.search.ProductCondition;
 import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.entity.DhProductImage;
 import com.group7.fruitswebsite.model.DhProductModel;
 import com.group7.fruitswebsite.service.ProductImageService;
+import com.group7.fruitswebsite.service.search.ProductSearchService;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
 import com.group7.fruitswebsite.util.DateUtil;
 import com.group7.fruitswebsite.util.DtoUtil;
@@ -48,6 +50,7 @@ public class ProductServiceImpl implements ProductService {
     private CategoryRepository categoryRepository;
     private ProductImageRepository productImageRepository;
     private ProductImageService productImageService;
+    private ProductSearchService productSearchService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public DhProduct setNewProduct(DhProductModel dhProductModel) throws JsonProcessingException {
@@ -173,7 +176,7 @@ public class ProductServiceImpl implements ProductService {
         }
         return Collections.emptyList();
     }
-    
+
     @Override
     public List<DhProductDto> getProductsOrderByPriceSaleAscAsDto() {
         try {
@@ -188,11 +191,11 @@ public class ProductServiceImpl implements ProductService {
         }
         return Collections.emptyList();
     }
-    
+
     @Override
     public List<DhProductDto> getProductsByCategoryIdWithPaging(int page, int size, Integer categoryId) {
         try {
-        	Pageable paging = PageRequest.of(page, size);
+            Pageable paging = PageRequest.of(page, size);
             List<DhProductDto> result = new ArrayList<>();
             Page<DhProduct> pageProducts = productRepository.findByCategory(paging, categoryRepository.getById(categoryId));
             for (DhProduct dhProduct : pageProducts) {
@@ -204,20 +207,34 @@ public class ProductServiceImpl implements ProductService {
         }
         return Collections.emptyList();
     }
-    
+
     @Override
-    public List<Integer> getTotalPagesByCategory(int size, int categoryId){
-    	List<Integer> arrayTotalPage = new ArrayList<Integer>();
-    	int totalProductByCategory = productRepository.findByCategory(categoryId);
-		int totalPages = totalProductByCategory % size == 0 ? totalProductByCategory/size : totalProductByCategory/size + 1;
-		
-		arrayTotalPage.add(0);
-		if(totalPages >= 2) {		
-			for(int i=1;i<totalPages;i++) {
-				arrayTotalPage.add(i);				
-			}
-		}
-		return arrayTotalPage;
+    public List<Integer> getTotalPagesByCategory(int size, int categoryId) {
+        List<Integer> arrayTotalPage = new ArrayList<Integer>();
+        int totalProductByCategory = productRepository.findByCategory(categoryId);
+        int totalPages = totalProductByCategory % size == 0 ? totalProductByCategory / size : totalProductByCategory / size + 1;
+
+        arrayTotalPage.add(0);
+        if (totalPages >= 2) {
+            for (int i = 1; i < totalPages; i++) {
+                arrayTotalPage.add(i);
+            }
+        }
+        return arrayTotalPage;
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> search(List<ProductCondition> conditions) {
+        try {
+            List<DhProduct> searchedProducts = productSearchService.search(conditions);
+            List<DhProductDto> productDtos = searchedProducts.stream()
+                    .map(val -> DtoUtil.getDtoFromProduct(val, objectMapper, productImageRepository)).collect(Collectors.toList());
+            ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultWithoutPaging(productDtos);
+            return ApiResponseUtil.getBaseSuccessStatus(responseResult);
+        } catch (Exception ex) {
+            log.error(String.format("Search product with conditions %s error", conditions), ex);
+            return ApiResponseUtil.getBaseFailureStatus();
+        }
     }
 
     @Override
@@ -327,5 +344,10 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     public void setProductImageService(ProductImageService productImageService) {
         this.productImageService = productImageService;
+    }
+
+    @Autowired
+    public void setProductSearchService(ProductSearchService productSearchService) {
+        this.productSearchService = productSearchService;
     }
 }

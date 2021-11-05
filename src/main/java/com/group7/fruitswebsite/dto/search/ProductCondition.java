@@ -1,6 +1,5 @@
 package com.group7.fruitswebsite.dto.search;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +13,6 @@ import java.util.Arrays;
 @Setter
 public class ProductCondition extends Condition {
     static {
-        allowedConditions = new ArrayList<>(Arrays.asList("price", "name"));
+        allowedConditions = new ArrayList<>(Arrays.asList("price", "name", "category_id", "price", "price_sale", "weight"));
     }
 }
