@@ -206,6 +206,7 @@
 									All Categories <span onclick="showAllCategory();"
 										class="arrow_carrot-down dropdowncate"></span>
 								</div>
+								<input type="hidden" id="categoryNameToSearch" name="categoryName" />
 								<input type="text" placeholder="What do yo u need?">
 								<button type="submit" class="site-btn">SEARCH</button>
 							</form>
@@ -213,7 +214,7 @@
 						<div id="dropDownCategory" class="dropdown-content">
 							<c:forEach items="${categories}" var="category">
 								<c:if test="${category.status = true}">
-									<span onclick="getCategoryName();">
+									<span onclick="getCategoryName(event);">
 										${category.name} </span>
 								</c:if>
 							</c:forEach>
