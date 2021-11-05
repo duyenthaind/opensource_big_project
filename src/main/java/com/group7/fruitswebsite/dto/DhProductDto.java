@@ -35,10 +35,8 @@ public class DhProductDto extends BaseDto {
     private List<DhProductImageDto> listProductImages;
     @JsonAnySetter
     private Map<String, Object> any = new HashMap<>();
-    
+
     public void setSalePercent() {
-    	float price = (float)this.price;
-    	float priceSale = (float)this.priceSale;
-    	this.salePercent = (long) ((1-(priceSale/price))*100);
+        this.salePercent = (long) ((1 - ((float) this.priceSale / this.price)) * 100);
     }
 }
