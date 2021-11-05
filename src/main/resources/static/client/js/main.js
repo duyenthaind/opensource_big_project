@@ -9,8 +9,10 @@
 
 'use strict';
 
-function getCategoryName(event){	
-	document.getElementById('outPutCategoryName').innerHTML = event.target.value;
+function getCategoryName(event){
+	var text = $(event.target).text();
+	document.getElementById('categoryNameToSearch').value = text;
+	document.getElementById('outPutCategoryName').innerHTML = text + '<span onclick="showAllCategory();"class="arrow_carrot-down dropdowncate"></span>';
 }
 
 (function ($) {
