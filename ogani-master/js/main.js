@@ -241,3 +241,24 @@ function myFunction(){
                 }
             }
         }
+        
+function subscribeEmail(event){
+    event.preventDefault()
+    let email = $('emailSubcriber').val()
+    $.ajax({
+        url: '/v1/api/client-subscriber/subscribers',
+        type: 'post',
+        data: {
+            email: email
+        },
+        success: function(response){
+            if(response.status >= 200 && response.status < 300){
+                alert('Thank you, we will send you the latest new about our proucts and events')
+            }
+        },
+        error: function(jqXhr, textStatus, errorMessage){
+            alert('Error')
+            console.log(textStatus,errorMessage)
+        }
+    })
+}
