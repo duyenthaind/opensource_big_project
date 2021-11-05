@@ -154,7 +154,7 @@ public class ProductServiceImpl implements ProductService {
             }
             return result;
         } catch (Exception ex) {
-            log.error("Get all product as dto error, ", ex);
+            log.error("Get product top random as dto error, ", ex);
         }
         return Collections.emptyList();
     }
@@ -169,9 +169,55 @@ public class ProductServiceImpl implements ProductService {
             }
             return result;
         } catch (Exception ex) {
-            log.error("Get all product as dto error, ", ex);
+            log.error("Get product inlist category as dto error, ", ex);
         }
         return Collections.emptyList();
+    }
+    
+    @Override
+    public List<DhProductDto> getProductsOrderByPriceSaleAscAsDto() {
+        try {
+            List<DhProductDto> result = new ArrayList<>();
+            List<DhProduct> listProducts = productRepository.getProductsOrderByPriceSaleAsc();
+            for (DhProduct dhProduct : listProducts) {
+                result.add(DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository));
+            }
+            return result;
+        } catch (Exception ex) {
+            log.error("Get product order by price sale as dto error, ", ex);
+        }
+        return Collections.emptyList();
+    }
+    
+    @Override
+    public List<DhProductDto> getProductsByCategoryIdWithPaging(int page, int size, Integer categoryId) {
+        try {
+        	Pageable paging = PageRequest.of(page, size);
+            List<DhProductDto> result = new ArrayList<>();
+            Page<DhProduct> pageProducts = productRepository.findByCategory(paging, categoryRepository.getById(categoryId));
+            for (DhProduct dhProduct : pageProducts) {
+                result.add(DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository));
+            }
+            return result;
+        } catch (Exception ex) {
+            log.error("Get product order by price sale as dto error, ", ex);
+        }
+        return Collections.emptyList();
+    }
+    
+    @Override
+    public List<Integer> getTotalPagesByCategory(int size, int categoryId){
+    	List<Integer> arrayTotalPage = new ArrayList<Integer>();
+    	int totalProductByCategory = productRepository.findByCategory(categoryId);
+		int totalPages = totalProductByCategory % size == 0 ? totalProductByCategory/size : totalProductByCategory/size + 1;
+		
+		arrayTotalPage.add(0);
+		if(totalPages >= 2) {		
+			for(int i=1;i<totalPages;i++) {
+				arrayTotalPage.add(i);				
+			}
+		}
+		return arrayTotalPage;
     }
 
     @Override

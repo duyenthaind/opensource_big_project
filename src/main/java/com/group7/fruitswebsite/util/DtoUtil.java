@@ -42,6 +42,7 @@ public class DtoUtil {
                 productDto.setProductImages(Collections.emptyList());
                 productDto.setListProductImages(Collections.emptyList());
             }
+            productDto.setSalePercent();
             return productDto;
         } catch (Exception ex) {
             log.error("Map error, ", ex);

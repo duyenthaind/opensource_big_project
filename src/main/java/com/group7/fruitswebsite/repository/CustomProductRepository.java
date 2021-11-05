@@ -9,4 +9,6 @@ public interface CustomProductRepository {
 	List<DhProduct> getTopRandom(int limit);
 	
 	List<DhProduct> getProductByListCategoryId(List<Integer> listId,int total);
+	
+	List<DhProduct> getProductsOrderByPriceSaleAsc();
 }

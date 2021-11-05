@@ -9,6 +9,10 @@
 
 'use strict';
 
+function getCategoryName(event){	
+	document.getElementById('outPutCategoryName').innerHTML = event.target.value;
+}
+
 (function ($) {
 
     /*------------------
