@@ -53,5 +53,20 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 
 		return dhProducts;
 	}
+	
+	@Override
+	public List<DhProduct> getProductsOrderByPriceSaleAsc() {
+		String jpql = "select p from DhProduct p order by p.priceSale asc";
+		 
+		List<DhProduct> dhProducts = null;
+		try {
+			dhProducts = entityManager.createQuery(jpql, DhProduct.class).setMaxResults(12).getResultList();
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error("Error get product order by price sale asc", e.getMessage());
+		}
+
+		return dhProducts;
+	}
 
 }
