@@ -39,8 +39,8 @@
 					<h6>Join Our Newsletter Now</h6>
 					<p>Get E-mail updates about our latest shop and special offers.</p>
 					<form action="#">
-						<input type="text" placeholder="Enter your mail">
-						<button type="submit" class="site-btn">Subscribe</button>
+						<input type="text" placeholder="Enter your mail" id="emailSubcriber"/>
+						<button type="submit" class="site-btn" onclick="subscribeEmail(event)">Subscribe</button>
 					</form>
 					<div class="footer__widget__social">
 						<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
@@ -87,6 +87,7 @@
 <script src="${server}/js/owl.carousel.min.js"></script>
 <script src="${server}/admin/js/common.js"></script>
 <script src="${server}/js/main.js"></script>
+<script src="${server}/client/js/subcriber.js"></script>
 
 
 </body>
