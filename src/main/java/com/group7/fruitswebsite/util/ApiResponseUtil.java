@@ -72,4 +72,11 @@ public class ApiResponseUtil {
         return responseResult;
     }
 
+    public static ApiResponse.ApiResponseResult mapResultWithoutPaging(List data) {
+        ApiResponse.ApiResponseResult responseResult = new ApiResponse.ApiResponseResult();
+        responseResult.setData(data);
+        responseResult.setTotal(data.size());
+        return responseResult;
+    }
+
 }
