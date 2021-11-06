@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.group7.fruitswebsite.dto.ApiResponse;
-import com.group7.fruitswebsite.dto.search.ProductCondition;
 import com.group7.fruitswebsite.repository.ProductRepository;
 import com.group7.fruitswebsite.service.ProductService;
 import com.group7.fruitswebsite.util.StringUtil;
@@ -71,7 +70,7 @@ public class HomeController {
 		model.addAttribute("top9Products1", productService.getTopRandomProductsAsDto(3));
 		model.addAttribute("prodOrBPriceSale", productService.getProductsOrderByPriceSaleAscAsDto());
 		
-		List<ProductCondition> conditions = new ArrayList<ProductCondition>();
+//		List<ProductCondition> conditions = new ArrayList<ProductCondition>();
 		if (!StringUtil.isNullOrEmpty(request.getParameter("categoryId"))) {
 			Integer categoryId = Integer.parseInt(request.getParameter("categoryId"));
 			model.addAttribute("categoryId", categoryId);
@@ -84,7 +83,7 @@ public class HomeController {
 			model.addAttribute("totalPages", productService.getTotalPagesByCategory(size, categoryId));
 		}else {
 			if (!StringUtil.isNullOrEmpty(searchText)) {
-				model.addAttribute("productSearch", productService.search(conditions));
+//				model.addAttribute("productSearch", productService.search(conditions));
 			}
 		}
 		return "client/shop-grid";
@@ -99,9 +98,9 @@ public class HomeController {
 		model.addAttribute("top9Products1", productService.getTopRandomProductsAsDto(3));
 		model.addAttribute("prodOrBPriceSale", productService.getProductsOrderByPriceSaleAscAsDto());
 		
-		List<ProductCondition> conditions = new ArrayList<ProductCondition>();
+//		List<ProductCondition> conditions = new ArrayList<ProductCondition>();
 		if (!StringUtil.isNullOrEmpty(searchText)) {
-			model.addAttribute("productSearch", productService.search(conditions));
+//			model.addAttribute("productSearch", productService.search(conditions));
 		}
 		return "client/shop-grid";
 	}
@@ -131,6 +130,7 @@ public class HomeController {
 	@GetMapping("/blog")
 	public String blog(Model model) {
 		model.addAttribute("action", "blog");
+		
 		return "client/blog";
 	}
 

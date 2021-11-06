@@ -1,6 +1,7 @@
 package com.group7.fruitswebsite.service.search.impl;
 
-import com.group7.fruitswebsite.dto.search.ProductCondition;
+import com.group7.fruitswebsite.dto.search.condition.ProductCondition;
+import com.group7.fruitswebsite.dto.search.result.Result;
 import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.service.search.ProductSearchService;
 import com.group7.fruitswebsite.util.QueryGeneratorUtil;
@@ -19,22 +20,23 @@ import java.util.List;
  */
 @Service
 @Log4j
-public class ProductSearchImpl implements ProductSearchService {
+public class ProductSearchServiceImpl implements ProductSearchService {
 
     private EntityManager entityManager;
 
     @Override
-    public List<DhProduct> search(List<ProductCondition> conditions) {
+    public Result<DhProduct> search(List<ProductCondition> conditions, int page) {
         try {
             String sqlQuery = QueryGeneratorUtil.generateQuery(conditions, "dh_product");
             log.info(String.format("Query sqlQuery: %s", sqlQuery));
             if (!sqlQuery.equals(StringUtils.EMPTY)) {
-                return QueryHelper.replaceConditionAndQuery(conditions, sqlQuery, entityManager, DhProduct.class);
+                Result<DhProduct> result = QueryHelper.replaceConditionAndQuery(conditions, sqlQuery, entityManager, DhProduct.class, page);
+                return result;
             }
         } catch (Exception ex) {
             log.error("Search error, ", ex);
         }
-        return Collections.emptyList();
+        return new Result<>();
     }
 
     @Autowired

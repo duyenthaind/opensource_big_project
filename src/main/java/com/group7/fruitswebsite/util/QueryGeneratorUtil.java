@@ -1,6 +1,6 @@
 package com.group7.fruitswebsite.util;
 
-import com.group7.fruitswebsite.dto.search.Condition;
+import com.group7.fruitswebsite.dto.search.condition.Condition;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.group7.fruitswebsite.dto.search.ProductCondition;
+import com.group7.fruitswebsite.dto.search.condition.ProductCondition;
 import com.group7.fruitswebsite.entity.DhProductImage;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,9 +83,10 @@ public class ProductController {
     }
 
     @GetMapping("/products/searches")
-    public ResponseEntity<ApiResponse> search(@RequestBody List<ProductCondition> conditions) {
+    public ResponseEntity<ApiResponse> search(@RequestBody List<ProductCondition> conditions, @RequestParam(defaultValue = "0") int page) {
         log.info(String.format("Request search with conditions: %s", conditions));
-        return productService.search(conditions);
+        log.info(String.format("With paging: %s", page));
+        return productService.search(conditions, page);
     }
 
     @Autowired
