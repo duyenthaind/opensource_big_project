@@ -206,9 +206,57 @@ public class ProductServiceImpl implements ProductService {
     }
     
     @Override
+    public List<DhProductDto> getProductsWithPaging(int page, int size,String searchText) {
+        try {
+        	Pageable paging = PageRequest.of(page, size);
+            List<DhProductDto> result = new ArrayList<>();
+            Page<DhProduct> pageProducts = productRepository.findByName(paging,searchText);
+            for (DhProduct dhProduct : pageProducts) {
+                result.add(DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository));
+            }
+            return result;
+        } catch (Exception ex) {
+            log.error("Get product with paging as dto error, ", ex);
+        }
+        return Collections.emptyList();
+    }
+    
+//    
+//    @Override
+//    public List<DhProductDto> getProductsSearchTextWithPaging(int page, int size, String searchText) {
+//        try {
+//        	Pageable paging = PageRequest.of(page, size);
+//            List<DhProductDto> result = new ArrayList<>();
+//            Page<DhProduct> pageProducts = productRepository.findByPrice(price, pageable);
+//            for (DhProduct dhProduct : pageProducts) {
+//                result.add(DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository));
+//            }
+//            return result;
+//        } catch (Exception ex) {
+//            log.error("Get product order by price sale as dto error, ", ex);
+//        }
+//        return Collections.emptyList();
+//    }
+    
+    @Override
     public List<Integer> getTotalPagesByCategory(int size, int categoryId){
     	List<Integer> arrayTotalPage = new ArrayList<Integer>();
     	int totalProductByCategory = productRepository.findByCategory(categoryId);
+		int totalPages = totalProductByCategory % size == 0 ? totalProductByCategory/size : totalProductByCategory/size + 1;
+		
+		arrayTotalPage.add(0);
+		if(totalPages >= 2) {		
+			for(int i=1;i<totalPages;i++) {
+				arrayTotalPage.add(i);				
+			}
+		}
+		return arrayTotalPage;
+    }
+    
+    @Override
+    public List<Integer> getTotalPagesProducts(int size,String searchText){
+    	List<Integer> arrayTotalPage = new ArrayList<Integer>();
+    	int totalProductByCategory = productRepository.findAllByName(searchText).size();
 		int totalPages = totalProductByCategory % size == 0 ? totalProductByCategory/size : totalProductByCategory/size + 1;
 		
 		arrayTotalPage.add(0);

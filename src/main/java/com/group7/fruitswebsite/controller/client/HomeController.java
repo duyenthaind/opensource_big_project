@@ -13,12 +13,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.group7.fruitswebsite.repository.ProductRepository;
 import com.group7.fruitswebsite.service.ProductService;
+import com.group7.fruitswebsite.util.StringUtil;
 
 import lombok.extern.log4j.Log4j;
 
@@ -29,12 +31,6 @@ public class HomeController {
 	private CategoryService categoryService;
 	private ProductService productService;
 	private BlogService blogService;
-	private ProductRepository productRepository;
-
-	@Autowired
-	public void setProductRepository(ProductRepository productRepository) {
-		this.productRepository = productRepository;
-	}
 
 	@Autowired
 	public void setProductService(ProductService productService) {
@@ -66,31 +62,79 @@ public class HomeController {
 
 	@GetMapping("/shop-grid")
 	public String shop(Model model, HttpServletRequest request, @RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "12") int size) {	 
+			@RequestParam(defaultValue = "12") int size,@RequestParam String searchText,
+			@RequestParam String typeSearch) {
 		model.addAttribute("categories", categoryService.getAllEntity());
-		if (request.getParameter("categoryId") != null) {
+		model.addAttribute("top9Products", productService.getTopRandomProductsAsDto(3));
+		model.addAttribute("top9Products1", productService.getTopRandomProductsAsDto(3));
+		model.addAttribute("prodOrBPriceSale", productService.getProductsOrderByPriceSaleAscAsDto());
+		System.out.println(request.getParameter("categoryId"));
+		if (!StringUtil.isNullOrEmpty(request.getParameter("categoryId"))) {
 			Integer categoryId = Integer.parseInt(request.getParameter("categoryId"));
-			model.addAttribute("categoryId",categoryId);
-			model.addAttribute("top9Products", productService.getTopRandomProductsAsDto(3));
-
-			model.addAttribute("top9Products1", productService.getTopRandomProductsAsDto(3));
-
-			model.addAttribute("prodOrBPriceSale", productService.getProductsOrderByPriceSaleAscAsDto());
+			model.addAttribute("categoryId", categoryId);
+			
 			model.addAttribute("productByCategoryWithPage",
 					productService.getProductsByCategoryIdWithPaging(page, size, categoryId));
-			
-			int countPage = productService.getProductsByCategoryIdWithPaging(page, size, categoryId).size();		
-			model.addAttribute("totalProductByCategoryWithpage",countPage);			
-			model.addAttribute("totalPages",productService.getTotalPagesByCategory(size,categoryId));	
-		} 
+
+			int countPage = productService.getProductsByCategoryIdWithPaging(page, size, categoryId).size();
+			model.addAttribute("totalProductByCategoryWithpage", countPage);
+			model.addAttribute("totalPages", productService.getTotalPagesByCategory(size, categoryId));
+		}else {
+			if (!StringUtil.isNullOrEmpty(searchText)) {
+				if (typeSearch.equals("All Products")) {
+					model.addAttribute("productByCategoryWithPage",productService.getProductsWithPaging(page, size,searchText));
+
+					int countPage = productService.getProductsWithPaging(page, size,searchText).size();
+					model.addAttribute("totalProductByCategoryWithpage", countPage);
+					model.addAttribute("totalPages", productService.getTotalPagesProducts(size,searchText));
+					model.addAttribute("searchText",searchText);
+					model.addAttribute("typeSearch",typeSearch);
+				}
+				else if (typeSearch.equals("Price")) {
+
+				}
+				else if (typeSearch.equals("Price sale")) {
+
+				}
+				else {
+
+				}
+			}
+		}
 		return "client/shop-grid";
 	}
 
-	@GetMapping("/test")
-	public ResponseEntity test(@RequestParam("page") int page, @RequestParam int size,
-			@RequestParam Integer categoryId) {
-		return new ResponseEntity<>(HttpStatus.ACCEPTED)
-				.ok(productService.getProductsByCategoryIdWithPaging(page, size, categoryId));
+	@PostMapping("/shop-grid")
+	public String searchProduct(Model model, HttpServletRequest request, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "12") int size, @RequestParam String searchText,
+			@RequestParam String typeSearch) {
+		model.addAttribute("categories", categoryService.getAllEntity());
+		model.addAttribute("top9Products", productService.getTopRandomProductsAsDto(3));
+
+		model.addAttribute("top9Products1", productService.getTopRandomProductsAsDto(3));
+		model.addAttribute("prodOrBPriceSale", productService.getProductsOrderByPriceSaleAscAsDto());
+		
+		if (!StringUtil.isNullOrEmpty(searchText)) {
+			if (typeSearch.equals("All Products")) {
+				model.addAttribute("productByCategoryWithPage",productService.getProductsWithPaging(page, size,searchText));
+
+				int countPage = productService.getProductsWithPaging(page, size,searchText).size();
+				model.addAttribute("totalProductByCategoryWithpage", countPage);
+				model.addAttribute("totalPages", productService.getTotalPagesProducts(size,searchText));
+				model.addAttribute("searchText",searchText);
+				model.addAttribute("typeSearch",typeSearch);
+			}
+			else if (typeSearch.equals("Price")) {
+
+			}
+			else if (typeSearch.equals("Price sale")) {
+
+			}
+			else {
+
+			}
+		}
+		return "client/shop-grid";
 	}
 
 	@GetMapping("/blog-details")

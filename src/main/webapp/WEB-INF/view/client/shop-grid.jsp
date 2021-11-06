@@ -180,7 +180,7 @@
 				</div>
 				<div class="product__pagination">
 					<c:forEach var="totalPage" items="${totalPages}">
-						<a href="${server}/shop-grid?categoryId=${categoryId}&page=${totalPage}">${totalPage+1}</a>		
+						<a href="${server}/shop-grid?categoryId=${categoryId}&page=${totalPage}&searchText=${searchText}&typeSearch=${typeSearch}">${totalPage+1}</a>		
 					</c:forEach>
 				</div>
 			</div>

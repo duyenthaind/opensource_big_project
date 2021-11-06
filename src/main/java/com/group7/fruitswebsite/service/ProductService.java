@@ -33,5 +33,8 @@ public interface ProductService {
 	
 	List<DhProductDto> getProductsByCategoryIdWithPaging(int page, int size, Integer categoryId);
 	List<Integer> getTotalPagesByCategory(int size, int categoryId);
+//	List<DhProductDto> getProductsSearchTextWithPaging(int page, int size, String searchText);
+	List<DhProductDto> getProductsWithPaging(int page, int size,String searchText);
+	List<Integer> getTotalPagesProducts(int size,String searchText);
 
 }

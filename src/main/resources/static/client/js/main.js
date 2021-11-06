@@ -9,14 +9,14 @@
 
 'use strict';
 
-function getCategoryName(event){
+function getTypeSearch(event){
 	var text = $(event.target).text();
-	document.getElementById('categoryNameToSearch').value = text;
-	document.getElementById('outPutCategoryName').innerHTML = text + '<span onclick="showAllCategory();"class="arrow_carrot-down dropdowncate"></span>';
+	document.getElementById('typeToSearch').value = text;
+	document.getElementById('outPutTypeName').innerHTML = text + '<span onclick="showAllCategory();"class="arrow_carrot-down dropdowncate"></span>';
 }
 
 (function ($) {
-
+		
     /*------------------
         Preloader
     --------------------*/
@@ -257,4 +257,5 @@ window.onclick = function(event) {
         }
     }
 }
+
 

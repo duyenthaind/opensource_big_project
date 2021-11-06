@@ -201,23 +201,30 @@
 				<div class="col-lg-9">
 					<div class="hero__search">
 						<div class="hero__search__form">
-							<form action="#">
-								<div class="hero__search__categories" id="outPutCategoryName">
-									All Categories <span onclick="showAllCategory();"
+							<form action="${server}/shop-grid" method="POST">
+								<div class="hero__search__categories" id="outPutTypeName">
+									All Products <span onclick="showAllCategory();"
 										class="arrow_carrot-down dropdowncate"></span>
 								</div>
-								<input type="hidden" id="categoryNameToSearch" name="categoryName" />
-								<input type="text" placeholder="What do yo u need?">
+								<input type="hidden" id="typeToSearch" value="All Products" name="typeSearch" /> <input
+									type="text" name="searchText" placeholder="What do yo u need?">
 								<button type="submit" class="site-btn">SEARCH</button>
 							</form>
 						</div>
 						<div id="dropDownCategory" class="dropdown-content">
-							<c:forEach items="${categories}" var="category">
-								<c:if test="${category.status = true}">
-									<span onclick="getCategoryName(event);">
-										${category.name} </span>
-								</c:if>
-							</c:forEach>
+							<span onclick="getTypeSearch(event);"> Price </span> <span
+								onclick="getTypeSearch(event);"> Price sale </span> <span
+								class="typeCateToSearch" id="typeCateToSearch"> Category
+								name
+								<ul id="cateNameToSearch" class="list-group listcate">
+									<c:forEach items="${categories}" var="category">
+										<c:if test="${category.status = true}">
+											<li onclick="getTypeSearch(event);" class="list-group-item">${category.name}</li>
+										</c:if>
+									</c:forEach>
+								</ul>
+							</span>
+
 						</div>
 						<div class="hero__search__phone">
 							<div class="hero__search__phone__icon">
