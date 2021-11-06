@@ -83,7 +83,8 @@ public class ProductController {
     }
 
     @GetMapping("/products/searches")
-    public ResponseEntity<ApiResponse> search(@RequestBody List<ProductCondition> conditions){
+    public ResponseEntity<ApiResponse> search(@RequestBody List<ProductCondition> conditions) {
+        log.info(String.format("Request search with conditions: %s", conditions));
         return productService.search(conditions);
     }
 
