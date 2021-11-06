@@ -1,5 +1,6 @@
 package com.group7.fruitswebsite.util;
 
+import com.group7.fruitswebsite.common.search.Operator;
 import com.group7.fruitswebsite.dto.search.Condition;
 
 import javax.persistence.EntityManager;
@@ -18,7 +19,8 @@ public class QueryHelper {
         conditions.forEach(val -> {
             if (val instanceof Condition) {
                 Condition condition = (Condition) val;
-                nativeQuery.setParameter(condition.getKey(), condition.getValue());
+                Object value = condition.getOperator().equals(Operator.LIKE) ? String.format("%%%s%%", condition.getValue()) : condition.getValue();
+                nativeQuery.setParameter(condition.getKey(), value);
             }
         });
         return nativeQuery.getResultList();

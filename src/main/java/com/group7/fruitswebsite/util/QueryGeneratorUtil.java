@@ -51,10 +51,10 @@ public class QueryGeneratorUtil {
                 operation = " %s <= %s ";
                 break;
             case LIKE:
-                operation = " %s like %:%s% ";
+                operation = " %s like :%s ";
                 break;
             default:
-                operation = "";
+                operation = StringUtils.EMPTY;
                 break;
         }
         if (!operation.equals(StringUtils.EMPTY)) {

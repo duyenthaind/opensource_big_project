@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.group7.fruitswebsite.common.search.Operator;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  */
 @Setter
 @Getter
+@ToString
 public abstract class Condition {
     protected String key;
     protected Object value;
