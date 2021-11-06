@@ -1,6 +1,5 @@
 package com.group7.fruitswebsite.service.search.impl;
 
-import com.group7.fruitswebsite.dto.search.Condition;
 import com.group7.fruitswebsite.dto.search.ProductCondition;
 import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.service.search.ProductSearchService;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.Collections;
 import java.util.List;
 
