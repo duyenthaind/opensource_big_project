@@ -34,8 +34,8 @@ public class Constants {
         FORBIDDEN("forbidden", 403),
         NOT_FOUND("not_found", 404),
         REQUEST_TIMEOUT("request_timeout", 408),
-    	INTERNAL_SERVER("internal_server",500);
-    	
+        INTERNAL_SERVER("internal_server", 500);
+
         private final String message;
         private final int status;
 
@@ -53,8 +53,8 @@ public class Constants {
         }
     }
 
-    public static class ApiMessage{
-        private ApiMessage(){
+    public static class ApiMessage {
+        private ApiMessage() {
         }
 
         public static final String NOT_FOUND_CATEGORY = "category is not found";
@@ -65,9 +65,8 @@ public class Constants {
         public static final String PRODUCT_IN_COMMENT_NOT_DEFINED = "no product for comment is defined";
     }
 
-    public enum CustomMessage{
-        FILE_EXCEED_LIMIT(1,"image exceeded limit")
-        ;
+    public enum CustomMessage {
+        FILE_EXCEED_LIMIT(1, "image exceeded limit");
 
         private final int errorCode;
         private final String message;
@@ -86,8 +85,8 @@ public class Constants {
         }
     }
 
-    public static class CustomMessageField{
-        private CustomMessageField(){
+    public static class CustomMessageField {
+        private CustomMessageField() {
         }
 
         public static final String ERROR_CODE = "errorCode";
@@ -95,10 +94,17 @@ public class Constants {
         public static final String CUSTOM_DATA = "customData";
     }
 
-    public static class SystemUser{
-        private SystemUser(){
+    public static class SystemUser {
+        private SystemUser() {
         }
 
         public static final int SYSTEM_USER_ID = -999;
+    }
+
+    public static class Search {
+        private Search() {
+        }
+
+        public static final int SEARCH_PER_PAGE = 12;
     }
 }

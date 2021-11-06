@@ -72,10 +72,14 @@ public class ApiResponseUtil {
         return responseResult;
     }
 
-    public static ApiResponse.ApiResponseResult mapResultWithoutPaging(List data) {
+    public static ApiResponse.ApiResponseResult mapResultWithoutPaging(List data, int page, int total) {
         ApiResponse.ApiResponseResult responseResult = new ApiResponse.ApiResponseResult();
         responseResult.setData(data);
-        responseResult.setTotal(data.size());
+        responseResult.setTotal(total);
+        responseResult.setPage(page);
+        responseResult.setPerPage(Constants.Search.SEARCH_PER_PAGE);
+        responseResult.setTotalPages(total % Constants.Search.SEARCH_PER_PAGE != 0 ?
+                total / Constants.Search.SEARCH_PER_PAGE + 1 : total / Constants.Search.SEARCH_PER_PAGE);
         return responseResult;
     }
 

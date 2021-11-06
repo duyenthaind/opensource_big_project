@@ -1,4 +1,4 @@
-package com.group7.fruitswebsite.dto.search;
+package com.group7.fruitswebsite.dto.search.condition;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.group7.fruitswebsite.common.search.Operator;

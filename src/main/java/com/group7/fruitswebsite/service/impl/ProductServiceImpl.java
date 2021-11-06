@@ -6,7 +6,8 @@ import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.config.ApplicationConfig;
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.DhProductDto;
-import com.group7.fruitswebsite.dto.search.ProductCondition;
+import com.group7.fruitswebsite.dto.search.condition.ProductCondition;
+import com.group7.fruitswebsite.dto.search.result.ProductSearchResult;
 import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.entity.DhProductImage;
@@ -14,7 +15,6 @@ import com.group7.fruitswebsite.model.DhProductModel;
 import com.group7.fruitswebsite.service.ProductImageService;
 import com.group7.fruitswebsite.service.search.ProductSearchService;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
-import com.group7.fruitswebsite.util.DateUtil;
 import com.group7.fruitswebsite.util.DtoUtil;
 import com.group7.fruitswebsite.util.StringUtil;
 
@@ -33,7 +33,6 @@ import com.group7.fruitswebsite.repository.CategoryRepository;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
 import com.group7.fruitswebsite.repository.ProductRepository;
 import com.group7.fruitswebsite.service.ProductService;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -224,13 +223,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> search(List<ProductCondition> conditions) {
+    public ResponseEntity<ApiResponse> search(List<ProductCondition> conditions, int page) {
         try {
-            List<DhProduct> searchedProducts = productSearchService.search(conditions);
-            List<DhProductDto> productDtos = searchedProducts.stream()
-                    .map(val -> DtoUtil.getDtoFromProduct(val, objectMapper, productImageRepository)).collect(Collectors.toList());
-            ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultWithoutPaging(productDtos);
-            return ApiResponseUtil.getBaseSuccessStatus(responseResult);
+            ProductSearchResult result = productSearchService.search(conditions, page);
+            if (result.getDatas() != null && !result.getDatas().isEmpty()) {
+                List<DhProductDto> productDtos = result.getDatas().stream()
+                        .map(val -> DtoUtil.getDtoFromProduct(val, objectMapper, productImageRepository)).collect(Collectors.toList());
+                ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultWithoutPaging(productDtos, page, result.getTotal());
+                return ApiResponseUtil.getBaseSuccessStatus(responseResult);
+            }
+            return ApiResponseUtil.getBaseSuccessStatus(null);
         } catch (Exception ex) {
             log.error(String.format("Search product with conditions %s error", conditions), ex);
             return ApiResponseUtil.getBaseFailureStatus();

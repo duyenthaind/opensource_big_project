@@ -1,4 +1,4 @@
-package com.group7.fruitswebsite.dto.search;
+package com.group7.fruitswebsite.dto.search.condition;
 
 import lombok.Getter;
 import lombok.Setter;
