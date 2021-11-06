@@ -2,7 +2,7 @@ package com.group7.fruitswebsite.service;
 
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.DhProductDto;
-import com.group7.fruitswebsite.dto.search.ProductCondition;
+import com.group7.fruitswebsite.dto.search.condition.ProductCondition;
 import com.group7.fruitswebsite.model.DhProductModel;
 
 import org.springframework.http.ResponseEntity;
@@ -36,5 +36,5 @@ public interface ProductService {
 
 	List<Integer> getTotalPagesByCategory(int size, int categoryId);
 
-	ResponseEntity<ApiResponse> search(List<ProductCondition> conditions);
+	ResponseEntity<ApiResponse> search(List<ProductCondition> conditions, int page);
 }
