@@ -7,7 +7,7 @@ import com.group7.fruitswebsite.config.ApplicationConfig;
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.DhProductDto;
 import com.group7.fruitswebsite.dto.search.condition.ProductCondition;
-import com.group7.fruitswebsite.dto.search.result.ProductSearchResult;
+import com.group7.fruitswebsite.dto.search.result.Result;
 import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.entity.DhProductImage;
@@ -209,7 +209,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Integer> getTotalPagesByCategory(int size, int categoryId) {
-        List<Integer> arrayTotalPage = new ArrayList<Integer>();
+        List<Integer> arrayTotalPage = new ArrayList<>();
         int totalProductByCategory = productRepository.findByCategory(categoryId);
         int totalPages = totalProductByCategory % size == 0 ? totalProductByCategory / size : totalProductByCategory / size + 1;
 
@@ -225,7 +225,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<ApiResponse> search(List<ProductCondition> conditions, int page) {
         try {
-            ProductSearchResult result = productSearchService.search(conditions, page);
+            Result<DhProduct> result = productSearchService.search(conditions, page);
             if (result.getDatas() != null && !result.getDatas().isEmpty()) {
                 List<DhProductDto> productDtos = result.getDatas().stream()
                         .map(val -> DtoUtil.getDtoFromProduct(val, objectMapper, productImageRepository)).collect(Collectors.toList());
