@@ -6,6 +6,7 @@ import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.config.ApplicationConfig;
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.DhProductDto;
+import com.group7.fruitswebsite.dto.search.ProductCondition;
 import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.entity.DhProductImage;
@@ -31,6 +32,8 @@ import com.group7.fruitswebsite.repository.CategoryRepository;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
 import com.group7.fruitswebsite.repository.ProductRepository;
 import com.group7.fruitswebsite.service.ProductService;
+import com.group7.fruitswebsite.service.search.ProductSearchService;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
@@ -48,6 +51,7 @@ public class ProductServiceImpl implements ProductService {
     private CategoryRepository categoryRepository;
     private ProductImageRepository productImageRepository;
     private ProductImageService productImageService;
+    private ProductSearchService productSearchService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public DhProduct setNewProduct(DhProductModel dhProductModel) throws JsonProcessingException {
@@ -173,7 +177,7 @@ public class ProductServiceImpl implements ProductService {
         }
         return Collections.emptyList();
     }
-    
+
     @Override
     public List<DhProductDto> getProductsOrderByPriceSaleAscAsDto() {
         try {
@@ -188,11 +192,11 @@ public class ProductServiceImpl implements ProductService {
         }
         return Collections.emptyList();
     }
-    
+
     @Override
     public List<DhProductDto> getProductsByCategoryIdWithPaging(int page, int size, Integer categoryId) {
         try {
-        	Pageable paging = PageRequest.of(page, size);
+            Pageable paging = PageRequest.of(page, size);
             List<DhProductDto> result = new ArrayList<>();
             Page<DhProduct> pageProducts = productRepository.findByCategory(paging, categoryRepository.getById(categoryId));
             for (DhProduct dhProduct : pageProducts) {
@@ -204,69 +208,98 @@ public class ProductServiceImpl implements ProductService {
         }
         return Collections.emptyList();
     }
-    
+
     @Override
-    public List<DhProductDto> getProductsWithPaging(int page, int size,String searchText) {
-        try {
-        	Pageable paging = PageRequest.of(page, size);
-            List<DhProductDto> result = new ArrayList<>();
-            Page<DhProduct> pageProducts = productRepository.findByName(paging,searchText);
-            for (DhProduct dhProduct : pageProducts) {
-                result.add(DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository));
+    public List<Integer> getTotalPagesByCategory(int size, int categoryId) {
+        List<Integer> arrayTotalPage = new ArrayList<Integer>();
+        int totalProductByCategory = productRepository.findByCategory(categoryId);
+        int totalPages = totalProductByCategory % size == 0 ? totalProductByCategory / size : totalProductByCategory / size + 1;
+
+        arrayTotalPage.add(0);
+        if (totalPages >= 2) {
+            for (int i = 1; i < totalPages; i++) {
+                arrayTotalPage.add(i);
             }
-            return result;
-        } catch (Exception ex) {
-            log.error("Get product with paging as dto error, ", ex);
         }
-        return Collections.emptyList();
+        return arrayTotalPage;
     }
-    
-//    
+
 //    @Override
-//    public List<DhProductDto> getProductsSearchTextWithPaging(int page, int size, String searchText) {
+//<<<<<<< HEAD
+//    public List<DhProductDto> getProductsWithPaging(int page, int size,String searchText) {
 //        try {
 //        	Pageable paging = PageRequest.of(page, size);
 //            List<DhProductDto> result = new ArrayList<>();
-//            Page<DhProduct> pageProducts = productRepository.findByPrice(price, pageable);
+//            Page<DhProduct> pageProducts = productRepository.findByName(paging,searchText);
 //            for (DhProduct dhProduct : pageProducts) {
 //                result.add(DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository));
 //            }
 //            return result;
 //        } catch (Exception ex) {
-//            log.error("Get product order by price sale as dto error, ", ex);
+//            log.error("Get product with paging as dto error, ", ex);
 //        }
 //        return Collections.emptyList();
 //    }
-    
+//    
+////    
+////    @Override
+////    public List<DhProductDto> getProductsSearchTextWithPaging(int page, int size, String searchText) {
+////        try {
+////        	Pageable paging = PageRequest.of(page, size);
+////            List<DhProductDto> result = new ArrayList<>();
+////            Page<DhProduct> pageProducts = productRepository.findByPrice(price, pageable);
+////            for (DhProduct dhProduct : pageProducts) {
+////                result.add(DtoUtil.getDtoFromProduct(dhProduct, objectMapper, productImageRepository));
+////            }
+////            return result;
+////        } catch (Exception ex) {
+////            log.error("Get product order by price sale as dto error, ", ex);
+////        }
+////        return Collections.emptyList();
+////    }
+//    
+//    @Override
+//    public List<Integer> getTotalPagesByCategory(int size, int categoryId){
+//    	List<Integer> arrayTotalPage = new ArrayList<Integer>();
+//    	int totalProductByCategory = productRepository.findByCategory(categoryId);
+//		int totalPages = totalProductByCategory % size == 0 ? totalProductByCategory/size : totalProductByCategory/size + 1;
+//		
+//		arrayTotalPage.add(0);
+//		if(totalPages >= 2) {		
+//			for(int i=1;i<totalPages;i++) {
+//				arrayTotalPage.add(i);				
+//			}
+//		}
+//		return arrayTotalPage;
+
     @Override
-    public List<Integer> getTotalPagesByCategory(int size, int categoryId){
-    	List<Integer> arrayTotalPage = new ArrayList<Integer>();
-    	int totalProductByCategory = productRepository.findByCategory(categoryId);
-		int totalPages = totalProductByCategory % size == 0 ? totalProductByCategory/size : totalProductByCategory/size + 1;
-		
-		arrayTotalPage.add(0);
-		if(totalPages >= 2) {		
-			for(int i=1;i<totalPages;i++) {
-				arrayTotalPage.add(i);				
-			}
-		}
-		return arrayTotalPage;
+    public ResponseEntity<ApiResponse> search(List<ProductCondition> conditions) {
+        try {
+            List<DhProduct> searchedProducts = productSearchService.search(conditions);
+            List<DhProductDto> productDtos = searchedProducts.stream()
+                    .map(val -> DtoUtil.getDtoFromProduct(val, objectMapper, productImageRepository)).collect(Collectors.toList());
+            ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultWithoutPaging(productDtos);
+            return ApiResponseUtil.getBaseSuccessStatus(responseResult);
+        } catch (Exception ex) {
+            log.error(String.format("Search product with conditions %s error", conditions), ex);
+            return ApiResponseUtil.getBaseFailureStatus();
+        }
     }
     
-    @Override
-    public List<Integer> getTotalPagesProducts(int size,String searchText){
-    	List<Integer> arrayTotalPage = new ArrayList<Integer>();
-    	int totalProductByCategory = productRepository.findAllByName(searchText).size();
-		int totalPages = totalProductByCategory % size == 0 ? totalProductByCategory/size : totalProductByCategory/size + 1;
-		
-		arrayTotalPage.add(0);
-		if(totalPages >= 2) {		
-			for(int i=1;i<totalPages;i++) {
-				arrayTotalPage.add(i);				
-			}
-		}
-		return arrayTotalPage;
-    }
+//    @Override
+//    public List<Integer> getTotalPagesProducts(int size,String searchText){
+//    	List<Integer> arrayTotalPage = new ArrayList<Integer>();
+//    	int totalProductByCategory = productRepository.findAllByName(searchText).size();
+//		int totalPages = totalProductByCategory % size == 0 ? totalProductByCategory/size : totalProductByCategory/size + 1;
+//		
+//		arrayTotalPage.add(0);
+//		if(totalPages >= 2) {		
+//			for(int i=1;i<totalPages;i++) {
+//				arrayTotalPage.add(i);				
+//			}
+//		}
+//		return arrayTotalPage;
+//    }
 
     @Override
     public DhProductDto getOneProductsAsDto(Integer id) {
@@ -375,5 +408,10 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     public void setProductImageService(ProductImageService productImageService) {
         this.productImageService = productImageService;
+    }
+
+    @Autowired
+    public void setProductSearchService(ProductSearchService productSearchService) {
+        this.productSearchService = productSearchService;
     }
 }

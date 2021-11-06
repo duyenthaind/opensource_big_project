@@ -201,7 +201,7 @@
 				<div class="col-lg-9">
 					<div class="hero__search">
 						<div class="hero__search__form">
-							<form action="${server}/shop-grid" method="POST">
+							<form action="${server}/shop-grid/search" method="POST">
 								<div class="hero__search__categories" id="outPutTypeName">
 									All Products <span onclick="showAllCategory();"
 										class="arrow_carrot-down dropdowncate"></span>

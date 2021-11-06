@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.group7.fruitswebsite.dto.search.ProductCondition;
 import com.group7.fruitswebsite.entity.DhProductImage;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,11 @@ public class ProductController {
     @DeleteMapping("/products")
     public ResponseEntity<ApiResponse> deleteProduct(@RequestParam Integer id) {
         return productService.delete(id);
+    }
+
+    @GetMapping("/products/searches")
+    public ResponseEntity<ApiResponse> search(@RequestBody List<ProductCondition> conditions){
+        return productService.search(conditions);
     }
 
     @Autowired

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.group7.fruitswebsite.dto.ApiResponse;
+import com.group7.fruitswebsite.dto.search.ProductCondition;
 import com.group7.fruitswebsite.repository.ProductRepository;
 import com.group7.fruitswebsite.service.ProductService;
 import com.group7.fruitswebsite.util.StringUtil;
@@ -68,7 +70,8 @@ public class HomeController {
 		model.addAttribute("top9Products", productService.getTopRandomProductsAsDto(3));
 		model.addAttribute("top9Products1", productService.getTopRandomProductsAsDto(3));
 		model.addAttribute("prodOrBPriceSale", productService.getProductsOrderByPriceSaleAscAsDto());
-		System.out.println(request.getParameter("categoryId"));
+		
+		List<ProductCondition> conditions = new ArrayList<ProductCondition>();
 		if (!StringUtil.isNullOrEmpty(request.getParameter("categoryId"))) {
 			Integer categoryId = Integer.parseInt(request.getParameter("categoryId"));
 			model.addAttribute("categoryId", categoryId);
@@ -81,58 +84,24 @@ public class HomeController {
 			model.addAttribute("totalPages", productService.getTotalPagesByCategory(size, categoryId));
 		}else {
 			if (!StringUtil.isNullOrEmpty(searchText)) {
-				if (typeSearch.equals("All Products")) {
-					model.addAttribute("productByCategoryWithPage",productService.getProductsWithPaging(page, size,searchText));
-
-					int countPage = productService.getProductsWithPaging(page, size,searchText).size();
-					model.addAttribute("totalProductByCategoryWithpage", countPage);
-					model.addAttribute("totalPages", productService.getTotalPagesProducts(size,searchText));
-					model.addAttribute("searchText",searchText);
-					model.addAttribute("typeSearch",typeSearch);
-				}
-				else if (typeSearch.equals("Price")) {
-
-				}
-				else if (typeSearch.equals("Price sale")) {
-
-				}
-				else {
-
-				}
+				model.addAttribute("productSearch", productService.search(conditions));
 			}
 		}
 		return "client/shop-grid";
 	}
 
-	@PostMapping("/shop-grid")
+	@PostMapping("/shop-grid/search")
 	public String searchProduct(Model model, HttpServletRequest request, @RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "12") int size, @RequestParam String searchText,
 			@RequestParam String typeSearch) {
 		model.addAttribute("categories", categoryService.getAllEntity());
 		model.addAttribute("top9Products", productService.getTopRandomProductsAsDto(3));
-
 		model.addAttribute("top9Products1", productService.getTopRandomProductsAsDto(3));
 		model.addAttribute("prodOrBPriceSale", productService.getProductsOrderByPriceSaleAscAsDto());
 		
+		List<ProductCondition> conditions = new ArrayList<ProductCondition>();
 		if (!StringUtil.isNullOrEmpty(searchText)) {
-			if (typeSearch.equals("All Products")) {
-				model.addAttribute("productByCategoryWithPage",productService.getProductsWithPaging(page, size,searchText));
-
-				int countPage = productService.getProductsWithPaging(page, size,searchText).size();
-				model.addAttribute("totalProductByCategoryWithpage", countPage);
-				model.addAttribute("totalPages", productService.getTotalPagesProducts(size,searchText));
-				model.addAttribute("searchText",searchText);
-				model.addAttribute("typeSearch",typeSearch);
-			}
-			else if (typeSearch.equals("Price")) {
-
-			}
-			else if (typeSearch.equals("Price sale")) {
-
-			}
-			else {
-
-			}
+			model.addAttribute("productSearch", productService.search(conditions));
 		}
 		return "client/shop-grid";
 	}

@@ -17,6 +17,7 @@ configurations {
 configurations {
     //avoid multiple binding
     all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    all*.exclude group: 'ch.qos.logback', module: 'logback-classic'
 }
 
 repositories {
@@ -63,3 +64,17 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+task zip(type: Zip) {
+    from(configurations.runtimeClasspath) {
+        into('lib')
+    }
+    from('config/') {
+        include '**/*'
+        into('config')
+    }
+/*    from("$buildDir" + '/libs') {
+        include '*.jar'
+    }*/
+}
+
