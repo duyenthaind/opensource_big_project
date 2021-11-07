@@ -208,9 +208,30 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<DhProductDto> getAllProductsDtoWithPaging(int page, int size) {
+        try {
+            Pageable paging = PageRequest.of(page, size);
+            Page<DhProduct> pageProducts = productRepository.findAll(paging);
+            return pageProducts.getContent().stream()
+                    .map(val -> DtoUtil.getDtoFromProduct(val, objectMapper, productImageRepository)).collect(Collectors.toList());
+        } catch (Exception ex) {
+            log.error("Get all product with paging as dto error, ", ex);
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
     public List<Integer> getTotalPagesByCategory(int size, int categoryId) {
         List<Integer> arrayTotalPage = new ArrayList<>();
-        int totalProductByCategory = productRepository.findByCategory(categoryId);
+        int totalProductByCategory = 0;
+        if (categoryId != -1) {
+            totalProductByCategory = productRepository.findNumsByCategory(categoryId);
+        } else {
+            totalProductByCategory = productRepository.findAll().size();
+        }
+        if (size <= 0) {
+            return arrayTotalPage;
+        }
         int totalPages = totalProductByCategory % size == 0 ? totalProductByCategory / size : totalProductByCategory / size + 1;
 
         arrayTotalPage.add(0);
@@ -238,26 +259,24 @@ public class ProductServiceImpl implements ProductService {
             return ApiResponseUtil.getBaseFailureStatus();
         }
     }
-    
+
     @Override
-    public Result<DhProductDto> searchProduct(List<ProductCondition> conditions, int page){
-    	Result<DhProduct> result = new Result<DhProduct>();
-    	Result<DhProductDto> resultDto = new Result<DhProductDto>();
-    	List<DhProductDto> productDtos = new ArrayList<DhProductDto>();
-    	try {
-    		result = productSearchService.search(conditions, page);
-        	resultDto.setTotal(result.getTotal());
-        	resultDto.setTotalPages(Constants.Search.SEARCH_PER_PAGE);
-        	resultDto.setListPages();
+    public Result<DhProductDto> searchProduct(List<ProductCondition> conditions, int page) {
+        Result<DhProductDto> resultDto = new Result<>();
+        try {
+            Result<DhProduct> result = productSearchService.search(conditions, page);
+            resultDto.setTotal(result.getTotal());
+            resultDto.generateTotalPages(Constants.Search.SEARCH_PER_PAGE);
+            resultDto.generateListPages();
             if (result.getDatas() != null && !result.getDatas().isEmpty()) {
-                productDtos = result.getDatas().stream()
-                        .map(val -> DtoUtil.getDtoFromProduct(val, objectMapper, productImageRepository)).collect(Collectors.toList());               
+                List<DhProductDto> productDtos = result.getDatas().stream()
+                        .map(val -> DtoUtil.getDtoFromProduct(val, objectMapper, productImageRepository)).collect(Collectors.toList());
                 resultDto.setDatas(productDtos);
                 return resultDto;
             }
             return resultDto;
         } catch (Exception ex) {
-            log.error(String.format("Search product with conditions %s error", conditions), ex);
+            log.error(String.format("Search product dto with conditions %s error", conditions), ex);
             return resultDto;
         }
     }

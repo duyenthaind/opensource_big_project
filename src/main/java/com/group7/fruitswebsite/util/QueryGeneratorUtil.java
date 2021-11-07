@@ -1,7 +1,6 @@
 package com.group7.fruitswebsite.util;
 
 import com.group7.fruitswebsite.dto.search.condition.Condition;
-import com.group7.fruitswebsite.dto.search.condition.ProductSearchDto;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,18 +14,17 @@ public class QueryGeneratorUtil {
     }
 
     public static String generateQuery(List conditions, String tableName) {
-        StringBuilder queryBuilder = new StringBuilder("select * from ");
-        queryBuilder.append(String.format("%s where ", tableName));
+        StringBuilder queryBuilder = new StringBuilder(String.format("select * from %s", tableName));
+        if (!conditions.isEmpty()) {
+            queryBuilder.append(" where ");
+        }
         conditions.forEach(val -> {
             if (val instanceof Condition) {
-                Condition condition = (Condition) val;              
+                Condition condition = (Condition) val;
                 if (condition.isValidCondition()) {
                     queryBuilder.append(generateOperation(condition));
                     if (conditions.indexOf(val) + 1 < conditions.size()) {
                         queryBuilder.append(" and ");
-                    }
-                    if(condition.getValue().getCategoryId() > 0 && condition.getValue().getCategoryId() != null) {
-                    	queryBuilder.append(" and name like :name");
                     }
                 }
             }

@@ -15,14 +15,14 @@ public class Result<T> {
     protected int total;
     protected int totalPages;
     protected List<T> datas;
-    protected List<Integer> listPages = new ArrayList<Integer>();
+    protected List<Integer> listPages = new ArrayList<>();
    
-    public void setTotalPages(int size) {
-    	this.totalPages = this.total % size == 0 ? this.total / size : this.total / size + 1;
+    public void generateTotalPages(int size) {
+    	this.totalPages = this.total > 0 && this.total % size == 0 ? this.total / size : this.total / size + 1;
     }
     
-    public void setListPages() {
-    	if (this.totalPages >= 2) {
+    public void generateListPages() {
+    	if (this.totalPages >= 1) {
             for (int i = 0; i < this.totalPages; i++) {
             	this.listPages.add(i);
             }
