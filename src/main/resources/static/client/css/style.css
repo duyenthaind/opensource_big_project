@@ -138,6 +138,19 @@ ol {
 	cursor: pointer;
 }
 
+.typeCateToSearch ul{
+	display:none;
+}
+
+.typeCateToSearch:hover ul{
+	display:block;
+	
+}
+
+.listcate li{
+	cursor: pointer;
+}
+
 .show {
 	display: block;
 }

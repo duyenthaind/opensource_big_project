@@ -82,8 +82,8 @@
 		</div>
 		<nav class="humberger__menu__nav mobile-menu">
 			<ul>
-				<li class="active"><a href="./index.html">Home</a></li>
-				<li><a href="./shop-grid.html">Shop</a></li>
+				<li class="active"><a href="/index">Home</a></li>
+				<li><a href="${server}/shop-grid?categoryId=0&page=0&searchText=&typeSearch=name&operator=LIKE">Shop</a></li>
 				<li><a href="#">Pages</a>
 					<ul class="header__menu__dropdown">
 						<li><a href="${server}/shoping-cart">Shoping Cart</a></li>
@@ -190,7 +190,7 @@
 							<i class="fa fa-bars"></i> <span>Menu</span>
 						</div>
 						<ul style="${display}">
-							<li><a href="${server}/shop-grid">Shopping</a></li>
+							<li><a href="${server}/shop-grid?categoryId=0&page=0&searchText=&typeSearch=name&operator=LIKE">Shopping</a></li>
 							<li><a href="${server}/shoping-cart">Shopping Cart</a></li>
 							<li><a href="${server}/checkout">Check Out</a></li>
 							<li><a href="${server}/blog">Blog</a></li>
@@ -201,23 +201,34 @@
 				<div class="col-lg-9">
 					<div class="hero__search">
 						<div class="hero__search__form">
-							<form action="#">
-								<div class="hero__search__categories" id="outPutCategoryName">
-									All Categories <span onclick="showAllCategory();"
+							<form action="${server}/shop-grid" method="POST">
+								<div class="hero__search__categories" id="outPutTypeName">
+									All Products <span onclick="showAllCategory();"
 										class="arrow_carrot-down dropdowncate"></span>
 								</div>
-								<input type="hidden" id="categoryNameToSearch" name="categoryName" />
-								<input type="text" placeholder="What do yo u need?">
+								<input type="hidden" id="typeToSearch" value="name" name="typeSearch" />
+								<input type="hidden" id="categoryIdToSearch" value="0" name="categoryId" />
+								<input type="hidden" id="operator" value="LIKE" name="operator" />
+								 <input
+									type="text" name="searchText" placeholder="What do yo u need?">
 								<button type="submit" class="site-btn">SEARCH</button>
 							</form>
 						</div>
 						<div id="dropDownCategory" class="dropdown-content">
-							<c:forEach items="${categories}" var="category">
-								<c:if test="${category.status = true}">
-									<span onclick="getCategoryName(event);">
-										${category.name} </span>
-								</c:if>
-							</c:forEach>
+							<span onclick="getTypeSearch(event);">All Products</span>
+							<span onclick="getTypeSearch(event);">Price</span> <span
+								onclick="getTypeSearch(event);">Price sale</span> <span
+								class="typeCateToSearch" id="typeCateToSearch"> Category
+								name
+								<ul id="cateNameToSearch" class="list-group listcate">
+									<c:forEach items="${categories}" var="category">
+										<c:if test="${category.status = true}">
+											<li onclick="getTypeSearch(event);" value="${category.id}" class="list-group-item">${category.name}</li>
+										</c:if>
+									</c:forEach>
+								</ul>
+							</span>
+
 						</div>
 						<div class="hero__search__phone">
 							<div class="hero__search__phone__icon">

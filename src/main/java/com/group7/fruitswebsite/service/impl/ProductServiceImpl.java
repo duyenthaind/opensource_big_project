@@ -13,7 +13,6 @@ import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.entity.DhProductImage;
 import com.group7.fruitswebsite.model.DhProductModel;
 import com.group7.fruitswebsite.service.ProductImageService;
-import com.group7.fruitswebsite.service.search.ProductSearchService;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
 import com.group7.fruitswebsite.util.DtoUtil;
 import com.group7.fruitswebsite.util.StringUtil;
@@ -33,6 +32,7 @@ import com.group7.fruitswebsite.repository.CategoryRepository;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
 import com.group7.fruitswebsite.repository.ProductRepository;
 import com.group7.fruitswebsite.service.ProductService;
+import com.group7.fruitswebsite.service.search.ProductSearchService;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -236,6 +236,29 @@ public class ProductServiceImpl implements ProductService {
         } catch (Exception ex) {
             log.error(String.format("Search product with conditions %s error", conditions), ex);
             return ApiResponseUtil.getBaseFailureStatus();
+        }
+    }
+    
+    @Override
+    public Result<DhProductDto> searchProduct(List<ProductCondition> conditions, int page){
+    	Result<DhProduct> result = new Result<DhProduct>();
+    	Result<DhProductDto> resultDto = new Result<DhProductDto>();
+    	List<DhProductDto> productDtos = new ArrayList<DhProductDto>();
+    	try {
+    		result = productSearchService.search(conditions, page);
+        	resultDto.setTotal(result.getTotal());
+        	resultDto.setTotalPages(Constants.Search.SEARCH_PER_PAGE);
+        	resultDto.setListPages();
+            if (result.getDatas() != null && !result.getDatas().isEmpty()) {
+                productDtos = result.getDatas().stream()
+                        .map(val -> DtoUtil.getDtoFromProduct(val, objectMapper, productImageRepository)).collect(Collectors.toList());               
+                resultDto.setDatas(productDtos);
+                return resultDto;
+            }
+            return resultDto;
+        } catch (Exception ex) {
+            log.error(String.format("Search product with conditions %s error", conditions), ex);
+            return resultDto;
         }
     }
 

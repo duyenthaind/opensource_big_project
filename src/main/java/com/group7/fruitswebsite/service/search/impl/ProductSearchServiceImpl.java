@@ -37,7 +37,7 @@ public class ProductSearchServiceImpl implements ProductSearchService {
         }
         return new Result<>();
     }
-
+    
     @Autowired
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
