@@ -13,19 +13,19 @@ import com.group7.fruitswebsite.entity.DhCategory;
 import com.group7.fruitswebsite.entity.DhProduct;
 
 @Repository
-public interface ProductRepository extends JpaRepository<DhProduct, Integer>,CustomProductRepository{
+public interface ProductRepository extends JpaRepository<DhProduct, Integer>, CustomProductRepository {
     Page<DhProduct> findAll(Pageable pageable);
-    
-    Page<DhProduct> findByName(Pageable pageable,String name);
-    
-    Page<DhProduct> findByCategory(Pageable pageable,DhCategory category);
-    
-    @Query(value = "SELECT * FROM Dh_Product WHERE price > 0 and price <= ?1",nativeQuery = true)
-    Page<DhProduct> findByPrice(Long price,Pageable pageable);
-    
-    @Query(value = "SELECT count(*) FROM Dh_Product WHERE category_id = ?1",nativeQuery = true)
-    Integer findByCategory(Integer categoryId);
-    
-    @Query(value = "SELECT * FROM Dh_Product p WHERE p.name LIKE %:name%", nativeQuery = true)
+
+    Page<DhProduct> findByName(Pageable pageable, String name);
+
+    Page<DhProduct> findByCategory(Pageable pageable, DhCategory category);
+
+    @Query(value = "SELECT * FROM dh_product WHERE price > 0 and price <= ?1", nativeQuery = true)
+    Page<DhProduct> findByPrice(Long price, Pageable pageable);
+
+    @Query(value = "SELECT count(*) FROM dh_product WHERE category_id = ?1", nativeQuery = true)
+    Integer findNumsByCategory(Integer categoryId);
+
+    @Query(value = "SELECT * FROM dh_product p WHERE p.name LIKE %:name%", nativeQuery = true)
     List<DhProduct> findAllByName(@Param("name") String name);
 }

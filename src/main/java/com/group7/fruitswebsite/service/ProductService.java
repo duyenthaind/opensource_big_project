@@ -12,32 +12,35 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ProductService {
-	ResponseEntity<ApiResponse> saveOne(DhProductModel dhProductModel);
+    ResponseEntity<ApiResponse> saveOne(DhProductModel dhProductModel);
 
-	ResponseEntity<ApiResponse> getAll();
+    ResponseEntity<ApiResponse> getAll();
 
-	List<DhProductDto> getAllProductsAsDto();
+    List<DhProductDto> getAllProductsAsDto();
 
-	ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
+    ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
 
-	ResponseEntity<ApiResponse> getOne(int id);
+    ResponseEntity<ApiResponse> getOne(int id);
 
-	DhProductDto getOneProductsAsDto(Integer id);
+    DhProductDto getOneProductsAsDto(Integer id);
 
-	ResponseEntity<ApiResponse> update(DhProductModel dhProductModel);
+    ResponseEntity<ApiResponse> update(DhProductModel dhProductModel);
 
-	ResponseEntity<ApiResponse> delete(int id);
+    ResponseEntity<ApiResponse> delete(int id);
 
-	List<DhProductDto> getTopRandomProductsAsDto(int limit);
+    List<DhProductDto> getTopRandomProductsAsDto(int limit);
 
-	List<DhProductDto> getProductsInListCategoryAsDto(int total);
+    List<DhProductDto> getProductsInListCategoryAsDto(int total);
 
-	List<DhProductDto> getProductsOrderByPriceSaleAscAsDto();
+    List<DhProductDto> getProductsOrderByPriceSaleAscAsDto();
 
-	List<DhProductDto> getProductsByCategoryIdWithPaging(int page, int size, Integer categoryId);
+    List<DhProductDto> getProductsByCategoryIdWithPaging(int page, int size, Integer categoryId);
 
-	List<Integer> getTotalPagesByCategory(int size, int categoryId);
+    List<DhProductDto> getAllProductsDtoWithPaging(int page, int size);
 
-	ResponseEntity<ApiResponse> search(List<ProductCondition> conditions, int page);
-	Result<DhProductDto> searchProduct(List<ProductCondition> conditions, int page);
+    List<Integer> getTotalPagesByCategory(int size, int categoryId);
+
+    ResponseEntity<ApiResponse> search(List<ProductCondition> conditions, int page);
+
+    Result<DhProductDto> searchProduct(List<ProductCondition> conditions, int page);
 }

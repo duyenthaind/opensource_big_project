@@ -105,6 +105,14 @@ public class Constants {
         private Search() {
         }
 
+        public static class Product{
+            private Product(){
+            }
+
+            public static final String NAME = "name";
+            public static final String CATEGORY_ID = "category_id";
+        }
+
         public static final int SEARCH_PER_PAGE = 12;
     }
 }
