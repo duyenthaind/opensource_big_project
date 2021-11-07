@@ -11,7 +11,20 @@
 
 function getTypeSearch(event){
 	var text = $(event.target).text();
-	document.getElementById('typeToSearch').value = text;
+	if(text == "Price"){
+		document.getElementById('typeToSearch').value = "price";
+		document.getElementById('operator').value = "LESS_THAN_OR_EQUAL";
+	}else if(text == "Price sale"){
+		document.getElementById('typeToSearch').value = "price_sale";
+		document.getElementById('operator').value = "LESS_THAN_OR_EQUAL";
+	}else if(text == "All Products"){
+		document.getElementById('typeToSearch').value = "name";
+		document.getElementById('operator').value = "LIKE";
+	}else{
+		document.getElementById('typeToSearch').value = "category_id";
+		document.getElementById('categoryIdToSearch').value = event.target.value;
+		document.getElementById('operator').value = "LIKE";
+	}
 	document.getElementById('outPutTypeName').innerHTML = text + '<span onclick="showAllCategory();"class="arrow_carrot-down dropdowncate"></span>';
 }
 

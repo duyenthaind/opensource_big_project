@@ -7,7 +7,7 @@
 		<nav class="header__menu">
 			<ul>
 				<li class="active"><a href="${base}/index">Home</a></li>
-				<li><a href="${base}/shop-grid">Shop</a></li>
+				<li><a href="${base}/shop-grid?categoryId=0&page=0&searchText=&typeSearch=name&operator=LIKE">Shop</a></li>
 				<li><a href="#">Pages</a>
 					<ul class="header__menu__dropdown">
 						<li><a href="${server}/shoping-cart">Shoping Cart</a></li>

@@ -35,7 +35,8 @@
 						<ul>
 							<c:forEach var="category" items="${categories}">
 								<c:if test="${category.status = true}">
-									<li><a href="${server}/shop-grid?categoryId=${category.id}">${category.name}</a></li>
+									<li><a
+										href="${server}/shop-grid?categoryId=${category.id}">${category.name}</a></li>
 								</c:if>
 							</c:forEach>
 						</ul>
@@ -144,7 +145,7 @@
 						<div class="col-lg-4 col-md-4">
 							<div class="filter__found">
 								<h6>
-									<span>${totalProductByCategoryWithpage}</span> Products found
+									<span> ..  </span> Products found
 								</h6>
 							</div>
 						</div>
@@ -156,32 +157,102 @@
 					</div>
 				</div>
 				<div class="row">
-					<c:forEach var="prodByCategory"
-						items="${productByCategoryWithPage}">
-						<div class="col-lg-4 col-md-6 col-sm-6">
-							<div class="product__item">
-								<div class="product__item__pic set-bg"
-									data-setbg="${uploadsDir}/${prodByCategory.productImages[0]}">
-									<ul class="product__item__pic__hover">
-										<li><a href="#"><i class="fa fa-heart"></i></a></li>
-										<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-										<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-									</ul>
-								</div>
-								<div class="product__item__text">
-									<h6>
-										<a href="#">${prodByCategory.name}</a>
-									</h6>
-									<h5>$${prodByCategory.price}</h5>
+					<c:if test="${productByCategoryWithPage != null }">
+						<c:forEach var="prodByCategory"
+							items="${productByCategoryWithPage}">
+							<div class="col-lg-4 col-md-6 col-sm-6">
+								<div class="product__item">
+									<div class="product__item__pic set-bg"
+										data-setbg="${uploadsDir}/${prodByCategory.productImages[0]}">
+										<ul class="product__item__pic__hover">
+											<li><a href="#"><i class="fa fa-heart"></i></a></li>
+											<li><a href="#"><i class="fa fa-retweet"></i></a></li>
+											<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+										</ul>
+									</div>
+									<div class="product__item__text">
+										<h6>
+											<a href="#">${prodByCategory.name}</a>
+										</h6>
+										<h5>$${prodByCategory.priceSale}</h5>
+										<div class="product__item__price">
+												<span style="color:#8F6A43"><del>$${prodByCategory.price}</del></span>
+											</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</c:forEach>
+						</c:forEach>
+					</c:if>
+					<c:if test="${productSearch != null }">
+						<c:forEach var="productSearch" items="${productSearch}">
+							<div class="col-lg-4 col-md-6 col-sm-6">
+								<div class="product__item">
+									<div class="product__item__pic set-bg"
+										data-setbg="${uploadsDir}/${productSearch.productImages[0]}">
+										<ul class="product__item__pic__hover">
+											<li><a href="#"><i class="fa fa-heart"></i></a></li>
+											<li><a href="#"><i class="fa fa-retweet"></i></a></li>
+											<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+										</ul>
+									</div>
+									<div class="product__item__text">
+										<h6>
+											<a href="#">${productSearch.name}</a>
+										</h6>
+										<h5>$${productSearch.priceSale}</h5>
+										<div class="product__item__price">
+												<span style="color:#8F6A43"><del>$${productSearch.price}</del></span>
+											</div>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</c:if>
+					<c:if test="${allProducts != null }">
+						<c:forEach var="productSearch" items="${allProducts}">
+							<div class="col-lg-4 col-md-6 col-sm-6">
+								<div class="product__item">
+									<div class="product__item__pic set-bg"
+										data-setbg="${uploadsDir}/${productSearch.productImages[0]}">
+										<ul class="product__item__pic__hover">
+											<li><a href="#"><i class="fa fa-heart"></i></a></li>
+											<li><a href="#"><i class="fa fa-retweet"></i></a></li>
+											<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+										</ul>
+									</div>
+									<div class="product__item__text">
+										<h6>
+											<a href="#">${productSearch.name}</a>
+										</h6>
+										<h5>$${productSearch.priceSale}</h5>
+										<div class="product__item__price">
+												<span style="color:#8F6A43"><del>$${productSearch.price}</del></span>
+											</div>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</c:if>
 				</div>
 				<div class="product__pagination">
-					<c:forEach var="totalPage" items="${totalPages}">
-						<a href="${server}/shop-grid?categoryId=${categoryId}&page=${totalPage}&searchText=${searchText}&typeSearch=${typeSearch}">${totalPage+1}</a>		
+					<c:if test="${productByCategoryWithPage != null}">
+						<c:forEach var="totalPage" items="${totalPages}">
+						<a
+							href="${server}/shop-grid?categoryId=${categoryId}&page=${totalPage}">${totalPage+1}</a>
 					</c:forEach>
+					</c:if>
+					<c:if test="${allProducts != null}">
+						<c:forEach var="totalPage" items="${totalPages}">
+						<a
+							href="${server}/shop-grid?&page=${totalPage}">${totalPage+1}</a>
+					</c:forEach>
+					</c:if>
+					<c:if test="${conditions != null}">
+						<c:forEach var="totalPage" items="${totalPages}">
+						<a
+							href="${server}/shop-grid?categoryId=${conditions[0].value.categoryId}&page=${totalPage}&searchText=${conditions[0].value.searchText}&typeSearch=${conditions[0].key}&operator=${conditions[0].operator}">${totalPage+1}</a>
+					</c:forEach>
+					</c:if>				
 				</div>
 			</div>
 		</div>

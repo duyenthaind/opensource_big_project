@@ -33,6 +33,7 @@ public class DhProductDto extends BaseDto {
     private DhCategory category;
     private List<String> productImages;
     private List<DhProductImageDto> listProductImages;
+    private int totalPages;
     @JsonAnySetter
     private Map<String, Object> any = new HashMap<>();
 

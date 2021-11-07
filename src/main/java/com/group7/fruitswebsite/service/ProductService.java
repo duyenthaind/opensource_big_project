@@ -3,6 +3,8 @@ package com.group7.fruitswebsite.service;
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.DhProductDto;
 import com.group7.fruitswebsite.dto.search.condition.ProductCondition;
+import com.group7.fruitswebsite.dto.search.result.Result;
+import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.model.DhProductModel;
 
 import org.springframework.http.ResponseEntity;
@@ -35,9 +37,7 @@ public interface ProductService {
 	List<DhProductDto> getProductsByCategoryIdWithPaging(int page, int size, Integer categoryId);
 
 	List<Integer> getTotalPagesByCategory(int size, int categoryId);
-//	List<DhProductDto> getProductsSearchTextWithPaging(int page, int size, String searchText);
-//	List<DhProductDto> getProductsWithPaging(int page, int size,String searchText);
-//	List<Integer> getTotalPagesProducts(int size,String searchText);
 
 	ResponseEntity<ApiResponse> search(List<ProductCondition> conditions, int page);
+	Result<DhProductDto> searchProduct(List<ProductCondition> conditions, int page);
 }

@@ -17,7 +17,7 @@ import java.util.List;
 @ToString
 public abstract class Condition {
     protected String key;
-    protected Object value;
+    protected ProductSearchDto value;
     @JsonProperty(value = "operator")
     protected Operator operator;
     protected static List<String> allowedConditions = new ArrayList<>();

@@ -13,6 +13,6 @@ import java.util.Arrays;
 @Setter
 public class ProductCondition extends Condition {
     static {
-        allowedConditions = new ArrayList<>(Arrays.asList("price", "name", "category_id", "price", "price_sale", "weight"));
+        allowedConditions = new ArrayList<>(Arrays.asList("price", "name", "category_id", "price_sale", "weight"));
     }
 }

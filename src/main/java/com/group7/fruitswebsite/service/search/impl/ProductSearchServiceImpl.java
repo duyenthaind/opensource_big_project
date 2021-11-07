@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,7 +37,7 @@ public class ProductSearchServiceImpl implements ProductSearchService {
         }
         return new Result<>();
     }
-
+    
     @Autowired
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
