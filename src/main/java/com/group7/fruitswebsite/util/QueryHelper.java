@@ -28,8 +28,7 @@ public class QueryHelper {
         Result result = new Result();
         int totalRecords = nativeQuery.getResultList().size();
         result.setTotal(totalRecords);
-        result.setTotalPages(totalRecords % Constants.Search.SEARCH_PER_PAGE == 0 ?
-                totalRecords / Constants.Search.SEARCH_PER_PAGE : totalRecords / Constants.Search.SEARCH_PER_PAGE + 1);
+        result.generateTotalPages(Constants.Search.SEARCH_PER_PAGE);
         result.generateListPages();
         int firstResult = page > 0 ? page * Constants.Search.SEARCH_PER_PAGE : 0;
         nativeQuery.setFirstResult(firstResult);
