@@ -70,7 +70,7 @@ public class BlogServiceImpl implements BlogService {
         }
         return Collections.emptyList();
     }
-    
+
     @Override
     public List<DhBlogDto> getTopBlogsAsDto(int limit) {
         try {
@@ -80,6 +80,27 @@ public class BlogServiceImpl implements BlogService {
             log.error("Error get all blogs as dto, ", ex);
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public List<DhBlogDto> getMostRecentBlogsAsDto(int limit) {
+        try {
+            List<DhBlog> mostRecentBlogs = blogRepository.getMostRecentBlogs(limit);
+            return mostRecentBlogs.stream().map(val -> DtoUtil.getBlogDtoFromDhBlog(val, objectMapper)).collect(Collectors.toList());
+        } catch (Exception ex) {
+            log.error("Error get most recent blogs as dto, ", ex);
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Integer countAll() {
+        try {
+            return blogRepository.countAll();
+        } catch (Exception ex) {
+            log.error("Error count all blogs", ex);
+        }
+        return -1;
     }
 
     @Override

@@ -28,4 +28,8 @@ public interface BlogService {
     ResponseEntity<ApiResponse> delete(int id);
     
     List<DhBlogDto> getTopBlogsAsDto(int limit);
+
+    List<DhBlogDto> getMostRecentBlogsAsDto(int limit);
+
+    Integer countAll();
 }

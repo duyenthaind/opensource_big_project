@@ -6,4 +6,6 @@ import com.group7.fruitswebsite.entity.DhBlog;
 
 public interface CustomBlogRepository {
 	List<DhBlog> getLimit(int limit);
+
+	List<DhBlog> getMostRecentBlogs(int limit);
 }
