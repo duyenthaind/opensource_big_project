@@ -141,8 +141,8 @@ public class HomeController {
     }
 
     @GetMapping("/blog-details")
-    public String blog_details(Model model,@RequestParam("blogId") Integer blogId) {
-    	model.addAttribute("blog",blogService.getOneBlogAsDto(blogId));
+    public String blog_details(Model model,@RequestParam Integer id) {
+    	model.addAttribute("blog",blogService.getOneBlogAsDto(id));
     	model.addAttribute("blogs", blogService.getTopBlogsAsDto(3));
         return "client/blog-details";
     }

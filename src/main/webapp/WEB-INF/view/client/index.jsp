@@ -225,7 +225,7 @@
 						
 						<div class="blog__item__text">
 							<ul>
-								<li class="blogFormatDate" data-value="${blog.createdDate}">${blog.createdDate}</li>
+								<li class="blogFormatDate" data-value="${blog.date}">${blog.date}</li>
 							</ul>
 							<h5>
 								<a href="#">${blog.thumbnail}</a>
