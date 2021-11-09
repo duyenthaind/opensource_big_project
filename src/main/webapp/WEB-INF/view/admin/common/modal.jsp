@@ -599,6 +599,7 @@
 									</div>
 									<hr>
 									<input type="hidden" id="updateBlogId" name="id"/>
+									<input type="hidden" id="blogCreatedDate" name="createdDate" />
 									<div class="form-group">
 										<label for="cc-payment" class="control-label mb-1">Thumbnail</label>
 										<input id="detailBlogThumbnail" name="thumbnail" type="text"

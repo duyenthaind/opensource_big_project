@@ -21,13 +21,12 @@ public class CustomBlogRepositoryImpl implements CustomBlogRepository {
 
     @Override
     public List<DhBlog> getLimit(int limit) {
-        // TODO Auto-generated method stub
         String jpql = "SELECT p FROM DhBlog p ORDER BY p.thumbnail";
         List<DhBlog> blogs = null;
         try {
             blogs = entityManager.createQuery(jpql, DhBlog.class).setMaxResults(limit).getResultList();
         } catch (Exception e) {
-            // TODO: handle exception
+            log.error("Get top blog error, ", e);
         }
         return blogs;
     }

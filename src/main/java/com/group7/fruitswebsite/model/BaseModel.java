@@ -22,7 +22,6 @@ public abstract class BaseModel {
 	private Integer createdBy;
 	@JsonProperty(value = "updated_date")
 	private Long updatedDate;
-
 	@JsonProperty(value = "created_date")
 	private Long createdDate;
 }

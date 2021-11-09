@@ -144,6 +144,7 @@ public class HomeController {
     public String blog_details(Model model,@RequestParam Integer id) {
     	model.addAttribute("blog",blogService.getOneBlogAsDto(id));
     	model.addAttribute("blogs", blogService.getTopBlogsAsDto(3));
+        model.addAttribute("mostRecentBlogs", blogService.getTopBlogsAsDto(Constants.Search.Blog.NUM_BLOGS_AT_SIDE_BAR));
         return "client/blog-details";
     }
 
@@ -190,7 +191,7 @@ public class HomeController {
             conditions.add(condition);
         }
 
-        Result<DhBlogDto> searchResult = blogService.searchProduct(conditions, page);
+        Result<DhBlogDto> searchResult = blogService.searchBlog(conditions, page);
         model.addAttribute("displayBlogs", searchResult.getDatas());
         model.addAttribute("listPageIndexes", searchResult.getListPages());
         return "client/blog";
