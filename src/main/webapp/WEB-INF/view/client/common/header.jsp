@@ -22,7 +22,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ogani | Template</title>
+	<style>
+	body {
+		background-color: #eee
+	}
 
+	.card {
+		background-color: #fff;
+		border: none
+	}
+
+	.form-color {
+		background-color: #fafafa
+	}
+
+	.form-control {
+		height: 48px;
+		border-radius: 25px
+	}
+
+	.form-control:focus {
+		color: #495057;
+		background-color: #fff;
+		border-color: #35b69f;
+		outline: 0;
+		box-shadow: none;
+		text-indent: 10px
+	}
+
+	.c-badge {
+		background-color: #35b69f;
+		color: white;
+		height: 20px;
+		font-size: 11px;
+		width: 92px;
+		border-radius: 5px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 2px
+	}
+
+	.comment-text {
+		font-size: 13px
+	}
+
+	.wish {
+		color: #35b69f
+	}
+
+	.user-feed {
+		font-size: 14px;
+		margin-top: 12px
+	}
+</style>
     <!-- Google Font -->
     <link
             href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
@@ -44,6 +97,7 @@
     <link rel="stylesheet" href="${server}/css/slicknav.min.css"
           type="text/css">
     <link rel="stylesheet" href="${server}/css/style.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js">
 </head>
 
 <body>

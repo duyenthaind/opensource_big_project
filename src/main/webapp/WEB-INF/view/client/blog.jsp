@@ -80,9 +80,9 @@
                                     <ul>
                                         <li><i class="fa fa-calendar-o"></i>${blog.date}</li>
                                     </ul>
-                                    <h5><a href="#">${blog.thumbnail}</a></h5>
+                                    <h5><a href="${server}/blog-details?id=${blog.id}">${blog.thumbnail}</a></h5>
                                     <p>${blog.shortDescription}</p>
-                                    <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
+                                    <a href="${server}/blog-details?id=${blog.id}" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
                                 </div>
                             </div>
                         </div>

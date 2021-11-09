@@ -54,12 +54,12 @@ function getTypeSearch(event){
     /*------------------
     	Format timestamp for blog
 	--------------------*/
-    var timestamp = document.getElementsByClassName("blogFormatDate");
-    
-    for(var i=0;i<timestamp.length;i++){
-    	var data = '<i class="fa fa-calendar-o"></i> ' + formatDate(new Date(parseInt(timestamp[i].getAttribute('data-value'))));
-    	timestamp[i].innerHTML = data;
-    }
+//    var timestamp = document.getElementsByClassName("blogFormatDate");
+//    
+//    for(var i=0;i<timestamp.length;i++){
+//    	var data = '<i class="fa fa-calendar-o"></i> ' + formatDate(new Date(parseInt(timestamp[i].getAttribute('data-value'))));
+//    	timestamp[i].innerHTML = data;
+//    }
     
     /*------------------
         Background Set
