@@ -2,12 +2,18 @@ package com.group7.fruitswebsite.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.DhBlogDto;
+import com.group7.fruitswebsite.dto.DhProductDto;
+import com.group7.fruitswebsite.dto.search.condition.BlogCondition;
+import com.group7.fruitswebsite.dto.search.condition.ProductCondition;
+import com.group7.fruitswebsite.dto.search.result.Result;
 import com.group7.fruitswebsite.entity.DhBlog;
 import com.group7.fruitswebsite.model.DhBlogModel;
 import com.group7.fruitswebsite.repository.BlogRepository;
 import com.group7.fruitswebsite.service.BlogService;
+import com.group7.fruitswebsite.service.search.BlogSearchService;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
 import com.group7.fruitswebsite.util.DtoUtil;
 import lombok.extern.log4j.Log4j;
@@ -30,8 +36,10 @@ import java.util.stream.Collectors;
 @Log4j
 public class BlogServiceImpl implements BlogService {
 
-    private BlogRepository blogRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    private BlogRepository blogRepository;
+    private BlogSearchService blogSearchService;
 
     @Override
     public ResponseEntity<ApiResponse> saveOne(DhBlogModel dhBlogModel) {
@@ -101,6 +109,24 @@ public class BlogServiceImpl implements BlogService {
             log.error("Error count all blogs", ex);
         }
         return -1;
+    }
+
+    @Override
+    public Result<DhBlogDto> searchProduct(List<BlogCondition> conditions, int page) {
+        Result<DhBlogDto> resultDto = new Result<>();
+        try {
+            Result<DhBlog> result = blogSearchService.search(conditions, page);
+            resultDto.setTotal(result.getTotal());
+            resultDto.generateTotalPages(Constants.Search.Blog.BLOGS_PER_PAGE);
+            resultDto.generateListPages();
+            if (result.getDatas() != null && !result.getDatas().isEmpty()) {
+                resultDto.setDatas(result.getDatas().stream()
+                        .map(val -> DtoUtil.getBlogDtoFromDhBlog(val, objectMapper)).collect(Collectors.toList()));
+            }
+        } catch (Exception ex) {
+            log.error("Search blogs dto with conditions %s error ", ex);
+        }
+        return resultDto;
     }
 
     @Override
@@ -178,5 +204,10 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     public void setBlogRepository(BlogRepository blogRepository) {
         this.blogRepository = blogRepository;
+    }
+
+    @Autowired
+    public void setBlogSearchService(BlogSearchService blogSearchService) {
+        this.blogSearchService = blogSearchService;
     }
 }
