@@ -12,7 +12,9 @@ import com.group7.fruitswebsite.entity.DhProductImage;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
 import lombok.extern.log4j.Log4j;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,7 +65,12 @@ public class DtoUtil {
 
     public static DhBlogDto getBlogDtoFromDhBlog(DhBlog dhBlog, ObjectMapper objectMapper) {
         try {
-            return objectMapper.readValue(objectMapper.writeValueAsString(dhBlog), DhBlogDto.class);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+            DhBlogDto dto = objectMapper.readValue(objectMapper.writeValueAsString(dhBlog), DhBlogDto.class);
+            if (dhBlog.getCreatedDate() != null && dhBlog.getCreatedDate() > 0) {
+                dto.setDate(simpleDateFormat.format(new Date(dhBlog.getCreatedDate())));
+            }
+            return dto;
         } catch (Exception ex) {
             log.error("Map blog to dto error, ", ex);
         }

@@ -6,19 +6,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.group7.fruitswebsite.common.Constants;
+import com.group7.fruitswebsite.dto.DhBlogDto;
 import com.group7.fruitswebsite.dto.DhProductDto;
+import com.group7.fruitswebsite.dto.search.condition.BlogCondition;
 import com.group7.fruitswebsite.dto.search.result.Result;
 import com.group7.fruitswebsite.service.BlogService;
 import com.group7.fruitswebsite.service.CategoryService;
+import com.group7.fruitswebsite.util.PagingUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.group7.fruitswebsite.common.search.Operator;
 import com.group7.fruitswebsite.dto.search.condition.ProductCondition;
@@ -166,7 +165,32 @@ public class HomeController {
     @GetMapping("/blog")
     public String blog(Model model) {
         model.addAttribute("action", "blog");
+        model.addAttribute("mostRecentBlogs", blogService.getTopBlogsAsDto(Constants.Search.Blog.NUM_BLOGS_AT_SIDE_BAR));
+        model.addAttribute("displayBlogs", blogService.getMostRecentBlogsAsDto(Constants.Search.Blog.BLOGS_PER_PAGE));
+        model.addAttribute("listPageIndexes",
+                PagingUtil.generateListPagingFromDataAndSize(blogService.countAll(), Constants.Search.Blog.BLOGS_PER_PAGE));
 
+        return "client/blog";
+    }
+
+    @GetMapping("/blog/search")
+    public String blogSearch(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(required = false) String textSearch) {
+        model.addAttribute("action", "blog");
+        model.addAttribute("mostRecentBlogs", blogService.getTopBlogsAsDto(Constants.Search.Blog.NUM_BLOGS_AT_SIDE_BAR));
+
+        List<BlogCondition> conditions = new ArrayList<>();
+        if (!StringUtils.isEmpty(textSearch)) {
+            model.addAttribute("textSearch", textSearch);
+            BlogCondition condition = new BlogCondition();
+            condition.setKey(Constants.Search.Blog.THUMBNAIL);
+            condition.setValue(textSearch);
+            condition.setOperator(Operator.LIKE);
+            conditions.add(condition);
+        }
+
+        Result<DhBlogDto> searchResult = blogService.searchProduct(conditions, page);
+        model.addAttribute("displayBlogs", searchResult.getDatas());
+        model.addAttribute("listPageIndexes", searchResult.getListPages());
         return "client/blog";
     }
 
