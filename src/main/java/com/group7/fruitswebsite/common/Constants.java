@@ -113,6 +113,15 @@ public class Constants {
             public static final String CATEGORY_ID = "category_id";
         }
 
+        public static class Blog{
+            private Blog(){
+            }
+
+            public static final int NUM_BLOGS_AT_SIDE_BAR = 3;
+            public static final int BLOGS_PER_PAGE = 6;
+            public static final String THUMBNAIL = "thumbnail";
+        }
+
         public static final int SEARCH_PER_PAGE = 12;
     }
 }

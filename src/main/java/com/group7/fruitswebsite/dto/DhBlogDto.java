@@ -15,4 +15,5 @@ public class DhBlogDto extends BaseDto{
     private String details;
     private String shortDescription;
     private String avatar;
+    private String date;
 }

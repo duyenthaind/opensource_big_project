@@ -2,6 +2,8 @@ package com.group7.fruitswebsite.service;
 
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.DhBlogDto;
+import com.group7.fruitswebsite.dto.search.condition.BlogCondition;
+import com.group7.fruitswebsite.dto.search.result.Result;
 import com.group7.fruitswebsite.model.DhBlogModel;
 import org.springframework.http.ResponseEntity;
 
@@ -28,4 +30,11 @@ public interface BlogService {
     ResponseEntity<ApiResponse> delete(int id);
     
     List<DhBlogDto> getTopBlogsAsDto(int limit);
+
+    List<DhBlogDto> getMostRecentBlogsAsDto(int limit);
+
+    Integer countAll();
+
+    Result<DhBlogDto> searchProduct(List<BlogCondition> conditions, int page);
+
 }
