@@ -112,7 +112,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Result<DhBlogDto> searchProduct(List<BlogCondition> conditions, int page) {
+    public Result<DhBlogDto> searchBlog(List<BlogCondition> conditions, int page) {
         Result<DhBlogDto> resultDto = new Result<>();
         try {
             Result<DhBlog> result = blogSearchService.search(conditions, page);
@@ -174,6 +174,7 @@ public class BlogServiceImpl implements BlogService {
     public ResponseEntity<ApiResponse> update(DhBlogModel dhBlogModel) {
         try {
             DhBlog dhBlog = mapBlogFromModel(dhBlogModel);
+            dhBlog.setUpdatedDate(System.currentTimeMillis());
             blogRepository.save(dhBlog);
 
             log.info(String.format("Update 1 blog with id=%s", dhBlog.getId()));

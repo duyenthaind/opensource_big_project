@@ -106,6 +106,8 @@ function showDetailAndUpdateBlog(id,currentPage){
 				$("#updateDetailsBlog").summernote("code", object[0].details);
 				document.getElementById("currentPageBlog").value = currentPage;
 				document.getElementById("detailOutputBlog").src = "/uploads/" + object[0].avatar;
+				$('#blogCreatedDate').val(object[0].created_date)
+				console.log("create date: " + object[0].created_date)
 			}
 			
 		},
@@ -134,7 +136,7 @@ function updateBlog(event){
 		processData: false,
 	    contentType: false,
 	    cache: false,
-	    timeout: 1000000,
+	    timeout: 10000,
 	    success : function(jsonResult){
 			if(jsonResult.status == 200){			
 				alert("Success");

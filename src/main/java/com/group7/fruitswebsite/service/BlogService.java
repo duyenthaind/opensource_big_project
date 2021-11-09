@@ -35,6 +35,6 @@ public interface BlogService {
 
     Integer countAll();
 
-    Result<DhBlogDto> searchProduct(List<BlogCondition> conditions, int page);
+    Result<DhBlogDto> searchBlog(List<BlogCondition> conditions, int page);
 
 }
