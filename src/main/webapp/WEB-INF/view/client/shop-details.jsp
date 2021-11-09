@@ -78,8 +78,6 @@
 							data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">Description</a>
 						</li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
-							href="#tabs-2" role="tab" aria-selected="false">Information</a></li>
-						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#tabs-3" role="tab" aria-selected="false">Reviews <span>(1)</span></a>
 						</li>
 					</ul>
@@ -90,49 +88,143 @@
 								${product.detailDescription}
 							</div>
 						</div>
-						<div class="tab-pane" id="tabs-2" role="tabpanel">
-							<div class="product__details__tab__desc">
-								<h6>Products Infomation</h6>
-								<p>Vestibulum ac diam sit amet quam vehicula elementum sed
-									sit amet dui. Pellentesque in ipsum id orci porta dapibus.
-									Proin eget tortor risus. Vivamus suscipit tortor eget felis
-									porttitor volutpat. Vestibulum ac diam sit amet quam vehicula
-									elementum sed sit amet dui. Donec rutrum congue leo eget
-									malesuada. Vivamus suscipit tortor eget felis porttitor
-									volutpat. Curabitur arcu erat, accumsan id imperdiet et,
-									porttitor at sem. Praesent sapien massa, convallis a
-									pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet
-									quam vehicula elementum sed sit amet dui. Vestibulum ante ipsum
-									primis in faucibus orci luctus et ultrices posuere cubilia
-									Curae; Donec velit neque, auctor sit amet aliquam vel,
-									ullamcorper sit amet ligula. Proin eget tortor risus.</p>
-								<p>Praesent sapien massa, convallis a pellentesque nec,
-									egestas non nisi. Lorem ipsum dolor sit amet, consectetur
-									adipiscing elit. Mauris blandit aliquet elit, eget tincidunt
-									nibh pulvinar a. Cras ultricies ligula sed magna dictum porta.
-									Cras ultricies ligula sed magna dictum porta. Sed porttitor
-									lectus nibh. Mauris blandit aliquet elit, eget tincidunt nibh
-									pulvinar a.</p>
-							</div>
-						</div>
 						<div class="tab-pane" id="tabs-3" role="tabpanel">
 							<div class="product__details__tab__desc">
-								<h6>Products Infomation</h6>
-								<p>Vestibulum ac diam sit amet quam vehicula elementum sed
-									sit amet dui. Pellentesque in ipsum id orci porta dapibus.
-									Proin eget tortor risus. Vivamus suscipit tortor eget felis
-									porttitor volutpat. Vestibulum ac diam sit amet quam vehicula
-									elementum sed sit amet dui. Donec rutrum congue leo eget
-									malesuada. Vivamus suscipit tortor eget felis porttitor
-									volutpat. Curabitur arcu erat, accumsan id imperdiet et,
-									porttitor at sem. Praesent sapien massa, convallis a
-									pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet
-									quam vehicula elementum sed sit amet dui. Vestibulum ante ipsum
-									primis in faucibus orci luctus et ultrices posuere cubilia
-									Curae; Donec velit neque, auctor sit amet aliquam vel,
-									ullamcorper sit amet ligula. Proin eget tortor risus.</p>
+								<div class="container mt-5 mb-5">
+									<div
+										class="row height d-flex justify-content-center align-items-center">
+										<div class="col-md-12">
+											<div class="card">
+												<div class="p-3">
+													<h6>Comments</h6>
+												</div>
+												<div
+													class="mt-3 d-flex flex-row align-items-center p-3 form-color">
+													<img src="https://i.imgur.com/zQZSWrt.jpg" width="50"
+														class="rounded-circle mr-2"> <input type="text"
+														class="form-control" placeholder="Enter your comment...">
+												</div>
+												<div class="mt-2">
+													<div class="d-flex flex-row p-3">
+														<img src="https://i.imgur.com/zQZSWrt.jpg" width="40"
+															height="40" class="rounded-circle mr-3">
+														<div class="w-100">
+															<div
+																class="d-flex justify-content-between align-items-center">
+																<div class="d-flex flex-row align-items-center">
+																	<span class="mr-2">Brian selter</span> <small
+																		class="c-badge">Top Comment</small>
+																</div>
+																<small>12h ago</small>
+															</div>
+															<p class="text-justify comment-text mb-0">Lorem ipsum
+																dolor sit amet, consectetur adipiscing elit, sed do
+																eiusmod tempor incididunt ut labore et dolore magna
+																aliqua. Ut enim ad minim veniam</p>
+															<div class="d-flex flex-row user-feed">
+																<span class="wish"><i
+																	class="fa fa-heartbeat mr-2"></i>24</span> <span class="ml-3"><i
+																	class="fa fa-comments-o mr-2"></i>Reply</span>
+															</div>
+
+
+															<div
+																class="mt-3 d-flex flex-row align-items-center p-3 form-color">
+																<img src="https://i.imgur.com/zQZSWrt.jpg" width="50"
+																	class="rounded-circle mr-2"> <input type="text"
+																	class="form-control"
+																	placeholder="Enter your comment...">
+															</div>
+															<div class="d-flex flex-row p-3">
+																<img src="https://i.imgur.com/3J8lTLm.jpg" width="40"
+																	height="40" class="rounded-circle mr-3">
+																<div class="w-100">
+																	<div
+																		class="d-flex justify-content-between align-items-center">
+																		<div class="d-flex flex-row align-items-center">
+																			<span class="mr-2">Seltos Majito</span> <small
+																				class="c-badge">Top Comment</small>
+																		</div>
+																		<small>2h ago</small>
+																	</div>
+																	<p class="text-justify comment-text mb-0">Tellus in
+																		hac habitasse platea dictumst vestibulum. Lectus nulla
+																		at volutpat diam ut venenatis tellus. Aliquam etiam
+																		erat velit scelerisque in dictum non consectetur.
+																		Sagittis nisl rhoncus mattis rhoncus urna neque
+																		viverra justo nec. Tellus cras adipiscing enim eu
+																		turpis egestas pretium aenean pharetra. Aliquam
+																		faucibus purus in massa.</p>
+																	<div class="d-flex flex-row user-feed">
+																		<span class="wish"><i
+																			class="fa fa-heartbeat mr-2"></i>14</span> <span
+																			class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="d-flex flex-row p-3">
+														<img src="https://i.imgur.com/3J8lTLm.jpg" width="40"
+															height="40" class="rounded-circle mr-3">
+														<div class="w-100">
+															<div
+																class="d-flex justify-content-between align-items-center">
+																<div class="d-flex flex-row align-items-center">
+																	<span class="mr-2">Seltos Majito</span> <small
+																		class="c-badge">Top Comment</small>
+																</div>
+																<small>2h ago</small>
+															</div>
+															<p class="text-justify comment-text mb-0">Tellus in
+																hac habitasse platea dictumst vestibulum. Lectus nulla
+																at volutpat diam ut venenatis tellus. Aliquam etiam erat
+																velit scelerisque in dictum non consectetur. Sagittis
+																nisl rhoncus mattis rhoncus urna neque viverra justo
+																nec. Tellus cras adipiscing enim eu turpis egestas
+																pretium aenean pharetra. Aliquam faucibus purus in
+																massa.</p>
+															<div class="d-flex flex-row user-feed">
+																<span class="wish"><i
+																	class="fa fa-heartbeat mr-2"></i>14</span> <span class="ml-3"><i
+																	class="fa fa-comments-o mr-2"></i>Reply</span>
+															</div>
+														</div>
+													</div>
+													<div class="d-flex flex-row p-3">
+														<img src="https://i.imgur.com/agRGhBc.jpg" width="40"
+															height="40" class="rounded-circle mr-3">
+														<div class="w-100">
+															<div
+																class="d-flex justify-content-between align-items-center">
+																<div class="d-flex flex-row align-items-center">
+																	<span class="mr-2">Maria Santola</span> <small
+																		class="c-badge">Top Comment</small>
+																</div>
+																<small>12h ago</small>
+															</div>
+															<p class="text-justify comment-text mb-0">Id eu nisl
+																nunc mi ipsum faucibus. Massa massa ultricies mi quis
+																hendrerit dolor. Arcu bibendum at varius vel pharetra
+																vel turpis nunc eget. Habitasse platea dictumst quisque
+																sagittis purus sit amet volutpat. Urna condimentum
+																mattis pellentesque id.Lorem ipsum dolor sit amet,
+																consectetur adipiscing elit, sed do eiusmod tempor
+																incididunt ut labore et dolore magna aliqua. Ut enim ad
+																minim veniam</p>
+															<div class="d-flex flex-row user-feed">
+																<span class="wish"><i
+																	class="fa fa-heartbeat mr-2"></i>54</span> <span class="ml-3"><i
+																	class="fa fa-comments-o mr-2"></i>Reply</span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
-						</div>
 					</div>
 				</div>
 			</div>
