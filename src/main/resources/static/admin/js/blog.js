@@ -107,7 +107,6 @@ function showDetailAndUpdateBlog(id,currentPage){
 				document.getElementById("currentPageBlog").value = currentPage;
 				document.getElementById("detailOutputBlog").src = "/uploads/" + object[0].avatar;
 				$('#blogCreatedDate').val(object[0].created_date)
-				console.log("create date: " + object[0].created_date)
 			}
 			
 		},
