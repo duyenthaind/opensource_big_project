@@ -1,7 +1,10 @@
 package com.group7.fruitswebsite.config;
 
+import com.group7.fruitswebsite.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,14 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
-	private UserDetailsService userDetailsService;
-	
-
-	@Autowired
-	public void setUserDetailsService(UserDetailsService userDetailsService) {
-		this.userDetailsService = userDetailsService;
-	}
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
@@ -37,7 +32,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder(4));
+		auth.userDetailsService(userDetailsServiceBean()).passwordEncoder(new BCryptPasswordEncoder(4));
+	}
+
+	@Override
+	@Bean
+	@Primary
+	public UserDetailsService userDetailsServiceBean() throws Exception {
+		return new UserDetailsServiceImpl();
 	}
 	
 }

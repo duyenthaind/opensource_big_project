@@ -2,8 +2,8 @@ package com.group7.fruitswebsite.service;
 
 import com.group7.fruitswebsite.entity.DhUser;
 
-public interface UserService {
-	DhUser loadUserByUsername(String userName);
+import java.util.Optional;
 
-	DhUser findByUserName(String userName);
+public interface UserService {
+	Optional<DhUser> findByUserName(String userName);
 }

@@ -1,6 +1,7 @@
 package com.group7.fruitswebsite.entity;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -46,7 +48,7 @@ public class DhUser extends BaseEntity implements java.io.Serializable,UserDetai
 			@JoinColumn(name = "role_id") })
 	@JsonProperty(value = "roles")
 	private Set<DhRole> dhRoles = new HashSet<>();
-	
+
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "dh_user_product", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "product_id") })
@@ -55,15 +57,15 @@ public class DhUser extends BaseEntity implements java.io.Serializable,UserDetai
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "dhUser")
 	private List<DhOrder> orders = new ArrayList<>();
-	
+
 	public void likeProduct(DhProduct product) {
 		dhProducts.add(product);
 	}
-	
+
 	public void unlikeProduct(DhProduct product) {
 		dhProducts.remove(product);
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -87,31 +89,26 @@ public class DhUser extends BaseEntity implements java.io.Serializable,UserDetai
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return (Collection<? extends GrantedAuthority>) this.dhRoles;
+		return this.dhRoles.stream().map(val -> new SimpleGrantedAuthority(val.getName())).collect(Collectors.toList());
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 }
