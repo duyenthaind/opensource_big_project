@@ -34,13 +34,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String username = StringUtils.EMPTY;
         String accessToken = StringUtils.EMPTY;
 
-        if(!StringUtils.isEmpty(requestTokenHeader) && requestTokenHeader.startsWith("Bearer ")){
+        if (!StringUtils.isEmpty(requestTokenHeader) && requestTokenHeader.startsWith("Bearer ")) {
             accessToken = requestTokenHeader.substring(7);
-            try{
+            try {
                 username = jwtTokenUtil.getUserNameFromAccessToken(accessToken);
-            } catch (IllegalArgumentException ex){
+            } catch (IllegalArgumentException ex) {
                 log.error("Unable to get JWT token", ex);
-            } catch (ExpiredJwtException ex){
+            } catch (ExpiredJwtException ex) {
                 log.error("JWT Token has expired", ex);
             }
         } else {
@@ -51,7 +51,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
             UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(username);
 
-            if (jwtTokenUtil.validateAccessToken(accessToken, userDetails)) {
+            if (Boolean.TRUE.equals(jwtTokenUtil.validateAccessToken(accessToken, userDetails))) {
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
@@ -59,6 +59,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
+        } else {
+            log.debug("Guest mode, this user cannot do what a logged in user can do!");
         }
         filterChain.doFilter(request, response);
     }
