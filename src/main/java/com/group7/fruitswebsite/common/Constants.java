@@ -66,7 +66,8 @@ public class Constants {
     }
 
     public enum CustomMessage {
-        FILE_EXCEED_LIMIT(1, "image exceeded limit");
+        FILE_EXCEED_LIMIT(1, "image exceeded limit"),
+        USER_NOT_FOUND(2, "user is not found");
 
         private final int errorCode;
         private final String message;
@@ -105,16 +106,16 @@ public class Constants {
         private Search() {
         }
 
-        public static class Product{
-            private Product(){
+        public static class Product {
+            private Product() {
             }
 
             public static final String NAME = "name";
             public static final String CATEGORY_ID = "category_id";
         }
 
-        public static class Blog{
-            private Blog(){
+        public static class Blog {
+            private Blog() {
             }
 
             public static final int NUM_BLOGS_AT_SIDE_BAR = 3;
