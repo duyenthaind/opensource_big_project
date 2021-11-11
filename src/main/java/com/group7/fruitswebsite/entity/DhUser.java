@@ -12,6 +12,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -19,7 +22,7 @@ import lombok.*;
 @Table(name = "dh_user")
 @Setter
 @Getter
-public class DhUser extends BaseEntity implements java.io.Serializable {
+public class DhUser extends BaseEntity implements java.io.Serializable,UserDetails {
 
 	@Column(name = "email", nullable = false, length = 50)
 	private String email;
@@ -31,7 +34,7 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 	@JsonProperty(value = "username")
 	private String username;
 
-	@Column(name = "avatar", nullable = false, length = 50)
+	@Column(name = "avatar", nullable = true, length = 50)
 	@JsonProperty(value = "avatar")
 	private String avatar;
 
@@ -80,5 +83,35 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), email, password, username, dhRoles, orders,avatar,dhProducts);
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return (Collection<? extends GrantedAuthority>) this.dhRoles;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }
