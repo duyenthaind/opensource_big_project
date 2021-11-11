@@ -152,6 +152,16 @@ public class HomeController {
     public String checkout() {
         return "client/checkout";
     }
+    
+    @GetMapping("/login")
+    public String login() {
+        return "client/login";
+    }
+    
+    @GetMapping("/logout")
+    public String logout() {
+        return "client/logout";
+    }
 
     @GetMapping("/shop-details")
     public String shop_details(@RequestParam Integer productId, Model model) {
