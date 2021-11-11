@@ -42,6 +42,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    @Bean
+    @Primary
+    public UserDetailsService userDetailsServiceBean(){
+        return new JwtUserDetailsService();
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
@@ -54,13 +61,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedPage("/403")
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-    }
-
-    @Override
-    @Bean
-    @Primary
-    public UserDetailsService userDetailsServiceBean(){
-        return new JwtUserDetailsService();
     }
 
     @Autowired
