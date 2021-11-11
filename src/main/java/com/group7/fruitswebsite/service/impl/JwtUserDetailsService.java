@@ -1,6 +1,5 @@
 package com.group7.fruitswebsite.service.impl;
 
-import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.entity.DhUser;
 import com.group7.fruitswebsite.repository.UserRepository;
 import lombok.extern.log4j.Log4j;
@@ -30,7 +29,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<DhUser> optional = userRepository.findByUsername(username);
         if (!optional.isPresent()) {
-            throw new UsernameNotFoundException(Constants.CustomMessage.USER_NOT_FOUND.getMessage());
+            return null;
         }
         DhUser user = optional.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
