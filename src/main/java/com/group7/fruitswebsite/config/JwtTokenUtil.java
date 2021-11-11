@@ -51,7 +51,7 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public String generateAccessToken(UserDetails userDetails) {
-        return doGenerateAccessToken((List<GrantedAuthority>) userDetails.getAuthorities(), userDetails.getUsername());
+        return doGenerateAccessToken(new ArrayList<>(userDetails.getAuthorities()), userDetails.getUsername());
     }
 
     private String doGenerateAccessToken(List<GrantedAuthority> claims, String subject) {
