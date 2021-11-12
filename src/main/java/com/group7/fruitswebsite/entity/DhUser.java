@@ -1,6 +1,7 @@
 package com.group7.fruitswebsite.entity;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -88,7 +90,7 @@ public class DhUser extends BaseEntity implements java.io.Serializable,UserDetai
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return (Collection<? extends GrantedAuthority>) this.dhRoles;
+		return this.dhRoles.stream().map(val -> new SimpleGrantedAuthority(val.getName())).collect(Collectors.toList());
 	}
 
 	@Override
