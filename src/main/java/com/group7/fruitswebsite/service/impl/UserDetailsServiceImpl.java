@@ -7,17 +7,23 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.group7.fruitswebsite.entity.DhUser;
 import com.group7.fruitswebsite.service.UserService;
+import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService{
 
-	@Autowired
 	private UserService userService;
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		DhUser dhUser = userService.loadUserByUsername(username);
-		return dhUser;
+		Optional<DhUser> optional  = userService.findByUserName(username);
+		return optional.orElse(null);
 	}
 
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 }

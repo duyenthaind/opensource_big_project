@@ -9,6 +9,105 @@
 
 'use strict';
 
+$(document).ready(function() {
+	document.getElementById("udetail").addEventListener("click", function() {
+		var html = '<hr>'
+			+'<form class="form" action="##" method="post" id="registrationForm">'
+			+'<div class="form-group">'
+
+			+'	<div class="col-xs-6">'
+			+'	<label for="name"><h4>Full name</h4></label> <input'
+			+'	type="text" class="form-control" name="name"'
+			+'	id="name" placeholder="name"'
+			+'	title="enter your first name if any.">'
+			+'</div>'
+			+'	</div>'
+
+				+'<div class="form-group">'
+
+				+'	<div class="col-xs-6">'
+				+'		<label for="phone"><h4>Phone</h4></label> <input type="text"'
+				+'	class="form-control" name="phone" id="phone"'
+						+'			placeholder="enter phone"'
+						+'			title="enter your phone number if any.">'
+						+'	</div>'
+						+'</div>'
+		
+						+'	<div class="form-group">'
+
+						+'<div class="col-xs-6">'
+						+'	<label for="email"><h4>Email</h4></label> <input type="email"'
+						+'	class="form-control" name="email" id="email"'
+						+'	placeholder="you@email.com" title="enter your email.">'
+						+'</div>'
+						+'</div>'
+						+'<div class="form-group">'
+
+						+'	<div class="col-xs-6">'
+						+'	<label for="address"><h4>Addess</h4></label> <input type="text"'
+						+'	class="form-control" id="location" placeholder="somewhere"'
+						+'	title="enter a location">'
+						+'</div>'
+						+'</div>'
+						+'<div class="form-group">'
+
+						+'	<div class="col-xs-6">'
+						+'	<label for="password"><h4>Password</h4></label> <input'
+				+'		type="password" class="form-control" name="password"'
+				+'	id="password" placeholder="password"'
+				+'	title="enter your password.">'
+				+'</div>'
+				+'</div>'
+				+'<div class="form-group">'
+
+				+'<div class="col-xs-6">'
+				+'<label for="password2"><h4>Verify</h4></label> <input'
+				+'	type="password" class="form-control" name="password2"'
+				+'	id="password2" placeholder="password2"'
+				+'	title="enter your password2.">'
+				+'</div>'
+				+'</div>'
+				+'<div class="form-group">'
+				+'<div class="col-xs-12">'
+				+'	<br>'
+				+'	<button class="btn btn-lg btn-success" type="submit">'
+		+'		<i class="glyphicon glyphicon-ok-sign"></i> Save'
+		+'	</button>'
+		+'<button class="btn btn-lg" type="reset">'
+		+'	<i class="glyphicon glyphicon-repeat"></i> Reset'
+		+'	</button>'
+		+'</div>'
+		+'</div>'
+		+'</form>'
+
+		+'<hr>';
+		$(".tab-pane").empty();
+		$(".tab-pane").html(html);
+	});
+	document.getElementById("uorder").addEventListener("click", function() {
+		$(".tab-pane").empty();
+	});
+    
+    var readURL = function(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.avatar').attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+
+    $(".file-upload").on('change', function(){
+        readURL(this);
+    });
+});
+
+
+
 function getTypeSearch(event){
 	var text = $(event.target).text();
 	if(text == "Price"){

@@ -15,7 +15,7 @@ function deleteProductImage(){
     let index = "imageProduct" + $("#indexForDeleteProductImage").val()
     let divId = "#" + index
     $.ajax({
-        url: "/api/product-image/v1/product-images",
+        url: "/admin/api/product-image/v1/product-images",
         type: "DELETE",
         data:{
             id: id

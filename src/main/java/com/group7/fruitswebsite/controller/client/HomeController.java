@@ -158,6 +158,11 @@ public class HomeController {
         return "client/login";
     }
     
+    @GetMapping("/sigin")
+    public String sigin() {
+        return "client/sigin";
+    }
+    
     @GetMapping("/logout")
     public String logout() {
         return "client/logout";

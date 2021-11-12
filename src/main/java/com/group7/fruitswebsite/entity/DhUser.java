@@ -29,7 +29,7 @@ public class DhUser extends BaseEntity implements java.io.Serializable,UserDetai
 	@Column(name = "email", nullable = false, length = 50)
 	private String email;
 
-	@Column(name = "password", nullable = false, length = 50)
+	@Column(name = "password", nullable = false, length = 100)
 	private String password;
 
 	@Column(name = "username", nullable = false, length = 50)
@@ -42,13 +42,19 @@ public class DhUser extends BaseEntity implements java.io.Serializable,UserDetai
 
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
+	
+	@Column(name = "address", nullable = false, columnDefinition = "LONGTEXT")
+	private String address;
+	
+	@Column(name = "phone", nullable = false, length=15)
+	private String phone;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "dh_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
 	@JsonProperty(value = "roles")
 	private Set<DhRole> dhRoles = new HashSet<>();
-	
+
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "dh_user_product", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "product_id") })
@@ -57,15 +63,15 @@ public class DhUser extends BaseEntity implements java.io.Serializable,UserDetai
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "dhUser")
 	private List<DhOrder> orders = new ArrayList<>();
-	
+
 	public void likeProduct(DhProduct product) {
 		dhProducts.add(product);
 	}
-	
+
 	public void unlikeProduct(DhProduct product) {
 		dhProducts.remove(product);
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -89,31 +95,26 @@ public class DhUser extends BaseEntity implements java.io.Serializable,UserDetai
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return this.dhRoles.stream().map(val -> new SimpleGrantedAuthority(val.getName())).collect(Collectors.toList());
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 }

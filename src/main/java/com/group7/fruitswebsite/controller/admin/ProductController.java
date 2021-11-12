@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller(value = "productAdminController")
 @Log4j
-@RequestMapping(value = "/api/product/v1")
+@RequestMapping(value = "/admin/api/product/v1")
 public class ProductController {
 
     private ProductService productService;

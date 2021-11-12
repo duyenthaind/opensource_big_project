@@ -7,7 +7,7 @@ function addNewCate(event){
     var data = new FormData(form);
 	if(validateCate()){
 		$.ajax({
-			url : "/api/category/v1/add",
+			url : "/admin/api/category/v1/add",
 			type:"POST",
 			enctype: 'multipart/form-data',
 			data : data,
@@ -38,7 +38,7 @@ function addNewCate(event){
 function getFirst(){
 	document.getElementById("currentPageCate").value = 0;
 	$.ajax({
-		url:"/api/category/v1/getAll",
+		url:"/admin/api/category/v1/getAll",
 		type:"GET",
 		data: {
 			page:0
@@ -98,7 +98,7 @@ $(document).ready(function(){
 	$("#buttonDeleteCategory").on("click",function(){
 		var id = document.getElementById("idForDelete").value;
 		$.ajax({
-			url : "/api/category/v1/delete",
+			url : "/admin/api/category/v1/delete",
 			type : "DELETE",
 			data : {
 				id : id
@@ -128,7 +128,7 @@ function showUpdateCategory(id,currentPage){
 	}
 	
 	$.ajax({
-		url : "/api/category/v1/getOne",
+		url : "/admin/api/category/v1/getOne",
 		type : "GET",
 		data : {
 			id : id
@@ -161,7 +161,7 @@ function updateCategory(event){
 	 var data = new FormData(form);
 	
 	$.ajax({
-		url : "/api/category/v1/update",
+		url : "/admin/api/category/v1/update",
 		type:"PUT",
 		enctype: 'multipart/form-data',
 		data : data,
@@ -190,7 +190,7 @@ function updateCategory(event){
 function detailsCategory(id){
 	
 	$.ajax({
-		url : "/api/category/v1/getOne",
+		url : "/admin/api/category/v1/getOne",
 		type : "GET",
 		data : {
 			id : id
@@ -272,7 +272,7 @@ function loadData(currentPage){
 		document.getElementById("currentPageCate").value = currentPage;
 	
 		$.ajax({
-		url:"/api/category/v1/getAll",
+		url:"/admin/api/category/v1/getAll",
 		type:"GET",
 		data: {
 			page:currentPage

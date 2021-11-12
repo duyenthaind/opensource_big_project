@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController(value = "productImageControllerAdmin")
 @Log4j
-@RequestMapping("/api/product-image/v1")
+@RequestMapping("/admin/api/product-image/v1")
 public class ProductImageController {
     private ProductImageService productImageService;
 

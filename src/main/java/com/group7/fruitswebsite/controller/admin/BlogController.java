@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 @RestController(value = "blogControllerAdmin")
 @Log4j
-@RequestMapping("/api/blog/v1")
+@RequestMapping("/admin/api/blog/v1")
 public class BlogController {
 
     private BlogService blogService;
