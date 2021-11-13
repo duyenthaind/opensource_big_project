@@ -56,10 +56,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/css/**", "/js/**", "/img/**", "/upload/**", "/fonts/**","/vendor/**", "/v1/authenticate").permitAll()
                     .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                .and().formLogin().loginPage("/login").loginProcessingUrl("/authenticate")
-                .usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/home",true)
+                .and()
+                .formLogin().loginPage("/login").loginProcessingUrl("/authenticate").defaultSuccessUrl("/home",true)
                 .failureUrl("/login?login_error=true").permitAll()
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/home").invalidateHttpSession(true)
+                .and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/home").invalidateHttpSession(true)
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedPage("/403")
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
