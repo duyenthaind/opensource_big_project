@@ -14,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -45,6 +46,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         } else {
             log.debug("JWT Token does not begin with Bearer");
+        }
+
+        // get accessToken from cookies instead
+        if (StringUtils.isEmpty(username) && StringUtils.isEmpty(accessToken)) {
+            try {
+                for (Cookie cookie : request.getCookies()) {
+                    if (cookie.getName().equals("accessToken")) {
+                        accessToken = cookie.getValue();
+                    }
+                }
+                if (!StringUtils.isEmpty(accessToken)) {
+                    username = jwtTokenUtil.getUserNameFromAccessToken(accessToken);
+                }
+            } catch (Exception ex) {
+                log.error("Parse cookies to get JWT error", ex);
+            }
         }
 
         if (!username.isEmpty() && SecurityContextHolder.getContext().getAuthentication() == null) {

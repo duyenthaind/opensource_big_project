@@ -55,3 +55,27 @@
     
 
 })(jQuery);
+
+function performLogin(event){
+    event.preventDefault();
+    let username = $('#username').val();
+    let password = $('#password').val();
+    let auth = {username: username, password: password}
+    $.ajax({
+        url:'/v1/authenticate',
+        method: 'post',
+        data: JSON.stringify(auth),
+        processData: false,
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function(response){
+            if(response.status >= 200 && response.status < 300){
+                // localStorage.accessToken = response.result.data[0].jwtAccessToken;
+                document.cookie = "accessToken=" + response.result.data[0].jwtAccessToken;
+                window.location.href = "/home";
+            }
+        }, error: function(xhjr, textStatus, errorMessage){
+
+        }
+    })
+}

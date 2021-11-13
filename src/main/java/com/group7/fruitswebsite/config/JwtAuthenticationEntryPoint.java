@@ -19,6 +19,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.debug(String.format("Request %s has no authority to use admin url", request));
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+//        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        response.sendRedirect("/login");
     }
 }
