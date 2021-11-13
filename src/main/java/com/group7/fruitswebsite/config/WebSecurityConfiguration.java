@@ -55,7 +55,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                     .antMatchers("/css/**", "/js/**", "/img/**", "/upload/**", "/fonts/**","/vendor/**", "/v1/authenticate").permitAll()
-                    .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                    .antMatchers("/admin/**", "/api-admin/**").hasAnyAuthority("ADMIN")
                 .and()
                 .formLogin().loginPage("/login").loginProcessingUrl("/authenticate").defaultSuccessUrl("/home",true)
                 .failureUrl("/login?login_error=true").permitAll()

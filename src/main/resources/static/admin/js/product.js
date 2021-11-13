@@ -66,7 +66,7 @@ function addNewProduct(event){
 
 	if(validateProduct()){
 		$.ajax({
-			url : "/api/product/v1/products",
+			url : "/api-admin/product/v1/products",
 			type:"POST",
 			enctype: 'multipart/form-data',
 			data : data,
@@ -128,7 +128,7 @@ function updateProduct(event){
 	if(validateProduct2(data)){
 		
 		$.ajax({
-			url : "/api/product/v1/products",
+			url : "/api-admin/product/v1/products",
 			type:"PUT",
 			enctype: 'multipart/form-data',
 			data : data,
@@ -257,7 +257,7 @@ function validateProduct2(data){
 function prodGetFirst(){
 	document.getElementById("currentPageUpdateProd").value = 0;
 	$.ajax({
-			url: "/api/product/v1/products",
+			url: "/api-admin/product/v1/products",
 			type: "GET",
 			data: {
 				page: 0
@@ -303,7 +303,7 @@ function prodGetFirst(){
 
 function prodloadData(currentPage){
 	$.ajax({
-			url: "/api/product/v1/products",
+			url: "/api-admin/product/v1/products",
 			type: "GET",
 			data: {
 				page: currentPage
@@ -367,7 +367,7 @@ function prodLoadPage(total_pages,currentPage){
 
 function detailsProduct(id){
 	$.ajax({
-		url: "/api/product/v1/products/" + id,
+		url: "/api-admin/product/v1/products/" + id,
 		type: "GET",
 		data:{
 
@@ -461,7 +461,7 @@ function detailsProduct(id){
 
 function deleteProduct(id){
 	$.ajax({
-		url: "/api/product/v1/products" ,
+		url: "/api-admin/product/v1/products" ,
 		type: "DELETE",
 		data: {
 			id: id
@@ -491,7 +491,7 @@ function showModalUpdateProduct(id,currentPage){
 	}
 	
 	$.ajax({
-		url: "/api/product/v1/products/" + id,
+		url: "/api-admin/product/v1/products/" + id,
 		type: "GET",
 		data:{
 

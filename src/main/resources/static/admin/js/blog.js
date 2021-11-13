@@ -13,7 +13,7 @@ function addNewBlog(event){
     var data = new FormData(form);
 	if(validateBlog()){
 		$.ajax({
-			url : "/api/blog/v1/blogs",
+			url : "/api-admin/blog/v1/blogs",
 			type:"POST",
 			enctype: 'multipart/form-data',
 			data : data,
@@ -41,7 +41,7 @@ function addNewBlog(event){
 function getFirstBlogPage(){
 	document.getElementById("currentPageBlog").value = 0;
 	$.ajax({
-		url:"/api/blog/v1/blogs",
+		url:"/api-admin/blog/v1/blogs",
 		type:"GET",
 		data: {
 			page:0
@@ -92,7 +92,7 @@ function showDetailAndUpdateBlog(id,currentPage){
 	}
 	
 	$.ajax({
-		url : "/api/blog/v1/blogs",
+		url : "/api-admin/blog/v1/blogs",
 		type : "GET",
 		data : {
 			id : id
@@ -127,7 +127,7 @@ function updateBlog(event){
 	 var data = new FormData(form);
 	
 	$.ajax({
-		url : "/api/blog/v1/blogs",
+		url : "/api-admin/blog/v1/blogs",
 		type:"PUT",
 		enctype: 'multipart/form-data',
 		data : data,
@@ -155,7 +155,7 @@ function loadDataCurrentPage(currentPage){
 	
 	document.getElementById("currentPageBlog").value = currentPage;
 	$.ajax({
-	url:"/api/blog/v1/blogs",
+	url:"/api-admin/blog/v1/blogs",
 	type:"GET",
 	data: {
 		page:currentPage
@@ -215,7 +215,7 @@ $(document).ready(function(){
 		var id = document.getElementById("idForDeleteBlog").value;
 		var currentPage = document.getElementById("currentPageBlog").value;
 		$.ajax({
-			url : "/api/blog/v1/blogs",
+			url : "/api-admin/blog/v1/blogs",
 			type : "DELETE",
 			data : {
 				id : id
