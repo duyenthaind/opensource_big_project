@@ -29,7 +29,7 @@ import com.group7.fruitswebsite.util.StringUtil;
 import lombok.extern.log4j.Log4j;
 
 @Controller(value = "categoryAdminController")
-@RequestMapping(value = "/api/category/v1")
+@RequestMapping(value = "/api-admin/category/v1")
 @Log4j
 public class CategoryController {
 	
