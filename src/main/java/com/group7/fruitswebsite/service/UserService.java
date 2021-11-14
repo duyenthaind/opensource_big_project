@@ -1,5 +1,6 @@
 package com.group7.fruitswebsite.service;
 
+import com.group7.fruitswebsite.dto.DhUserDto;
 import com.group7.fruitswebsite.entity.DhUser;
 
 import java.util.Optional;
@@ -9,4 +10,5 @@ import java.util.Optional;
  */
 public interface UserService {
     Optional<DhUser> findByUserName(String userName);
+    DhUserDto getUserByUsernameAsDto(String username);
 }
