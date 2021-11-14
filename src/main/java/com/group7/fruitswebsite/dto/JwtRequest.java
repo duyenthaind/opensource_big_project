@@ -1,4 +1,4 @@
-package com.group7.fruitswebsite.model;
+package com.group7.fruitswebsite.dto;
 
 import lombok.Data;
 

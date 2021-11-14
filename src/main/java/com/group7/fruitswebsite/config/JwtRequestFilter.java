@@ -40,16 +40,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             try {
                 username = jwtTokenUtil.getUserNameFromAccessToken(accessToken);
             } catch (IllegalArgumentException ex) {
-                log.error("Unable to get JWT token", ex);
+                log.error("Unable to get JWT token");
+                log.debug("Unable to get JWT token", ex);
             } catch (ExpiredJwtException ex) {
-                log.error("JWT Token has expired", ex);
+                log.error("JWT Token has expired");
+                log.debug("JWT Token has expired", ex);
             }
         } else {
             log.debug("JWT Token does not begin with Bearer");
         }
 
         // get accessToken from cookies instead
-        if (StringUtils.isEmpty(username) && StringUtils.isEmpty(accessToken)) {
+        if (StringUtils.isEmpty(username) && StringUtils.isEmpty(accessToken) && request.getCookies() != null) {
             try {
                 for (Cookie cookie : request.getCookies()) {
                     if (cookie.getName().equals("accessToken")) {
@@ -60,7 +62,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     username = jwtTokenUtil.getUserNameFromAccessToken(accessToken);
                 }
             } catch (Exception ex) {
-                log.error("Parse cookies to get JWT error", ex);
+                log.error("Parse cookies to get JWT error");
+                log.debug("Parse cookies to get JWT error", ex);
             }
         }
 

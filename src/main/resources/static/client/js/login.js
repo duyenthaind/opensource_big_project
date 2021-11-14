@@ -71,7 +71,8 @@ function performLogin(event){
         success: function(response){
             if(response.status >= 200 && response.status < 300){
                 // localStorage.accessToken = response.result.data[0].jwtAccessToken;
-                document.cookie = "accessToken=" + response.result.data[0].jwtAccessToken;
+                document.cookie = "accessToken=" + response.result.data[0].jwtAccessToken
+                localStorage.userinfo = JSON.stringify(response.result.data[1])
                 window.location.href = "/home";
             }
         }, error: function(xhjr, textStatus, errorMessage){
