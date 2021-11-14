@@ -2,8 +2,9 @@ package com.group7.fruitswebsite.controller;
 
 import com.group7.fruitswebsite.config.JwtTokenUtil;
 import com.group7.fruitswebsite.dto.ApiResponse;
-import com.group7.fruitswebsite.model.JwtRequest;
-import com.group7.fruitswebsite.model.JwtResponse;
+import com.group7.fruitswebsite.dto.JwtRequest;
+import com.group7.fruitswebsite.dto.JwtResponse;
+import com.group7.fruitswebsite.dto.UserResponse;
 import com.group7.fruitswebsite.service.impl.JwtUserDetailsService;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author duyenthai
@@ -30,12 +33,15 @@ public class JwtAuthenticationController {
     private JwtUserDetailsService userDetailsService;
 
     @PostMapping(value = "/authenticate")
-    public ResponseEntity<ApiResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+    public ResponseEntity<ApiResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)  {
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String accessToken = jwtTokenUtil.generateAccessToken(userDetails);
         ApiResponse.ApiResponseResult responseResult = new ApiResponse.ApiResponseResult();
-        responseResult.setData(Collections.singletonList(new JwtResponse(accessToken)));
+        List<Object> data = new ArrayList<>();
+        data.add(new JwtResponse(accessToken));
+        data.add(new UserResponse(userDetails.getUsername(), userDetails.getAuthorities().stream().map(Object::toString).collect(Collectors.toList())));
+        responseResult.setData(data);
         return ApiResponseUtil.getBaseSuccessStatus(responseResult);
     }
 

@@ -1,6 +1,4 @@
-package com.group7.fruitswebsite.model;
-
-import lombok.Data;
+package com.group7.fruitswebsite.dto;
 
 /**
  * @author duyenthai

@@ -87,6 +87,7 @@
 <script src="${server}/js/owl.carousel.min.js"></script>
 <script src="${server}/js/main.js"></script>
 <script src="${server}/client/js/subcriber.js"></script>
+<script src="${server}/client/js/header.js"></script>
 
 
 </body>

@@ -193,11 +193,14 @@
                                 <li><a href="#">English</a></li>
                             </ul>
                         </div>
-                        <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Login</a>
+                        <div class="header__top__right__auth" id="loginDiv">
+                            <a href="/login"><i class="fa fa-user"></i> Login</a>
                         </div>
-                        <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-exclamation"></i> Logout</a>
+                        <div class="header__top__right__auth" id="logoutDiv">
+                            <a href="/signup"><i class="fa fa-exclamation"></i> Sign up</a>
+                        </div>
+                        <div class="header__top__right__auth" id="adminDiv">
+
                         </div>
                     </div>
                 </div>
