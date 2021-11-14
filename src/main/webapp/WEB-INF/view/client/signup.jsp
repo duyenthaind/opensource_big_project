@@ -51,9 +51,8 @@
 					<div class="wrap-input100 validate-input"
 						data-validate="Valid email is required: ex@abc.xyz">
 						<input class="input100" type="text" name="name"
-							placeholder="Fullname"> <span class="focus-input100"></span>
-						<span class="symbol-input100"> <i class="fa fa-envelope"
-							aria-hidden="true"></i>
+							placeholder="Full name"> <span class="focus-input100"></span>
+						<span class="symbol-input100"> <i class="fa fa-language"></i>
 						</span>
 					</div>
 					</br>

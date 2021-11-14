@@ -11,8 +11,8 @@ public class LoginSiginController {
 		return "client/login";
 	}
 	
-	@GetMapping("/sigin")
-	public String sigin() {
-		return "client/sigin";
+	@GetMapping("/signup")
+	public String signup() {
+		return "client/signup";
 	}
 }
