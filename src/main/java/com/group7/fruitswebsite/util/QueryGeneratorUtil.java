@@ -5,6 +5,7 @@ import com.group7.fruitswebsite.dto.search.condition.Condition;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author duyenthai
@@ -64,5 +65,29 @@ public class QueryGeneratorUtil {
             return String.format(operation, condition.getKey(), condition.getKey());
         }
         return operation;
+    }
+
+    public static String generateQueryUpdate(Map<String, Object> conditions, Map<String, Object> searches, String tableName) {
+        StringBuilder queryBuilder = new StringBuilder(String.format("update %s set ", tableName));
+        if (conditions == null || searches == null || conditions.isEmpty() || searches.isEmpty()) {
+            return StringUtils.EMPTY;
+        }
+
+        int index = -1;
+        for (String key : conditions.keySet()) {
+            queryBuilder.append(String.format(" %s = :%s ", key, key));
+            if (++index < conditions.size() - 1) {
+                queryBuilder.append(" , ");
+            }
+        }
+        queryBuilder.append(" where ");
+        index = -1;
+        for (String key : searches.keySet()) {
+            queryBuilder.append(String.format(" %s = :%s ", key, key));
+            if (++index < conditions.size() - 1) {
+                queryBuilder.append(" and ");
+            }
+        }
+        return queryBuilder.toString();
     }
 }

@@ -63,6 +63,8 @@ public class Constants {
         public static final String PRODUCT_ID_IS_NOT_DEFINED = "product id is not defined";
         public static final String BLOG_ID_IS_NOT_DEFINED = "blog id is not defined";
         public static final String PRODUCT_IN_COMMENT_NOT_DEFINED = "no product for comment is defined";
+        public static final String USERNAME_IS_ALREADY_DEFINED = "username is already defined";
+        public static final String IDENTITY_IS_NOT_DEFINED = "identity information is not defined";
     }
 
     public enum CustomMessage {

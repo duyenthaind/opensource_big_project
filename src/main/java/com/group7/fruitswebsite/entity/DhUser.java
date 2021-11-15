@@ -38,6 +38,12 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
 
+	@Column(name = "phone", nullable = true, columnDefinition = "TEXT")
+	private String phone;
+
+	@Column(name = "address", nullable = true, length = 14)
+	private String address;
+
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "dh_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
