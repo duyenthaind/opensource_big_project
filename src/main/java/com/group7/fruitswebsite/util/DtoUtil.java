@@ -31,16 +31,14 @@ public class DtoUtil {
     private DtoUtil() {
 
     }
-    
-    public static DhUserDto getDtoFromUserDetail(DhUser dhUser,ObjectMapper objectMapper) {
-    	try {
-			DhUserDto dhUserDto = objectMapper.readValue(objectMapper.writeValueAsString(dhUser), DhUserDto.class);
-			return dhUserDto;
-		} catch (Exception e) {
-			// TODO: handle exception
-			log.error("Map userdto error!",e);
-		}
-    	return null;
+
+    public static DhUserDto getDtoFromUserDetail(DhUser dhUser, ObjectMapper objectMapper) {
+        try {
+            return objectMapper.readValue(objectMapper.writeValueAsString(dhUser), DhUserDto.class);
+        } catch (Exception e) {
+            log.error("Map userdto error!", e);
+        }
+        return null;
     }
 
     public static DhProductDto getDtoFromProduct(DhProduct dhProduct, ObjectMapper objectMapper, ProductImageRepository productImageRepository) {
