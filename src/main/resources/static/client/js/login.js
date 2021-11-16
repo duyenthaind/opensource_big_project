@@ -76,7 +76,7 @@ function performLogin(event){
                 window.location.href = "/home";
             }
         }, error: function(xhjr, textStatus, errorMessage){
-
+            window.location.href = "/login?login_error=true";
         }
     })
 }
