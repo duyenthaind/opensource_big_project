@@ -2,7 +2,7 @@ package com.group7.fruitswebsite.service.impl.img;
 
 import com.group7.fruitswebsite.common.ApplicationContextProvider;
 import com.group7.fruitswebsite.config.ApplicationConfig;
-import com.group7.fruitswebsite.entity.DhProductImage;
+import com.group7.fruitswebsite.entity.DhUser;
 import com.group7.fruitswebsite.service.ImageService;
 import com.group7.fruitswebsite.util.ImageUtil;
 import lombok.extern.log4j.Log4j;
@@ -17,31 +17,32 @@ import java.util.Optional;
  * @author duyenthai
  */
 @Log4j
-public class ImageProductServiceImpl implements ImageService<DhProductImage> {
+public class ImageUserServiceImpl implements ImageService<DhUser> {
 
-    private static final String PRODUCT_UPLOAD_PATH = ApplicationConfig.ROOT_UPLOAD_DIR + File.separator + ApplicationConfig.PRODUCT_UPLOAD_RELATIVE_DIR;
+    private static final String USER_AVATAR_UPLOAD_PATH = ApplicationConfig.ROOT_UPLOAD_DIR + File.separator + ApplicationConfig.USER_AVATAR_RELATIVE_DIR;
 
     @Override
     public String saveUploadFiles(MultipartFile[] files) {
-        return ImageUtil.saveUploadedFiles(files, PRODUCT_UPLOAD_PATH);
+        return ImageUtil.saveUploadedFiles(files, USER_AVATAR_UPLOAD_PATH);
     }
 
     @Override
     public List<String> saveUploadedMultiFiles(MultipartFile[] files) {
-        return ImageUtil.saveUploadedMultiFiles(files, PRODUCT_UPLOAD_PATH);
+        return ImageUtil.saveUploadedMultiFiles(files, USER_AVATAR_UPLOAD_PATH);
     }
 
     @Override
-    public Optional<DhProductImage> checkExists(MultipartFile file, int entityId) {
+    public Optional<DhUser> checkExists(MultipartFile file, int entityId) {
         try (Session session = ApplicationContextProvider.getApplicationContext().getBean(Session.class)) {
-            return Optional.ofNullable((DhProductImage)
-                    session.createQuery("from DhProductImage where name = :name and dhProduct.id=:entityId")
-                            .setParameter("name", file.getOriginalFilename())
+            log.info(file.getOriginalFilename());
+            return Optional.ofNullable((DhUser)
+                    session.createQuery("from DhUser where avatar like :avatar and id = :entityId")
                             .setParameter("entityId", entityId)
+                            .setParameter("avatar", String.format("%%%s%%", file.getOriginalFilename()))
                             .uniqueResult()
             );
         } catch (Exception ex) {
-            log.error("Check exists file error, ", ex);
+            log.error(String.format("Check exists file error for entity id %s, ", entityId), ex);
         }
         return Optional.empty();
     }

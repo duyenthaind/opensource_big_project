@@ -1,4 +1,4 @@
-package com.group7.fruitswebsite.repository.impl;
+package com.group7.fruitswebsite.repository.custom.impl;
 
 import java.util.Collections;
 import java.util.List;
@@ -8,11 +8,11 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import com.group7.fruitswebsite.entity.DhBlog;
-import com.group7.fruitswebsite.repository.CustomBlogRepository;
+import com.group7.fruitswebsite.repository.custom.CustomBlogRepository;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 
-@Log4j2
+@Log4j
 @Transactional
 public class CustomBlogRepositoryImpl implements CustomBlogRepository {
 

@@ -1,4 +1,4 @@
-package com.group7.fruitswebsite.repository.impl;
+package com.group7.fruitswebsite.repository.custom.impl;
 
 import java.util.List;
 
@@ -9,11 +9,12 @@ import javax.transaction.Transactional;
 
 
 import com.group7.fruitswebsite.entity.DhProduct;
-import com.group7.fruitswebsite.repository.CustomProductRepository;
+import com.group7.fruitswebsite.repository.custom.CustomProductRepository;
 
+import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 
-@Log4j2
+@Log4j
 @Transactional
 public class CustomProductRepositoryImpl implements CustomProductRepository {
 
@@ -29,7 +30,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 			dhProducts = entityManager.createQuery(jpql, DhProduct.class).setMaxResults(limit).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
-			log.error("Error get top 9 random", e.getMessage());
+			log.error("Error get top 9 random", e);
 		}
 
 		return dhProducts;
@@ -48,7 +49,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 			dhProducts = query.setMaxResults(16).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
-			log.error("Error get product by list category id", e.getMessage());
+			log.error("Error get product by list category id", e);
 		}
 
 		return dhProducts;
@@ -63,7 +64,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 			dhProducts = entityManager.createQuery(jpql, DhProduct.class).setMaxResults(12).getResultList();
 		} catch (Exception e) {
 			// TODO: handle exception
-			log.error("Error get product order by price sale asc", e.getMessage());
+			log.error("Error get product order by price sale asc", e);
 		}
 
 		return dhProducts;
