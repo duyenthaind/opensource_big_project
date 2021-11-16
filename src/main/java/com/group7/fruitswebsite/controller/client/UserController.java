@@ -65,12 +65,6 @@ public class UserController {
         return userService.update(userModel);
     }
 
-    @GetMapping("/user-profile")
-    public String userProfile(Model model, @RequestParam String username) {
-        model.addAttribute("user",userService.getUserByUsernameAsDto(username));
-        return "client/user-profile";
-    }
-
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;

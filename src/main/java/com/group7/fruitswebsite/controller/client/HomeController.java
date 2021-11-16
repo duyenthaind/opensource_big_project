@@ -12,6 +12,7 @@ import com.group7.fruitswebsite.dto.search.condition.BlogCondition;
 import com.group7.fruitswebsite.dto.search.result.Result;
 import com.group7.fruitswebsite.service.BlogService;
 import com.group7.fruitswebsite.service.CategoryService;
+import com.group7.fruitswebsite.service.UserService;
 import com.group7.fruitswebsite.util.PagingUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class HomeController {
     private CategoryService categoryService;
     private ProductService productService;
     private BlogService blogService;
+    private UserService userService;
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -46,6 +48,11 @@ public class HomeController {
     @Autowired
     public void setBlogService(BlogService blogService) {
         this.blogService = blogService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @RequestMapping(value = {"/", "index", "home"}, method = RequestMethod.GET)
@@ -201,6 +208,12 @@ public class HomeController {
     public String contact(Model model) {
         model.addAttribute("action", "contact");
         return "client/contact";
+    }
+
+    @GetMapping("/user-profile")
+    public String userProfile(Model model, @RequestParam String username) {
+        model.addAttribute("user",userService.getUserByUsernameAsDto(username));
+        return "client/user-profile";
     }
 
 }
