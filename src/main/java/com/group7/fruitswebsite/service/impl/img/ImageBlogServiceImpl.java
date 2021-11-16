@@ -35,8 +35,9 @@ public class ImageBlogServiceImpl implements ImageService<DhBlog> {
     public Optional<DhBlog> checkExists(MultipartFile file, int entityId) {
         try (Session session = ApplicationContextProvider.getApplicationContext().getBean(Session.class)) {
             return Optional.ofNullable((DhBlog)
-                    session.createQuery("from DhBlog  where id = :entityId")
+                    session.createQuery("from DhBlog  where avatar like :avatar and id = :entityId")
                             .setParameter("entityId", entityId)
+                            .setParameter("avatar", String.format("%%%s%%", file.getOriginalFilename()))
                             .uniqueResult()
             );
         } catch (Exception ex) {

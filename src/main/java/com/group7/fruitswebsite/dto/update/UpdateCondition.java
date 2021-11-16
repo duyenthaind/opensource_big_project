@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -13,9 +14,9 @@ import java.util.Map;
 @Setter
 @ToString
 public abstract class UpdateCondition<T> {
-    protected Map<String, Object> conditions;
+    protected Map<String, Object> conditions = new HashMap<>();
 
-    protected Map<String, Object> searches;
+    protected Map<String, Object> searches = new HashMap<>();
 
     protected UpdateCondition(T ent) {
     }

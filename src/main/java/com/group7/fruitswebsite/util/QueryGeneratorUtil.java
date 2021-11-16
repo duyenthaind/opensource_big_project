@@ -84,7 +84,7 @@ public class QueryGeneratorUtil {
         index = -1;
         for (String key : searches.keySet()) {
             queryBuilder.append(String.format(" %s = :%s ", key, key));
-            if (++index < conditions.size() - 1) {
+            if (++index < searches.size() - 1) {
                 queryBuilder.append(" and ");
             }
         }

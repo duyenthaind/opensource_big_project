@@ -36,7 +36,7 @@ public class ImageProductServiceImpl implements ImageService<DhProductImage> {
         try (Session session = ApplicationContextProvider.getApplicationContext().getBean(Session.class)) {
             return Optional.ofNullable((DhProductImage)
                     session.createQuery("from DhProductImage where name = :name and dhProduct.id=:entityId")
-                            .setParameter("name", "%" + file.getName())
+                            .setParameter("name", file.getOriginalFilename())
                             .setParameter("entityId", entityId)
                             .uniqueResult()
             );

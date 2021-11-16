@@ -24,14 +24,14 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 	@Column(name = "email", nullable = false, length = 50)
 	private String email;
 
-	@Column(name = "password", nullable = false, length = 50)
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	@Column(name = "username", nullable = false, length = 50)
 	@JsonProperty(value = "username")
 	private String username;
 
-	@Column(name = "avatar", nullable = false, length = 50)
+	@Column(name = "avatar", nullable = true, length = 500)
 	@JsonProperty(value = "avatar")
 	private String avatar;
 

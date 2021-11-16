@@ -3,8 +3,10 @@ package com.group7.fruitswebsite.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
+import com.group7.fruitswebsite.entity.DhRole;
 import com.group7.fruitswebsite.entity.DhUser;
 import com.group7.fruitswebsite.model.DhUserModel;
+import com.group7.fruitswebsite.repository.RoleRepository;
 import com.group7.fruitswebsite.repository.UserRepository;
 import com.group7.fruitswebsite.service.UserService;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    private RoleRepository roleRepository;
 
     @Override
     public Optional<DhUser> findByUserName(String userName) {
@@ -49,6 +52,13 @@ public class UserServiceImpl implements UserService {
             DhUser user = objectMapper.readValue(objectMapper.writeValueAsString(userModel), DhUser.class);
             user.setPassword(passwordEncoder.encode(userModel.getPassword()));
             user.setCreatedDate(System.currentTimeMillis());
+            Optional<DhRole> optional = roleRepository.findByName(Constants.RoleName.USER.getName());
+            if (optional.isPresent()) {
+                user.getDhRoles().add(optional.get());
+            } else {
+                log.error(String.format("Cannot set role for user %s, please contact admin for help", userModel));
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.CANNOT_SET_ROLE_TO_USER, HttpStatus.FORBIDDEN);
+            }
             userRepository.save(user);
             log.info(String.format("Save one new user to system id=%s", user.getId()));
             return ApiResponseUtil.getBaseSuccessStatus(null);
@@ -79,5 +89,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Autowired
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
     }
 }

@@ -5,7 +5,6 @@ import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.JwtRequest;
 import com.group7.fruitswebsite.dto.JwtResponse;
 import com.group7.fruitswebsite.dto.UserResponse;
-import com.group7.fruitswebsite.service.impl.JwtUserDetailsService;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +13,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class JwtAuthenticationController {
 
     private AuthenticationManager authenticationManager;
     private JwtTokenUtil jwtTokenUtil;
-    private JwtUserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @PostMapping(value = "/authenticate")
     public ResponseEntity<ApiResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)  {
@@ -66,7 +66,7 @@ public class JwtAuthenticationController {
     }
 
     @Autowired
-    public void setJwtUserDetailsService(JwtUserDetailsService jwtUserDetailsService) {
+    public void setJwtUserDetailsService(UserDetailsService jwtUserDetailsService) {
         this.userDetailsService = jwtUserDetailsService;
     }
 }

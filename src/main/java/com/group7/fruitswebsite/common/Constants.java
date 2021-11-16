@@ -7,7 +7,7 @@ public class Constants {
     public enum RoleName {
 
         ADMIN("ADMIN", 1),
-        USER("USER", 2);
+        USER("CLIENT", 2);
 
         private final String name;
         private final int index;
@@ -65,6 +65,8 @@ public class Constants {
         public static final String PRODUCT_IN_COMMENT_NOT_DEFINED = "no product for comment is defined";
         public static final String USERNAME_IS_ALREADY_DEFINED = "username is already defined";
         public static final String IDENTITY_IS_NOT_DEFINED = "identity information is not defined";
+        public static final String CANNOT_SET_ROLE_TO_USER = "cannot define the role for this user";
+        public static final String HAS_NO_AUTHORIZE_TO_CHANGE_OTHER_INFORMATION = "this user has no right to change other's information";
     }
 
     public enum CustomMessage {

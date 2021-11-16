@@ -39,11 +39,15 @@ public class UserController {
     }
 
     @PutMapping("/users")
-    public ResponseEntity<ApiResponse> update(@ModelAttribute DhUserModel userModel) {
+    public ResponseEntity<ApiResponse> update(@ModelAttribute DhUserModel userModel, @RequestParam String userName, @RequestParam Integer userid) {
         log.info(userModel);
-        if (userModel.getId() == null && StringUtils.isEmpty(userModel.getUsername())) {
+        if (userModel.getId() == null || StringUtils.isEmpty(userModel.getUsername()) || StringUtils.isEmpty(userName) || userid == null) {
             log.error(String.format("Drop all action with model %s because it has no identity information", userModel));
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.IDENTITY_IS_NOT_DEFINED, HttpStatus.FORBIDDEN);
+        }
+        if ((!userModel.getId().equals(userid)) || (!userModel.getUsername().equals(userName))) {
+            log.error(String.format("Drop all action with model %s because user has no right to change other's information", userModel));
+            return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.HAS_NO_AUTHORIZE_TO_CHANGE_OTHER_INFORMATION, HttpStatus.FORBIDDEN);
         }
         MultipartFile[] files = userModel.getFiles();
         if (files != null && files.length > 0) {
@@ -53,7 +57,7 @@ public class UserController {
                 files = new MultipartFile[1];
             }
             String imagePath = imageService.saveUploadFiles(files);
-            if (StringUtils.isEmpty(imagePath)) {
+            if (!StringUtils.isEmpty(imagePath)) {
                 userModel.setAvatar(imagePath);
             }
         }
