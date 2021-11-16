@@ -17,10 +17,13 @@ public class UserUpdateCondition extends UpdateCondition<DhUser> {
     @Override
     protected void extractConditions(DhUser ent) {
         conditions.put("email", ent.getEmail());
-        conditions.put("password", ent.getPassword());
+        if (!StringUtils.isEmpty(ent.getPassword())) {
+            conditions.put("password", ent.getPassword());
+        }
         conditions.put("avatar", ent.getAvatar());
         conditions.put("name", ent.getName());
         conditions.put("address", ent.getAddress());
+        conditions.put("phone", ent.getPhone());
     }
 
     @Override
