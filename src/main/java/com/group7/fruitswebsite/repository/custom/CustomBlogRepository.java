@@ -1,4 +1,4 @@
-package com.group7.fruitswebsite.repository;
+package com.group7.fruitswebsite.repository.custom;
 
 import java.util.List;
 

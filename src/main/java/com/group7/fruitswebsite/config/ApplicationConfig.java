@@ -31,6 +31,7 @@ public class ApplicationConfig {
     public static String CATEGORY_UPLOAD_RELATIVE_DIR;
     public static String PRODUCT_UPLOAD_RELATIVE_DIR;
     public static String BLOG_UPLOAD_RELATIVE_DIR;
+    public static String USER_AVATAR_RELATIVE_DIR;
 
     public static void loadConfig() {
         try {
@@ -50,6 +51,7 @@ public class ApplicationConfig {
                 CATEGORY_UPLOAD_RELATIVE_DIR = properties.getProperty("category_upload_dir");
                 PRODUCT_UPLOAD_RELATIVE_DIR = properties.getProperty("product_upload_dir");
                 BLOG_UPLOAD_RELATIVE_DIR = properties.getProperty("blog_upload_dir");
+                USER_AVATAR_RELATIVE_DIR = properties.getProperty("user_avatar_upload_dir");
             } finally {
                 fileInputStream.close();
             }

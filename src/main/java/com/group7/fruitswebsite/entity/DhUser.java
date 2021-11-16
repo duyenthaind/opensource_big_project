@@ -24,14 +24,14 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 	@Column(name = "email", nullable = false, length = 50)
 	private String email;
 
-	@Column(name = "password", nullable = false, length = 50)
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	@Column(name = "username", nullable = false, length = 50)
 	@JsonProperty(value = "username")
 	private String username;
 
-	@Column(name = "avatar", nullable = false, length = 50)
+	@Column(name = "avatar", nullable = true, length = 500)
 	@JsonProperty(value = "avatar")
 	private String avatar;
 
@@ -44,12 +44,18 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 	@Column(name = "address", nullable = true, columnDefinition = "TEXT")
 	private String address;
 
+	@Column(name = "phone", nullable = true, length = 15)
+	private String phone;
+
+	@Column(name = "address", nullable = true, columnDefinition = "TEXT" )
+	private String address;
+
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "dh_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
 	@JsonProperty(value = "roles")
 	private Set<DhRole> dhRoles = new HashSet<>();
-	
+
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "dh_user_product", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "product_id") })
@@ -58,15 +64,15 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "dhUser")
 	private List<DhOrder> orders = new ArrayList<>();
-	
+
 	public void likeProduct(DhProduct product) {
 		dhProducts.add(product);
 	}
-	
+
 	public void unlikeProduct(DhProduct product) {
 		dhProducts.remove(product);
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

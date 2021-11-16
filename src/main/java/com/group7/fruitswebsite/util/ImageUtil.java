@@ -58,6 +58,10 @@ public class ImageUtil {
             uploadDir.mkdirs();
         }
 
+        if (files == null) {
+            return result.toString();
+        }
+
         for (MultipartFile file : files) {
             if (file == null || file.isEmpty()) {
                 continue;
@@ -81,6 +85,10 @@ public class ImageUtil {
         // Make sure directory exists!
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
+        }
+
+        if (files == null) {
+            return Collections.emptyList();
         }
 
         for (MultipartFile file : files) {

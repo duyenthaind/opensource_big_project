@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -35,6 +36,10 @@
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="img/27.jpg" alt="IMG">
 				</div>
+
+				<c:if test="${error == true}">
+					<div class="alert alert-danger" role="alert">Sign up was not successful, please try again.</div>
+				</c:if>
 
 				<form class="login100-form validate-form">
 					<span class="login100-form-title"> Sigin </span>

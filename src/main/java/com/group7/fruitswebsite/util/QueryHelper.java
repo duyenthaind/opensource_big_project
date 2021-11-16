@@ -8,6 +8,7 @@ import com.group7.fruitswebsite.dto.search.result.Result;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author duyenthai
@@ -35,5 +36,18 @@ public class QueryHelper {
         nativeQuery.setMaxResults(Constants.Search.SEARCH_PER_PAGE);
         result.setDatas(nativeQuery.getResultList());
         return result;
+    }
+
+    public static void replaceConditionAndQueryUpdate(Map<String, Object> conditions, Map<String, Object> searches, String sqlQuery, EntityManager entityManager, Class clazz) {
+        Query nativeQuery = entityManager.createNativeQuery(sqlQuery, clazz);
+        iterateMapAndReplaceConditions(conditions, nativeQuery);
+        iterateMapAndReplaceConditions(searches, nativeQuery);
+        nativeQuery.executeUpdate();
+    }
+
+    private static void iterateMapAndReplaceConditions(Map<String, Object> conditions, Query query) {
+        for (Map.Entry<String, Object> entry : conditions.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
     }
 }

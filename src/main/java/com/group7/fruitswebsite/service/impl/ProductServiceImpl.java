@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
                 DhProductImage dhProductImage = new DhProductImage();
                 dhProductImage.setCreatedBy(Constants.SystemUser.SYSTEM_USER_ID);
                 dhProductImage.setCreatedDate(System.currentTimeMillis());
-                dhProductImage.setName(dhProductModel.getFiles()[i].getName());
+                dhProductImage.setName(dhProductModel.getFiles()[i].getOriginalFilename());
                 dhProductImage.setPath(imagePath.get(i).replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY));
                 dhProductImage.setDhProduct(dhProduct);
                 productImageRepository.save(dhProductImage);
