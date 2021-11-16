@@ -1,14 +1,6 @@
 package com.group7.fruitswebsite.dto;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.group7.fruitswebsite.entity.DhOrder;
-import com.group7.fruitswebsite.entity.DhProduct;
-import com.group7.fruitswebsite.entity.DhRole;
 
 import lombok.Getter;
 import lombok.Setter;
