@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -12,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Setter
 @Getter
+@ToString
 public class DhUserModel extends BaseModel{
     private String email;
     private String password;

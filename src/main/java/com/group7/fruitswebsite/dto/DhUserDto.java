@@ -18,13 +18,9 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DhUserDto extends BaseDto{
 	private String email;
-	private String password;
 	private String username;
 	private String avatar;
 	private String name;
 	private String phone;
 	private String address;
-	private Set<DhRole> dhRoles = new HashSet<>();
-	private Set<DhProduct> dhProducts = new HashSet<>();
-	private List<DhOrder> orders = new ArrayList<>();
 }
