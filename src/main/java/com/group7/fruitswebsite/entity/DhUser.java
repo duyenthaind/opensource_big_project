@@ -38,10 +38,10 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
 
-	@Column(name = "phone", nullable = true, columnDefinition = "TEXT")
+	@Column(name = "phone", nullable = true, length = 15)
 	private String phone;
 
-	@Column(name = "address", nullable = true, length = 14)
+	@Column(name = "address", nullable = true, columnDefinition = "TEXT" )
 	private String address;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -49,7 +49,7 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 			@JoinColumn(name = "role_id") })
 	@JsonProperty(value = "roles")
 	private Set<DhRole> dhRoles = new HashSet<>();
-	
+
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "dh_user_product", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "product_id") })
@@ -58,15 +58,15 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "dhUser")
 	private List<DhOrder> orders = new ArrayList<>();
-	
+
 	public void likeProduct(DhProduct product) {
 		dhProducts.add(product);
 	}
-	
+
 	public void unlikeProduct(DhProduct product) {
 		dhProducts.remove(product);
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
