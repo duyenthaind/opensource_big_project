@@ -70,7 +70,9 @@ function performSignup(event){
 	    timeout: 1000000,
         success: function(response){
             if(response.status >= 200 && response.status < 300){
-                // localStorage.accessToken = response.result.data[0].jwtAccessToken;
+            	document.cookie = "username=" + data.get("username"); 
+            	document.cookie = "password=" + data.get("password");
+            	alert("Success, please to login!")
                 window.location.href = "/login";
             }
         }, error: function(xhjr, textStatus, errorMessage){

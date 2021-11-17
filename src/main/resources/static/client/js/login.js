@@ -1,7 +1,17 @@
+$(function(){
+
+	if(getCookie("username") != null && getCookie("password") != null){
+    	console.log(getCookie("username"))
+    	document.getElementById("username").value = getCookie("username");
+    	document.getElementById("password").value = getCookie("password");
+    }
+
+});
 
 (function ($) {
     "use strict";
-
+    
+    
     
     /*==================================================================
     [ Validate ]*/

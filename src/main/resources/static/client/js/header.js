@@ -38,6 +38,8 @@ function logout(){
 	 
     if(localStorage.userinfo != null && getCookie("accessToken") != null){
     	document.cookie = "accessToken=";
+    	document.cookie = "username=";
+    	document.cookie = "password=";
         localStorage.userinfo = null;
     }
     window.location.href = "/logout";
