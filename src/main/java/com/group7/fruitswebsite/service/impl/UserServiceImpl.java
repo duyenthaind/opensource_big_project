@@ -6,6 +6,7 @@ import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.entity.DhRole;
 import com.group7.fruitswebsite.dto.DhUserDto;
 import com.group7.fruitswebsite.entity.DhUser;
+import com.group7.fruitswebsite.model.ChangeRoleModel;
 import com.group7.fruitswebsite.model.DhUserModel;
 import com.group7.fruitswebsite.repository.RoleRepository;
 import com.group7.fruitswebsite.repository.UserRepository;
@@ -50,14 +51,50 @@ public class UserServiceImpl implements UserService {
         try {
             DhUserDto result = new DhUserDto();
             Optional<DhUser> dhUser = findByUserName(username);
-            if(dhUser.isPresent()) {
-            	result = DtoUtil.getDtoFromUserDetail(dhUser.get(), objectMapper);
+            if (dhUser.isPresent()) {
+                result = DtoUtil.getDtoFromUserDetail(dhUser.get(), objectMapper);
             }
             return result;
         } catch (Exception ex) {
             log.error("Get user error, ", ex);
         }
         return null;
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> changeRole(ChangeRoleModel changeRoleModel) {
+        try {
+            Optional<DhRole> optionalNewRole = roleRepository.findByName(changeRoleModel.getNewRole());
+            if (!optionalNewRole.isPresent()) {
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ROLE_IS_NOT_SUPPORTED, HttpStatus.FORBIDDEN);
+            }
+            DhRole newRole = optionalNewRole.get();
+            Optional<DhUser> optional = userRepository.findById(changeRoleModel.getUserId());
+            Optional<DhRole> roleSuperOptional = roleRepository.findByName(Constants.RoleName.SUPER_ADMIN.getName());
+            DhRole roleSuperAdmin = roleSuperOptional.orElse(new DhRole());
+            if (newRole.equals(roleSuperAdmin)) {
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.HAS_NO_AUTHORITIES_TO_CHANGE_TO_SUPER, HttpStatus.FORBIDDEN);
+            }
+            if (!optional.isPresent()) {
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.CustomMessage.USER_NOT_FOUND.getMessage(), HttpStatus.FORBIDDEN);
+            }
+            DhUser dhUser = optional.get();
+            if (dhUser.getDhRoles().contains(newRole)) {
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.NO_CHANGE, HttpStatus.ACCEPTED);
+            }
+            if (dhUser.getDhRoles().contains(roleSuperAdmin)) {
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.USER_IS_SUPER, HttpStatus.FORBIDDEN);
+            }
+            dhUser.getDhRoles().clear();
+            dhUser.getDhRoles().add(newRole);
+            dhUser.setUpdatedDate(System.currentTimeMillis());
+            userRepository.save(dhUser);
+            log.info(String.format("Update user %s with new role %s", dhUser.getId(), newRole.getName()));
+            return ApiResponseUtil.getBaseSuccessStatus(null);
+        } catch (Exception ex) {
+            log.error(String.format("Error when update role for user with id=%s", changeRoleModel.getUserId()));
+            return ApiResponseUtil.getBaseFailureStatus();
+        }
     }
 
     @Override

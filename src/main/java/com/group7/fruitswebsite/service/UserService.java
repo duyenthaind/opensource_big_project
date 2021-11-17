@@ -3,6 +3,7 @@ package com.group7.fruitswebsite.service;
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.DhUserDto;
 import com.group7.fruitswebsite.entity.DhUser;
+import com.group7.fruitswebsite.model.ChangeRoleModel;
 import com.group7.fruitswebsite.model.DhUserModel;
 import org.springframework.http.ResponseEntity;
 
@@ -19,4 +20,6 @@ public interface UserService {
     ResponseEntity<ApiResponse> update(DhUserModel userModel);
 
     DhUserDto getUserByUsernameAsDto(String username);
+
+    ResponseEntity<ApiResponse> changeRole(ChangeRoleModel changeRoleModel);
 }
