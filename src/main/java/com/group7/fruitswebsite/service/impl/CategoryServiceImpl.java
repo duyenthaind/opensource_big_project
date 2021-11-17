@@ -206,7 +206,6 @@ public class CategoryServiceImpl implements CategoryService {
                      .withResult(result).build();
              return ResponseEntity.ok(apiResponse);
 		} catch (Exception e) {
-			// TODO: handle exception
 			apiResponse = new ApiResponse(Constants.APIResponseStatus.INTERNAL_SERVER.getStatus(), DateUtil.currentDate(),
                     Constants.APIResponseStatus.INTERNAL_SERVER.getMessage(), null);
             return ResponseEntity.status(Constants.APIResponseStatus.INTERNAL_SERVER.getStatus()).body(apiResponse);

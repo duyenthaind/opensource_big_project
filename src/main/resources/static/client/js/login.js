@@ -62,8 +62,6 @@ $(function(){
         $(thisAlert).removeClass('alert-validate');
     }
     
-    
-
 })(jQuery);
 
 function performLogin(event){

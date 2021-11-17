@@ -84,7 +84,6 @@ public class UserServiceImpl implements UserService {
             responseResult.setTotal(dhUserAndRoleDtos.size());
             return ApiResponseUtil.getBaseSuccessStatus(responseResult);
 		} catch (Exception e) {
-			// TODO: handle exception
 			return ApiResponseUtil.getBaseFailureStatus();
 		}
     }

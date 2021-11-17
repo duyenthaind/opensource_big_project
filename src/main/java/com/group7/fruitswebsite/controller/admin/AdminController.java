@@ -23,8 +23,6 @@ public class AdminController {
 
 	private CategoryRepository categoryRepository;
 	private CategoryService categoryService;
-	
-	@Autowired
 	private UserService userService;
 
 	@GetMapping(value = { "/index", "/", "/home", "" })
@@ -59,4 +57,8 @@ public class AdminController {
 		this.categoryService = categoryService;
 	}
 
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 }

@@ -67,12 +67,10 @@ function performSignup(event){
         processData: false,
 	    contentType: false,
 	    cache: false,
-	    timeout: 1000000,
+	    timeout: 10000,
         success: function(response){
             if(response.status >= 200 && response.status < 300){
-            	document.cookie = "username=" + data.get("username"); 
-            	document.cookie = "password=" + data.get("password");
-            	alert("Success, please to login!")
+            	alert("Success, please login!")
                 window.location.href = "/login";
             }
         }, error: function(xhjr, textStatus, errorMessage){
