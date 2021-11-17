@@ -3,6 +3,7 @@ package com.group7.fruitswebsite.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
+import com.group7.fruitswebsite.dto.DhUserAndRoleDto;
 import com.group7.fruitswebsite.entity.DhRole;
 import com.group7.fruitswebsite.dto.DhUserDto;
 import com.group7.fruitswebsite.entity.DhUser;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author duyenthai
@@ -55,8 +57,8 @@ public class UserServiceImpl implements UserService {
         try {
             DhUserDto result = new DhUserDto();
             Optional<DhUser> dhUser = findByUserName(username);
-            if (dhUser.isPresent()) {
-                result = DtoUtil.getDtoFromUserDetail(dhUser.get(), objectMapper);
+            if(dhUser.isPresent()) {
+            	result = DtoUtil.getDtoFromUserDetail(dhUser.get(), objectMapper);
             }
             return result;
         } catch (Exception ex) {
@@ -65,17 +67,28 @@ public class UserServiceImpl implements UserService {
         return null;
     }
     
-//    @Override
-//    public ResponseEntity<ApiResponse> getAllWithPage(int page, int size){
-//    	try {
-//			Pageable pageable = PageRequest.of(page, size);
-//			Page<DhUser> pageUsers = userRepository.findAll(pageable);
-//			List<DhUserDto>  
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//    }
-
+    @Override
+    public ResponseEntity<ApiResponse> getAllWithPage(int page, int size){
+    	try {
+			Pageable pageable = PageRequest.of(page, size);
+			Page<DhUser> pageUsers = userRepository.findAll(pageable);
+			List<DhUserAndRoleDto> dhUserAndRoleDtos = pageUsers.getContent().stream()
+					.map(val -> DtoUtil.getDtoFromUserAndRole(val, objectMapper)).collect(Collectors.toList());
+			ApiResponse.ApiResponseResult responseResult = new ApiResponse.ApiResponseResult();
+            int totalProducts = userRepository.findAll().size();
+            int totalPages = totalProducts % size == 0 ? totalProducts / size : totalProducts / size + 1;
+            responseResult.setData(dhUserAndRoleDtos);
+            responseResult.setPage(pageUsers.getNumber() + 1);
+            responseResult.setPerPage(pageUsers.getNumberOfElements());
+            responseResult.setTotalPages(totalPages);
+            responseResult.setTotal(dhUserAndRoleDtos.size());
+            return ApiResponseUtil.getBaseSuccessStatus(responseResult);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ApiResponseUtil.getBaseFailureStatus();
+		}
+    }
+    
     @Override
     public ResponseEntity<ApiResponse> changeRole(ChangeRoleModel changeRoleModel) {
         try {

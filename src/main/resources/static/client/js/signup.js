@@ -56,28 +56,25 @@
 
 })(jQuery);
 
-function performLogin(event){
+function performSignup(event){
     event.preventDefault();
-    let username = $('#username').val();
-    let password = $('#password').val();
-    let auth = {username: username, password: password}
+    var form = $("#signupForm")[0];
+    var data = new FormData(form);
     $.ajax({
-        url:'/v1/authenticate',
+        url:'/v1/api/users/perform_signup',
         method: 'post',
-        data: JSON.stringify(auth),
+        data: data,
         processData: false,
-        dataType: 'json',
-        contentType: 'application/json',
+	    contentType: false,
+	    cache: false,
+	    timeout: 1000000,
         success: function(response){
             if(response.status >= 200 && response.status < 300){
                 // localStorage.accessToken = response.result.data[0].jwtAccessToken;
-                document.cookie = "accessToken=" + response.result.data[0].jwtAccessToken
-                localStorage.userinfo = JSON.stringify(response.result.data[1])
-                window.location.href = "/home";
+                window.location.href = "/login";
             }
         }, error: function(xhjr, textStatus, errorMessage){
-            window.location.href = "/login?login_error=true";
+        	window.location.href = "/signup?signup_error=true";
         }
     })
 }
-

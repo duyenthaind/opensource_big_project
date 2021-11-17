@@ -131,14 +131,14 @@
 							<table class="table">
 								<thead>
 									<tr>
-										
+
 										<td>name</td>
 										<td>role</td>
 										<td>type</td>
 										<td></td>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody class="userTable">
 									<tr>
 										<td>
 											<div class="table-data__info">
@@ -161,80 +161,12 @@
 										<td><span class="more"> <i class="zmdi zmdi-more"></i>
 										</span></td>
 									</tr>
-									<tr>
-										
-										<td>
-											<div class="table-data__info">
-												<h6>lori lynch</h6>
-												<span> <a href="#">johndoe@gmail.com</a>
-												</span>
-											</div>
-										</td>
-										<td><span class="role user">user</span></td>
-										<td>
-											<div class="rs-select2--trans rs-select2--sm">
-												<select class="js-select2" name="property">
-													<option value="">Full Control</option>
-													<option value="" selected="selected">Post</option>
-													<option value="">Watch</option>
-												</select>
-												<div class="dropDownSelect2"></div>
-											</div>
-										</td>
-										<td><span class="more"> <i class="zmdi zmdi-more"></i>
-										</span></td>
-									</tr>
-									<tr>
-										
-										<td>
-											<div class="table-data__info">
-												<h6>lori lynch</h6>
-												<span> <a href="#">johndoe@gmail.com</a>
-												</span>
-											</div>
-										</td>
-										<td><span class="role user">user</span></td>
-										<td>
-											<div class="rs-select2--trans rs-select2--sm">
-												<select class="js-select2" name="property">
-													<option value="">Full Control</option>
-													<option value="" selected="selected">Post</option>
-													<option value="">Watch</option>
-												</select>
-												<div class="dropDownSelect2"></div>
-											</div>
-										</td>
-										<td><span class="more"> <i class="zmdi zmdi-more"></i>
-										</span></td>
-									</tr>
-									<tr>
-										
-										<td>
-											<div class="table-data__info">
-												<h6>lori lynch</h6>
-												<span> <a href="#">johndoe@gmail.com</a>
-												</span>
-											</div>
-										</td>
-										<td><span class="role member">member</span></td>
-										<td>
-											<div class="rs-select2--trans rs-select2--sm">
-												<select class="js-select2" name="property">
-													<option selected="selected">Full Control</option>
-													<option value="">Post</option>
-													<option value="">Watch</option>
-												</select>
-												<div class="dropDownSelect2"></div>
-											</div>
-										</td>
-										<td><span class="more"> <i class="zmdi zmdi-more"></i>
-										</span></td>
-									</tr>
 								</tbody>
 							</table>
 						</div>
+						<input id="currentPageUser" type="hidden" value="0" />
 						<div class="user-data__footer">
-							<ul id="" class="pagination userpage">
+							<ul id="paginationUser" class="pagination userpage">
 
 							</ul>
 						</div>
@@ -277,6 +209,7 @@
 						</div>
 					</div>
 					<div class="table-responsive table-responsive-data2">
+
 						<table class="table table-data2">
 							<thead>
 								<tr>
@@ -330,7 +263,8 @@
 						</div>
 						<div class="table-data__tool-right">
 							<button class="au-btn au-btn-icon au-btn--green au-btn--small"
-								type="button" data-toggle="modal" data-target="#newProduct" onclick="emptyGallery()">
+								type="button" data-toggle="modal" data-target="#newProduct"
+								onclick="emptyGallery()">
 								<i class="zmdi zmdi-plus"></i>add item
 							</button>
 

@@ -13,13 +13,15 @@ import java.util.Optional;
  * @author duyenthai
  */
 public interface UserService {
-    Optional<DhUser> findByUserName(String userName);
+	Optional<DhUser> findByUserName(String userName);
 
-    ResponseEntity<ApiResponse> saveOne(DhUserModel userModel);
+	ResponseEntity<ApiResponse> saveOne(DhUserModel userModel);
 
-    ResponseEntity<ApiResponse> update(DhUserModel userModel);
+	ResponseEntity<ApiResponse> update(DhUserModel userModel);
 
-    DhUserDto getUserByUsernameAsDto(String username);
+	DhUserDto getUserByUsernameAsDto(String username);
 
-    ResponseEntity<ApiResponse> changeRole(ChangeRoleModel changeRoleModel);
+	ResponseEntity<ApiResponse> changeRole(ChangeRoleModel changeRoleModel);
+
+	ResponseEntity<ApiResponse> getAllWithPage(int page, int size);
 }
