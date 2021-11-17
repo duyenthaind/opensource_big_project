@@ -131,9 +131,7 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<td><label class="au-checkbox"> <input
-												type="checkbox"> <span class="au-checkmark"></span>
-										</label></td>
+										
 										<td>name</td>
 										<td>role</td>
 										<td>type</td>
@@ -142,9 +140,6 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td><label class="au-checkbox"> <input
-												type="checkbox"> <span class="au-checkmark"></span>
-										</label></td>
 										<td>
 											<div class="table-data__info">
 												<h6>lori lynch</h6>
@@ -167,10 +162,7 @@
 										</span></td>
 									</tr>
 									<tr>
-										<td><label class="au-checkbox"> <input
-												type="checkbox" checked="checked"> <span
-												class="au-checkmark"></span>
-										</label></td>
+										
 										<td>
 											<div class="table-data__info">
 												<h6>lori lynch</h6>
@@ -193,9 +185,7 @@
 										</span></td>
 									</tr>
 									<tr>
-										<td><label class="au-checkbox"> <input
-												type="checkbox"> <span class="au-checkmark"></span>
-										</label></td>
+										
 										<td>
 											<div class="table-data__info">
 												<h6>lori lynch</h6>
@@ -218,9 +208,7 @@
 										</span></td>
 									</tr>
 									<tr>
-										<td><label class="au-checkbox"> <input
-												type="checkbox"> <span class="au-checkmark"></span>
-										</label></td>
+										
 										<td>
 											<div class="table-data__info">
 												<h6>lori lynch</h6>
@@ -246,7 +234,9 @@
 							</table>
 						</div>
 						<div class="user-data__footer">
-							<button class="au-btn au-btn-load">load more</button>
+							<ul id="" class="pagination userpage">
+
+							</ul>
 						</div>
 					</div>
 					<!-- END USER DATA-->

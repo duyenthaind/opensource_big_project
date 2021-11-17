@@ -15,11 +15,15 @@ import com.group7.fruitswebsite.util.DtoUtil;
 
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -59,6 +63,17 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+    
+//    @Override
+//    public ResponseEntity<ApiResponse> getAllWithPage(int page, int size){
+//    	try {
+//			Pageable pageable = PageRequest.of(page, size);
+//			Page<DhUser> pageUsers = userRepository.findAll(pageable);
+//			List<DhUserDto>  
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//    }
 
     @Override
     public ResponseEntity<ApiResponse> saveOne(DhUserModel userModel) {
