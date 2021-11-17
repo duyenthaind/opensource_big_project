@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -19,6 +21,7 @@ import lombok.*;
 @Table(name = "dh_user")
 @Setter
 @Getter
+@JsonIgnoreProperties({"dhRoles", "products", "orders", "hibernateLazyInitializer", "handler"})
 public class DhUser extends BaseEntity implements java.io.Serializable {
 
 	@Column(name = "email", nullable = false, length = 50)
@@ -37,25 +40,28 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
-
+	
 	@Column(name = "phone", nullable = true, length = 15)
 	private String phone;
 
 	@Column(name = "address", nullable = true, columnDefinition = "TEXT" )
 	private String address;
 
+	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "dh_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
 	@JsonProperty(value = "roles")
 	private Set<DhRole> dhRoles = new HashSet<>();
 
+	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "dh_user_product", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "product_id") })
 	@JsonProperty(value = "products")
 	private Set<DhProduct> dhProducts = new HashSet<>();
 
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "dhUser")
 	private List<DhOrder> orders = new ArrayList<>();
 

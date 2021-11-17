@@ -78,7 +78,7 @@
 					</div>
 
 					<div class="text-center p-t-136">
-						<a class="txt2" href="/sigin"> Create your Account <i
+						<a class="txt2" href="/signup"> Create your Account <i
 							class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>
 					</div>
@@ -106,6 +106,7 @@
 	</script>
 	<!--===============================================================================================-->
 	<script src="js/login.js"></script>
+	<script src="/js/header.js"></script>
 
 </body>
 </html>

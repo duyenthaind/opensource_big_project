@@ -1,5 +1,6 @@
 package com.group7.fruitswebsite.config;
 
+import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.service.impl.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -55,7 +56,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                     .antMatchers("/css/**", "/js/**", "/img/**", "/upload/**", "/fonts/**","/vendor/**", "/v1/authenticate").permitAll()
-                    .antMatchers("/admin/**", "/api-admin/**").hasAnyAuthority("ADMIN")
+                    .antMatchers("/admin/**", "/api-admin/**").hasAnyAuthority(Constants.RoleName.ADMIN.getName(), Constants.RoleName.SUPER_ADMIN.getName())
+                    .antMatchers("/api-super/**").hasAnyAuthority(Constants.RoleName.SUPER_ADMIN.getName())
+                    .antMatchers("/user-profile/**").hasAnyAuthority(Constants.RoleName.USER.getName(),Constants.RoleName.ADMIN.getName(), Constants.RoleName.SUPER_ADMIN.getName())
                 .and()
                 .formLogin().loginPage("/login").loginProcessingUrl("/authenticate").defaultSuccessUrl("/home",true)
                 .failureUrl("/login?login_error=true").permitAll()

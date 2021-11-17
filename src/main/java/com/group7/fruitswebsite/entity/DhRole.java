@@ -18,6 +18,7 @@ import java.util.Objects;
 @Table(name = "dh_role")
 @Getter
 @Setter
+@ToString
 public class DhRole extends BaseEntity implements java.io.Serializable{
 
 	@Column(name = "name",nullable = false)

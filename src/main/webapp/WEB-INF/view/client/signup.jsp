@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -37,13 +37,15 @@
 					<img src="img/27.jpg" alt="IMG">
 				</div>
 
-				<c:if test="${error == true}">
-					<div class="alert alert-danger" role="alert">Sign up was not successful, please try again.</div>
-				</c:if>
 
-				<form class="login100-form validate-form">
-					<span class="login100-form-title"> Sigin </span>
 
+				<form class="login100-form validate-form" action="/perform_signup"
+					id="signupForm">
+					<span class="login100-form-title"> Sigup </span>
+					<c:if test="${not empty param.signup_error}">
+						<div class="alert alert-danger" role="alert">Sign up was not
+							successful, please try again.</div>
+					</c:if>
 					<div class="wrap-input100 validate-input"
 						data-validate="Valid email is required: ex@abc.xyz">
 						<input class="input100" type="text" name="email"
@@ -78,9 +80,9 @@
 							aria-hidden="true"></i>
 						</span>
 					</div>
-					
+
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">Sigin</button>
+						<button class="login100-form-btn" onclick="performSignup(event)">Sigup</button>
 					</div>
 
 					<div class="text-center p-t-136">
@@ -112,6 +114,7 @@
 	</script>
 	<!--===============================================================================================-->
 	<script src="js/login.js"></script>
+	<script src="js/signup.js"></script>
 
 </body>
 </html>

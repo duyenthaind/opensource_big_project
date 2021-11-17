@@ -7,7 +7,8 @@ public class Constants {
     public enum RoleName {
 
         ADMIN("ADMIN", 1),
-        USER("CLIENT", 2);
+        USER("CLIENT", 2),
+        SUPER_ADMIN("SUPER_ADMIN",3);
 
         private final String name;
         private final int index;
@@ -67,6 +68,11 @@ public class Constants {
         public static final String IDENTITY_IS_NOT_DEFINED = "identity information is not defined";
         public static final String CANNOT_SET_ROLE_TO_USER = "cannot define the role for this user";
         public static final String HAS_NO_AUTHORIZE_TO_CHANGE_OTHER_INFORMATION = "this user has no right to change other's information";
+        public static final String NEW_ROLE_IS_NOT_SET = "new role is not set yet";
+        public static final String NO_CHANGE = "no change to be made";
+        public static final String USER_IS_SUPER = "super user cannot be changed role";
+        public static final String ROLE_IS_NOT_SUPPORTED = "role is not supported";
+        public static final String HAS_NO_AUTHORITIES_TO_CHANGE_TO_SUPER = "cannot change user role to super admin";
     }
 
     public enum CustomMessage {

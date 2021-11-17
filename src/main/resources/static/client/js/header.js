@@ -6,12 +6,12 @@
         	$('#loginDiv').hide()
         	$('#logoutDiv').hide()
         	selectionDiv.empty();
-            selectionDiv.html('<a class="dropdown-item" href="#"><i class="fa fa-user"></i> Your account</a><a class="dropdown-item" href="/logout" onClick="logout()"><i class="fa fa-exclamation"></i> Logout</a>');
+            selectionDiv.html('<a class="dropdown-item" href="/user-profile?username='+ userinfo.username +'"><i class="fa fa-user"></i> Your account</a><a class="dropdown-item" href="/logout" onClick="logout()"><i class="fa fa-exclamation"></i> Logout</a>');
             
             accountDiv.html(userinfo.username);
             
-            if(userinfo.roles.includes('ADMIN')){
-            	selectionDiv.html('<a class="dropdown-item" href="#"><i class="fa fa-user"></i> Your account</a><a class="dropdown-item" href="/admin"><i class="fa fa-user-secret"></i> Admin page</a><a class="dropdown-item" href="/logout" onClick="logout()"><i class="fa fa-exclamation"></i> Logout</a>')
+            if(userinfo.roles.includes('ADMIN') || userinfo.roles.includes('SUPER_ADMIN')){
+            	selectionDiv.html('<a class="dropdown-item" href="/user-profile?username='+ userinfo.username +'"><i class="fa fa-user"></i> Your account</a><a class="dropdown-item" href="/admin"><i class="fa fa-user-secret"></i> Admin page</a><a class="dropdown-item" href="/logout" onClick="logout()"><i class="fa fa-exclamation"></i> Logout</a>')
             }
         }else{
         	$('#validateAccount').hide();
@@ -38,6 +38,8 @@ function logout(){
 	 
     if(localStorage.userinfo != null && getCookie("accessToken") != null){
     	document.cookie = "accessToken=";
+    	document.cookie = "username=";
+    	document.cookie = "password=";
         localStorage.userinfo = null;
     }
     window.location.href = "/logout";

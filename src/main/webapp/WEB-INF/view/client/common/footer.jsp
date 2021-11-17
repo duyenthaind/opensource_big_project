@@ -88,6 +88,7 @@
 <script src="${server}/js/main.js"></script>
 <script src="${server}/client/js/subcriber.js"></script>
 <script src="${server}/client/js/header.js"></script>
+<script src="${server}/client/js/user-profile.js"></script>
 
 
 </body>

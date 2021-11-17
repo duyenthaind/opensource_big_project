@@ -23,13 +23,11 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 
 	@Override
 	public List<DhProduct> getTopRandom(int limit) {
-		// TODO Auto-generated method stub
 		String jpql = "SELECT p FROM DhProduct p order by RAND()";
 		List<DhProduct> dhProducts = null;
 		try {
 			dhProducts = entityManager.createQuery(jpql, DhProduct.class).setMaxResults(limit).getResultList();
 		} catch (Exception e) {
-			// TODO: handle exception
 			log.error("Error get top 9 random", e);
 		}
 
@@ -48,7 +46,6 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 		try {
 			dhProducts = query.setMaxResults(16).getResultList();
 		} catch (Exception e) {
-			// TODO: handle exception
 			log.error("Error get product by list category id", e);
 		}
 
@@ -63,7 +60,6 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 		try {
 			dhProducts = entityManager.createQuery(jpql, DhProduct.class).setMaxResults(12).getResultList();
 		} catch (Exception e) {
-			// TODO: handle exception
 			log.error("Error get product order by price sale asc", e);
 		}
 

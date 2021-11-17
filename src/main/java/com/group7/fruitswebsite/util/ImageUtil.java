@@ -73,6 +73,7 @@ public class ImageUtil {
             Files.write(currentPath, bytes);
 
             uploadFilePath = uploadFilePath.replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY);
+            log.info(String.format("Upload file to server, path: %s", uploadFilePath));
             result.append(uploadFilePath);
         }
         return result.toString();
@@ -102,6 +103,7 @@ public class ImageUtil {
             Files.write(currentPath, bytes);
 
             uploadFilePath = uploadFilePath.replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY);
+            log.info(String.format("Upload file to server, path: %s", uploadFilePath));
             results.add(uploadFilePath);
         }
         return results;

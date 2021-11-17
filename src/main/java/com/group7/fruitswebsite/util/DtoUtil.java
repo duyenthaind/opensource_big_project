@@ -1,14 +1,19 @@
 package com.group7.fruitswebsite.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.DhBlogDto;
 import com.group7.fruitswebsite.dto.DhCommentDto;
 import com.group7.fruitswebsite.dto.DhProductDto;
 import com.group7.fruitswebsite.dto.DhProductImageDto;
+import com.group7.fruitswebsite.dto.DhUserAndRoleDto;
+import com.group7.fruitswebsite.dto.DhUserDto;
 import com.group7.fruitswebsite.entity.DhBlog;
 import com.group7.fruitswebsite.entity.DhComment;
 import com.group7.fruitswebsite.entity.DhProduct;
 import com.group7.fruitswebsite.entity.DhProductImage;
+import com.group7.fruitswebsite.entity.DhRole;
+import com.group7.fruitswebsite.entity.DhUser;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
 import lombok.extern.log4j.Log4j;
 
@@ -18,6 +23,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+
 /**
  * @author duyenthai
  */
@@ -26,6 +34,39 @@ public class DtoUtil {
 
     private DtoUtil() {
 
+    }
+
+    public static DhUserDto getDtoFromUserDetail(DhUser dhUser, ObjectMapper objectMapper) {
+        try {
+            return objectMapper.readValue(objectMapper.writeValueAsString(dhUser), DhUserDto.class);
+        } catch (Exception e) {
+            log.error("Map userdto error!", e);
+        }
+        return null;
+    }
+
+    public static DhUserAndRoleDto getDtoFromUserAndRole(DhUser dhUser, ObjectMapper objectMapper) {
+        try {
+            DhUserDto dhUserDto = objectMapper.readValue(objectMapper.writeValueAsString(dhUser), DhUserDto.class);
+            DhUserAndRoleDto dhUserAndRoleDto = objectMapper.readValue(objectMapper.writeValueAsString(dhUserDto), DhUserAndRoleDto.class);
+            for (DhRole dhRole : dhUser.getDhRoles()) {
+                if (dhRole.getName().equals(Constants.RoleName.SUPER_ADMIN.getName())) {
+                    dhUserAndRoleDto.setRole(dhRole.getName());
+                    break;
+                }
+                if (dhRole.getName().equals(Constants.RoleName.ADMIN.getName()) &&
+                        (StringUtils.isEmpty(dhUserAndRoleDto.getRole()) || dhUserAndRoleDto.getRole().equals(Constants.RoleName.USER.getName()))) {
+                    dhUserAndRoleDto.setRole(dhRole.getName());
+                    continue;
+                }
+                dhUserAndRoleDto.setRole(dhRole.getName());
+            }
+            return dhUserAndRoleDto;
+
+        } catch (Exception e) {
+            log.error("Map userAndRole dto error!", e);
+        }
+        return null;
     }
 
     public static DhProductDto getDtoFromProduct(DhProduct dhProduct, ObjectMapper objectMapper, ProductImageRepository productImageRepository) {
