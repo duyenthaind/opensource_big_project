@@ -58,6 +58,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/css/**", "/js/**", "/img/**", "/upload/**", "/fonts/**","/vendor/**", "/v1/authenticate").permitAll()
                     .antMatchers("/admin/**", "/api-admin/**").hasAnyAuthority(Constants.RoleName.ADMIN.getName(), Constants.RoleName.SUPER_ADMIN.getName())
                     .antMatchers("/api-super/**").hasAnyAuthority(Constants.RoleName.SUPER_ADMIN.getName())
+                    .antMatchers("/admin/**", "/api-admin/**").hasAnyAuthority("ADMIN")
+                    .antMatchers("/user-profile/**").hasAnyAuthority("ADMIN","CLIENT")
                 .and()
                 .formLogin().loginPage("/login").loginProcessingUrl("/authenticate").defaultSuccessUrl("/home",true)
                 .failureUrl("/login?login_error=true").permitAll()
