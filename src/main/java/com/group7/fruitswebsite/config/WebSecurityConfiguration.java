@@ -63,7 +63,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/login").loginProcessingUrl("/authenticate").defaultSuccessUrl("/home",true)
                 .failureUrl("/login?login_error=true").permitAll()
                 .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/home").invalidateHttpSession(true)
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/home").deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true)           
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedPage("/403")
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

@@ -3,7 +3,9 @@ package com.group7.fruitswebsite.controller.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.DhBlogDto;
