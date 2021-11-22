@@ -23,7 +23,7 @@ public class DhProductImage extends BaseEntity implements java.io.Serializable{
 	@Column(name = "path", nullable = true, length = 1000)
 	private String path;
 
-	@Column(name = "name", nullable = true, length = 50)
+	@Column(name = "name", nullable = true, length = 1000)
 	private String name;
 
 	@ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.LAZY)

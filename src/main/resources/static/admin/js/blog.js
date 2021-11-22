@@ -92,11 +92,8 @@ function showDetailAndUpdateBlog(id,currentPage){
 	}
 	
 	$.ajax({
-		url : "/api-admin/blog/v1/blogs",
+		url : "/api-admin/blog/v1/blog/"+id,
 		type : "GET",
-		data : {
-			id : id
-		},
 		success : function(data){
 			var object = data.result.data;
 			if(object){
