@@ -16,6 +16,7 @@ import com.group7.fruitswebsite.util.ApiResponseUtil;
 import com.group7.fruitswebsite.util.DtoUtil;
 
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -57,8 +58,8 @@ public class UserServiceImpl implements UserService {
         try {
             DhUserDto result = new DhUserDto();
             Optional<DhUser> dhUser = findByUserName(username);
-            if(dhUser.isPresent()) {
-            	result = DtoUtil.getDtoFromUserDetail(dhUser.get(), objectMapper);
+            if (dhUser.isPresent()) {
+                result = DtoUtil.getDtoFromUserDetail(dhUser.get(), objectMapper);
             }
             return result;
         } catch (Exception ex) {
@@ -66,15 +67,15 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
-    
+
     @Override
-    public ResponseEntity<ApiResponse> getAllWithPage(int page, int size){
-    	try {
-			Pageable pageable = PageRequest.of(page, size);
-			Page<DhUser> pageUsers = userRepository.findAll(pageable);
-			List<DhUserAndRoleDto> dhUserAndRoleDtos = pageUsers.getContent().stream()
-					.map(val -> DtoUtil.getDtoFromUserAndRole(val, objectMapper)).collect(Collectors.toList());
-			ApiResponse.ApiResponseResult responseResult = new ApiResponse.ApiResponseResult();
+    public ResponseEntity<ApiResponse> getAllWithPage(int page, int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DhUser> pageUsers = userRepository.findAll(pageable);
+            List<DhUserAndRoleDto> dhUserAndRoleDtos = pageUsers.getContent().stream()
+                    .map(val -> DtoUtil.getDtoFromUserAndRole(val, objectMapper)).collect(Collectors.toList());
+            ApiResponse.ApiResponseResult responseResult = new ApiResponse.ApiResponseResult();
             int totalProducts = userRepository.findAll().size();
             int totalPages = totalProducts % size == 0 ? totalProducts / size : totalProducts / size + 1;
             responseResult.setData(dhUserAndRoleDtos);
@@ -83,11 +84,11 @@ public class UserServiceImpl implements UserService {
             responseResult.setTotalPages(totalPages);
             responseResult.setTotal(dhUserAndRoleDtos.size());
             return ApiResponseUtil.getBaseSuccessStatus(responseResult);
-		} catch (Exception e) {
-			return ApiResponseUtil.getBaseFailureStatus();
-		}
+        } catch (Exception e) {
+            return ApiResponseUtil.getBaseFailureStatus();
+        }
     }
-    
+
     @Override
     public ResponseEntity<ApiResponse> changeRole(ChangeRoleModel changeRoleModel) {
         try {
@@ -154,7 +155,9 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<ApiResponse> update(DhUserModel userModel) {
         try {
             DhUser user = objectMapper.readValue(objectMapper.writeValueAsString(userModel), DhUser.class);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            if (!StringUtils.isEmpty(user.getPassword()) && !StringUtils.isEmpty(user.getPassword().replaceAll("\\s", ""))) {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
             userRepository.customUpdate(user);
             return ApiResponseUtil.getBaseSuccessStatus(null);
         } catch (Exception ex) {
