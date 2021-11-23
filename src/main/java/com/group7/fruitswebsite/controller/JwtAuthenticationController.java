@@ -5,6 +5,7 @@ import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.JwtRequest;
 import com.group7.fruitswebsite.dto.JwtResponse;
 import com.group7.fruitswebsite.dto.UserResponse;
+import com.group7.fruitswebsite.service.CartService;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,10 @@ public class JwtAuthenticationController {
     private AuthenticationManager authenticationManager;
     private JwtTokenUtil jwtTokenUtil;
     private UserDetailsService userDetailsService;
+    private CartService cartService;
 
     @PostMapping(value = "/authenticate")
-    public ResponseEntity<ApiResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)  {
+    public ResponseEntity<ApiResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String accessToken = jwtTokenUtil.generateAccessToken(userDetails);
@@ -41,6 +43,7 @@ public class JwtAuthenticationController {
         List<Object> data = new ArrayList<>();
         data.add(new JwtResponse(accessToken));
         data.add(new UserResponse(userDetails.getUsername(), userDetails.getAuthorities().stream().map(Object::toString).collect(Collectors.toList())));
+        data.add(cartService.findAllCart(userDetails.getUsername()));
         responseResult.setData(data);
         return ApiResponseUtil.getBaseSuccessStatus(responseResult);
     }
@@ -66,7 +69,13 @@ public class JwtAuthenticationController {
     }
 
     @Autowired
-    public void setJwtUserDetailsService(UserDetailsService jwtUserDetailsService) {
-        this.userDetailsService = jwtUserDetailsService;
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
+
+    @Autowired
+    public void setCartService(CartService cartService) {
+        this.cartService = cartService;
+    }
+
 }
