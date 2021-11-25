@@ -121,8 +121,7 @@ public class DtoUtil {
 
     public static DhCartDto getCartDtoFromDhCart(DhCart dhCart, ObjectMapper objectMapper) {
         try {
-            DhCartDto dto = objectMapper.readValue(objectMapper.writeValueAsString(dhCart), DhCartDto.class);
-            return dto;
+            return objectMapper.readValue(objectMapper.writeValueAsString(dhCart), DhCartDto.class);
         } catch (Exception ex) {
             log.error("Map cart to dto error, ", ex);
         }
