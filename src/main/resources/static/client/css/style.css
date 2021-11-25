@@ -926,6 +926,7 @@ ol {
 	list-style: none;
 	display: inline-block;
 	margin-right: 6px;
+	cursor: pointer;
 }
 
 .featured__item__pic__hover li:last-child {
