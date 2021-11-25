@@ -75,6 +75,7 @@
 		</div>
 	</div>
 </footer>
+<jsp:include page="/WEB-INF/view/client/common/modal.jsp"></jsp:include>
 <!-- Footer Section End -->
 
 <!-- Js Plugins -->
@@ -87,6 +88,7 @@
 <script src="${server}/js/owl.carousel.min.js"></script>
 <script src="${server}/js/main.js"></script>
 <script src="${server}/client/js/subcriber.js"></script>
+<script src="${server}/client/js/cart.js"></script>
 <script src="${server}/client/js/header.js"></script>
 <script src="${server}/client/js/user-profile.js"></script>
 
