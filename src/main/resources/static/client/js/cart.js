@@ -1,6 +1,6 @@
 function addCart(id,quantity){
 	$.ajax({
-		url : "",
+		url : "/user-carts/carts",
 		type:"POST",
 		data : {
 			productId : id,
@@ -9,6 +9,9 @@ function addCart(id,quantity){
 		success: function(responseData){
 			
 		},
-		error
+		error : function(jqXhr, textStatus, errorMessage) { // error
+			// callback
+
+		}
 	});
 }

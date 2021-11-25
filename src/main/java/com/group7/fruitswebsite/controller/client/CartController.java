@@ -22,7 +22,7 @@ import java.util.*;
  * @author duyenthai
  */
 @RestController
-@RequestMapping("value = /user-carts/")
+@RequestMapping(value = "/user-carts")
 @Log4j
 public class CartController {
 
