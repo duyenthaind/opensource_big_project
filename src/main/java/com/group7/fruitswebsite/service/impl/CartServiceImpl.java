@@ -61,7 +61,7 @@ public class CartServiceImpl implements CartService {
                 cartRepository.save(updatedCart);
                 log.info(String.format("Update cart item %s of user %s", updatedCart.getId(), updatedCart.getUserId()));
             }
-            return ApiResponseUtil.getBaseSuccessStatus(null);
+            return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.CART_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
         } catch (Exception ex) {
             log.error(String.format("Update cart for user %s error", cartModel.getUserId()), ex);
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.CART_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
@@ -74,7 +74,7 @@ public class CartServiceImpl implements CartService {
             Optional<DhCart> currentCartItem = cartRepository.findByUserIdAndProductId(cartModel.getUserId(), cartModel.getProductId());
             currentCartItem.ifPresent(dhCart -> cartRepository.delete(dhCart));
             log.info(String.format("Delete cart item of user %s", cartModel.getUserId()));
-            return ApiResponseUtil.getBaseSuccessStatus(null);
+            return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.CART_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
         } catch (Exception ex) {
             log.error(String.format("Update cart for user %s error", cartModel.getUserId()), ex);
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.CART_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
@@ -84,6 +84,14 @@ public class CartServiceImpl implements CartService {
     @Override
     public ResponseEntity<ApiResponse> addCart(CartModel cartModel) {
         try {
+            Optional<DhCart> existedCart = cartRepository.findByUserIdAndProductId(cartModel.getUserId(), cartModel.getProductId());
+            if (existedCart.isPresent()) {
+                DhCart currentCart = existedCart.get();
+                currentCart.setQuantity(currentCart.getQuantity() + 1);
+                cartRepository.save(currentCart);
+                log.info(String.format("Update cart item for user %s", cartModel.getUserId()));
+                return ApiResponseUtil.getBaseSuccessStatus(null);
+            }
             DhCart dhCart = objectMapper.readValue(objectMapper.writeValueAsString(cartModel), DhCart.class);
             dhCart.setCreatedDate(System.currentTimeMillis());
             dhCart.setCreatedBy(cartModel.getUserId());
