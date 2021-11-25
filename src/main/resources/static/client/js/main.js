@@ -233,7 +233,6 @@ function getTypeSearch(event){
     /*-------------------
 		Quantity change
 	--------------------- */
-    
 
 })(jQuery);
 

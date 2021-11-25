@@ -17,24 +17,31 @@ import java.util.Objects;
 @Getter
 @Table(name = "dh_cart")
 public class DhCart extends BaseEntity implements Serializable {
-    @Column(name = "product_id")
-    private Integer productId;
-    @Column(name = "user_id")
-    private Integer userId;
-    @Column(name = "quantity")
-    private Integer quantity;
+	@Column(name = "product_id")
+	private Integer productId;
+	@Column(name = "user_id")
+	private Integer userId;
+	@Column(name = "quantity")
+	private Integer quantity;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "avatar")
+	private String avatar;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        DhCart dhCart = (DhCart) o;
-        return Objects.equals(productId, dhCart.productId) && Objects.equals(userId, dhCart.userId);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		if (!super.equals(o))
+			return false;
+		DhCart dhCart = (DhCart) o;
+		return Objects.equals(productId, dhCart.productId) && Objects.equals(userId, dhCart.userId);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), productId, userId);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), productId, userId);
+	}
 }

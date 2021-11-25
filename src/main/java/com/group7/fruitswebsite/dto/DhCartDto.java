@@ -13,4 +13,6 @@ import lombok.Setter;
 public class DhCartDto extends BaseDto{
     private Integer productId;
     private Integer quantity;
+    private String avatar;
+    private String name;
 }
