@@ -1,5 +1,6 @@
 package com.group7.fruitswebsite.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DhCartDto extends BaseDto{
     private Integer productId;
     private Integer quantity;
