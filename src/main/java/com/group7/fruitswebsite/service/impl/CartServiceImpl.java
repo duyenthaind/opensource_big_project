@@ -5,9 +5,13 @@ import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.DhCartDto;
 import com.group7.fruitswebsite.entity.DhCart;
+import com.group7.fruitswebsite.entity.DhProduct;
+import com.group7.fruitswebsite.entity.DhProductImage;
 import com.group7.fruitswebsite.entity.DhUser;
 import com.group7.fruitswebsite.model.CartModel;
 import com.group7.fruitswebsite.repository.CartRepository;
+import com.group7.fruitswebsite.repository.ProductImageRepository;
+import com.group7.fruitswebsite.repository.ProductRepository;
 import com.group7.fruitswebsite.repository.UserRepository;
 import com.group7.fruitswebsite.service.CartService;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
@@ -34,6 +38,8 @@ public class CartServiceImpl implements CartService {
 
     private CartRepository cartRepository;
     private UserRepository userRepository;
+    private ProductImageRepository productImageRepository;
+    private ProductRepository productRepository;
 
     @Override
     public List<DhCartDto> findAllCart(String username) {
@@ -96,6 +102,14 @@ public class CartServiceImpl implements CartService {
             dhCart.setCreatedDate(System.currentTimeMillis());
             dhCart.setCreatedBy(cartModel.getUserId());
             dhCart.setQuantity(1);
+            Optional<DhProduct> product = productRepository.findById(cartModel.getProductId());
+            if (product.isPresent()) {
+                dhCart.setName(product.get().getName());
+                List<DhProductImage> listProductImages = productImageRepository.getByDhProductId(product.get().getId());
+                if (!listProductImages.isEmpty()) {
+                    dhCart.setAvatar(listProductImages.get(0).getPath());
+                }
+            }
             cartRepository.save(dhCart);
             log.info(String.format("Save new cart item for user %s", cartModel.getUserId()));
             return ApiResponseUtil.getBaseSuccessStatus(null);
@@ -113,5 +127,15 @@ public class CartServiceImpl implements CartService {
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setProductImageRepository(ProductImageRepository productImageRepository) {
+        this.productImageRepository = productImageRepository;
+    }
+
+    @Autowired
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 }
