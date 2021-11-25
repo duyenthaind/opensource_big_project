@@ -16,14 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
  * @author duyenthai
  */
 @RestController
-@RequestMapping("value = /v1/api/cart")
+@RequestMapping("value = /user-carts/")
 @Log4j
 public class CartController {
 
@@ -41,7 +40,7 @@ public class CartController {
     }
 
     @PostMapping(value = "/carts")
-    public ResponseEntity<ApiResponse> addCart(@RequestBody CartModel cartModel, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<ApiResponse> addCart(@RequestBody CartModel cartModel) {
         if (cartModel.getProductId() == null) {
             log.info(String.format("Drop all action for model %s because it has no productId", cartModel));
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.PRODUCT_ID_MUST_BE_NON_NULL, HttpStatus.EXPECTATION_FAILED);
@@ -57,14 +56,11 @@ public class CartController {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.CART_IS_NOT_FOUND, HttpStatus.EXPECTATION_FAILED);
             }
         }
-        Set<CartModel> carts = checkCartInSessionAndCreateNewIfNeeded(httpServletRequest);
-        carts.add(cartModel);
-        httpServletRequest.getSession().setAttribute(Constants.SessionItem.CART, carts);
         return ApiResponseUtil.getBaseSuccessStatus(null);
     }
 
     @PutMapping(value = "/carts")
-    public ResponseEntity<ApiResponse> updateCart(@RequestBody CartModel cartModel, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<ApiResponse> updateCart(@RequestBody CartModel cartModel) {
         if (cartModel.getProductId() == null) {
             log.info(String.format("Drop all action for model %s because it has no productId", cartModel));
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.PRODUCT_ID_MUST_BE_NON_NULL, HttpStatus.EXPECTATION_FAILED);
@@ -83,18 +79,11 @@ public class CartController {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.CART_IS_NOT_FOUND, HttpStatus.EXPECTATION_FAILED);
             }
         }
-        Set<CartModel> carts = checkCartInSessionAndCreateNewIfNeeded(httpServletRequest);
-        for (CartModel index : carts) {
-            if (Objects.equals(cartModel.getQuantity(), index.getQuantity())) {
-                index.setQuantity(index.getQuantity() + 1);
-                break;
-            }
-        }
         return ApiResponseUtil.getBaseSuccessStatus(null);
     }
 
     @DeleteMapping(value = "/carts")
-    public ResponseEntity<ApiResponse> deleteCart(@RequestParam Integer productId, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<ApiResponse> deleteCart(@RequestParam Integer productId) {
         User currentUser = SecurityUtil.getUserDetails();
         if (currentUser != null) {
             Optional<DhUser> user = userService.findByUserName(currentUser.getUsername());
@@ -107,23 +96,7 @@ public class CartController {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.CART_IS_NOT_FOUND, HttpStatus.EXPECTATION_FAILED);
             }
         }
-        Set<CartModel> carts = checkCartInSessionAndCreateNewIfNeeded(httpServletRequest);
-        for (CartModel index : carts) {
-            if (Objects.equals(productId, index.getProductId())) {
-                carts.remove(index);
-                break;
-            }
-        }
         return ApiResponseUtil.getBaseSuccessStatus(null);
-    }
-
-    private Set<CartModel> checkCartInSessionAndCreateNewIfNeeded(HttpServletRequest httpServletRequest) {
-        Set<CartModel> carts = (Set<CartModel>) httpServletRequest.getSession().getAttribute(Constants.SessionItem.CART);
-        if (carts == null) {
-            carts = new HashSet<>();
-            httpServletRequest.getSession().setAttribute(Constants.SessionItem.CART, carts);
-        }
-        return carts;
     }
 
     @Autowired
