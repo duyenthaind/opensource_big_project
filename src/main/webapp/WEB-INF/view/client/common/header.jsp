@@ -159,7 +159,7 @@ body {
 		</div>
 		<div class="humberger__menu__contact">
 			<ul>
-				<li><i class="fa fa-envelope"></i> noreply@fruitshop.com</li>
+				<li><i class="fa fa-envelope"></i> fruitshop@gmail.com</li>
 				<li>Free Shipping for all Order of $99</li>
 			</ul>
 		</div>
@@ -174,7 +174,7 @@ body {
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__left">
 							<ul>
-								<li><i class="fa fa-envelope"></i> noreply@fruitshop.com</li>
+								<li><i class="fa fa-envelope"></i> fruitshop@gmail.com</li>
 								<li>Free Shipping for all Order of $99</li>
 							</ul>
 						</div>
@@ -319,7 +319,7 @@ body {
 									Vegetable <br />100% Organic
 								</h2>
 								<p>Free Pickup and Delivery Available</p>
-								<a href="#" class="primary-btn">SHOP NOW</a>
+								<a href="/shop-grid?categoryId=-1&page=0&searchText=&typeSearch=name&operator=LIKE" class="primary-btn">SHOP NOW</a>
 							</div>
 						</div>
 					</c:if>
