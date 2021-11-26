@@ -74,6 +74,7 @@ public class Constants {
         public static final String ROLE_IS_NOT_SUPPORTED = "role is not supported";
         public static final String HAS_NO_AUTHORITIES_TO_CHANGE_TO_SUPER = "cannot change user role to super admin";
         public static final String CART_IS_NOT_FOUND = "cannot change cart because it is not found";
+        public static final String CART_IS_FOUNDED = "changed cart";
         public static final String PRODUCT_ID_MUST_BE_NON_NULL = "you must provide product_id to add cart";
         public static final String CART_QUANTITY_MUST_BE_NON_NULL = "you must provide a valid quantity to update cart";
     }

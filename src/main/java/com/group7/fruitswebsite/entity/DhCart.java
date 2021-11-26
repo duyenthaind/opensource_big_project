@@ -27,6 +27,8 @@ public class DhCart extends BaseEntity implements Serializable {
 	private String name;
 	@Column(name = "avatar")
 	private String avatar;
+	@Column(name = "price")
+	private Long price;
 
 	@Override
 	public boolean equals(Object o) {

@@ -51,47 +51,96 @@ function loadCart(){
 			var html = "";
 			var data = responseData.result.data;
 			for(var i=0;i<data.length;i++){
-				html += '<tr>'
+				html += '<tr><td><input type="hidden" value="'+data[i].productId+'" class="cartProductId"/></td>'
                                  +'   <td class="shoping__cart__item">'
-                                 +'       <img src="/uploads/'+ data[i].avatar +'" alt="">'
+                                 +'       <img width="250px" height="100px" src="/uploads/'+ data[i].avatar +'" alt="">'
                                  +'       <h5>'+ data[i].name +'</h5>'
                                  +'   </td>'
                                  +'   <td class="shoping__cart__price">'
-                                  +'      $'+ data[i].price +''
+                                  +'      '+ data[i].price +''
                                  +'   </td>'
                                  +'   <td class="shoping__cart__quantity">'
                                   +'      <div class="quantity">'
                                   +'          <div class="pro-qty">'
-                                  +'              <input type="text" value="'+ data[i].quantity +'">'
+                                  +' <span class="dec qtybtn decrease">-</span>'
+                                  +'              <input class="qty" type="text" value="'+ data[i].quantity +'">'
+                                  +'  <span class="inc qtybtn increase">+</span>'
                                   +'          </div>'
                                   +'      </div>'
                                    +' </td>'
-                                  +'  <td class="shoping__cart__total">'
-                                   +'     $'+ data[i].price*data[i].quantity +''
+                                  +'  <td class="shoping__cart__total totalOneProduct">'
+                                   +'     '+ data[i].price*data[i].quantity +''
                                    +' </td>'
                                    +' <td class="shoping__cart__item__close">'
                                    +'     <span class="icon_close"></span>'
                                    +' </td></tr>';
 			}
 			$("#tableCart").append(html);
+			cartTotal();
+			var index = 0;
 			var proQty = $('.pro-qty');
-		    proQty.prepend('<span class="dec qtybtn">-</span>');
-		    proQty.append('<span class="inc qtybtn">+</span>');
-		    proQty.on('click', '.qtybtn', function () {
-		        var $button = $(this);
-		        var oldValue = $button.parent().find('input').val();
-		        if ($button.hasClass('inc')) {
-		            var newVal = parseFloat(oldValue) + 1;
-		        } else {
-		            // Don't allow decrementing below zero
-		            if (oldValue > 0) {
-		                var newVal = parseFloat(oldValue) - 1;
-		            } else {
-		                newVal = 0;
-		            }
+			
+			var decrease = $(".decrease").on("click",function(){
+				
+				index = decrease.index(this);
+				var $qty=$(this).parent().find('input');
+		        var currentVal = parseInt($qty.val());
+		        var newVal = 0;
+		        if (!isNaN(currentVal) && currentVal > 1) {
+		            $qty.val(currentVal - 1);
+		            newVal = $qty.val();
+		           
+	            	document.getElementsByClassName("totalOneProduct")[index].innerHTML=newVal*parseInt(document.getElementsByClassName("shoping__cart__price")[index].innerHTML);
+	            	cartTotal()
+	            	updateCart(document.getElementsByClassName("cartProductId")[index].value,newVal);
 		        }
-		        $button.parent().find('input').val(newVal);
+			});
+			
+			var increase = $('.increase').on('click',function(){
+				
+				index = increase.index(this);
+				var $qty=$(this).parent().find('input');
+		        var currentVal = parseInt($qty.val());
+		        var newVal = 0;
+		        if (!isNaN(currentVal) && currentVal > 0) {
+		            $qty.val(currentVal + 1);
+		            newVal = $qty.val();
+		           	document.getElementsByClassName("totalOneProduct")[index].innerHTML=newVal*parseInt(document.getElementsByClassName("shoping__cart__price")[index].innerHTML);
+		           	cartTotal();
+		           	updateCart(document.getElementsByClassName("cartProductId")[index].value,newVal);
+		        }
 		    });
+		},
+		error : function(jqXhr, textStatus, errorMessage) { // error
+			// callback
+
+		}
+	});
+}
+
+function cartTotal(){
+	var total = 0;
+	var totalProduct = document.getElementsByClassName("totalOneProduct");
+	for(var i=0;i<totalProduct.length;i++){
+		total += parseInt(totalProduct[i].innerHTML);
+	}
+	$("#totalCart").html("$"+total);
+}
+
+function updateCart(productId,quantity){
+	var id = parseInt(productId);
+	console.log(id);
+	$.ajax({
+		url : "/user-carts/carts",
+		type:"PUT",
+		data : JSON.stringify({
+			productId : id,
+			quantity : quantity,
+		}),
+		dataType: 'json',
+        contentType: 'application/json',
+		success: function(responseData){
+			
 		},
 		error : function(jqXhr, textStatus, errorMessage) { // error
 			// callback
@@ -102,7 +151,8 @@ function loadCart(){
 
 (function () {
 	updateTotal()
-	loadCart()
+	loadCart();
+	cartTotal();
 	
 })();
 

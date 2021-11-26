@@ -67,7 +67,7 @@ public class CartServiceImpl implements CartService {
                 cartRepository.save(updatedCart);
                 log.info(String.format("Update cart item %s of user %s", updatedCart.getId(), updatedCart.getUserId()));
             }
-            return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.CART_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
+            return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.CART_IS_NOT_FOUND, HttpStatus.ACCEPTED);
         } catch (Exception ex) {
             log.error(String.format("Update cart for user %s error", cartModel.getUserId()), ex);
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.CART_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
@@ -105,6 +105,7 @@ public class CartServiceImpl implements CartService {
             Optional<DhProduct> product = productRepository.findById(cartModel.getProductId());
             if (product.isPresent()) {
                 dhCart.setName(product.get().getName());
+                dhCart.setPrice(product.get().getPriceSale());
                 List<DhProductImage> listProductImages = productImageRepository.getByDhProductId(product.get().getId());
                 if (!listProductImages.isEmpty()) {
                     dhCart.setAvatar(listProductImages.get(0).getPath());

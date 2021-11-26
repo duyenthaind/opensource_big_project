@@ -15,4 +15,5 @@ public class DhCartDto extends BaseDto{
     private Integer quantity;
     private String avatar;
     private String name;
+    private String price;
 }
