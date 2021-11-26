@@ -51,7 +51,7 @@ function loadCart(){
 			var html = "";
 			var data = responseData.result.data;
 			for(var i=0;i<data.length;i++){
-				html += '<tr><td><input type="hidden" value="'+data[i].productId+'" class="cartProductId"/></td>'
+				html += '<tr class="product_tr"><td><input type="hidden" value="'+data[i].productId+'" class="cartProductId"/></td>'
                                  +'   <td class="shoping__cart__item">'
                                  +'       <img width="250px" height="100px" src="/uploads/'+ data[i].avatar +'" alt="">'
                                  +'       <h5>'+ data[i].name +'</h5>'
@@ -72,13 +72,21 @@ function loadCart(){
                                    +'     '+ data[i].price*data[i].quantity +''
                                    +' </td>'
                                    +' <td class="shoping__cart__item__close">'
-                                   +'     <span class="icon_close"></span>'
+                                   +'     <span class="icon_close remove_cart"></span>'
                                    +' </td></tr>';
 			}
 			$("#tableCart").append(html);
 			cartTotal();
 			var index = 0;
 			var proQty = $('.pro-qty');
+			
+			var removeCart = $(".remove_cart").on("click",function(){
+				index = removeCart.index(this);
+				var productId = document.getElementsByClassName("cartProductId")[index].value;
+				$(".product_tr")[index].remove();
+				remove(productId);
+				cartTotal();
+			});
 			
 			var decrease = $(".decrease").on("click",function(){
 				
@@ -110,6 +118,24 @@ function loadCart(){
 		           	updateCart(document.getElementsByClassName("cartProductId")[index].value,newVal);
 		        }
 		    });
+		},
+		error : function(jqXhr, textStatus, errorMessage) { // error
+			// callback
+
+		}
+	});
+}
+
+function remove(productId){
+	var id = parseInt(productId);
+	console.log(id);
+	$.ajax({
+		url : "/user-carts/carts?productId="+id,
+		type:"DELETE",
+		dataType: 'json',
+        contentType: 'application/json',
+		success: function(responseData){
+			
 		},
 		error : function(jqXhr, textStatus, errorMessage) { // error
 			// callback
