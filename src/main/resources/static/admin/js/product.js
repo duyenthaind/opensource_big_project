@@ -508,8 +508,8 @@ function showModalUpdateProduct(id,currentPage){
                 $('#productPriceUpdate').val(data.price)
                 $('#productPriceSaleUpdate').val(data.priceSale)
                 $('#productWeightUpdate').val(data.weight)
-                $('#productShortDescriptionUpdate').val(data.shortDescription)
-                $('#productDetailDescriptionUpdate').val(data.detailDescription)
+                $("#productShortDescriptionUpdate").summernote("code", data.shortDescription);
+                $("#productDetailDescriptionUpdate").summernote("code", data.detailDescription);
                 $("#currentPageUpdateProd").val(currentPage);
                 $("#createdDateProd").val(data.created_date);
                 let images = "";

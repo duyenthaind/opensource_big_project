@@ -74,7 +74,7 @@ public class BlogController {
         return blogService.delete(id);
     }
 
-    @GetMapping("/blogs/{id}")
+    @GetMapping("/blog/{id}")
     public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id) {
         return blogService.getOne(id);
     }
