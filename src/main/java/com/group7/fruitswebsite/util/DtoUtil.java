@@ -2,18 +2,8 @@ package com.group7.fruitswebsite.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.common.Constants;
-import com.group7.fruitswebsite.dto.DhBlogDto;
-import com.group7.fruitswebsite.dto.DhCommentDto;
-import com.group7.fruitswebsite.dto.DhProductDto;
-import com.group7.fruitswebsite.dto.DhProductImageDto;
-import com.group7.fruitswebsite.dto.DhUserAndRoleDto;
-import com.group7.fruitswebsite.dto.DhUserDto;
-import com.group7.fruitswebsite.entity.DhBlog;
-import com.group7.fruitswebsite.entity.DhComment;
-import com.group7.fruitswebsite.entity.DhProduct;
-import com.group7.fruitswebsite.entity.DhProductImage;
-import com.group7.fruitswebsite.entity.DhRole;
-import com.group7.fruitswebsite.entity.DhUser;
+import com.group7.fruitswebsite.dto.*;
+import com.group7.fruitswebsite.entity.*;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
 import lombok.extern.log4j.Log4j;
 
@@ -24,7 +14,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @author duyenthai
@@ -126,6 +115,15 @@ public class DtoUtil {
             return dto;
         } catch (Exception ex) {
             log.error("Map comment to dto error, ", ex);
+        }
+        return null;
+    }
+
+    public static DhCartDto getCartDtoFromDhCart(DhCart dhCart, ObjectMapper objectMapper) {
+        try {
+            return objectMapper.readValue(objectMapper.writeValueAsString(dhCart), DhCartDto.class);
+        } catch (Exception ex) {
+            log.error("Map cart to dto error, ", ex);
         }
         return null;
     }

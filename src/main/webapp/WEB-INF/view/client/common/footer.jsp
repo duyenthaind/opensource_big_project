@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <footer class="footer spad">
 	<div class="container">
 		<div class="row">
@@ -7,9 +9,9 @@
 						<a href="./index.html"><img src="img/logo.png" alt=""></a>
 					</div>
 					<ul>
-						<li>Address: 60-49 Road 11378 New York</li>
+						<li>Address: 298 Đ. Cầu Diễn, Minh Khai, Bắc Từ Liêm, Hà Nội</li>
 						<li>Phone: +65 11.188.888</li>
-						<li>Email: noreply@fruitshop.com</li>
+						<li>Email: fruitshop@gmail.com</li>
 					</ul>
 				</div>
 			</div>
@@ -67,14 +69,12 @@
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</p>
 					</div>
-					<div class="footer__copyright__payment">
-						<img src="img/payment-item.png" alt="">
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </footer>
+<jsp:include page="/WEB-INF/view/client/common/modal.jsp"></jsp:include>
 <!-- Footer Section End -->
 
 <!-- Js Plugins -->
@@ -87,6 +87,7 @@
 <script src="${server}/js/owl.carousel.min.js"></script>
 <script src="${server}/js/main.js"></script>
 <script src="${server}/client/js/subcriber.js"></script>
+<script src="${server}/client/js/cart.js"></script>
 <script src="${server}/client/js/header.js"></script>
 <script src="${server}/client/js/user-profile.js"></script>
 

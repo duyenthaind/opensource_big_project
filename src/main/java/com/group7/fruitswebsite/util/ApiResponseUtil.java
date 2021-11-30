@@ -83,4 +83,10 @@ public class ApiResponseUtil {
         return responseResult;
     }
 
+    public static ApiResponse.ApiResponseResult mapResultWithOnlyData(List data){
+        ApiResponse.ApiResponseResult responseResult = new ApiResponse.ApiResponseResult();
+        responseResult.setData(data);
+        return responseResult;
+    }
+
 }

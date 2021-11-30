@@ -122,9 +122,6 @@ body {
 				<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
 				<li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
 			</ul>
-			<div class="header__cart__price">
-				item: <span>$150.00</span>
-			</div>
 		</div>
 		<div class="humberger__menu__widget">
 			<div class="header__top__right__language">
@@ -162,7 +159,7 @@ body {
 		</div>
 		<div class="humberger__menu__contact">
 			<ul>
-				<li><i class="fa fa-envelope"></i> noreply@fruitshop.com</li>
+				<li><i class="fa fa-envelope"></i> fruitshop@gmail.com</li>
 				<li>Free Shipping for all Order of $99</li>
 			</ul>
 		</div>
@@ -177,7 +174,7 @@ body {
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__left">
 							<ul>
-								<li><i class="fa fa-envelope"></i> noreply@fruitshop.com</li>
+								<li><i class="fa fa-envelope"></i> fruitshop@gmail.com</li>
 								<li>Free Shipping for all Order of $99</li>
 							</ul>
 						</div>
@@ -243,11 +240,9 @@ body {
 					<div class="header__cart">
 						<ul>
 							<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-							<li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+							<li style="cursor: pointer;" onclick="shopCart();"><a><i class="fa fa-shopping-bag"></i> <span id="productTotal">0</span></a></li>
 						</ul>
-						<div class="header__cart__price">
-							item: <span>$150.00</span>
-						</div>
+
 					</div>
 				</div>
 			</div>
@@ -324,7 +319,7 @@ body {
 									Vegetable <br />100% Organic
 								</h2>
 								<p>Free Pickup and Delivery Available</p>
-								<a href="#" class="primary-btn">SHOP NOW</a>
+								<a href="/shop-grid?categoryId=-1&page=0&searchText=&typeSearch=name&operator=LIKE" class="primary-btn">SHOP NOW</a>
 							</div>
 						</div>
 					</c:if>
