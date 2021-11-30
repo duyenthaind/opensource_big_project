@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,16 +21,18 @@ import lombok.Setter;
 @Setter
 public class DhCoupon extends BaseEntity implements Serializable {
 
-	@Column(name = "code", nullable = false)
+	@Column(name = "code", nullable = false, unique = true)
 	private String code;
 
 	@Column(name = "total", nullable = false)
 	private int total;
 
-	@OneToMany(mappedBy = "dhCoupon", cascade = CascadeType.ALL)
-	@JsonProperty(value = "orders")
-	private List<DhOrder> dhOrders = new ArrayList<>();
-	
+	@Column(name = "start_time", nullable = false)
+	private Long startTime;
+
+	@Column(name = "duration", nullable = false)
+	private Long duration;
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
