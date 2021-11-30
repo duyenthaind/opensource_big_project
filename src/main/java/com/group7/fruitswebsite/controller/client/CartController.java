@@ -36,7 +36,7 @@ public class CartController {
             List<DhCartDto> listCartDtos = cartService.findAllCart(currentUser.getUsername());
             return ApiResponseUtil.getBaseSuccessStatus(ApiResponseUtil.mapResultWithOnlyData(listCartDtos));
         }
-        return ApiResponseUtil.getBaseSuccessStatus(null);
+        return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(value = "/carts")
