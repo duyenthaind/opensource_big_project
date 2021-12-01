@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.*;
 import com.group7.fruitswebsite.entity.*;
+import com.group7.fruitswebsite.repository.OrderProductRepository;
 import com.group7.fruitswebsite.repository.ProductImageRepository;
 import lombok.extern.log4j.Log4j;
 
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -124,6 +126,26 @@ public class DtoUtil {
             return objectMapper.readValue(objectMapper.writeValueAsString(dhCart), DhCartDto.class);
         } catch (Exception ex) {
             log.error("Map cart to dto error, ", ex);
+        }
+        return null;
+    }
+
+    public static DhOrderDto getOrderDtoFromDhOrder(DhOrder dhOrder, ObjectMapper objectMapper, OrderProductRepository orderProductRepository) {
+        try {
+            DhOrderDto dhOrderDto = objectMapper.readValue(objectMapper.writeValueAsString(dhOrder), DhOrderDto.class);
+            dhOrderDto.setCouponId(Objects.nonNull(dhOrder.getDhCoupon()) ? dhOrder.getDhCoupon().getId() : null);
+            dhOrderDto.setUserId(Objects.nonNull(dhOrder.getDhUser()) ? dhOrder.getDhUser().getId() : null);
+            if (Objects.nonNull(orderProductRepository)) {
+                List<DhOrderProduct> listAllProducts = orderProductRepository.findByOrderId(dhOrder.getId());
+                for (DhOrderProduct index : listAllProducts) {
+                    DhOrderProductDto dto = objectMapper.readValue(objectMapper.writeValueAsString(index), DhOrderProductDto.class);
+                    dto.setOrder(dhOrder.getId());
+                    dhOrderDto.getListProductDto().add(dto);
+                }
+            }
+            return dhOrderDto;
+        } catch (Exception ex) {
+            log.error("Map order to dto error, ", ex);
         }
         return null;
     }

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CouponDto extends BaseDto {
+public class DhCouponDto extends BaseDto {
     private String code;
     private Integer total;
 }

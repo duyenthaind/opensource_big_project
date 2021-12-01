@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import java.util.Objects;
@@ -16,17 +17,18 @@ import java.util.Objects;
 @Setter
 @Getter
 @Table(name = "dh_order_product")
-public class DhOrderProduct extends BaseEntity implements java.io.Serializable{
+@JsonIgnoreProperties({"order"})
+public class DhOrderProduct extends BaseEntity implements java.io.Serializable {
 
-	@Column(name = "quantity",nullable = false)
-	private int quantity;
+    @Column(name = "quantity", nullable = false)
+    private int quantity;
 
     @Column(name = "product_id")
-	private Integer productId;
+    private Integer productId;
 
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name = "order_id")
-	private DhOrder order;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private DhOrder order;
 
     @Override
     public boolean equals(Object o) {

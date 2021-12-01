@@ -3,15 +3,21 @@ package com.group7.fruitswebsite.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
+import com.group7.fruitswebsite.dto.DhOrderDto;
 import com.group7.fruitswebsite.entity.*;
 import com.group7.fruitswebsite.model.DhOrderModel;
+import com.group7.fruitswebsite.model.DhOrderModelUpdate;
 import com.group7.fruitswebsite.repository.*;
 import com.group7.fruitswebsite.service.OrderService;
 import com.group7.fruitswebsite.util.ApiResponseUtil;
+import com.group7.fruitswebsite.util.DtoUtil;
 import com.group7.fruitswebsite.util.SecurityUtil;
 import com.group7.fruitswebsite.util.StringUtil;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
@@ -20,6 +26,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author duyenthai
@@ -46,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
             String username = currentUser.getUsername();
             Optional<DhUser> optionalUser = userRepository.findByUsername(username);
             if (!optionalUser.isPresent()) {
-                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.BAD_REQUEST);
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
             }
             Optional<DhCoupon> optionalCoupon = couponRepository.findByCode(dhOrderModel.getCouponCode());
             optionalCoupon.ifPresent(dhOrder::setDhCoupon);
@@ -59,6 +66,55 @@ public class OrderServiceImpl implements OrderService {
             return ApiResponseUtil.getBaseSuccessStatus(null);
         } catch (Exception ex) {
             log.error(String.format("Save order %s error", dhOrderModel), ex);
+            return ApiResponseUtil.getBaseFailureStatus();
+        }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> getAllForUser(String username) {
+        try {
+            Optional<DhUser> currentUser = userRepository.findByUsername(username);
+            if (!currentUser.isPresent()) {
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
+            }
+            int userId = currentUser.get().getId();
+            List<DhOrder> orders = orderRepository.findByUserId(userId);
+            List<DhOrderDto> result = orders.stream().map(val -> DtoUtil.getOrderDtoFromDhOrder(val, objectMapper, null)).collect(Collectors.toList());
+            ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultWithOnlyData(result);
+            return ApiResponseUtil.getBaseSuccessStatus(responseResult);
+        } catch (Exception ex) {
+            log.error("Error get all order, ", ex);
+            return ApiResponseUtil.getBaseFailureStatus();
+        }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> getAllWithPaging(int page, int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DhOrder> pageOrders = orderRepository.findAll(pageable);
+            List<DhOrderDto> orderDtos = pageOrders.getContent().stream()
+                    .map(val -> DtoUtil.getOrderDtoFromDhOrder(val, objectMapper, null)).collect(Collectors.toList());
+            int totalOrders = orderRepository.findAll().size();
+            ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultFromList(orderDtos, pageOrders, totalOrders, size);
+            return ApiResponseUtil.getBaseSuccessStatus(responseResult);
+        } catch (Exception ex) {
+            log.error("Error get all order, ", ex);
+            return ApiResponseUtil.getBaseFailureStatus();
+        }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> customUpdate(DhOrderModelUpdate orderModelUpdate) {
+        try {
+            DhOrder order = new DhOrder();
+            order.setId(orderModelUpdate.getOrderId());
+            order.setIsPrepaid(orderModelUpdate.getIsPrepaid());
+            order.setOrderStatus(orderModelUpdate.getOrderStatus());
+            orderRepository.customUpdate(order);
+            return ApiResponseUtil.getBaseSuccessStatus(null);
+        } catch (Exception ex) {
+            log.error(String.format("Custom update model %s error ", orderModelUpdate), ex);
             return ApiResponseUtil.getBaseFailureStatus();
         }
     }
