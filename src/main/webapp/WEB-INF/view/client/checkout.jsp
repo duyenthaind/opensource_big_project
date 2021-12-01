@@ -39,7 +39,8 @@
 									<p>
 										Full Name<span>*</span>
 									</p>
-									<input type="text" name="customerName" id="customerName" value="${userOrder.name}">
+									<input type="text" name="customerName" id="customerName"
+										value="${userOrder.name}">
 								</div>
 							</div>
 						</div>
@@ -47,17 +48,19 @@
 							<p>
 								Address<span>*</span>
 							</p>
-							<input type="text" placeholder="Street Address" name="customerAddress" id="customerAddress" value="${userOrder.address}"
-								class="checkout__input__add"> 
+							<input type="text" placeholder="Street Address"
+								name="customerAddress" id="customerAddress"
+								value="${userOrder.address}" class="checkout__input__add">
 						</div>
-						
+
 						<div class="row">
 							<div class="col-lg-6">
 								<div class="checkout__input">
 									<p>
 										Phone<span>*</span>
 									</p>
-									<input type="text" name="customerPhone" id="customerPhone" value="${userOrder.phone}">
+									<input type="text" name="customerPhone" id="customerPhone"
+										value="${userOrder.phone}">
 								</div>
 							</div>
 							<div class="col-lg-6">
@@ -65,7 +68,8 @@
 									<p>
 										Email<span>*</span>
 									</p>
-									<input type="text" name="customerEmail" id="customerEmail" value="${userOrder.email}">
+									<input type="text" name="customerEmail" id="customerEmail"
+										value="${userOrder.email}">
 								</div>
 							</div>
 						</div>
@@ -80,8 +84,10 @@
 							<div class="shoping__discount">
 								<h5>Discount Codes</h5>
 
-								<input type="text" id="apply_coupon" placeholder="Enter your coupon code">
-								<button type="button" id="btn_apply_coupon" class="site-btn">APPLY COUPON</button>
+								<input type="text" id="apply_coupon"
+									placeholder="Enter your coupon code">
+								<button type="button" id="btn_apply_coupon" class="site-btn">APPLY
+									COUPON</button>
 
 							</div>
 						</div>
@@ -94,25 +100,20 @@
 								Products <span>Total</span>
 							</div>
 							<ul id="loadCartOrder">
-								
+
 							</ul>
 							<div class="checkout__order__total">
 								Total <span id="totalCartOrder"></span>
-							</div>	
+							</div>
 							<div class="checkout__order__total" id="checkout_order_coupon">
-								
+
 							</div>
-							<div class="checkout__input__checkbox">
-								<label for="payment"> Ship Cod <input
-									type="checkbox" id="payment"> <span class="checkmark"></span>
-								</label>
-							</div>
-							<div class="checkout__input__checkbox">
-								<label for="paypal"> MOMO <input type="checkbox"
-									id="paypal"> <span class="checkmark"></span>
-								</label>
-							</div>
-							<button type="button" id="place_order" class="site-btn">PLACE ORDER</button>
+							<select name="paymentMethod" class="form-select" aria-label="Default select example">
+								<option selected value="1">Cod</option>
+								<option value="2">MOMO</option>
+							</select>
+							<button type="button" id="place_order" class="site-btn">PLACE
+								ORDER</button>
 						</div>
 					</div>
 				</div>

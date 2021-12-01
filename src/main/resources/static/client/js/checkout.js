@@ -2,7 +2,6 @@ $("#btn_apply_coupon").click(function(){
 	var order = $("#checkout_order_coupon");
 	var code = $("#apply_coupon").val();
 	var total = $("#totalCartOrder");
-	console.log(total.text());
 	$.ajax({
 		url : "/v1/api/client-coupon/coupons",
 		type:"POST",
@@ -14,7 +13,7 @@ $("#btn_apply_coupon").click(function(){
 		success: function(responseData){
 			if(responseData.result != null){
 				order.empty();
-				order.append("Your Coupon <span>"+ responseData.result.data[0].code +"</span><input name='couponCode' type='hidden' value="+ responseData.result.data[0].code +"/>");
+				order.append("Your Coupon <span>"+ responseData.result.data[0].code +"</span><input name='couponCode' type='hidden' value="+ responseData.result.data[0].code +">");
 				setDialog("Success");
 				var newTotal = parseInt(total.text().substring(1))-responseData.result.data[0].total
 				total.html("$"+newTotal);
@@ -77,6 +76,9 @@ $("#place_order").click(function(event){
 			success : function(jsonResult){
 				if(jsonResult.status == 200){			
 					setDialog("Success");
+					window.location.href="/checkout";
+					$("#totalCartOrder").empty();
+					$("#totalCartOrder").html("$0");
 				}else{
 					setDialog("Failure");
 				}
