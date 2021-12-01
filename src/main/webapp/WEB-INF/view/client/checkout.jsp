@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!-- header -->
 <jsp:include page="/WEB-INF/view/client/common/header.jsp"></jsp:include>
 <!-- end header -->
@@ -14,7 +15,7 @@
 				<div class="breadcrumb__text">
 					<h2>Checkout</h2>
 					<div class="breadcrumb__option">
-						<a href="./index.html">Home</a> <span>Checkout</span>
+						<a href="/index">Home</a> <span>Checkout</span>
 					</div>
 				</div>
 			</div>
@@ -29,7 +30,7 @@
 
 		<div class="checkout__form">
 			<h4>Billing Details</h4>
-			<form action="#">
+			<form action="" id="formCheckout">
 				<div class="row">
 					<div class="col-lg-8 col-md-6">
 						<div class="row">
@@ -38,7 +39,7 @@
 									<p>
 										Full Name<span>*</span>
 									</p>
-									<input type="text">
+									<input type="text" name="customerName" id="customerName" value="${userOrder.name}">
 								</div>
 							</div>
 						</div>
@@ -46,7 +47,7 @@
 							<p>
 								Address<span>*</span>
 							</p>
-							<input type="text" placeholder="Street Address"
+							<input type="text" placeholder="Street Address" name="customerAddress" id="customerAddress" value="${userOrder.address}"
 								class="checkout__input__add"> 
 						</div>
 						
@@ -56,7 +57,7 @@
 									<p>
 										Phone<span>*</span>
 									</p>
-									<input type="text">
+									<input type="text" name="customerPhone" id="customerPhone" value="${userOrder.phone}">
 								</div>
 							</div>
 							<div class="col-lg-6">
@@ -64,7 +65,7 @@
 									<p>
 										Email<span>*</span>
 									</p>
-									<input type="text">
+									<input type="text" name="customerEmail" id="customerEmail" value="${userOrder.email}">
 								</div>
 							</div>
 						</div>
@@ -72,15 +73,15 @@
 							<p>
 								Order notes<span>*</span>
 							</p>
-							<input type="text"
+							<input type="text" name="note"
 								placeholder="Notes about your order, e.g. special notes for delivery.">
 						</div>
 						<div class="shoping__continue">
 							<div class="shoping__discount">
 								<h5>Discount Codes</h5>
 
-								<input type="text" placeholder="Enter your coupon code">
-								<button type="submit" class="site-btn">APPLY COUPON</button>
+								<input type="text" id="apply_coupon" placeholder="Enter your coupon code">
+								<button type="button" id="btn_apply_coupon" class="site-btn">APPLY COUPON</button>
 
 							</div>
 						</div>
@@ -92,14 +93,15 @@
 							<div class="checkout__order__products">
 								Products <span>Total</span>
 							</div>
-							<ul>
-								<li>Vegetable’s Package <span>$75.99</span></li>
-								<li>Fresh Vegetable <span>$151.99</span></li>
-								<li>Organic Bananas <span>$53.99</span></li>
+							<ul id="loadCartOrder">
+								
 							</ul>
 							<div class="checkout__order__total">
-								Total <span>$750.99</span>
+								Total <span id="totalCartOrder"></span>
 							</div>	
+							<div class="checkout__order__total" id="checkout_order_coupon">
+								
+							</div>
 							<div class="checkout__input__checkbox">
 								<label for="payment"> Ship Cod <input
 									type="checkbox" id="payment"> <span class="checkmark"></span>
@@ -110,7 +112,7 @@
 									id="paypal"> <span class="checkmark"></span>
 								</label>
 							</div>
-							<button type="submit" class="site-btn">PLACE ORDER</button>
+							<button type="button" id="place_order" class="site-btn">PLACE ORDER</button>
 						</div>
 					</div>
 				</div>
