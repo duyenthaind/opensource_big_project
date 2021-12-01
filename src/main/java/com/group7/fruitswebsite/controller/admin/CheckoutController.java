@@ -29,9 +29,14 @@ public class CheckoutController {
         return orderService.getAllWithPaging(page, size);
     }
 
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id) {
+        return orderService.getOne(id);
+    }
+
     @PutMapping("/orders")
-    public ResponseEntity<ApiResponse> updateOrder(@RequestBody DhOrderModelUpdate orderModelUpdate){
-        if(Objects.isNull(orderModelUpdate.getOrderId())){
+    public ResponseEntity<ApiResponse> updateOrder(@RequestBody DhOrderModelUpdate orderModelUpdate) {
+        if (Objects.isNull(orderModelUpdate.getOrderId())) {
             log.info(String.format("Drop all action for model %s because it has no identity ", orderModelUpdate));
         }
         return orderService.customUpdate(orderModelUpdate);

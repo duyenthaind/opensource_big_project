@@ -16,4 +16,10 @@ public interface OrderService {
     ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
 
     ResponseEntity<ApiResponse> customUpdate(DhOrderModelUpdate orderModelUpdate);
+
+    ResponseEntity<ApiResponse> getOne(int orderId);
+
+    ResponseEntity<ApiResponse> getOneForUser(int orderId, String username);
+
+    ResponseEntity<ApiResponse> deleteOne(int orderId, String username);
 }
