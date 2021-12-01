@@ -12,6 +12,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- end header -->
 
+<link rel="stylesheet" href="${server}/data-table/datatables.css">
 <hr>
 <div class="container bootstrap snippet">
 	<div class="row">
@@ -27,19 +28,20 @@
 
 
 				<div class="text-center">
-				<c:if test="${user.avatar == null}">
-					<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
-						width="170px" height="70px"
-						class="avatar img-circle img-thumbnail" alt="avatar">
-				</c:if>
-				<c:if test="${user.avatar != null}">
-					<img src="${uploadsDir}/${user.avatar}"
-						width="170px" height="70px" name="files"
-						class="avatar img-circle img-thumbnail" alt="avatar">
-				</c:if>
-					
+					<c:if test="${user.avatar == null}">
+						<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+							width="170px" height="70px"
+							class="avatar img-circle img-thumbnail" alt="avatar">
+					</c:if>
+					<c:if test="${user.avatar != null}">
+						<img src="${uploadsDir}/${user.avatar}" width="170px"
+							height="70px" name="files"
+							class="avatar img-circle img-thumbnail" alt="avatar">
+					</c:if>
+
 					<h6>Upload a different photo...</h6>
-					<input type="file" name="files" class="text-center center-block file-upload">
+					<input type="file" name="files"
+						class="text-center center-block file-upload">
 				</div>
 				</hr>
 				<br>
@@ -108,8 +110,8 @@
 
 							<div class="col-xs-6">
 								<label for="address"><h4>Address</h4></label> <input type="text"
-									value="${user.address}" class="form-control" id="location" name="address"
-									placeholder="somewhere" title="enter a location">
+									value="${user.address}" class="form-control" id="location"
+									name="address" placeholder="somewhere" title="enter a location">
 							</div>
 						</div>
 						<div class="form-group">
@@ -133,7 +135,8 @@
 						<div class="form-group">
 							<div class="col-xs-12">
 								<br>
-								<button class="btn btn-lg btn-success" type="submit" onclick="updateUser(event)">
+								<button class="btn btn-lg btn-success" type="submit"
+									onclick="updateUser(event)">
 									<i class="glyphicon glyphicon-ok-sign"></i> Save
 								</button>
 								<button class="btn btn-lg" type="reset">
@@ -145,6 +148,26 @@
 
 						<hr>
 					</div>
+					<br>
+					<br>
+					<table id="orderTableUser">
+						<thead>
+							<tr>
+								<th>Column 1</th>
+								<th>Column 2</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Row 1 Data 1</td>
+								<td>Row 1 Data 2</td>
+							</tr>
+							<tr>
+								<td>Row 2 Data 1</td>
+								<td>Row 2 Data 2</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<!--/tab-pane-->
 			</div>
@@ -152,8 +175,8 @@
 
 		</div>
 		<!--/col-9-->
-		</form>
-	</div>
+	</form>
+</div>
 <!--/row-->
 
 

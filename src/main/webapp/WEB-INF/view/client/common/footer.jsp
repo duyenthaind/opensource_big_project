@@ -86,11 +86,12 @@
 <script src="${server}/js/mixitup.min.js"></script>
 <script src="${server}/js/owl.carousel.min.js"></script>
 <script src="${server}/js/main.js"></script>
-<script src="${server}/client/js/subcriber.js"></script>
-<script src="${server}/client/js/cart.js"></script>
-<script src="${server}/client/js/checkout.js"></script>
-<script src="${server}/client/js/header.js"></script>
-<script src="${server}/client/js/user-profile.js"></script>
+<script src="${server}/js/subcriber.js"></script>
+<script src="${server}/js/cart.js"></script>
+<script src="${server}/js/checkout.js"></script>
+<script src="${server}/js/header.js"></script>
+<script src="${server}/js/user-profile.js"></script>
+<script src="${server}/data-table/datatables.js"></script>
 
 
 </body>

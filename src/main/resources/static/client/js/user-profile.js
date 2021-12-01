@@ -4,6 +4,9 @@ document.getElementById("udetail").addEventListener("click", function() {
 	});
 	document.getElementById("uorder").addEventListener("click", function() {
 		$("#home1").hide();
+		$("#orderTableUser").DataTable({
+			
+		});
 	});
     
     var readURL = function(input) {
