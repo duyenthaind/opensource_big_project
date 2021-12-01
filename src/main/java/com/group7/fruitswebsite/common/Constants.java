@@ -77,6 +77,7 @@ public class Constants {
         public static final String CART_IS_FOUNDED = "changed cart";
         public static final String PRODUCT_ID_MUST_BE_NON_NULL = "you must provide product_id to add cart";
         public static final String CART_QUANTITY_MUST_BE_NON_NULL = "you must provide a valid quantity to update cart";
+        public static final String ACCOUNT_IS_NOT_FOUND = "we cannot find you account and data with it";
     }
 
     public enum CustomMessage {
