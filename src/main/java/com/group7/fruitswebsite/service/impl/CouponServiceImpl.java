@@ -3,7 +3,7 @@ package com.group7.fruitswebsite.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.dto.ApiResponse;
-import com.group7.fruitswebsite.dto.CouponDto;
+import com.group7.fruitswebsite.dto.DhCouponDto;
 import com.group7.fruitswebsite.entity.DhCoupon;
 import com.group7.fruitswebsite.model.CouponModel;
 import com.group7.fruitswebsite.repository.CouponRepository;
@@ -66,7 +66,7 @@ public class CouponServiceImpl implements CouponService {
                 log.info(String.format("Coupon %s is expired", dhCoupon.getId()));
                 return null;
             }
-            CouponDto couponDto = objectMapper.readValue(objectMapper.writeValueAsString(dhCoupon), CouponDto.class);
+            DhCouponDto couponDto = objectMapper.readValue(objectMapper.writeValueAsString(dhCoupon), DhCouponDto.class);
             return ApiResponseUtil.mapResultWithOnlyData(Collections.singletonList(couponDto));
         }
         return null;
