@@ -165,6 +165,7 @@ public class OrderServiceImpl implements OrderService {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
             }
             int userId = currentUser.get().getId();
+            orderProductRepository.deleteByOrderId(orderId);
             orderRepository.deleteByIdAndUserId(orderId, userId);
             return ApiResponseUtil.getBaseSuccessStatus(null);
         } catch (Exception ex) {
