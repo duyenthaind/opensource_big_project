@@ -17,7 +17,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="detailOrder" role="dialog">
+<div class="modal" id="detailOrder" role="dialog">
 	<div class="modal-dialog">
 
 		<!-- Modal content-->

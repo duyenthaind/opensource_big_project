@@ -5,6 +5,7 @@ import com.group7.fruitswebsite.repository.customupdate.OrderCustomUpdateReposit
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +26,9 @@ public interface OrderRepository extends JpaRepository<DhOrder, Integer>, OrderC
     Page<DhOrder> findAll(Pageable pageable);
 
     @Transactional
+    @Modifying
     @Query("delete  from DhOrder  where id = :id and dhUser.id = :userId and orderStatus <= 3")
-    void deleteByIdAndUserId(Integer id, Integer userId);
+    void deleteByIdAndUserId(@Param("id") Integer id,@Param("userId") Integer userId);
 
     @Query("from DhOrder where id = :id and dhUser.id in (select id from DhUser u where u.username = :userName)")
     Optional<DhOrder> findByIdAndUserName(@Param("id") Integer id, @Param("userName") String userName);

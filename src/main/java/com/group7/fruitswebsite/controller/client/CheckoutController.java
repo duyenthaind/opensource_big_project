@@ -51,12 +51,12 @@ public class CheckoutController {
     }
 
     @PostMapping("/checkouts")
-    public ResponseEntity<ApiResponse> placeOrder(@RequestBody DhOrderModel dhOrderModel) {
+    public ResponseEntity<ApiResponse> placeOrder(@ModelAttribute DhOrderModel dhOrderModel) {
         return orderService.saveOne(dhOrderModel);
     }
 
-    @DeleteMapping("/checkouts")
-    public ResponseEntity<ApiResponse> deleteOne(@RequestBody Integer orderId) {
+    @DeleteMapping("/checkouts/{orderId}")
+    public ResponseEntity<ApiResponse> deleteOne(@PathVariable Integer orderId) {
         User currentUser = SecurityUtil.getUserDetails();
         if (Objects.isNull(currentUser)) {
             log.info(String.format("Drop all action for orderID %s because no user is specified", orderId));
