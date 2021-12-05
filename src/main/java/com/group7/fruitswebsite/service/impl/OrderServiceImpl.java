@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
             }
             List<DhCart> listCartsOfCurrentUser = cartRepository.findByUserId(optionalUser.get().getId());
-            if(listCartsOfCurrentUser.isEmpty()){
+            if (listCartsOfCurrentUser.isEmpty()) {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.NO_CART, HttpStatus.GONE);
             }
             Optional<DhCoupon> optionalCoupon = couponRepository.findByCode(dhOrderModel.getCouponCode());
@@ -76,16 +76,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> getAllForUser(String username) {
+    public ResponseEntity<ApiResponse> getAllForUser(String username, int page, int size) {
         try {
             Optional<DhUser> currentUser = userRepository.findByUsername(username);
             if (!currentUser.isPresent()) {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
             }
+            Pageable pageable = PageRequest.of(page, size);
             int userId = currentUser.get().getId();
-            List<DhOrder> orders = orderRepository.findByUserId(userId);
-            List<DhOrderDto> result = orders.stream().map(val -> DtoUtil.getOrderDtoFromDhOrder(val, objectMapper, null)).collect(Collectors.toList());
-            ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultWithOnlyData(result);
+            Page<DhOrder> orders = orderRepository.findByUserId(userId, pageable);
+            List<DhOrder> allOrdersOfUser = orderRepository.findByUserId(userId);
+            List<DhOrderDto> result = orders.getContent().stream().map(val -> DtoUtil.getOrderDtoFromDhOrder(val, objectMapper, null)).collect(Collectors.toList());
+            ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultFromList(result, orders, allOrdersOfUser.size(), size);
             return ApiResponseUtil.getBaseSuccessStatus(responseResult);
         } catch (Exception ex) {
             log.error("Error get all order, ", ex);
@@ -141,14 +143,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<ApiResponse> getOneForUser(int orderId, String username) {
-        try{
+        try {
             Optional<DhOrder> order = orderRepository.findByIdAndUserName(orderId, username);
             if (order.isPresent()) {
                 DhOrderDto dto = DtoUtil.getOrderDtoFromDhOrder(order.get(), objectMapper, orderProductRepository);
                 ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultWithOnlyData(Collections.singletonList(dto));
                 return ApiResponseUtil.getBaseSuccessStatus(responseResult);
             }
-        } catch (Exception ex){
+        } catch (Exception ex) {
             log.error(String.format("Get order %s, user %s error", orderId, username), ex);
         }
         return ApiResponseUtil.getBaseFailureStatus();
@@ -158,7 +160,7 @@ public class OrderServiceImpl implements OrderService {
     public ResponseEntity<ApiResponse> deleteOne(int orderId, String username) {
         try {
             Optional<DhUser> currentUser = userRepository.findByUsername(username);
-            if(!currentUser.isPresent()){
+            if (!currentUser.isPresent()) {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
             }
             int userId = currentUser.get().getId();
