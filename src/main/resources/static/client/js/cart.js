@@ -14,7 +14,11 @@ function addCart(id,quantity){
 		},
 		error : function(jqXhr, textStatus, errorMessage) { // error
 			// callback
-
+			var contentType = jqXhr.getResponseHeader("Content-Type");
+		    if (jqXhr.status == 200 && contentType.toLowerCase().indexOf("text/html") >= 0) {
+		        // assume that our login has expired - reload our current page
+		        window.location.href = "/login";
+		    }
 		}
 	});
 }
