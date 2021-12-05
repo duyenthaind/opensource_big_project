@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 public interface OrderService {
     ResponseEntity<ApiResponse> saveOne(DhOrderModel dhOrderModel);
 
-    ResponseEntity<ApiResponse> getAllForUser(String username);
+    ResponseEntity<ApiResponse> getAllForUser(String username, int page, int size);
 
     ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
 

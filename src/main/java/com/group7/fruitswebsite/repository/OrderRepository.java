@@ -19,6 +19,9 @@ public interface OrderRepository extends JpaRepository<DhOrder, Integer>, OrderC
     @Query("from DhOrder where dhUser.id = :userId")
     List<DhOrder> findByUserId(@Param("userId") Integer userId);
 
+    @Query(value = "select * from dh_order where user_id = :userId",nativeQuery = true)
+    Page<DhOrder> findByUserId(@Param("userId") Integer userId, Pageable pageable);
+
     Page<DhOrder> findAll(Pageable pageable);
 
     @Transactional

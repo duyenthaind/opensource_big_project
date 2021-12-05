@@ -1,11 +1,6 @@
 
-function checkStatus(orderStatus){
-	if(orderStatus == 0){
-		return "pending approval";
-	}
-	if(orderStatus == 1){
-		return "Not approved yet";
-	}if(orderStatus == 2){
+function checkStatus(orderStatus){	
+	if(orderStatus == 2){
 		return "Approved";
 	}if(orderStatus == 3){
 		return "Getting item";
@@ -14,12 +9,13 @@ function checkStatus(orderStatus){
 	}if(orderStatus == 6){
 		return "Order is completed";
 	}
+	return "Not approved yet";
 }
 
 
 function loadOrderDataPage(page){
 	$.ajax({
-		url : "/checkout/v1/api/orders",
+		url : "/checkout/v1/api/checkouts",
 		type:"GET",
 		data:{
 			page:page,
@@ -37,13 +33,13 @@ function loadOrderDataPage(page){
 					page += '<a style="cursor:pointer;" onclick="loadOrderDataPage('+ totalPages[j] +')">'+j+'</a>';
 				}
 				for(var i=0;i<data.length;i++){
-					if(data[i].orderStatus == 0){
+					if(data[i].orderStatus < 3){
 						html += '<tr>'
 							+'<td>'+ data[i].code_name +'</td>'
 							+'<td>'+ data[i].created_date +'</td>'
 							+'<td>'+ data[i].customer_name +'</td>'		
 							+'<td>'+ checkStatus(data[i].orderStatus) +'</td>'		
-							+'<td width="100px"><button type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button>  <button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>'
+							+'<td width="100px"><button onClick="detailOrder(' + data.id + ')" type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button>  <button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>'
 							+'</tr>';
 					}else{
 						html += '<tr>'
@@ -51,7 +47,7 @@ function loadOrderDataPage(page){
 							+'<td>'+ data[i].created_date +'</td>'
 							+'<td>'+ data[i].customer_name +'</td>'	
 							+'<td>'+ checkStatus(data[i].orderStatus) +'</td>'	
-							+'<td width="100px"><button type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button></td>'
+							+'<td width="100px"><button onClick="detailOrder(' + data.id + ')" type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button></td>'
 							+'</tr>';
 					}
 					
@@ -66,10 +62,38 @@ function loadOrderDataPage(page){
 	});
 }
 
+function detailOrder(orderId){
+	url : "/checkout/v1/api/checkouts",
+	type:"GET",
+    contentType: "applicaton/json",
+    data:{
+    	id : orderId,
+    },
+	success : function(jsonResult){
+		var html = "";
+		var data = jsonResult.result.data[0].listProductDto;
+		var totalPages = jsonResult.result.total_pages;
+		if(jsonResult.status == 200){
+			for(var i=0;i<data.length;i++){
+//				html += "'<tr>'
+//							+'<td>'+ data[i].code_name +'</td>'
+//							+'<td>'+ data[i].created_date +'</td>'
+//							+'<td>'+ data[i].customer_name +'</td>'		
+//							+'<td>'+ checkStatus(data[i].orderStatus) +'</td>'
+//							+'</tr>';";
+			}
+			$("#detailOrder").modal("show");
+		}
+	},
+	error : function(jqXhr, textStatus, errorMessage) { // error
+		// callback
+	} 
+}
+
 $("#pageOrder").hide();
 $("#orderTableUser").hide();
 $.ajax({
-	url : "/checkout/v1/api/orders",
+	url : "/checkout/v1/api/checkouts",
 	type:"GET",
     contentType: "applicaton/json",
 	success : function(jsonResult){
@@ -84,13 +108,13 @@ $.ajax({
 				page += '<a style="cursor:pointer;" onclick="loadOrderDataPage('+ totalPages[j] +')">'+j+'</a>';
 			}
 			for(var i=0;i<data.length;i++){
-				if(data[i].orderStatus == 0){
+				if(data[i].orderStatus < 3){
 					html += '<tr>'
 						+'<td>'+ data[i].code_name +'</td>'
 						+'<td>'+ data[i].created_date +'</td>'
 						+'<td>'+ data[i].customer_name +'</td>'		
 						+'<td>'+ checkStatus(data[i].orderStatus) +'</td>'		
-						+'<td width="100px"><button type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button>  <button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>'
+						+'<td width="100px"><button onClick="detailOrder(' + data.id + ')" type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button>  <button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>'
 						+'</tr>';
 				}else{
 					html += '<tr>'
@@ -98,7 +122,7 @@ $.ajax({
 						+'<td>'+ data[i].created_date +'</td>'
 						+'<td>'+ data[i].customer_name +'</td>'	
 						+'<td>'+ checkStatus(data[i].orderStatus) +'</td>'	
-						+'<td width="100px"><button type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button></td>'
+						+'<td width="100px"><button onClick="detailOrder(' + data.id + ')" type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button></td>'
 						+'</tr>';
 				}
 				

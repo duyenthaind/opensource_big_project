@@ -23,11 +23,16 @@ import java.util.Objects;
 @Log4j
 public class CheckoutController {
 	private OrderService orderService;
-	
+
 	@GetMapping("/orders")
 	public ResponseEntity<ApiResponse> getAll(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "5") int size) {
 		return orderService.getAllWithPaging(page, size);
+	}
+
+	@GetMapping("/orders/{id}")
+	public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id) {
+		return orderService.getOne(id);
 	}
 
 	@PutMapping("/orders")
@@ -38,23 +43,19 @@ public class CheckoutController {
 		return orderService.customUpdate(orderModelUpdate);
 	}
 
-	public ResponseEntity<ApiResponse> getAllForUser() {
+	public ResponseEntity<ApiResponse> getAllForUser(int page, int size) {
 		User currentUser = SecurityUtil.getUserDetails();
 		if (currentUser != null) {
-			return orderService.getAllForUser(currentUser.getUsername());
+			return orderService.getAllForUser(currentUser.getUsername(), page, size);
 		} else {
 			return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND,
 					HttpStatus.FORBIDDEN);
 		}
 	}
-	
-    @GetMapping("/orders/{id}")
-    public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id) {
-        return orderService.getOne(id);
-    }
 
 	@Autowired
 	public void setOrderService(OrderService orderService) {
 		this.orderService = orderService;
 	}
+
 }
