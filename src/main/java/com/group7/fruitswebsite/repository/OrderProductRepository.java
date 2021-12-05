@@ -2,6 +2,7 @@ package com.group7.fruitswebsite.repository;
 
 import com.group7.fruitswebsite.entity.DhOrderProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,5 +19,6 @@ public interface OrderProductRepository extends JpaRepository<DhOrderProduct, In
 
     @Query(value = "delete from DhOrderProduct where order.id = :orderId")
     @Transactional
+    @Modifying
     void deleteByOrderId(@Param("orderId") Integer orderId);
 }

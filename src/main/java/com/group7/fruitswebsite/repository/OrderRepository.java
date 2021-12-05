@@ -27,6 +27,7 @@ public interface OrderRepository extends JpaRepository<DhOrder, Integer>, OrderC
 
     @Transactional
     @Query("delete  from DhOrder  where id = :id and dhUser.id = :userId and orderStatus <= 3")
+    @Modifying
     void deleteByIdAndUserId(@Param("id") Integer id,@Param("userId") Integer userId);
 
     @Query("from DhOrder where id = :id and dhUser.id in (select id from DhUser u where u.username = :userName)")
