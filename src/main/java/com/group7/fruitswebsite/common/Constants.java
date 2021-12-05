@@ -74,7 +74,7 @@ public class Constants {
         public static final String ROLE_IS_NOT_SUPPORTED = "role is not supported";
         public static final String HAS_NO_AUTHORITIES_TO_CHANGE_TO_SUPER = "cannot change user role to super admin";
         public static final String CART_IS_NOT_FOUND = "cannot change cart because it is not found";
-        public static final String CART_IS_FOUNDED = "changed cart";
+        public static final String NO_CART = "no cart";
         public static final String PRODUCT_ID_MUST_BE_NON_NULL = "you must provide product_id to add cart";
         public static final String CART_QUANTITY_MUST_BE_NON_NULL = "you must provide a valid quantity to update cart";
         public static final String ACCOUNT_IS_NOT_FOUND = "we cannot find you account and data with it";
@@ -142,9 +142,33 @@ public class Constants {
     }
 
     public static class SessionItem {
-        private SessionItem(){
+        private SessionItem() {
         }
 
         public static final String CART = "cart";
+    }
+
+    public enum OrderStatus {
+        UNAPPROVED(1, "Not approved yet"),
+        APPROVED(2, "Approved"),
+        GETTING_GOODS(3, "Getting item"),
+        DELIVERING(4, "Item is being delivered"),
+        COMPLETED(5, "Order is completed");
+
+        private final int status;
+        private final String description;
+
+        OrderStatus(int status, String description) {
+            this.status = status;
+            this.description = description;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public String getDescription() {
+            return description;
+        }
     }
 }

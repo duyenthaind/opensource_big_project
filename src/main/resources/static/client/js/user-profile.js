@@ -1,7 +1,7 @@
 
 function checkStatus(orderStatus){
 	if(orderStatus == 0){
-		return "Awaiting confirmation";
+		return "pending approval";
 	}
 	if(orderStatus == 1){
 		return "Not approved yet";

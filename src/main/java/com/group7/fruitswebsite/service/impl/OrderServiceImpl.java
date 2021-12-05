@@ -23,7 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -56,13 +56,17 @@ public class OrderServiceImpl implements OrderService {
             if (!optionalUser.isPresent()) {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
             }
+            List<DhCart> listCartsOfCurrentUser = cartRepository.findByUserId(optionalUser.get().getId());
+            if(listCartsOfCurrentUser.isEmpty()){
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.NO_CART, HttpStatus.GONE);
+            }
             Optional<DhCoupon> optionalCoupon = couponRepository.findByCode(dhOrderModel.getCouponCode());
             optionalCoupon.ifPresent(dhOrder::setDhCoupon);
             dhOrder.setCreatedDate(System.currentTimeMillis());
             dhOrder.setDhUser(optionalUser.get());
             dhOrder.setCodeName(StringUtil.randomString(8, 1).toUpperCase());
             dhOrder.setIsPrepaid(false);
-            readCartInformationAndSaveOrder(dhOrder, optionalUser.get().getId(), dhOrder.getDhCoupon());
+            readCartInformationAndSaveOrder(dhOrder, listCartsOfCurrentUser, dhOrder.getDhCoupon());
             orderRepository.save(dhOrder);
             log.info(String.format("Save order %s of user %s ", dhOrder.getId(), username));
             return ApiResponseUtil.getBaseSuccessStatus(null);
@@ -121,8 +125,52 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private void readCartInformationAndSaveOrder(DhOrder dhOrder, Integer userId, DhCoupon coupon) {
-        List<DhCart> listCartsOfCurrentUser = cartRepository.findByUserId(userId);
+    @Override
+    public ResponseEntity<ApiResponse> getOne(int orderId) {
+        try {
+            Optional<DhOrder> order = orderRepository.findById(orderId);
+            if (order.isPresent()) {
+                DhOrderDto dto = DtoUtil.getOrderDtoFromDhOrder(order.get(), objectMapper, orderProductRepository);
+                ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultWithOnlyData(Collections.singletonList(dto));
+                return ApiResponseUtil.getBaseSuccessStatus(responseResult);
+            }
+        } catch (Exception ex) {
+            log.error(String.format("Get order %s error ", orderId), ex);
+        }
+        return ApiResponseUtil.getBaseFailureStatus();
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> getOneForUser(int orderId, String username) {
+        try{
+            Optional<DhOrder> order = orderRepository.findByIdAndUserName(orderId, username);
+            if (order.isPresent()) {
+                DhOrderDto dto = DtoUtil.getOrderDtoFromDhOrder(order.get(), objectMapper, orderProductRepository);
+                ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultWithOnlyData(Collections.singletonList(dto));
+                return ApiResponseUtil.getBaseSuccessStatus(responseResult);
+            }
+        } catch (Exception ex){
+            log.error(String.format("Get order %s, user %s error", orderId, username), ex);
+        }
+        return ApiResponseUtil.getBaseFailureStatus();
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> deleteOne(int orderId, String username) {
+        try {
+            Optional<DhUser> currentUser = userRepository.findByUsername(username);
+            if(!currentUser.isPresent()){
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
+            }
+            int userId = currentUser.get().getId();
+            orderRepository.deleteByIdAndUserId(orderId, userId);
+        } catch (Exception ex) {
+            log.error(String.format("Error delete order %s of user %s", orderId, username));
+        }
+        return ApiResponseUtil.getBaseFailureStatus();
+    }
+
+    private void readCartInformationAndSaveOrder(DhOrder dhOrder, List<DhCart> listCartsOfCurrentUser, DhCoupon coupon) {
         long totalAmount = 0L;
         if (!listCartsOfCurrentUser.isEmpty()) {
             for (DhCart index : listCartsOfCurrentUser) {

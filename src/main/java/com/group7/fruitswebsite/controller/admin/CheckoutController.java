@@ -47,6 +47,11 @@ public class CheckoutController {
 					HttpStatus.FORBIDDEN);
 		}
 	}
+	
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id) {
+        return orderService.getOne(id);
+    }
 
 	@Autowired
 	public void setOrderService(OrderService orderService) {
