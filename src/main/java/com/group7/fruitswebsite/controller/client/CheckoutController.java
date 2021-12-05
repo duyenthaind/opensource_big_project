@@ -4,12 +4,20 @@ import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.model.DhOrderModel;
 import com.group7.fruitswebsite.service.OrderService;
+
 import com.group7.fruitswebsite.util.ApiResponseUtil;
 import com.group7.fruitswebsite.util.SecurityUtil;
+
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +31,7 @@ import java.util.Objects;
 @Log4j
 public class CheckoutController {
     private OrderService orderService;
-
+    
     @GetMapping("/checkouts")
     public ResponseEntity<ApiResponse> getAllOrder(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         User currentUser = SecurityUtil.getUserDetails();
@@ -43,12 +51,12 @@ public class CheckoutController {
     }
 
     @PostMapping("/checkouts")
-    public ResponseEntity<ApiResponse> placeOrder(@RequestBody DhOrderModel dhOrderModel) {
+    public ResponseEntity<ApiResponse> placeOrder(@ModelAttribute DhOrderModel dhOrderModel) {
         return orderService.saveOne(dhOrderModel);
     }
 
-    @DeleteMapping("/checkouts")
-    public ResponseEntity<ApiResponse> deleteOne(@RequestBody Integer orderId) {
+    @DeleteMapping("/checkouts/{orderId}")
+    public ResponseEntity<ApiResponse> deleteOne(@PathVariable Integer orderId) {
         User currentUser = SecurityUtil.getUserDetails();
         if (Objects.isNull(currentUser)) {
             log.info(String.format("Drop all action for orderID %s because no user is specified", orderId));

@@ -62,6 +62,7 @@ public class OrderServiceImpl implements OrderService {
             }
             Optional<DhCoupon> optionalCoupon = couponRepository.findByCode(dhOrderModel.getCouponCode());
             optionalCoupon.ifPresent(dhOrder::setDhCoupon);
+            dhOrder.setCreatedDate(System.currentTimeMillis());
             dhOrder.setDhUser(optionalUser.get());
             dhOrder.setCodeName(StringUtil.randomString(8, 1).toUpperCase());
             dhOrder.setIsPrepaid(false);
@@ -165,8 +166,9 @@ public class OrderServiceImpl implements OrderService {
             }
             int userId = currentUser.get().getId();
             orderRepository.deleteByIdAndUserId(orderId, userId);
+            return ApiResponseUtil.getBaseSuccessStatus(null);
         } catch (Exception ex) {
-            log.error(String.format("Error delete order %s of user %s", orderId, username));
+            log.error(String.format("Error delete order %s of user %s", orderId, username),ex);
         }
         return ApiResponseUtil.getBaseFailureStatus();
     }

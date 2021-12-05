@@ -12,6 +12,47 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- end header -->
 
+<link rel="stylesheet" href="${server}/data-table/datatables.css">
+<style>
+
+.pagination {
+	display: inline-block;
+}
+
+.pagination a {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+}
+
+.pagination a.active {
+	background-color: #4CAF50;
+	color: white;
+	border-radius: 5px;
+}
+
+.pagination a:hover:not (.active ) {
+	background-color: #ddd;
+	border-radius: 5px;
+}
+
+#orderTableUser {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#orderTableUser td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+#orderTableUser tr:nth-child(even) {
+	background-color: #dddddd;
+}
+</style>
 <hr>
 <div class="container bootstrap snippet">
 	<div class="row">
@@ -27,19 +68,20 @@
 
 
 				<div class="text-center">
-				<c:if test="${user.avatar == null}">
-					<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
-						width="170px" height="70px"
-						class="avatar img-circle img-thumbnail" alt="avatar">
-				</c:if>
-				<c:if test="${user.avatar != null}">
-					<img src="${uploadsDir}/${user.avatar}"
-						width="170px" height="70px" name="files"
-						class="avatar img-circle img-thumbnail" alt="avatar">
-				</c:if>
-					
+					<c:if test="${user.avatar == null}">
+						<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+							width="170px" height="70px"
+							class="avatar img-circle img-thumbnail" alt="avatar">
+					</c:if>
+					<c:if test="${user.avatar != null}">
+						<img src="${uploadsDir}/${user.avatar}" width="170px"
+							height="70px" name="files"
+							class="avatar img-circle img-thumbnail" alt="avatar">
+					</c:if>
+
 					<h6>Upload a different photo...</h6>
-					<input type="file" name="files" class="text-center center-block file-upload">
+					<input type="file" name="files"
+						class="text-center center-block file-upload">
 				</div>
 				</hr>
 				<br>
@@ -108,8 +150,8 @@
 
 							<div class="col-xs-6">
 								<label for="address"><h4>Address</h4></label> <input type="text"
-									value="${user.address}" class="form-control" id="location" name="address"
-									placeholder="somewhere" title="enter a location">
+									value="${user.address}" class="form-control" id="location"
+									name="address" placeholder="somewhere" title="enter a location">
 							</div>
 						</div>
 						<div class="form-group">
@@ -133,7 +175,8 @@
 						<div class="form-group">
 							<div class="col-xs-12">
 								<br>
-								<button class="btn btn-lg btn-success" type="submit" onclick="updateUser(event)">
+								<button class="btn btn-lg btn-success" type="submit"
+									onclick="updateUser(event)">
 									<i class="glyphicon glyphicon-ok-sign"></i> Save
 								</button>
 								<button class="btn btn-lg" type="reset">
@@ -145,6 +188,25 @@
 
 						<hr>
 					</div>
+					<br> <br>
+					<table id="orderTableUser">
+						<thead>
+							<tr>
+								<th>CODE NAME</th>
+								<th>Created Date</th>
+								<th>Customer name</th>
+								<th>Status</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody id="dataOrderTableUser">
+
+						</tbody>
+						
+					</table>
+					<div class="pagination" id="pageOrder">
+						 	
+					</div>
 				</div>
 				<!--/tab-pane-->
 			</div>
@@ -152,8 +214,8 @@
 
 		</div>
 		<!--/col-9-->
-		</form>
-	</div>
+	</form>
+</div>
 <!--/row-->
 
 

@@ -2,20 +2,29 @@ package com.group7.fruitswebsite.controller.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.DhBlogDto;
+import com.group7.fruitswebsite.dto.DhCartDto;
 import com.group7.fruitswebsite.dto.DhProductDto;
 import com.group7.fruitswebsite.dto.search.condition.BlogCondition;
 import com.group7.fruitswebsite.dto.search.result.Result;
+import com.group7.fruitswebsite.entity.DhUser;
 import com.group7.fruitswebsite.service.BlogService;
+import com.group7.fruitswebsite.service.CartService;
 import com.group7.fruitswebsite.service.CategoryService;
 import com.group7.fruitswebsite.service.UserService;
+import com.group7.fruitswebsite.util.ApiResponseUtil;
 import com.group7.fruitswebsite.util.PagingUtil;
+import com.group7.fruitswebsite.util.SecurityUtil;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +43,14 @@ public class HomeController {
     private ProductService productService;
     private BlogService blogService;
     private UserService userService;
-
+    private CartService cartService;
+  
     @Autowired
+    public void setCartService(CartService cartService) {
+		this.cartService = cartService;
+	}
+
+	@Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
     }
@@ -156,7 +171,17 @@ public class HomeController {
     }
 
     @GetMapping("/checkout")
-    public String checkout() {
+    public String checkout(Model model) {
+    	User currentUser = SecurityUtil.getUserDetails();
+        if (currentUser != null) {
+            Optional<DhUser> user = userService.findByUserName(currentUser.getUsername());
+            if (user.isPresent()) {
+            	model.addAttribute("userOrder",user.get());
+            	List<DhCartDto> listCartDtos = cartService.findAllCart(currentUser.getUsername());
+            	model.addAttribute("cartOrder",listCartDtos);
+            } 
+            
+        }
         return "client/checkout";
     }
 
