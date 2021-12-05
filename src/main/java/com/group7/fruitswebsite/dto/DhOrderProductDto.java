@@ -14,4 +14,6 @@ public class DhOrderProductDto extends BaseDto{
     private Integer quantity;
     private Integer productId;
     private Integer order;
+    private String name;
+    private Long price;
 }

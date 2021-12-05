@@ -180,6 +180,8 @@ public class OrderServiceImpl implements OrderService {
                 orderProduct.setProductId(index.getProductId());
                 orderProduct.setQuantity(index.getQuantity());
                 orderProduct.setOrder(dhOrder);
+                orderProduct.setName(index.getName());
+                orderProduct.setPrice(index.getPrice());
                 totalAmount += index.getPrice() * index.getQuantity();
                 dhOrder.addOrderProduct(orderProduct);
                 orderProductRepository.save(orderProduct);
