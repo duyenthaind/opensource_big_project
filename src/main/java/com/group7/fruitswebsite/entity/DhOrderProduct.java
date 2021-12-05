@@ -26,6 +26,12 @@ public class DhOrderProduct extends BaseEntity implements java.io.Serializable {
     @Column(name = "product_id")
     private Integer productId;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "price")
+    private Long price;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private DhOrder order;
