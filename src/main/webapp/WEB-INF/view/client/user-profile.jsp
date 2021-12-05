@@ -13,6 +13,46 @@
 <!-- end header -->
 
 <link rel="stylesheet" href="${server}/data-table/datatables.css">
+<style>
+
+.pagination {
+	display: inline-block;
+}
+
+.pagination a {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+}
+
+.pagination a.active {
+	background-color: #4CAF50;
+	color: white;
+	border-radius: 5px;
+}
+
+.pagination a:hover:not (.active ) {
+	background-color: #ddd;
+	border-radius: 5px;
+}
+
+#orderTableUser {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#orderTableUser td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+#orderTableUser tr:nth-child(even) {
+	background-color: #dddddd;
+}
+</style>
 <hr>
 <div class="container bootstrap snippet">
 	<div class="row">
@@ -148,26 +188,25 @@
 
 						<hr>
 					</div>
-					<br>
-					<br>
+					<br> <br>
 					<table id="orderTableUser">
 						<thead>
 							<tr>
-								<th>Column 1</th>
-								<th>Column 2</th>
+								<th>CODE NAME</th>
+								<th>Created Date</th>
+								<th>Customer name</th>
+								<th>Status</th>
+								<th></th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>Row 1 Data 1</td>
-								<td>Row 1 Data 2</td>
-							</tr>
-							<tr>
-								<td>Row 2 Data 1</td>
-								<td>Row 2 Data 2</td>
-							</tr>
+						<tbody id="dataOrderTableUser">
+
 						</tbody>
+						
 					</table>
+					<div class="pagination" id="pageOrder">
+						 	
+					</div>
 				</div>
 				<!--/tab-pane-->
 			</div>

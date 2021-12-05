@@ -91,7 +91,6 @@
 <script src="${server}/js/checkout.js"></script>
 <script src="${server}/js/header.js"></script>
 <script src="${server}/js/user-profile.js"></script>
-<script src="${server}/data-table/datatables.js"></script>
 
 
 </body>

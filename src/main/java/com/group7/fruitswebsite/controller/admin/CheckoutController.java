@@ -22,32 +22,34 @@ import java.util.Objects;
 @RequestMapping("/api-admin/checkout/v1")
 @Log4j
 public class CheckoutController {
-    private OrderService orderService;
+	private OrderService orderService;
+	
+	@GetMapping("/orders")
+	public ResponseEntity<ApiResponse> getAll(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "5") int size) {
+		return orderService.getAllWithPaging(page, size);
+	}
 
-    @GetMapping("/orders")
-    public ResponseEntity<ApiResponse> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
-        return orderService.getAllWithPaging(page, size);
-    }
+	@PutMapping("/orders")
+	public ResponseEntity<ApiResponse> updateOrder(@RequestBody DhOrderModelUpdate orderModelUpdate) {
+		if (Objects.isNull(orderModelUpdate.getOrderId())) {
+			log.info(String.format("Drop all action for model %s because it has no identity ", orderModelUpdate));
+		}
+		return orderService.customUpdate(orderModelUpdate);
+	}
 
-    @PutMapping("/orders")
-    public ResponseEntity<ApiResponse> updateOrder(@RequestBody DhOrderModelUpdate orderModelUpdate){
-        if(Objects.isNull(orderModelUpdate.getOrderId())){
-            log.info(String.format("Drop all action for model %s because it has no identity ", orderModelUpdate));
-        }
-        return orderService.customUpdate(orderModelUpdate);
-    }
+	public ResponseEntity<ApiResponse> getAllForUser() {
+		User currentUser = SecurityUtil.getUserDetails();
+		if (currentUser != null) {
+			return orderService.getAllForUser(currentUser.getUsername());
+		} else {
+			return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND,
+					HttpStatus.FORBIDDEN);
+		}
+	}
 
-    public ResponseEntity<ApiResponse> getAllForUser() {
-        User currentUser = SecurityUtil.getUserDetails();
-        if (currentUser != null) {
-            return orderService.getAllForUser(currentUser.getUsername());
-        } else {
-            return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
-        }
-    }
-
-    @Autowired
-    public void setOrderService(OrderService orderService) {
-        this.orderService = orderService;
-    }
+	@Autowired
+	public void setOrderService(OrderService orderService) {
+		this.orderService = orderService;
+	}
 }

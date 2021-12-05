@@ -28,6 +28,7 @@ public class DhOrderDto extends BaseDto {
     private String note;
     private Integer couponId;
     private Integer userId;
+    private Integer orderStatus;
 
     private List<DhOrderProductDto> listProductDto = new ArrayList<>();
 }
