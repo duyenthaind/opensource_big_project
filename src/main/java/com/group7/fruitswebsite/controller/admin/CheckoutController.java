@@ -42,10 +42,10 @@ public class CheckoutController {
         return orderService.customUpdate(orderModelUpdate);
     }
 
-    public ResponseEntity<ApiResponse> getAllForUser() {
+    public ResponseEntity<ApiResponse> getAllForUser(int page, int size) {
         User currentUser = SecurityUtil.getUserDetails();
         if (currentUser != null) {
-            return orderService.getAllForUser(currentUser.getUsername());
+            return orderService.getAllForUser(currentUser.getUsername(), page, size);
         } else {
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
         }

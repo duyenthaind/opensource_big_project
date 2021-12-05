@@ -25,12 +25,12 @@ public class CheckoutController {
     private OrderService orderService;
 
     @GetMapping("/checkouts")
-    public ResponseEntity<ApiResponse> getAllOrder() {
+    public ResponseEntity<ApiResponse> getAllOrder(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         User currentUser = SecurityUtil.getUserDetails();
         if (Objects.isNull(currentUser)) {
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
         }
-        return orderService.getAllForUser(currentUser.getUsername());
+        return orderService.getAllForUser(currentUser.getUsername(), page, size);
     }
 
     @GetMapping("/checkouts/{id}")
