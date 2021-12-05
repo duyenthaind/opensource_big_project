@@ -1,4 +1,8 @@
 
+(function () {
+	loadFirstOrder()
+})();
+
 function checkStatus(orderStatus){	
 	if(orderStatus == 2){
 		return "Approved";
@@ -39,7 +43,7 @@ function loadOrderDataPage(page){
 							+'<td>'+ data[i].created_date +'</td>'
 							+'<td>'+ data[i].customer_name +'</td>'		
 							+'<td>'+ checkStatus(data[i].orderStatus) +'</td>'		
-							+'<td width="100px"><button onClick="detailOrder(' + data[i].id + ')" type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button>  <button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>'
+							+'<td width="100px"><button onClick="detailOrder(' + data[i].id + ')" type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button>  <button onClick="deleteOrder('+data[i].id+')"  type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>'
 							+'</tr>';
 					}else{
 						html += '<tr>'
@@ -93,78 +97,73 @@ function detailOrder(orderId){
 
 function deleteOrder(orderId){
 	$.ajax({
-		url : "/checkout/v1/api/checkouts",
+		url : "/checkout/v1/api/checkouts/"+orderId,
 		type:"DELETE",
-		data:{
-			"id":orderId
-		},
 		contentType: "applicaton/json",
 		success : function(jsonResult){
 			if(jsonResult.status == 200){
-				for(var i=0;i<data.length;i++){
-					html += '<tr>'
-							+'<td>'+ data[i].name +'</td>'
-							+'<td>'+ data[i].quantity +'</td>'
-							+'<td>'+ data[i].price +'</td>'		
-							+'<td>'+ data[i].quantity*data[i].price +'</td>'
-							+'</tr>';
+				setDialog("Delete order success");
+				loadFirstOrder();
+			}else{
+				setDialog("Failure");
 			}
-			$("#orderDetail").html(html);
-			$("#detailOrder").modal("show");
-		}
-	},
-	error : function(jqXhr, textStatus, errorMessage) { // error
-		// callback
-	} 
-	});
+			
+		},
+		error : function(jqXhr, textStatus, errorMessage) { // error
+			// callback
+			setDialog("Failure");
+		} 
+});
 }
-
 
 $("#pageOrder").hide();
 $("#orderTableUser").hide();
-$.ajax({
-	url : "/checkout/v1/api/checkouts",
-	type:"GET",
-    contentType: "applicaton/json",
-	success : function(jsonResult){
-		$("#dataOrderTableUser").empty();
-		$("#pageOrder").empty();
-		var html = "";
-		var page = "";
-		var data = jsonResult.result.data;
-		var totalPages = jsonResult.result.total_pages;
-		if(jsonResult.status == 200){
-			for(var j=0;j<totalPages;j++){
-				page += '<a style="cursor:pointer;" onclick="loadOrderDataPage('+ totalPages[j] +')">'+j+'</a>';
-			}
-			for(var i=0;i<data.length;i++){
-				if(data[i].orderStatus < 3){
-					html += '<tr>'
-						+'<td>'+ data[i].code_name +'</td>'
-						+'<td>'+ data[i].created_date +'</td>'
-						+'<td>'+ data[i].customer_name +'</td>'		
-						+'<td>'+ checkStatus(data[i].orderStatus) +'</td>'		
-						+'<td width="100px"><button onClick="detailOrder(' + data[i].id + ')" type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button>  <button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>'
-						+'</tr>';
-				}else{
-					html += '<tr>'
-						+'<td>'+ data[i].code_name +'</td>'
-						+'<td>'+ data[i].created_date +'</td>'
-						+'<td>'+ data[i].customer_name +'</td>'	
-						+'<td>'+ checkStatus(data[i].orderStatus) +'</td>'	
-						+'<td width="100px"><button onClick="detailOrder(' + data[i].id + ')" type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button></td>'
-						+'</tr>';
+
+function loadFirstOrder(){
+	$.ajax({
+		url : "/checkout/v1/api/checkouts",
+		type:"GET",
+	    contentType: "applicaton/json",
+		success : function(jsonResult){
+			$("#dataOrderTableUser").empty();
+			$("#pageOrder").empty();
+			var html = "";
+			var page = "";
+			var data = jsonResult.result.data;
+			var totalPages = jsonResult.result.total_pages;
+			if(jsonResult.status == 200){
+				for(var j=0;j<totalPages;j++){
+					page += '<a style="cursor:pointer;" onclick="loadOrderDataPage('+ totalPages[j] +')">'+j+'</a>';
 				}
-				
+				for(var i=0;i<data.length;i++){
+					if(data[i].orderStatus < 3){
+						html += '<tr>'
+							+'<td>'+ data[i].code_name +'</td>'
+							+'<td>'+ data[i].created_date +'</td>'
+							+'<td>'+ data[i].customer_name +'</td>'		
+							+'<td>'+ checkStatus(data[i].orderStatus) +'</td>'		
+							+'<td width="100px"><button onClick="detailOrder(' + data[i].id + ')" type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button>  <button onClick="deleteOrder('+data[i].id+')" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>'
+							+'</tr>';
+					}else{
+						html += '<tr>'
+							+'<td>'+ data[i].code_name +'</td>'
+							+'<td>'+ data[i].created_date +'</td>'
+							+'<td>'+ data[i].customer_name +'</td>'	
+							+'<td>'+ checkStatus(data[i].orderStatus) +'</td>'	
+							+'<td width="100px"><button onClick="detailOrder(' + data[i].id + ')" type="button" class="btn btn-primary"><i class="fa fa-info" aria-hidden="true"></i></button></td>'
+							+'</tr>';
+					}
+					
+				}
+				$("#dataOrderTableUser").html(html);
+				$("#pageOrder").html(page);
 			}
-			$("#dataOrderTableUser").html(html);
-			$("#pageOrder").html(page);
-		}
-	},
-	error : function(jqXhr, textStatus, errorMessage) { // error
-		// callback
-	} 
-});
+		},
+		error : function(jqXhr, textStatus, errorMessage) { // error
+			// callback
+		} 
+	});
+}
 
 $(document).ready(function() {
 	

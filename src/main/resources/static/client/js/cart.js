@@ -9,7 +9,7 @@ function addCart(id,quantity){
 		dataType: 'json',
         contentType: 'application/json',
 		success: function(responseData){
-			setDialog("Thêm thành công");
+			setDialog("Add item to cart cuccess");
 			updateTotal();
 		},
 		error : function(jqXhr, textStatus, errorMessage) { // error
