@@ -170,7 +170,19 @@ public class OrderServiceImpl implements OrderService {
             orderRepository.deleteByIdAndUserId(orderId, userId);
             return ApiResponseUtil.getBaseSuccessStatus(null);
         } catch (Exception ex) {
-            log.error(String.format("Error delete order %s of user %s", orderId, username),ex);
+            log.error(String.format("Error delete order %s of user %s", orderId, username), ex);
+        }
+        return ApiResponseUtil.getBaseFailureStatus();
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> deleteOne(int orderId) {
+        try {
+            orderProductRepository.deleteByOrderId(orderId);
+            orderRepository.deleteById(orderId);
+            return ApiResponseUtil.getBaseSuccessStatus(null);
+        } catch (Exception ex) {
+            log.error(String.format("Error delete order %s ", orderId), ex);
         }
         return ApiResponseUtil.getBaseFailureStatus();
     }

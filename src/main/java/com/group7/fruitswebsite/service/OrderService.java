@@ -22,4 +22,6 @@ public interface OrderService {
     ResponseEntity<ApiResponse> getOneForUser(int orderId, String username);
 
     ResponseEntity<ApiResponse> deleteOne(int orderId, String username);
+
+    ResponseEntity<ApiResponse> deleteOne(int orderId);
 }
