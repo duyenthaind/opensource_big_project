@@ -66,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
             dhOrder.setDhUser(optionalUser.get());
             dhOrder.setCodeName(StringUtil.randomString(8, 1).toUpperCase());
             dhOrder.setIsPrepaid(false);
+            dhOrder.setOrderStatus(Constants.OrderStatus.UNAPPROVED.getStatus());
             readCartInformationAndSaveOrder(dhOrder, listCartsOfCurrentUser, dhOrder.getDhCoupon());
             orderRepository.save(dhOrder);
             log.info(String.format("Save order %s of user %s ", dhOrder.getId(), username));
@@ -165,10 +166,23 @@ public class OrderServiceImpl implements OrderService {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
             }
             int userId = currentUser.get().getId();
+            orderProductRepository.deleteByOrderId(orderId);
             orderRepository.deleteByIdAndUserId(orderId, userId);
             return ApiResponseUtil.getBaseSuccessStatus(null);
         } catch (Exception ex) {
-            log.error(String.format("Error delete order %s of user %s", orderId, username),ex);
+            log.error(String.format("Error delete order %s of user %s", orderId, username), ex);
+        }
+        return ApiResponseUtil.getBaseFailureStatus();
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> deleteOne(int orderId) {
+        try {
+            orderProductRepository.deleteByOrderId(orderId);
+            orderRepository.deleteById(orderId);
+            return ApiResponseUtil.getBaseSuccessStatus(null);
+        } catch (Exception ex) {
+            log.error(String.format("Error delete order %s ", orderId), ex);
         }
         return ApiResponseUtil.getBaseFailureStatus();
     }

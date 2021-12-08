@@ -1,6 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<style>
+.orderProductTable {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.orderProductTable td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+.orderProductTable tr:nth-child(even) {
+	background-color: #dddddd;
+}
+</style>
 <div class="modal fade" id="newCate" role="dialog">
 	<div class="modal-dialog">
 
@@ -422,8 +439,8 @@
 								</div>
 							</div>
 						</div>
-						<input type="hidden" id="createdDateProd" />
-						<input type="hidden" id="currentPageUpdateProd" />
+						<input type="hidden" id="createdDateProd" /> <input type="hidden"
+							id="currentPageUpdateProd" />
 						<div class="col-lg-6">
 
 
@@ -546,7 +563,8 @@
 									id="outputBlog" class="img-rounded" alt="" width="230"
 									height="200" src="" />
 								<p>
-									<label for="blogFile" style="cursor: pointer">choose file</label>
+									<label for="blogFile" style="cursor: pointer">choose
+										file</label>
 								</p>
 								<input name="files" id="blogFile" type="file"
 									style="display: none" onchange="loadBlogFile(event)" />
@@ -598,8 +616,8 @@
 										<h3 class="text-center title-2">Blog</h3>
 									</div>
 									<hr>
-									<input type="hidden" id="updateBlogId" name="id"/>
-									<input type="hidden" id="blogCreatedDate" name="createdDate" />
+									<input type="hidden" id="updateBlogId" name="id" /> <input
+										type="hidden" id="blogCreatedDate" name="createdDate" />
 									<div class="form-group">
 										<label for="cc-payment" class="control-label mb-1">Thumbnail</label>
 										<input id="detailBlogThumbnail" name="thumbnail" type="text"
@@ -628,7 +646,8 @@
 									id="detailOutputBlog" class="img-rounded" alt="" width="230"
 									height="200" src="" />
 								<p>
-									<label for="blogFileDetail" style="cursor: pointer">choose file</label>
+									<label for="blogFileDetail" style="cursor: pointer">choose
+										file</label>
 								</p>
 								<input name="file" id="blogFileDetail" type="file"
 									style="display: none" onchange="loadDetailBlogFile(event)" />
@@ -638,13 +657,12 @@
 					</div>
 					<div class="row">
 						<div class="col-lg-12">
-						<input type="hidden" id="currentPageBlog"
-											name="currentPageBlog" />
+							<input type="hidden" id="currentPageBlog" name="currentPageBlog" />
 							<div class="form-group has-success">
 								<label for="cc-name" class="control-label mb-1">Detail
 									description</label>
-								<textarea class="summernote" id="updateDetailsBlog" name="details"
-									type="text"></textarea>
+								<textarea class="summernote" id="updateDetailsBlog"
+									name="details" type="text"></textarea>
 								<span class="help-block field-validation-valid"
 									data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
 							</div>
@@ -677,8 +695,55 @@
 			</div>
 			<div class="modal-footer">
 				<input type="hidden" id="idForDeleteBlog" />
-				<button type="button" id="buttonDeleteBlog"
-					class="btn btn-primary">Delete</button>
+				<button type="button" id="buttonDeleteBlog" class="btn btn-primary">Delete</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="modal fade" id="orderProduct" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Order Product</h5>
+			</div>
+			<div class="modal-body" id="orderProductBody">
+				<table class="orderProductTable">
+					<thead>
+						<tr>
+							<th>Product Id</th>
+							<th>Name</th>
+							<th>Quantity</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody id="listOrderProduct">
+						
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="modal fade" id="confirmDeleteOrder" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Modal title</h5>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure</p>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" id="idForDeleteOrder" />
+				<button type="button" id="buttonDeleteOrder" class="btn btn-primary">Delete</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>

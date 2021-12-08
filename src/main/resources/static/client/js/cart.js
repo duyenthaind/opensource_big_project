@@ -9,12 +9,16 @@ function addCart(id,quantity){
 		dataType: 'json',
         contentType: 'application/json',
 		success: function(responseData){
-			setDialog("Thêm thành công");
+			setDialog("Add item to cart cuccess");
 			updateTotal();
 		},
 		error : function(jqXhr, textStatus, errorMessage) { // error
 			// callback
-
+			var contentType = jqXhr.getResponseHeader("Content-Type");
+		    if (jqXhr.status == 200 && contentType.toLowerCase().indexOf("text/html") >= 0) {
+		        // assume that our login has expired - reload our current page
+		        window.location.href = "/login";
+		    }
 		}
 	});
 }

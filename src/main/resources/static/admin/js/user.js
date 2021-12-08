@@ -116,10 +116,7 @@ function loadDataUser(currentPage){
 }
 
 function updateRole(id,oldRole,selectObject) {
-	  var value = selectObject.value;  
-	  console.log(value);
-	  console.log(id);
-	  console.log(oldRole);
+	  var value = selectObject.value;
 	  
 	  $.ajax({
 			url:"/api-super/v1/users/users",

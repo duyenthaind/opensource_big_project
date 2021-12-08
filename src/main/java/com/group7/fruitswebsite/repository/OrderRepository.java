@@ -26,8 +26,8 @@ public interface OrderRepository extends JpaRepository<DhOrder, Integer>, OrderC
     Page<DhOrder> findAll(Pageable pageable);
 
     @Transactional
+    @Query("delete  from DhOrder  where id = :id and dhUser.id = :userId and (orderStatus <= 3 or orderStatus is null)")
     @Modifying
-    @Query("delete  from DhOrder  where id = :id and dhUser.id = :userId and orderStatus <= 3")
     void deleteByIdAndUserId(@Param("id") Integer id,@Param("userId") Integer userId);
 
     @Query("from DhOrder where id = :id and dhUser.id in (select id from DhUser u where u.username = :userName)")
