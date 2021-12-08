@@ -79,13 +79,11 @@ $("#place_order").click(function(event){
 					window.location.href="/checkout";
 					$("#totalCartOrder").empty();
 					$("#totalCartOrder").html("$0");
-				}else{
-					setDialog("Failure");
 				}
 			},
 			error : function(jqXhr, textStatus, errorMessage) { // error
 				// callback
-
+				setDialog("Failure");
 			} 
 		});
     }

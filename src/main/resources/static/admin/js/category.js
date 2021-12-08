@@ -19,10 +19,8 @@ function addNewCate(event){
 			success : function(jsonResult){
 				if(jsonResult.status == 200){			
 					alert("Success");
-					console.log(jsonResult);
 					getFirst();
 				}else{
-					alert(jsonResult.result);
 					alert("error");
 				}
 			},
@@ -106,7 +104,6 @@ $(document).ready(function(){
 			success : function(data){
 				var object = data.result.data;
 				if(object){
-					alert("success");
 					getFirst();
 					$("#confirmDeleteCategory").modal("hide");
 				}	
@@ -173,10 +170,8 @@ function updateCategory(event){
 	    success : function(jsonResult){
 			if(jsonResult.status == 200){			
 				alert("Success");
-				console.log(jsonResult);
 				loadData(currentPage);
 			}else{
-				alert(jsonResult.result);
 				alert("error");
 			}
 		},

@@ -32,6 +32,7 @@
 
 <!-- Main JS-->
 <script src="${base}/admin/js/category.js"></script>
+<script src="${base}/admin/js/checkOrder.js"></script>
 <script src="${base}/admin/js/product.js"></script>
 <script src="${base}/admin/js/main.js" type="module"></script>
 <script src="${server}/admin/js/common.js"></script>

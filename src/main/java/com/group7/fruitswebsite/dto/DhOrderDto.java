@@ -24,7 +24,7 @@ public class DhOrderDto extends BaseDto {
     @JsonProperty(value = "customer_phone")
     private String customerPhone;
     private Long total;
-    private Boolean isPrePaid;
+    private Boolean isPrepaid;
     private String note;
     private Integer couponId;
     private Integer userId;
