@@ -1,5 +1,6 @@
 package com.group7.fruitswebsite.config;
 
+import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.util.StringUtil;
 import lombok.extern.log4j.Log4j;
 import org.apache.log4j.PropertyConfigurator;
@@ -32,6 +33,7 @@ public class ApplicationConfig {
     public static String PRODUCT_UPLOAD_RELATIVE_DIR;
     public static String BLOG_UPLOAD_RELATIVE_DIR;
     public static String USER_AVATAR_RELATIVE_DIR;
+    public static Constants.EmailProvider EMAIL_PROVIDER;
 
     public static void loadConfig() {
         try {
@@ -52,6 +54,15 @@ public class ApplicationConfig {
                 PRODUCT_UPLOAD_RELATIVE_DIR = properties.getProperty("product_upload_dir");
                 BLOG_UPLOAD_RELATIVE_DIR = properties.getProperty("blog_upload_dir");
                 USER_AVATAR_RELATIVE_DIR = properties.getProperty("user_avatar_upload_dir");
+                String emailProviderType = properties.getProperty("mail_service");
+                switch (emailProviderType) {
+                    case "1":
+                        EMAIL_PROVIDER = Constants.EmailProvider.SMTP;
+                        break;
+                    default:
+                        EMAIL_PROVIDER = null;
+                        break;
+                }
             } finally {
                 fileInputStream.close();
             }

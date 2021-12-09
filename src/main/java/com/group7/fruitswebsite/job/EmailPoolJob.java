@@ -1,0 +1,38 @@
+package com.group7.fruitswebsite.job;
+
+import com.group7.fruitswebsite.common.Constants;
+import lombok.ToString;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author duyenthai
+ */
+@ToString
+public class EmailPoolJob extends PoolJob {
+    private String username;
+    private Map<String, Object> customs = new HashMap<>();
+
+    public EmailPoolJob(Constants.JobType jobType, String username) {
+        super(jobType);
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Map<String, Object> getCustoms() {
+        return customs;
+    }
+
+    public void setCustoms(Map<String, Object> customs) {
+        this.customs = customs;
+    }
+
+}

@@ -171,4 +171,28 @@ public class Constants {
             return description;
         }
     }
+
+    public enum JobType {
+        EMAIL_ORDER(1, "ORDER_EMAIL_JOB");
+        private final int type;
+        private final String description;
+
+        JobType(int type, String description) {
+            this.type = type;
+            this.description = description;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+    }
+
+    public enum EmailProvider {
+        SMTP,
+        ;
+    }
 }
