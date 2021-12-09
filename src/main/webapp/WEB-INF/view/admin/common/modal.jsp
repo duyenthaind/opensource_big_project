@@ -131,7 +131,7 @@
 									</div>
 									<div>
 										<input type="hidden" id="currentPageCate"
-											name="currentPageCate" />
+											name="currentPageCate" value="0" />
 										<button onclick="updateCategory(event);" type="submit"
 											class="btn btn-lg btn-info btn-block">
 											<span id="payment-button-amount">Submit</span> <span

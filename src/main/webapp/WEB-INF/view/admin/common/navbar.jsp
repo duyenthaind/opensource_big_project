@@ -90,24 +90,24 @@
                                 </div>
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
-                                        <div class="image">
-                                            <img src="${base}/admin/images/icon/avatar-01.jpg" alt="John Doe" />
-                                        </div>
+                                        <!-- <div class="image">
+                                            <img src="" alt="account image" />
+                                        </div> -->
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">john doe</a>
+                                            <a class="js-acc-btn" href="#">account</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="${base}/admin/images/icon/avatar-01.jpg" alt="John Doe" />
+                                                        <img src="" alt="account image" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">john doe</a>
+                                                        <a href="#">group7</a>
                                                     </h5>
-                                                    <span class="email">johndoe@example.com</span>
+                                                    <span class="email">group7@example.com</span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">

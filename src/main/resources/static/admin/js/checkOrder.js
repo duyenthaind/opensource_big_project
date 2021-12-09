@@ -13,7 +13,7 @@ function getFirstOrderPage() {
 			page : 0
 		},
 		success : function(data) {
-			loadPage(data.result.total_pages,0)
+			loadPageOrder(data.result.total_pages,0)
 			$("#check-order").empty();
 			var html = "";
 			var dataArr = data.result.data;
@@ -64,7 +64,7 @@ function loadDataOrder(page) {
 			page : page
 		},
 		success : function(data) {
-			loadPage(data.result.total_pages,page)
+			loadPageOrder(data.result.total_pages,page)
 			var tag = document.getElementsByClassName("order");
 			for(a =0;a<tag.length;a++){
 				tag[a].className = tag[a].className.replace("order active", "order");
@@ -197,7 +197,7 @@ $(document).ready(function(){
 });
 
 
-function loadPage(total_pages,currentPage){
+function loadPageOrder(total_pages,currentPage){
 	$("#paginationOrder").empty();
 	for(var i = 0;i<total_pages;i++){
 		if(i==0){

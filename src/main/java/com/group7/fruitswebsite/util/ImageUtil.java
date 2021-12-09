@@ -82,7 +82,9 @@ public class ImageUtil {
     private static List<String> uploadMultiFilesAndGetPath(MultipartFile[] files, String path) throws IOException {
         List<String> results = new ArrayList<>();
         String targetUploadDir = path + File.separator + createPathFromCurrentDate();
+        	
         File uploadDir = new File(targetUploadDir);
+        
         // Make sure directory exists!
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
@@ -97,11 +99,11 @@ public class ImageUtil {
                 continue;
             }
             String uploadFilePath = targetUploadDir + File.separator + file.getOriginalFilename();
-
+            
             byte[] bytes = file.getBytes();
             Path currentPath = Paths.get(uploadFilePath);
+            
             Files.write(currentPath, bytes);
-
             uploadFilePath = uploadFilePath.replace(ApplicationConfig.ROOT_UPLOAD_DIR + File.separator, StringUtils.EMPTY);
             log.info(String.format("Upload file to server, path: %s", uploadFilePath));
             results.add(uploadFilePath);

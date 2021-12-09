@@ -37,6 +37,16 @@ public class AdminController {
 		return "admin/table";
 	}
 
+	@GetMapping("/order")
+	public String order() {
+		return "admin/order";
+	}
+	
+	@GetMapping("/user")
+	public String user() {
+		return "admin/user";
+	}
+	
 	@GetMapping("/form")
 	public String form() {
 		return "admin/form";
