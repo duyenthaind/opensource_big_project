@@ -17,7 +17,7 @@ public class Start {
         ApplicationConfig.loadConfig();
         context = SpringApplication.run(FruitsWebsiteApplication.class, args);
         for(int index = -1; ++index < 2;){
-            EmailPoolWorker emailPoolWorker = new EmailPoolWorker("EmailPoolWorker" + index);
+            EmailPoolWorker emailPoolWorker = new EmailPoolWorker("EmailPoolWorker-" + index);
             emailPoolWorker.start();
         }
         log.info("Application start ok");
