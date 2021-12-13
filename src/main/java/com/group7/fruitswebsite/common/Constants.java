@@ -171,4 +171,63 @@ public class Constants {
             return description;
         }
     }
+
+    public enum JobType {
+        EMAIL_ORDER(1, "ORDER_EMAIL_JOB");
+        private final int type;
+        private final String description;
+
+        JobType(int type, String description) {
+            this.type = type;
+            this.description = description;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+    }
+
+    public enum EmailProvider {
+        SMTP("1"),
+        ;
+
+        private final String type;
+
+        EmailProvider(String type) {
+            this.type = type;
+        }
+
+        public static EmailProvider getFromEnum(String type) {
+            for (EmailProvider index : values()) {
+                if (index.type.equals(type)) {
+                    return index;
+                }
+            }
+            return null;
+        }
+    }
+
+    public enum AuthenticationProtocol {
+        TLS("tls"),
+        SSL("ssl"),
+        ;
+        private final String type;
+
+        AuthenticationProtocol(String type) {
+            this.type = type;
+        }
+
+        public static AuthenticationProtocol getFromEnum(String type) {
+            for (AuthenticationProtocol index : values()) {
+                if (index.type.equals(type)) {
+                    return index;
+                }
+            }
+            return null;
+        }
+    }
 }

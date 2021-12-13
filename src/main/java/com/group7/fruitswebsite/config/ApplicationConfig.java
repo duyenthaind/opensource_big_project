@@ -1,5 +1,6 @@
 package com.group7.fruitswebsite.config;
 
+import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.util.StringUtil;
 import lombok.extern.log4j.Log4j;
 import org.apache.log4j.PropertyConfigurator;
@@ -32,6 +33,13 @@ public class ApplicationConfig {
     public static String PRODUCT_UPLOAD_RELATIVE_DIR;
     public static String BLOG_UPLOAD_RELATIVE_DIR;
     public static String USER_AVATAR_RELATIVE_DIR;
+    public static Constants.EmailProvider EMAIL_PROVIDER;
+    public static String INVOICE_MAIL_TEMPLATE;
+    public static Constants.AuthenticationProtocol AUTHENTICATION_PROTOCOL;
+    public static String EMAIL_HOST;
+    public static String EMAIL_PORT;
+    public static String EMAIL_USERNAME;
+    public static String EMAIL_PASSWORD;
 
     public static void loadConfig() {
         try {
@@ -52,6 +60,14 @@ public class ApplicationConfig {
                 PRODUCT_UPLOAD_RELATIVE_DIR = properties.getProperty("product_upload_dir");
                 BLOG_UPLOAD_RELATIVE_DIR = properties.getProperty("blog_upload_dir");
                 USER_AVATAR_RELATIVE_DIR = properties.getProperty("user_avatar_upload_dir");
+                EMAIL_PROVIDER = Constants.EmailProvider.getFromEnum(properties.getProperty("mail_service"));
+                INVOICE_MAIL_TEMPLATE = System.getProperty("user.dir") + File.separator + CONF_DIR + File.separator
+                        + "mail_template" + File.separator + properties.getProperty("invoice_mail_template");
+                AUTHENTICATION_PROTOCOL = Constants.AuthenticationProtocol.getFromEnum(properties.getProperty("email_auth_protocol"));
+                EMAIL_HOST = properties.getProperty("email_host");
+                EMAIL_PORT = properties.getProperty("email_port");
+                EMAIL_USERNAME = properties.getProperty("email_username");
+                EMAIL_PASSWORD = properties.getProperty("email_password");
             } finally {
                 fileInputStream.close();
             }

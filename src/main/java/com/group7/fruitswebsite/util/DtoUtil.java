@@ -132,9 +132,11 @@ public class DtoUtil {
 
     public static DhOrderDto getOrderDtoFromDhOrder(DhOrder dhOrder, ObjectMapper objectMapper, OrderProductRepository orderProductRepository) {
         try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             DhOrderDto dhOrderDto = objectMapper.readValue(objectMapper.writeValueAsString(dhOrder), DhOrderDto.class);
             dhOrderDto.setCouponId(Objects.nonNull(dhOrder.getDhCoupon()) ? dhOrder.getDhCoupon().getId() : null);
             dhOrderDto.setUserId(Objects.nonNull(dhOrder.getDhUser()) ? dhOrder.getDhUser().getId() : null);
+            dhOrderDto.setDate(simpleDateFormat.format(new Date(dhOrder.getCreatedDate())));
             if (Objects.nonNull(orderProductRepository)) {
                 List<DhOrderProduct> listAllProducts = orderProductRepository.findByOrderId(dhOrder.getId());
                 for (DhOrderProduct index : listAllProducts) {
