@@ -62,18 +62,20 @@ public class OrderServiceImpl implements OrderService {
             if (listCartsOfCurrentUser.isEmpty()) {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.NO_CART, HttpStatus.GONE);
             }
+            long totalAmount = listCartsOfCurrentUser.stream().reduce(0L, (res, cart) -> res + cart.getPrice() * cart.getQuantity(), Long::sum);
             Optional<DhCoupon> optionalCoupon = couponRepository.findByCode(dhOrderModel.getCouponCode());
             optionalCoupon.ifPresent(dhOrder::setDhCoupon);
             dhOrder.setCreatedDate(System.currentTimeMillis());
             dhOrder.setDhUser(optionalUser.get());
             dhOrder.setCodeName(StringUtil.randomString(8, 1).toUpperCase());
             dhOrder.setIsPrepaid(false);
+            dhOrder.setTotal(totalAmount);
             dhOrder.setOrderStatus(Constants.OrderStatus.UNAPPROVED.getStatus());
             readCartInformationAndSaveOrder(dhOrder, listCartsOfCurrentUser, dhOrder.getDhCoupon());
             orderRepository.save(dhOrder);
             log.info(String.format("Save order %s of user %s ", dhOrder.getId(), username));
             // send mail to customer un synchronous
-            EmailPoolJob emailJob = new EmailPoolJob(Constants.JobType.EMAIL_ORDER, username);
+            EmailPoolJob emailJob = new EmailPoolJob(Constants.JobType.EMAIL_ORDER, username, optionalUser.get().getEmail());
             emailJob.getCustoms().put("orderId", dhOrder.getId());
             EmailPoolWorker.pubJob(emailJob);
             return ApiResponseUtil.getBaseSuccessStatus(null);

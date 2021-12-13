@@ -34,6 +34,12 @@ public class ApplicationConfig {
     public static String BLOG_UPLOAD_RELATIVE_DIR;
     public static String USER_AVATAR_RELATIVE_DIR;
     public static Constants.EmailProvider EMAIL_PROVIDER;
+    public static String INVOICE_MAIL_TEMPLATE;
+    public static Constants.AuthenticationProtocol AUTHENTICATION_PROTOCOL;
+    public static String EMAIL_HOST;
+    public static String EMAIL_PORT;
+    public static String EMAIL_USERNAME;
+    public static String EMAIL_PASSWORD;
 
     public static void loadConfig() {
         try {
@@ -54,15 +60,14 @@ public class ApplicationConfig {
                 PRODUCT_UPLOAD_RELATIVE_DIR = properties.getProperty("product_upload_dir");
                 BLOG_UPLOAD_RELATIVE_DIR = properties.getProperty("blog_upload_dir");
                 USER_AVATAR_RELATIVE_DIR = properties.getProperty("user_avatar_upload_dir");
-                String emailProviderType = properties.getProperty("mail_service");
-                switch (emailProviderType) {
-                    case "1":
-                        EMAIL_PROVIDER = Constants.EmailProvider.SMTP;
-                        break;
-                    default:
-                        EMAIL_PROVIDER = null;
-                        break;
-                }
+                EMAIL_PROVIDER = Constants.EmailProvider.getFromEnum(properties.getProperty("mail_service"));
+                INVOICE_MAIL_TEMPLATE = System.getProperty("user.dir") + File.separator + CONF_DIR + File.separator
+                        + "mail_template" + File.separator + properties.getProperty("invoice_mail_template");
+                AUTHENTICATION_PROTOCOL = Constants.AuthenticationProtocol.getFromEnum(properties.getProperty("email_auth_protocol"));
+                EMAIL_HOST = properties.getProperty("email_host");
+                EMAIL_PORT = properties.getProperty("email_port");
+                EMAIL_USERNAME = properties.getProperty("email_username");
+                EMAIL_PASSWORD = properties.getProperty("email_password");
             } finally {
                 fileInputStream.close();
             }

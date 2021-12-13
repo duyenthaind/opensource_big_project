@@ -12,11 +12,13 @@ import java.util.Map;
 @ToString
 public class EmailPoolJob extends PoolJob {
     private String username;
+    private String email;
     private Map<String, Object> customs = new HashMap<>();
 
-    public EmailPoolJob(Constants.JobType jobType, String username) {
+    public EmailPoolJob(Constants.JobType jobType, String username, String email) {
         super(jobType);
         this.username = username;
+        this.email = email;
     }
 
     public String getUsername() {
@@ -29,6 +31,14 @@ public class EmailPoolJob extends PoolJob {
 
     public Map<String, Object> getCustoms() {
         return customs;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setCustoms(Map<String, Object> customs) {

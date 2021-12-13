@@ -192,7 +192,42 @@ public class Constants {
     }
 
     public enum EmailProvider {
-        SMTP,
+        SMTP("1"),
         ;
+
+        private final String type;
+
+        EmailProvider(String type) {
+            this.type = type;
+        }
+
+        public static EmailProvider getFromEnum(String type) {
+            for (EmailProvider index : values()) {
+                if (index.type.equals(type)) {
+                    return index;
+                }
+            }
+            return null;
+        }
+    }
+
+    public enum AuthenticationProtocol {
+        TLS("tls"),
+        SSL("ssl"),
+        ;
+        private final String type;
+
+        AuthenticationProtocol(String type) {
+            this.type = type;
+        }
+
+        public static AuthenticationProtocol getFromEnum(String type) {
+            for (AuthenticationProtocol index : values()) {
+                if (index.type.equals(type)) {
+                    return index;
+                }
+            }
+            return null;
+        }
     }
 }

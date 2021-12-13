@@ -9,7 +9,7 @@ import com.group7.fruitswebsite.util.RenderMailHelper;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Map;
+import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -36,8 +36,8 @@ public class EmailPoolWorker extends PoolWorker {
             }
             if (queue.isEmpty()) {
                 try {
-                    // When there is no job, sleep 60s to increase performance
-                    TimeUnit.SECONDS.sleep(60);
+                    // When there is no job, sleep 30s to increase performance
+                    TimeUnit.SECONDS.sleep(30);
                 } catch (InterruptedException ex) {
                     log.error("Sleep worker error", ex);
                 }
@@ -46,6 +46,7 @@ public class EmailPoolWorker extends PoolWorker {
     }
 
     private void runSendMail(EmailPoolJob job) {
+        log.info(String.format("Process job %s at %s", job, new Date()));
         String body = StringUtils.EMPTY;
         Constants.JobType jobType = job.getJobType();
         switch (jobType) {
@@ -61,11 +62,12 @@ public class EmailPoolWorker extends PoolWorker {
         }
         EmailService emailService = EmailServiceFactory.getEmailService();
         if (Objects.nonNull(emailService)) {
-            emailService.send(job.getUsername(), body);
+            emailService.send(job.getEmail(), body);
         }
     }
 
     public static void pubJob(EmailPoolJob job) {
+        log.info(String.format("Publish a job send mail %s", job));
         PoolWorker.pubJob(job, EmailPoolWorker.class);
     }
 
