@@ -26,4 +26,6 @@ public interface OrderService {
     ResponseEntity<ApiResponse> deleteOne(int orderId);
 
     Long calculateTotalAmountOfCurrentUser(String couponCode);
+
+	ResponseEntity<ApiResponse> getByOrderStatusWithPaging(int page, int size, int orderStatus);
 }

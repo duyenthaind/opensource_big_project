@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 /**
@@ -31,6 +32,7 @@ public class OrderCustomUpdateRepositoryImpl implements OrderCustomUpdateReposit
             log.error("Custom update error, ", ex);
         }
     }
+    
 
     @PersistenceContext
     public void setEntityManager(EntityManager entityManager) {

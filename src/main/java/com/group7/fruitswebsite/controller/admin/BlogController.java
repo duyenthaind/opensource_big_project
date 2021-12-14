@@ -35,10 +35,8 @@ public class BlogController {
 
     @PostMapping("/blogs")
     public ResponseEntity<ApiResponse> add(@ModelAttribute DhBlogModel dhBlogModel) {
-        log.debug(dhBlogModel);
-        log.info(dhBlogModel.getFiles());
         ImageService imageService = new ImageBlogServiceImpl();
-        String imagePath = imageService.saveUploadFiles(dhBlogModel.getFiles());
+        String imagePath = imageService.saveUploadFiles(dhBlogModel.getFile());
         log.info(String.format("uploaded image to system: %s", imagePath));
         dhBlogModel.setAvatar(imagePath);
         return blogService.saveOne(dhBlogModel);
@@ -51,7 +49,7 @@ public class BlogController {
             log.error(String.format("Drop all action with model %s because it has no id", dhBlogModel));
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.BLOG_ID_IS_NOT_DEFINED, HttpStatus.FORBIDDEN);
         }
-        MultipartFile[] files = dhBlogModel.getFiles();
+        MultipartFile[] files = dhBlogModel.getFile();
         if (files != null && files.length > 0) {
             ImageService imageService = new ImageBlogServiceImpl();
             MultipartFile file = files[0];

@@ -131,7 +131,7 @@
 									</div>
 									<div>
 										<input type="hidden" id="currentPageCate"
-											name="currentPageCate" />
+											name="currentPageCate" value="0" />
 										<button onclick="updateCategory(event);" type="submit"
 											class="btn btn-lg btn-info btn-block">
 											<span id="payment-button-amount">Submit</span> <span
@@ -566,7 +566,7 @@
 									<label for="blogFile" style="cursor: pointer">choose
 										file</label>
 								</p>
-								<input name="files" id="blogFile" type="file"
+								<input name="file" id="blogFile" type="file"
 									style="display: none" onchange="loadBlogFile(event)" />
 								<div></div>
 							</div>
