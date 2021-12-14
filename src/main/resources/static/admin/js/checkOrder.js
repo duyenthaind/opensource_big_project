@@ -4,7 +4,6 @@ $(function() {
 });
 
 function getFirstDoneOrderPage() {
-	// document.getElementById("currentPageBlog").value = 0;
 	$.ajax({
 		url : "/api-admin/checkout/v1/orders-orderstatus",
 		type : "GET",
@@ -13,7 +12,7 @@ function getFirstDoneOrderPage() {
 			orderStatus:5
 		},
 		success : function(data) {
-			loadPageOrder(data.result.total_pages,0)
+			loadPageDoneOrder(data.result.total_pages,0)
 			$("#doneOrder").empty();
 			var html = "";
 			var dataArr = data.result.data;
@@ -38,6 +37,60 @@ function getFirstDoneOrderPage() {
 			console.log(errorThrown);
 		}
 	});
+}
+
+function loadDoneOrderPage(page) {
+	document.getElementById("currentPageDoneOrder").value = page;
+	 $("#doneOrder").empty();
+	$.ajax({
+		url : "/api-admin/checkout/v1/orders-orderstatus",
+		type : "GET",
+		data : {
+			page : 0,
+			orderStatus:5
+		},
+		success : function(data) {
+			loadPageDoneOrder(data.result.total_pages,page)
+			var tag = document.getElementsByClassName("done-order");
+			for(a =0;a<tag.length;a++){
+				tag[a].className = tag[a].className.replace("done-order active", "done-order");
+			}
+			tag[page].className = "page-item done-order active";
+			$("#doneOrder").empty();
+			var html = "";
+			var dataArr = data.result.data;
+			for (var i = 0; i < dataArr.length; i++) {
+				html += '<tr>'
+                  +'  <td>'+ dataArr[i].date +'</td>'
+                  +'  <td>'+ dataArr[i].code_name +'</td>'
+                  +'  <td>$'+ dataArr[i].total +'</td>'
+					+		'<td><div class="table-data-feature">'
+					+			'<button class="item linkDetail" onclick="detailOrderProduct('+ dataArr[i].id +');" data-toggle="tooltip"'
+					+				'data-placement="top" title="Detail">'
+					+				'<i class="zmdi zmdi-receipt"></i>'
+					+			'</button>'
+					+		'</div></td>'
+                  +'  </tr>';
+			}
+			$("#doneOrder").append(html);
+		},
+		error : function(jqXHR, testStatus, errorThrown) {
+			console.log(jqXHR);
+			console.log(testStatus);
+			console.log(errorThrown);
+		}
+	});
+}
+
+function loadPageDoneOrder(total_pages,currentPage){
+	$("#paginationDoneOrder").empty();
+	for(var i = 0;i<total_pages;i++){
+		if(i==0){
+			$("#paginationDoneOrder").append('<li class="page-item done-order active"><span class="page-link" onclick="loadDataDoneOrder('+ (i) +');">'+ (i+1) +'</span></li>');
+		}else{
+			$("#paginationDoneOrder").append('<li class="page-item done-order"><span class="page-link" onclick="loadDataDoneOrder('+ (i) +');">'+ (i+1)+'</span></li>');
+		}
+	}			
 }
 
 function getFirstOrderPage() {

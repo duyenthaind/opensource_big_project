@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.repository.CategoryRepository;
+import com.group7.fruitswebsite.repository.ContactRepository;
 import com.group7.fruitswebsite.repository.OrderRepository;
 import com.group7.fruitswebsite.repository.UserRepository;
 import com.group7.fruitswebsite.service.CategoryService;
@@ -27,6 +28,7 @@ public class AdminController {
 	private UserService userService;
 	private UserRepository userRepository;
 	private OrderRepository orderRepository;
+	private ContactRepository contactRepository;
 
 	@GetMapping(value = { "/index", "/", "/home", "" })
 	public String index(Model model) {
@@ -37,6 +39,8 @@ public class AdminController {
 		}else {
 			model.addAttribute("totalEarn", 0);
 		}
+		model.addAttribute("contacts",contactRepository.findAll());
+		
 		return "admin/index";
 	}
 
@@ -90,5 +94,12 @@ public class AdminController {
 	public void setOrderRepository(OrderRepository orderRepository) {
 		this.orderRepository = orderRepository;
 	}
+
+	@Autowired
+	public void setContactRepository(ContactRepository contactRepository) {
+		this.contactRepository = contactRepository;
+	}
+	
+	
 
 }

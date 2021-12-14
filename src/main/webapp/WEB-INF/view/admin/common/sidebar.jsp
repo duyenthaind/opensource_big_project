@@ -154,9 +154,9 @@
 
 						<li><a href="${base}/admin/table"> <i class="fas fa-table"></i>Category & Product
 						</a></li>
-						<li><a href="${base}/admin/user"> <i class="fas fa-table"></i>Users
+						<li><a href="${base}/admin/user"> <i class="fas fa-user-circle"></i>Users
 						</a></li>
-						<li><a href="${base}/admin/order"> <i class="fas fa-table"></i>Orders
+						<li><a href="${base}/admin/order"> <i class="fas fa-file-text"></i>Orders
 						</a></li>
 						<li><a href="${base}/admin/blog"> <i class="fa fa-newspaper-o" aria-hidden="true"></i>Blogs
 						</a></li>
