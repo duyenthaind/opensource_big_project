@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../variable.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!-- header -->
 <jsp:include page="/WEB-INF/view/client/common/header.jsp"></jsp:include>
 <!-- end header -->
@@ -12,9 +14,9 @@
 		<div class="row">
 			<div class="col-lg-12 text-center">
 				<div class="breadcrumb__text">
-					<h2>${product.category.name}'sPackage</h2>
+					<h2>${product.category.name}'s Package</h2>
 					<div class="breadcrumb__option">
-						<a href="/index">Home</a> <a href="/index">Vegetables</a> <span>${product.category.name}'™s
+						<a href="/index">Home</a> <a href="${server}/shop-grid?categoryId=${product.category.id}">${product.category.name}</a> <span>${product.name}'Â™s
 							Package</span>
 					</div>
 				</div>
@@ -245,13 +247,13 @@
 							data-setbg="${uploadsDir}/${product.productImages[0]}">
 							<ul class="product__item__pic__hover">
 								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a onClick="addCart(${product.id},1)"><i
+								<li style="cursor: pointer;"><a onClick="addCart(${product.id},1)"><i
 										class="fa fa-shopping-cart"></i></a></li>
 							</ul>
 						</div>
 						<div class="product__item__text">
 							<h6>
-								<a href="#">${product.name}</a>
+								<a href="${server}/shop-details?productId=${product.id}">${product.name}</a>
 							</h6>
 							<h5>$${product.price}</h5>
 						</div>
