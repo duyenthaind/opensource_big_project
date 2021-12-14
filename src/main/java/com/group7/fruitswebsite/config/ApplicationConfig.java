@@ -40,6 +40,12 @@ public class ApplicationConfig {
     public static String EMAIL_PORT;
     public static String EMAIL_USERNAME;
     public static String EMAIL_PASSWORD;
+    public static String MOMO_PARTNER_CODE;
+    public static String MOMO_ACCESS_KEY;
+    public static String MOMO_SECRET_KEY;
+    public static String MOMO_ENDPOINT;
+    public static String MOMO_RETURN_URL;
+    public static String MOMO_NOTIFY_URL;
 
     public static void loadConfig() {
         try {
@@ -68,6 +74,12 @@ public class ApplicationConfig {
                 EMAIL_PORT = properties.getProperty("email_port");
                 EMAIL_USERNAME = properties.getProperty("email_username");
                 EMAIL_PASSWORD = properties.getProperty("email_password");
+                MOMO_PARTNER_CODE = properties.getProperty("momo_partner_code");
+                MOMO_ACCESS_KEY = properties.getProperty("lR6BvNhh7v87g4Ff");
+                MOMO_SECRET_KEY = properties.getProperty("S9zu2fmRcpXvsQam1dRylrxYvhqZZGg7");
+                MOMO_ENDPOINT = properties.getProperty("https://test-payment.momo.vn/gw_payment/transactionProcessor");
+                MOMO_RETURN_URL = properties.getProperty("momo_return_url");
+                MOMO_NOTIFY_URL = properties.getProperty("momo_notify_url");
             } finally {
                 fileInputStream.close();
             }

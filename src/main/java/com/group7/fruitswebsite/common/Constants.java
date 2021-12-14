@@ -230,4 +230,22 @@ public class Constants {
             return null;
         }
     }
+
+    public enum PaymentMethod {
+        COD(1), MOMO(2);
+        private final Integer type;
+
+        PaymentMethod(Integer type) {
+            this.type = type;
+        }
+
+        public static PaymentMethod getFromEnum(int type) {
+            for (PaymentMethod index : values()) {
+                if (index.type == type) {
+                    return index;
+                }
+            }
+            return null;
+        }
+    }
 }

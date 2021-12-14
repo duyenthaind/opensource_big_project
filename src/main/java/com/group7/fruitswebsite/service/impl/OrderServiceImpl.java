@@ -16,6 +16,7 @@ import com.group7.fruitswebsite.util.SecurityUtil;
 import com.group7.fruitswebsite.util.StringUtil;
 import com.group7.fruitswebsite.worker.EmailPoolWorker;
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,6 +48,7 @@ public class OrderServiceImpl implements OrderService {
     private UserRepository userRepository;
     private CartRepository cartRepository;
     private CouponRepository couponRepository;
+    private TransactionRepository transactionRepository;
 
     @Override
     public ResponseEntity<ApiResponse> saveOne(DhOrderModel dhOrderModel) {
@@ -64,16 +66,35 @@ public class OrderServiceImpl implements OrderService {
             }
             long totalAmount = listCartsOfCurrentUser.stream().reduce(0L, (res, cart) -> res + cart.getPrice() * cart.getQuantity(), Long::sum);
             Optional<DhCoupon> optionalCoupon = couponRepository.findByCode(dhOrderModel.getCouponCode());
+            DhCoupon currentCoupon = optionalCoupon.orElse(null);
+            long couponPrice = 0L;
+            if (Objects.nonNull(currentCoupon) && currentCoupon.getStartTime() + currentCoupon.getDuration() * DAY_TO_MILLIS < System.currentTimeMillis()) {
+                dhOrder.setDhCoupon(currentCoupon);
+                couponPrice = currentCoupon.getTotal();
+            }
             optionalCoupon.ifPresent(dhOrder::setDhCoupon);
             dhOrder.setCreatedDate(System.currentTimeMillis());
             dhOrder.setDhUser(optionalUser.get());
             dhOrder.setCodeName(StringUtil.randomString(8, 1).toUpperCase());
             dhOrder.setIsPrepaid(false);
-            dhOrder.setTotal(totalAmount);
+            dhOrder.setTotal(totalAmount - couponPrice);
             dhOrder.setOrderStatus(Constants.OrderStatus.UNAPPROVED.getStatus());
             readCartInformationAndSaveOrder(dhOrder, listCartsOfCurrentUser, dhOrder.getDhCoupon());
             orderRepository.save(dhOrder);
             log.info(String.format("Save order %s of user %s ", dhOrder.getId(), username));
+            // momo transaction
+            Constants.PaymentMethod paymentMethod = Constants.PaymentMethod.getFromEnum(dhOrder.getPaymentMethod());
+            if (Objects.nonNull(paymentMethod) && paymentMethod.equals(Constants.PaymentMethod.MOMO)
+                    && !StringUtils.isEmpty(dhOrderModel.getTransactionId()) && !StringUtils.isEmpty(dhOrderModel.getRequestId())) {
+                log.info(String.format("Process traction momo, order %s", dhOrder.getId()));
+                DhTransaction dhTransaction = new DhTransaction();
+                dhTransaction.setTransactionId(dhOrderModel.getTransactionId());
+                dhTransaction.setRequestId(dhOrderModel.getRequestId());
+                dhTransaction.setOrderId(dhOrder.getId());
+                dhTransaction.setPrice(dhOrder.getTotal());
+                dhTransaction.setIsPaid(false);
+                transactionRepository.save(dhTransaction);
+            }
             // send mail to customer un synchronous
             EmailPoolJob emailJob = new EmailPoolJob(Constants.JobType.EMAIL_ORDER, username, optionalUser.get().getEmail());
             emailJob.getCustoms().put("orderId", dhOrder.getId());
@@ -195,6 +216,33 @@ public class OrderServiceImpl implements OrderService {
         return ApiResponseUtil.getBaseFailureStatus();
     }
 
+    @Override
+    public Long calculateTotalAmountOfCurrentUser(String couponCode) {
+        try {
+            User currentUser = SecurityUtil.getUserDetails();
+            String username = currentUser.getUsername();
+            Optional<DhUser> optionalUser = userRepository.findByUsername(username);
+            if (!optionalUser.isPresent()) {
+                return null;
+            }
+            List<DhCart> listCartsOfCurrentUser = cartRepository.findByUserId(optionalUser.get().getId());
+            if (listCartsOfCurrentUser.isEmpty()) {
+                return null;
+            }
+            long totalAmount = listCartsOfCurrentUser.stream().reduce(0L, (res, cart) -> res + cart.getPrice() * cart.getQuantity(), Long::sum);
+            Optional<DhCoupon> optionalCoupon = couponRepository.findByCode(couponCode);
+            DhCoupon currentCoupon = optionalCoupon.orElse(null);
+            long couponPrice = 0L;
+            if (Objects.nonNull(currentCoupon) && currentCoupon.getStartTime() + currentCoupon.getDuration() * DAY_TO_MILLIS < System.currentTimeMillis()) {
+                couponPrice = currentCoupon.getTotal();
+            }
+            return totalAmount - couponPrice;
+        } catch (Exception ex) {
+            log.error("Calculate total amount error", ex);
+        }
+        return null;
+    }
+
     private void readCartInformationAndSaveOrder(DhOrder dhOrder, List<DhCart> listCartsOfCurrentUser, DhCoupon coupon) {
         long totalAmount = 0L;
         if (!listCartsOfCurrentUser.isEmpty()) {
@@ -240,5 +288,10 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     public void setCouponRepository(CouponRepository couponRepository) {
         this.couponRepository = couponRepository;
+    }
+
+    @Autowired
+    public void setTransactionRepository(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
     }
 }

@@ -24,4 +24,6 @@ public interface OrderService {
     ResponseEntity<ApiResponse> deleteOne(int orderId, String username);
 
     ResponseEntity<ApiResponse> deleteOne(int orderId);
+
+    Long calculateTotalAmountOfCurrentUser(String couponCode);
 }
