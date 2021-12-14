@@ -187,6 +187,7 @@ public class HomeController {
 
     @GetMapping("/shop-details")
     public String shop_details(@RequestParam Integer productId, Model model) {
+    	model.addAttribute("top9Products1", productService.getTopRandomProductsAsDto(4));
         model.addAttribute("product", productService.getOneProductsAsDto(productId));
         model.addAttribute("productImages", productService.getOneProductsAsDto(productId).getProductImages());
         return "client/shop-details";

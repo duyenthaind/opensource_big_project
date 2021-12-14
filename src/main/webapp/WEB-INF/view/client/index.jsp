@@ -60,8 +60,9 @@
 							data-setbg="${uploadsDir}/${product.productImages[0]}">
 							<ul class="featured__item__pic__hover">
 								<li><a href="#"><i class="fa fa-heart"></i></a></li>
-								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-								<li><a onClick="addCart(${product.id},1)"><i class="fa fa-shopping-cart"></i></a></li>
+
+								<li><a onClick="addCart(${product.id},1)"><i
+										class="fa fa-shopping-cart"></i></a></li>
 							</ul>
 						</div>
 						<div class="featured__item__text">
@@ -108,27 +109,29 @@
 						<div class="latest-prdouct__slider__item">
 							<c:forEach var="top9Product" items="${top9Products}">
 								<a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="${uploadsDir}/${top9Product.productImages[0]}" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>${top9Product.name}</h6>
-									<span>$${top9Product.price}</span>
-								</div>
-							</a>
-							</c:forEach> 
+									<div class="latest-product__item__pic">
+										<img src="${uploadsDir}/${top9Product.productImages[0]}"
+											alt="">
+									</div>
+									<div class="latest-product__item__text">
+										<h6>${top9Product.name}</h6>
+										<span>$${top9Product.price}</span>
+									</div>
+								</a>
+							</c:forEach>
 						</div>
 						<div class="latest-prdouct__slider__item">
 							<c:forEach var="top9Product" items="${top9Products1}">
 								<a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="${uploadsDir}/${top9Product.productImages[0]}" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>${top9Product.name}</h6>
-									<span>$${top9Product.price}</span>
-								</div>
-							</a>
+									<div class="latest-product__item__pic">
+										<img src="${uploadsDir}/${top9Product.productImages[0]}"
+											alt="">
+									</div>
+									<div class="latest-product__item__text">
+										<h6>${top9Product.name}</h6>
+										<span>$${top9Product.price}</span>
+									</div>
+								</a>
 							</c:forEach>
 						</div>
 					</div>
@@ -141,27 +144,29 @@
 						<div class="latest-prdouct__slider__item">
 							<c:forEach var="top9Product" items="${top9Products1}">
 								<a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="${uploadsDir}/${top9Product.productImages[0]}" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>${top9Product.name}</h6>
-									<span>$${top9Product.price}</span>
-								</div>
-							</a>
+									<div class="latest-product__item__pic">
+										<img src="${uploadsDir}/${top9Product.productImages[0]}"
+											alt="">
+									</div>
+									<div class="latest-product__item__text">
+										<h6>${top9Product.name}</h6>
+										<span>$${top9Product.price}</span>
+									</div>
+								</a>
 							</c:forEach>
 						</div>
 						<div class="latest-prdouct__slider__item">
 							<c:forEach var="top9Product" items="${top9Products2}">
 								<a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="${uploadsDir}/${top9Product.productImages[0]}" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>${top9Product.name}</h6>
-									<span>$${top9Product.price}</span>
-								</div>
-							</a>
+									<div class="latest-product__item__pic">
+										<img src="${uploadsDir}/${top9Product.productImages[0]}"
+											alt="">
+									</div>
+									<div class="latest-product__item__text">
+										<h6>${top9Product.name}</h6>
+										<span>$${top9Product.price}</span>
+									</div>
+								</a>
 							</c:forEach>
 						</div>
 					</div>
@@ -174,27 +179,29 @@
 						<div class="latest-prdouct__slider__item">
 							<c:forEach var="top9Product" items="${top9Products2}">
 								<a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="${uploadsDir}/${top9Product.productImages[0]}" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>${top9Product.name}</h6>
-									<span>$${top9Product.price}</span>
-								</div>
-							</a>
+									<div class="latest-product__item__pic">
+										<img src="${uploadsDir}/${top9Product.productImages[0]}"
+											alt="">
+									</div>
+									<div class="latest-product__item__text">
+										<h6>${top9Product.name}</h6>
+										<span>$${top9Product.price}</span>
+									</div>
+								</a>
 							</c:forEach>
 						</div>
 						<div class="latest-prdouct__slider__item">
 							<c:forEach var="top9Product" items="${top9Products}">
 								<a href="#" class="latest-product__item">
-								<div class="latest-product__item__pic">
-									<img src="${uploadsDir}/${top9Product.productImages[0]}" alt="">
-								</div>
-								<div class="latest-product__item__text">
-									<h6>${top9Product.name}</h6>
-									<span>$${top9Product.price}</span>
-								</div>
-							</a>
+									<div class="latest-product__item__pic">
+										<img src="${uploadsDir}/${top9Product.productImages[0]}"
+											alt="">
+									</div>
+									<div class="latest-product__item__text">
+										<h6>${top9Product.name}</h6>
+										<span>$${top9Product.price}</span>
+									</div>
+								</a>
 							</c:forEach>
 						</div>
 					</div>
@@ -222,7 +229,7 @@
 						<div class="blog__item__pic">
 							<img src="${uploadsDir}/${blog.avatar}" alt="">
 						</div>
-						
+
 						<div class="blog__item__text">
 							<ul>
 								<li class="blogFormatDate" data-value="${blog.date}">${blog.date}</li>

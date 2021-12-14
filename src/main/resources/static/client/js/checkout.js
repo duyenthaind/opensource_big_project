@@ -76,7 +76,17 @@ $("#place_order").click(function(event){
 			success : function(jsonResult){
 				if(jsonResult.status == 200){			
 					setDialog("Success");
-					window.location.href="/checkout";
+					let userinfo = JSON.parse(localStorage.userinfo);
+					window.location.href="/user-profile?username="+ userinfo.username +"";
+					
+					$("#home1").show();
+					$("#orderTableUser").hide();
+					$("#pageOrder").hide();
+					
+					$("#home1").hide();
+					$("#orderTableUser").show(); 
+					$("#pageOrder").show();
+					
 					$("#totalCartOrder").empty();
 					$("#totalCartOrder").html("$0");
 				}

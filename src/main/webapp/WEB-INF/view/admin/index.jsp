@@ -124,7 +124,7 @@
 												<div class="au-message__item-text">
 													<div class="avatar-wrap">
 														<div class="avatar">
-															<img src="images/icon/avatar-01.jpg" alt="John Smith">
+															<img src="/admin/images/icon/avatar-01.jpg" alt="John Smith">
 														</div>
 													</div>
 													<div class="text">

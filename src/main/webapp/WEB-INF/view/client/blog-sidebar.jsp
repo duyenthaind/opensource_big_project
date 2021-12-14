@@ -16,7 +16,7 @@
         <div class="blog__sidebar__recent">
             <c:forEach var="blog" items="${mostRecentBlogs}">
                 <c:if test="${blog.status = true}">
-                    <a href="#" class="blog__sidebar__recent__item">
+                    <a href="${server}/blog-details?id=${blog.id}" class="blog__sidebar__recent__item">
                         <div class="blog__sidebar__recent__item__pic"
                              style="width: 70px; height: 70px;">
                             <img src="${server}/${uploadsDir}/${blog.avatar}" alt="">

@@ -213,6 +213,10 @@ function detailOrderProduct(orderId){
 			success : function(responseData){
 				var html = "";
 				var data = responseData.result.data[0].listProductDto;
+				var info = responseData.result.data[0];
+				$("#orderCustomerName").html(info.customer_name);
+				$("#orderPhone").html(info.customer_phone);
+				$("#orderAddress").html(info.customer_address);
 				for(var i = 0;i<data.length;i++){
 					html += '<tr>'
 						+'<td>'+ data[i].productId +'</td>'

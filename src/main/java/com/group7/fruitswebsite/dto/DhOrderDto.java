@@ -23,6 +23,8 @@ public class DhOrderDto extends BaseDto {
     private String customerEmail;
     @JsonProperty(value = "customer_phone")
     private String customerPhone;
+    @JsonProperty(value = "customer_address")
+    private String customerAddress;
     private Long total;
     private Boolean isPrepaid;
     private String note;

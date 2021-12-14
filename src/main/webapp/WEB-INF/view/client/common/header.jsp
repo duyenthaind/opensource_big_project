@@ -147,8 +147,8 @@ body {
 						<li><a href="${server}/shoping-cart">Shoping Cart</a></li>
 						<li><a href="${server}/checkout">Check Out</a></li>
 					</ul></li>
-				<li><a href="./blog.html">Blog</a></li>
-				<li><a href="./contact.html">Contact</a></li>
+				<li><a href="/blog">Blog</a></li>
+				<li><a href="/contact">Contact</a></li>
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>
