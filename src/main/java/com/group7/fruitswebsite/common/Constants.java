@@ -78,6 +78,7 @@ public class Constants {
         public static final String PRODUCT_ID_MUST_BE_NON_NULL = "you must provide product_id to add cart";
         public static final String CART_QUANTITY_MUST_BE_NON_NULL = "you must provide a valid quantity to update cart";
         public static final String ACCOUNT_IS_NOT_FOUND = "we cannot find you account and data with it";
+        public static final String ORDER_HAS_NO_PAYMENT_METHOD = "order has no payment method";
     }
 
     public enum CustomMessage {
@@ -228,6 +229,37 @@ public class Constants {
                 }
             }
             return null;
+        }
+    }
+
+    public enum PaymentMethod {
+        COD(1), MOMO(2);
+        private final Integer type;
+
+        PaymentMethod(Integer type) {
+            this.type = type;
+        }
+
+        public static PaymentMethod getFromEnum(int type) {
+            for (PaymentMethod index : values()) {
+                if (index.type == type) {
+                    return index;
+                }
+            }
+            return null;
+        }
+    }
+
+    public enum PaymentService {
+        MOMO("MOMO");
+        private final String name;
+
+        PaymentService(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
         }
     }
 }
