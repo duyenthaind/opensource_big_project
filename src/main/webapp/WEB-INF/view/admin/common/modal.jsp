@@ -566,7 +566,7 @@
 									<label for="blogFile" style="cursor: pointer">choose
 										file</label>
 								</p>
-								<input name="files" id="blogFile" type="file"
+								<input name="file" id="blogFile" type="file"
 									style="display: none" onchange="loadBlogFile(event)" />
 								<div></div>
 							</div>

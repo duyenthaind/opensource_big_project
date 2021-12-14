@@ -6,4 +6,5 @@ import com.group7.fruitswebsite.entity.DhOrder;
  * @author duyenthai
  */
 public interface OrderCustomUpdateRepository extends CustomUpdateRepository<DhOrder> {
+	
 }

@@ -12,11 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 @Setter
 @ToString
-@JsonIgnoreProperties({"files", "pathUploadedAvatar"})
+@JsonIgnoreProperties({"file", "pathUploadedAvatar"})
 public class DhBlogModel extends BaseModel {
     private String thumbnail;
     private String details;
     private String shortDescription;
-    private MultipartFile[] files;
+    private MultipartFile[] file;
     private String avatar;
 }

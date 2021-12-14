@@ -219,7 +219,6 @@ $(document).ready(function(){
 			},
 			success : function(data){
 				if(data.status == 200){
-					alert("success");
 					loadDataCurrentPage(currentPage);
 					$("#confirmDeleteBlog").modal("hide");
 				}	

@@ -2,7 +2,6 @@ package com.group7.fruitswebsite.controller.admin;
 
 import lombok.extern.log4j.Log4j;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.repository.CategoryRepository;
+import com.group7.fruitswebsite.repository.OrderRepository;
+import com.group7.fruitswebsite.repository.UserRepository;
 import com.group7.fruitswebsite.service.CategoryService;
 import com.group7.fruitswebsite.service.UserService;
 
@@ -24,16 +25,24 @@ public class AdminController {
 	private CategoryRepository categoryRepository;
 	private CategoryService categoryService;
 	private UserService userService;
+	private UserRepository userRepository;
+	private OrderRepository orderRepository;
 
 	@GetMapping(value = { "/index", "/", "/home", "" })
-	public String index() {		
+	public String index(Model model) {
+		model.addAttribute("members", userRepository.count());
+		model.addAttribute("itemsSolid", orderRepository.findByOrderStatus(5).size());
+		if(orderRepository.totalEarn(5) != null) {
+			model.addAttribute("totalEarn", orderRepository.totalEarn(5));
+		}else {
+			model.addAttribute("totalEarn", 0);
+		}
 		return "admin/index";
 	}
 
-
 	@GetMapping("/table")
 	public String table(final Model model) {
-		model.addAttribute("category",categoryRepository.findAll());
+		model.addAttribute("category", categoryRepository.findAll());
 		return "admin/table";
 	}
 
@@ -41,17 +50,17 @@ public class AdminController {
 	public String order() {
 		return "admin/order";
 	}
-	
+
 	@GetMapping("/user")
 	public String user() {
 		return "admin/user";
 	}
-	
+
 	@GetMapping("/form")
 	public String form() {
 		return "admin/form";
 	}
-	
+
 	@GetMapping("/blog")
 	public String blog() {
 		return "admin/blog";
@@ -71,4 +80,15 @@ public class AdminController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+
+	@Autowired
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
+	@Autowired
+	public void setOrderRepository(OrderRepository orderRepository) {
+		this.orderRepository = orderRepository;
+	}
+
 }
