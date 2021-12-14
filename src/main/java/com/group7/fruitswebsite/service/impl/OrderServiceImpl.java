@@ -5,6 +5,7 @@ import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
 import com.group7.fruitswebsite.dto.DhOrderDto;
 import com.group7.fruitswebsite.entity.*;
+import com.group7.fruitswebsite.job.EmailPoolJob;
 import com.group7.fruitswebsite.model.DhOrderModel;
 import com.group7.fruitswebsite.model.DhOrderModelUpdate;
 import com.group7.fruitswebsite.repository.*;
@@ -13,6 +14,7 @@ import com.group7.fruitswebsite.util.ApiResponseUtil;
 import com.group7.fruitswebsite.util.DtoUtil;
 import com.group7.fruitswebsite.util.SecurityUtil;
 import com.group7.fruitswebsite.util.StringUtil;
+import com.group7.fruitswebsite.worker.EmailPoolWorker;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,16 +62,22 @@ public class OrderServiceImpl implements OrderService {
             if (listCartsOfCurrentUser.isEmpty()) {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.NO_CART, HttpStatus.GONE);
             }
+            long totalAmount = listCartsOfCurrentUser.stream().reduce(0L, (res, cart) -> res + cart.getPrice() * cart.getQuantity(), Long::sum);
             Optional<DhCoupon> optionalCoupon = couponRepository.findByCode(dhOrderModel.getCouponCode());
             optionalCoupon.ifPresent(dhOrder::setDhCoupon);
             dhOrder.setCreatedDate(System.currentTimeMillis());
             dhOrder.setDhUser(optionalUser.get());
             dhOrder.setCodeName(StringUtil.randomString(8, 1).toUpperCase());
             dhOrder.setIsPrepaid(false);
+            dhOrder.setTotal(totalAmount);
             dhOrder.setOrderStatus(Constants.OrderStatus.UNAPPROVED.getStatus());
             readCartInformationAndSaveOrder(dhOrder, listCartsOfCurrentUser, dhOrder.getDhCoupon());
             orderRepository.save(dhOrder);
             log.info(String.format("Save order %s of user %s ", dhOrder.getId(), username));
+            // send mail to customer un synchronous
+            EmailPoolJob emailJob = new EmailPoolJob(Constants.JobType.EMAIL_ORDER, username, optionalUser.get().getEmail());
+            emailJob.getCustoms().put("orderId", dhOrder.getId());
+            EmailPoolWorker.pubJob(emailJob);
             return ApiResponseUtil.getBaseSuccessStatus(null);
         } catch (Exception ex) {
             log.error(String.format("Save order %s error", dhOrderModel), ex);
