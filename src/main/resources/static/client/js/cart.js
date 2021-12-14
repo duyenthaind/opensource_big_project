@@ -1,3 +1,33 @@
+function addCustomCart(id,quantity){
+	var qty = quantity;
+	var newQty = parseInt($("#customQuantity").val());
+	if(newQty > 1){
+		qty = newQty;
+	}
+	$.ajax({
+		url : "/user-carts/carts",
+		type:"POST",
+		data : JSON.stringify({
+			productId : id,
+			quantity : qty,
+		}),
+		dataType: 'json',
+        contentType: 'application/json',
+		success: function(responseData){
+			setDialog("Add item to cart cuccess");
+			updateTotal();
+		},
+		error : function(jqXhr, textStatus, errorMessage) { // error
+			// callback
+			var contentType = jqXhr.getResponseHeader("Content-Type");
+		    if (jqXhr.status == 200 && contentType.toLowerCase().indexOf("text/html") >= 0) {
+		        // assume that our login has expired - reload our current page
+		        window.location.href = "/login";
+		    }
+		}
+	});
+}
+
 function addCart(id,quantity){
 	$.ajax({
 		url : "/user-carts/carts",

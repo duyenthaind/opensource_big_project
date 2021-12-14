@@ -108,7 +108,7 @@
 					<div class="latest-product__slider owl-carousel">
 						<div class="latest-prdouct__slider__item">
 							<c:forEach var="top9Product" items="${top9Products}">
-								<a href="#" class="latest-product__item">
+								<a href="${server}/shop-details?productId=${top9Product.id}" class="latest-product__item">
 									<div class="latest-product__item__pic">
 										<img src="${uploadsDir}/${top9Product.productImages[0]}"
 											alt="">
@@ -122,7 +122,7 @@
 						</div>
 						<div class="latest-prdouct__slider__item">
 							<c:forEach var="top9Product" items="${top9Products1}">
-								<a href="#" class="latest-product__item">
+								<a href="${server}/shop-details?productId=${top9Product.id}" class="latest-product__item">
 									<div class="latest-product__item__pic">
 										<img src="${uploadsDir}/${top9Product.productImages[0]}"
 											alt="">
@@ -143,7 +143,7 @@
 					<div class="latest-product__slider owl-carousel">
 						<div class="latest-prdouct__slider__item">
 							<c:forEach var="top9Product" items="${top9Products1}">
-								<a href="#" class="latest-product__item">
+								<a href="${server}/shop-details?productId=${top9Product.id}" class="latest-product__item">
 									<div class="latest-product__item__pic">
 										<img src="${uploadsDir}/${top9Product.productImages[0]}"
 											alt="">
@@ -157,7 +157,7 @@
 						</div>
 						<div class="latest-prdouct__slider__item">
 							<c:forEach var="top9Product" items="${top9Products2}">
-								<a href="#" class="latest-product__item">
+								<a href="${server}/shop-details?productId=${top9Product.id}" class="latest-product__item">
 									<div class="latest-product__item__pic">
 										<img src="${uploadsDir}/${top9Product.productImages[0]}"
 											alt="">
@@ -178,7 +178,7 @@
 					<div class="latest-product__slider owl-carousel">
 						<div class="latest-prdouct__slider__item">
 							<c:forEach var="top9Product" items="${top9Products2}">
-								<a href="#" class="latest-product__item">
+								<a href="${server}/shop-details?productId=${top9Product.id}" class="latest-product__item">
 									<div class="latest-product__item__pic">
 										<img src="${uploadsDir}/${top9Product.productImages[0]}"
 											alt="">
@@ -192,7 +192,7 @@
 						</div>
 						<div class="latest-prdouct__slider__item">
 							<c:forEach var="top9Product" items="${top9Products}">
-								<a href="#" class="latest-product__item">
+								<a href="${server}/shop-details?productId=${top9Product.id}" class="latest-product__item">
 									<div class="latest-product__item__pic">
 										<img src="${uploadsDir}/${top9Product.productImages[0]}"
 											alt="">
@@ -235,7 +235,7 @@
 								<li class="blogFormatDate" data-value="${blog.date}">${blog.date}</li>
 							</ul>
 							<h5>
-								<a href="#">${blog.thumbnail}</a>
+								<a href="${server}/blog-details?id=${blog.id}">${blog.thumbnail}</a>
 							</h5>
 							<p>${blog.shortDescription}</p>
 						</div>

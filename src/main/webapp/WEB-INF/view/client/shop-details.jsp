@@ -50,25 +50,18 @@
 					<div class="product__details__quantity">
 						<div class="quantity">
 							<div class="pro-qty">
-								<input type="text" value="1">
+								<input type="text" id="customQuantity" value="1" onchange="changeQty()">
 							</div>
 						</div>
 					</div>
 					<a style="color: white; cursor: pointer;" class="primary-btn"
-						onClick="addCart(${product.id},1)">ADD TO CARD</a> <a href="#"
+						onClick="addCustomCart(${product.id},1)">ADD TO CARD</a> <a href="#"
 						class="heart-icon"><span class="icon_heart_alt"></span></a>
 					<ul>
 						<li><b>Available</b> <span>${product.available}</span></li>
 						<li><b>Shipping</b> <span>01 day shipping. <samp>Free
 									pickup today</samp></span></li>
 						<li><b>Weight</b> <span>${product.weight} kg</span></li>
-						<li><b>Share on</b>
-							<div class="share">
-								<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-									class="fa fa-twitter"></i></a> <a href="#"><i
-									class="fa fa-instagram"></i></a> <a href="#"><i
-									class="fa fa-pinterest"></i></a>
-							</div></li>
 					</ul>
 				</div>
 			</div>
