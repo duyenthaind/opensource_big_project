@@ -75,9 +75,9 @@ public class ApplicationConfig {
                 EMAIL_USERNAME = properties.getProperty("email_username");
                 EMAIL_PASSWORD = properties.getProperty("email_password");
                 MOMO_PARTNER_CODE = properties.getProperty("momo_partner_code");
-                MOMO_ACCESS_KEY = properties.getProperty("lR6BvNhh7v87g4Ff");
-                MOMO_SECRET_KEY = properties.getProperty("S9zu2fmRcpXvsQam1dRylrxYvhqZZGg7");
-                MOMO_ENDPOINT = properties.getProperty("https://test-payment.momo.vn/gw_payment/transactionProcessor");
+                MOMO_ACCESS_KEY = properties.getProperty("momo_access_key");
+                MOMO_SECRET_KEY = properties.getProperty("momo_secret_key");
+                MOMO_ENDPOINT = properties.getProperty("momo_endpoint");
                 MOMO_RETURN_URL = properties.getProperty("momo_return_url");
                 MOMO_NOTIFY_URL = properties.getProperty("momo_notify_url");
             } finally {

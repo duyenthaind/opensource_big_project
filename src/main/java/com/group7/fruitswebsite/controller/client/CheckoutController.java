@@ -12,6 +12,7 @@ import com.group7.fruitswebsite.util.SecurityUtil;
 
 import com.mservice.allinone.models.CaptureMoMoResponse;
 import com.mservice.allinone.processor.allinone.CaptureMoMo;
+import com.mservice.shared.sharedmodels.Environment;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,10 @@ public class CheckoutController {
 
     @PostMapping("/checkouts")
     public ResponseEntity<ApiResponse> placeOrder(@ModelAttribute DhOrderModel dhOrderModel, HttpServletResponse response) {
+        if (Objects.isNull(dhOrderModel.getPaymentMethod())) {
+            log.error(String.format("Cannot defined payment method, model %s", dhOrderModel));
+            return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ORDER_HAS_NO_PAYMENT_METHOD, HttpStatus.FORBIDDEN);
+        }
         Constants.PaymentMethod paymentMethod = Constants.PaymentMethod.getFromEnum(dhOrderModel.getPaymentMethod());
         if (Objects.nonNull(paymentMethod) && paymentMethod.equals(Constants.PaymentMethod.MOMO)) {
             try {
@@ -69,7 +74,8 @@ public class CheckoutController {
                 Long totalOrderAmount = orderService.calculateTotalAmountOfCurrentUser(dhOrderModel.getCouponCode());
                 dhOrderModel.setTransactionId(transactionId);
                 dhOrderModel.setRequestId(requestId);
-                CaptureMoMoResponse captureMoMoResponse = CaptureMoMo.process(MomoHelper.getMomoEnvironment(), transactionId, requestId,
+                Environment momoEnvironment = MomoHelper.getMomoEnvironment();
+                CaptureMoMoResponse captureMoMoResponse = CaptureMoMo.process(momoEnvironment, transactionId, requestId,
                         totalOrderAmount.toString(), orderInfo, ApplicationConfig.MOMO_RETURN_URL, ApplicationConfig.MOMO_NOTIFY_URL, StringUtils.EMPTY);
                 if (Objects.nonNull(captureMoMoResponse)) {
                     response.sendRedirect(captureMoMoResponse.getPayUrl());

@@ -10,4 +10,6 @@ import java.util.Optional;
  */
 public interface TransactionRepository extends JpaRepository<DhTransaction, Integer> {
     Optional<DhTransaction> findByTransactionIdAndRequestId(String transactionId, String requestId);
+
+    Optional<DhTransaction> findByTransactionId(String transactionId);
 }

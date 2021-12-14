@@ -77,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
             dhOrder.setDhUser(optionalUser.get());
             dhOrder.setCodeName(StringUtil.randomString(8, 1).toUpperCase());
             dhOrder.setIsPrepaid(false);
-            dhOrder.setTotal(totalAmount - couponPrice);
+            dhOrder.setTotal(couponPrice > totalAmount ? 0 : totalAmount - couponPrice);
             dhOrder.setOrderStatus(Constants.OrderStatus.UNAPPROVED.getStatus());
             readCartInformationAndSaveOrder(dhOrder, listCartsOfCurrentUser, dhOrder.getDhCoupon());
             orderRepository.save(dhOrder);
@@ -236,7 +236,7 @@ public class OrderServiceImpl implements OrderService {
             if (Objects.nonNull(currentCoupon) && currentCoupon.getStartTime() + currentCoupon.getDuration() * DAY_TO_MILLIS < System.currentTimeMillis()) {
                 couponPrice = currentCoupon.getTotal();
             }
-            return totalAmount - couponPrice;
+            return couponPrice > totalAmount ? 0 : totalAmount - couponPrice;
         } catch (Exception ex) {
             log.error("Calculate total amount error", ex);
         }

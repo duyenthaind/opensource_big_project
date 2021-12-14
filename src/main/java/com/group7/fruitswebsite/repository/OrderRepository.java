@@ -32,4 +32,9 @@ public interface OrderRepository extends JpaRepository<DhOrder, Integer>, OrderC
 
     @Query("from DhOrder where id = :id and dhUser.id in (select id from DhUser u where u.username = :userName)")
     Optional<DhOrder> findByIdAndUserName(@Param("id") Integer id, @Param("userName") String userName);
+
+    @Transactional
+    @Query("update DhOrder set isPrepaid = true where id = :orderId")
+    @Modifying
+    void updateOrderFromTransactionId(@Param("orderId") Integer orderId);
 }
