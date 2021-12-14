@@ -74,7 +74,7 @@
 				<div class="container-fluid">
 					<div class="header-mobile-inner">
 						<a class="logo" href="index.html"> <img
-							src="${base}/admin/images/icon/logo.png" alt="CoolAdmin" />
+							src="${base}/admin/images/large.png" alt="CoolAdmin" />
 						</a>
 						<button class="hamburger hamburger--slider" type="button">
 							<span class="hamburger-box"> <span class="hamburger-inner"></span>
@@ -152,7 +152,11 @@
 								<li><a href="${base}/home">Home</a></li>
 							</ul></li>
 
-						<li><a href="${base}/admin/table"> <i class="fas fa-table"></i>Tables
+						<li><a href="${base}/admin/table"> <i class="fas fa-table"></i>Category & Product
+						</a></li>
+						<li><a href="${base}/admin/user"> <i class="fas fa-table"></i>Users
+						</a></li>
+						<li><a href="${base}/admin/order"> <i class="fas fa-table"></i>Orders
 						</a></li>
 						<li><a href="${base}/admin/blog"> <i class="fa fa-newspaper-o" aria-hidden="true"></i>Blogs
 						</a></li>

@@ -20,7 +20,10 @@ public interface OrderRepository extends JpaRepository<DhOrder, Integer>, OrderC
     @Query("from DhOrder where dhUser.id = :userId")
     List<DhOrder> findByUserId(@Param("userId") Integer userId);
 
-    @Query(value = "select * from dh_order where user_id = :userId",nativeQuery = true)
+    @Query(value = "select * from dh_order where order_status = :orderStatus", nativeQuery = true)
+    List<DhOrder> findByOrderStatus(@Param("orderStatus") Integer orderStatus);
+
+    @Query(value = "select * from dh_order where user_id = :userId", nativeQuery = true)
     Page<DhOrder> findByUserId(@Param("userId") Integer userId, Pageable pageable);
 
     Page<DhOrder> findAll(Pageable pageable);
@@ -28,8 +31,14 @@ public interface OrderRepository extends JpaRepository<DhOrder, Integer>, OrderC
     @Transactional
     @Query("delete  from DhOrder  where id = :id and dhUser.id = :userId and (orderStatus <= 3 or orderStatus is null)")
     @Modifying
-    void deleteByIdAndUserId(@Param("id") Integer id,@Param("userId") Integer userId);
+    void deleteByIdAndUserId(@Param("id") Integer id, @Param("userId") Integer userId);
 
     @Query("from DhOrder where id = :id and dhUser.id in (select id from DhUser u where u.username = :userName)")
     Optional<DhOrder> findByIdAndUserName(@Param("id") Integer id, @Param("userName") String userName);
+
+    @Query(value = "SELECT SUM(total) FROM dh_order where order_status = :status", nativeQuery = true)
+    Long totalEarn(@Param("status") int status);
+
+    @Query(value = "select * from dh_order where order_status = :orderStatus", nativeQuery = true)
+    Page<DhOrder> findByOrderStatus(@Param("orderStatus") Integer orderStatus, Pageable pageable);
 }

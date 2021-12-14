@@ -29,6 +29,12 @@ public class CheckoutController {
                                               @RequestParam(defaultValue = "5") int size) {
         return orderService.getAllWithPaging(page, size);
     }
+    
+    @GetMapping("/orders-orderstatus")
+    public ResponseEntity<ApiResponse> getAllByOrderStatus(@RequestParam(defaultValue = "0") int page,
+                                              @RequestParam(defaultValue = "5") int size,@RequestParam Integer orderStatus) {
+        return orderService.getByOrderStatusWithPaging(page, size,orderStatus);
+    }
 
     @GetMapping("/orders/{id}")
     public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id) {

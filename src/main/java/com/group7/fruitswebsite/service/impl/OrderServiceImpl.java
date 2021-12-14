@@ -120,6 +120,22 @@ public class OrderServiceImpl implements OrderService {
             return ApiResponseUtil.getBaseFailureStatus();
         }
     }
+    
+    @Override
+    public ResponseEntity<ApiResponse> getByOrderStatusWithPaging(int page, int size,int orderStatus) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DhOrder> pageOrders = orderRepository.findByOrderStatus(orderStatus, pageable);
+            List<DhOrderDto> orderDtos = pageOrders.getContent().stream()
+                    .map(val -> DtoUtil.getOrderDtoFromDhOrder(val, objectMapper, null)).collect(Collectors.toList());
+            int totalOrders = orderRepository.findByOrderStatus(orderStatus).size();
+            ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultFromList(orderDtos, pageOrders, totalOrders, size);
+            return ApiResponseUtil.getBaseSuccessStatus(responseResult);
+        } catch (Exception ex) {
+            log.error("Error get all order, ", ex);
+            return ApiResponseUtil.getBaseFailureStatus();
+        }
+    }
 
     @Override
     public ResponseEntity<ApiResponse> customUpdate(DhOrderModelUpdate orderModelUpdate) {
