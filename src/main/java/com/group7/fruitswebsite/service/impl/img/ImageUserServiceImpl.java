@@ -34,7 +34,6 @@ public class ImageUserServiceImpl implements ImageService<DhUser> {
     @Override
     public Optional<DhUser> checkExists(MultipartFile file, int entityId) {
         try (Session session = ApplicationContextProvider.getApplicationContext().getBean(Session.class)) {
-            log.info(file.getOriginalFilename());
             return Optional.ofNullable((DhUser)
                     session.createQuery("from DhUser where avatar like :avatar and id = :entityId")
                             .setParameter("entityId", entityId)

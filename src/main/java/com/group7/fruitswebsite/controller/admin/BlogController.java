@@ -44,7 +44,6 @@ public class BlogController {
 
     @PutMapping("/blogs")
     public ResponseEntity<ApiResponse> update(@ModelAttribute DhBlogModel dhBlogModel) {
-        log.debug(dhBlogModel);
         if (dhBlogModel.getId() == null) {
             log.error(String.format("Drop all action with model %s because it has no id", dhBlogModel));
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.BLOG_ID_IS_NOT_DEFINED, HttpStatus.FORBIDDEN);

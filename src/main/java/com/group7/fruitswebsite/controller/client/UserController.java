@@ -32,7 +32,6 @@ public class UserController {
 
     @PostMapping("/perform_signup")
     public ResponseEntity<ApiResponse> performSignup(@ModelAttribute DhUserModel userModel) {
-        log.info(userModel);
         String avatarPath = imageService.saveUploadFiles(userModel.getFiles());
         userModel.setAvatar(avatarPath);
         return userService.saveOne(userModel);
@@ -40,7 +39,6 @@ public class UserController {
 
     @PutMapping("/users")
     public ResponseEntity<ApiResponse> update(@ModelAttribute DhUserModel userModel, @RequestParam String userName, @RequestParam Integer userid) {
-        log.info(userModel);
         if (userModel.getId() == null || StringUtils.isEmpty(userModel.getUsername()) || StringUtils.isEmpty(userName) || userid == null) {
             log.error(String.format("Drop all action with model %s because it has no identity information", userModel));
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.IDENTITY_IS_NOT_DEFINED, HttpStatus.FORBIDDEN);

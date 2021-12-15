@@ -19,7 +19,6 @@ public class SubscriberController {
 
     @PostMapping("/subscribers")
     public ResponseEntity<ApiResponse> saveOne(@RequestBody DhSubscriberModel dhSubscriberModel) {
-        log.info(dhSubscriberModel);
         return subscriberService.saveOne(dhSubscriberModel);
     }
 

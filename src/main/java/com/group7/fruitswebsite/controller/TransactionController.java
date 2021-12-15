@@ -17,7 +17,7 @@ public class TransactionController {
 
     @PostMapping(value = "/momo_transaction", consumes = {"application/x-www-form-urlencoded;charset=UTF-8"})
     public ResponseEntity<MomoPaymentResponseData> processTransaction(@RequestBody MomoPaymentResponse momoPaymentResponse) {
-        log.info(momoPaymentResponse);
+        log.info(String.format("Momo notify response: %s", momoPaymentResponse));
         MomoPaymentResponseData momoPaymentResponseData = new MomoPaymentResponseData.Builder()
                 .withStatus(0)
                 .withMessage("Thành công")
