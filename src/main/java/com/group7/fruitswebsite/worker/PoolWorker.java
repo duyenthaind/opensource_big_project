@@ -30,7 +30,7 @@ public abstract class PoolWorker extends Thread {
         log.info(String.format("Worker %s has started ! ", name));
     }
 
-    private List<PoolWorker> getWorkersForClass(Class clazz) {
+    private List<PoolWorker> getWorkersForClass(Class<? extends PoolWorker> clazz) {
         synchronized (ALL_WORKERS) {
             List<PoolWorker> allWorkerFromClass = ALL_WORKERS.get(clazz.getName());
             if (allWorkerFromClass == null || allWorkerFromClass.isEmpty()) {
@@ -58,7 +58,7 @@ public abstract class PoolWorker extends Thread {
         }
     }
 
-    public static void pubJob(PoolJob job, Class clazz) {
+    public static void pubJob(PoolJob job, Class<? extends PoolWorker> clazz) {
         List<PoolWorker> allWorkerForClass = ALL_WORKERS.get(clazz.getName());
         if (!allWorkerForClass.isEmpty()) {
             int index = RANDOM.nextInt(allWorkerForClass.size());
