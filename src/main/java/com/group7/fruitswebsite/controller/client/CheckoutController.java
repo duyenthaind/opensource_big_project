@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
@@ -60,7 +59,7 @@ public class CheckoutController {
     }
 
     @PostMapping("/checkouts")
-    public ResponseEntity<ApiResponse> placeOrder(@ModelAttribute DhOrderModel dhOrderModel, HttpServletResponse response) {
+    public ResponseEntity<ApiResponse> placeOrder(@ModelAttribute DhOrderModel dhOrderModel) {
         if (Objects.isNull(dhOrderModel.getPaymentMethod())) {
             log.error(String.format("Cannot defined payment method, model %s", dhOrderModel));
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ORDER_HAS_NO_PAYMENT_METHOD, HttpStatus.FORBIDDEN);
@@ -78,7 +77,7 @@ public class CheckoutController {
                 CaptureMoMoResponse captureMoMoResponse = CaptureMoMo.process(momoEnvironment, transactionId, requestId,
                         totalOrderAmount.toString(), orderInfo, ApplicationConfig.MOMO_RETURN_URL, ApplicationConfig.MOMO_NOTIFY_URL, StringUtils.EMPTY);
                 if (Objects.nonNull(captureMoMoResponse)) {
-                    response.sendRedirect(captureMoMoResponse.getPayUrl());
+                    dhOrderModel.setPayUrl(captureMoMoResponse.getPayUrl());
                 }
             } catch (Exception ex) {
                 log.error("Process transaction Momo error", ex);
