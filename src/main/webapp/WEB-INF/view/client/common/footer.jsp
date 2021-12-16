@@ -90,6 +90,7 @@
 <script src="${server}/js/cart.js"></script>
 <script src="${server}/js/checkout.js"></script>
 <script src="${server}/js/header.js"></script>
+<script src="${server}/js/comment.js"></script>
 <script src="${server}/js/user-profile.js"></script>
 
 

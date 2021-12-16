@@ -14,10 +14,11 @@
 		<div class="row">
 			<div class="col-lg-12 text-center">
 				<div class="breadcrumb__text">
-					<h2>${product.category.name}'s Package</h2>
+					<h2>${product.category.name}'sPackage</h2>
 					<div class="breadcrumb__option">
-						<a href="/index">Home</a> <a href="${server}/shop-grid?categoryId=${product.category.id}">${product.category.name}</a> <span>${product.name}'s
-							Package</span>
+						<a href="/index">Home</a> <a
+							href="${server}/shop-grid?categoryId=${product.category.id}">${product.category.name}</a>
+						<span>${product.name}'s Package</span>
 					</div>
 				</div>
 			</div>
@@ -52,12 +53,14 @@
 					<div class="product__details__quantity">
 						<div class="quantity">
 							<div class="pro-qty">
-								<input type="text" id="customQuantity" value="1" onchange="changeQty()">
+								<input type="text" id="customQuantity" value="1"
+									onchange="changeQty()">
 							</div>
 						</div>
 					</div>
 					<a style="color: white; cursor: pointer;" class="primary-btn"
-						onClick="addCustomCart(${product.id},1)">ADD TO CARD</a> <a style="cursor: pointer;" onclick="likeCart(${product.id})"
+						onClick="addCustomCart(${product.id},1)">ADD TO CARD</a> <a
+						style="cursor: pointer;" onclick="likeCart(${product.id})"
 						class="heart-icon"><span class="icon_heart_alt"></span></a>
 					<ul>
 						<li><b>Available</b> <span>${product.available}</span></li>
@@ -90,20 +93,23 @@
 									<div
 										class="row height d-flex justify-content-center align-items-center">
 										<div class="col-md-12">
+											<input type="hidden" id="productIdForComment"
+												value="${productIdForComment}" />
+											<div class="p-3">
+												<h6>Comments</h6>
+											</div>
 											<div class="card">
-												<div class="p-3">
-													<h6>Comments</h6>
-												</div>
+
 												<div
 													class="mt-3 d-flex flex-row align-items-center p-3 form-color">
 													<img src="https://i.imgur.com/zQZSWrt.jpg" width="50"
 														class="rounded-circle mr-2"> <input type="text"
 														class="form-control" placeholder="Enter your comment...">
 												</div>
-												<div class="mt-2">
+												<div class="mt-2" id="commentBody">
 													<div class="d-flex flex-row p-3">
 														<img src="https://i.imgur.com/zQZSWrt.jpg" width="40"
-															height="40" class="rounded-circle mr-3">
+															height="40" class="rounded-circle mr-3" />
 														<div class="w-100">
 															<div
 																class="d-flex justify-content-between align-items-center">
@@ -123,17 +129,16 @@
 																	class="fa fa-comments-o mr-2"></i>Reply</span>
 															</div>
 
-
 															<div
 																class="mt-3 d-flex flex-row align-items-center p-3 form-color">
 																<img src="https://i.imgur.com/zQZSWrt.jpg" width="50"
-																	class="rounded-circle mr-2"> <input type="text"
-																	class="form-control"
-																	placeholder="Enter your comment...">
+																	class="rounded-circle mr-2" /> <input
+																	type="text" class="form-control"
+																	placeholder="Enter your comment..." />
 															</div>
 															<div class="d-flex flex-row p-3">
 																<img src="https://i.imgur.com/3J8lTLm.jpg" width="40"
-																	height="40" class="rounded-circle mr-3">
+																	height="40" class="rounded-circle mr-3" />
 																<div class="w-100">
 																	<div
 																		class="d-flex justify-content-between align-items-center">
@@ -154,7 +159,8 @@
 																	<div class="d-flex flex-row user-feed">
 																		<span class="wish"><i
 																			class="fa fa-heartbeat mr-2"></i>14</span> <span
-																			class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>
+																			class="ml-3"><i
+																			class="fa fa-comments-o mr-2"></i>Reply</span>
 																	</div>
 																</div>
 															</div>
@@ -162,7 +168,7 @@
 													</div>
 													<div class="d-flex flex-row p-3">
 														<img src="https://i.imgur.com/3J8lTLm.jpg" width="40"
-															height="40" class="rounded-circle mr-3">
+															height="40" class="rounded-circle mr-3" />
 														<div class="w-100">
 															<div
 																class="d-flex justify-content-between align-items-center">
@@ -189,7 +195,7 @@
 													</div>
 													<div class="d-flex flex-row p-3">
 														<img src="https://i.imgur.com/agRGhBc.jpg" width="40"
-															height="40" class="rounded-circle mr-3">
+															height="40" class="rounded-circle mr-3" />
 														<div class="w-100">
 															<div
 																class="d-flex justify-content-between align-items-center">
@@ -246,8 +252,10 @@
 						<div class="product__item__pic set-bg"
 							data-setbg="${uploadsDir}/${product.productImages[0]}">
 							<ul class="product__item__pic__hover">
-								<li><a onClick="likeCart(${product.id})"><i class="fa fa-heart"></i></a></li>
-								<li style="cursor: pointer;"><a onClick="addCart(${product.id},1)"><i
+								<li><a onClick="likeCart(${product.id})"><i
+										class="fa fa-heart"></i></a></li>
+								<li style="cursor: pointer;"><a
+									onClick="addCart(${product.id},1)"><i
 										class="fa fa-shopping-cart"></i></a></li>
 							</ul>
 						</div>
