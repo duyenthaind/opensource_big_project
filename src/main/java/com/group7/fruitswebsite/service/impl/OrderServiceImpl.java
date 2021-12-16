@@ -3,6 +3,7 @@ package com.group7.fruitswebsite.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group7.fruitswebsite.common.Constants;
 import com.group7.fruitswebsite.dto.ApiResponse;
+import com.group7.fruitswebsite.dto.CheckoutResponse;
 import com.group7.fruitswebsite.dto.DhOrderDto;
 import com.group7.fruitswebsite.entity.*;
 import com.group7.fruitswebsite.job.EmailPoolJob;
@@ -60,6 +61,14 @@ public class OrderServiceImpl implements OrderService {
             if (!optionalUser.isPresent()) {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
             }
+            Constants.PaymentMethod paymentMethod = Constants.PaymentMethod.getFromEnum(dhOrder.getPaymentMethod());
+            if (Objects.isNull(paymentMethod)) {
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.PAYMENT_METHOD_IS_NOT_SUPPORTED, HttpStatus.BAD_REQUEST);
+            }
+            if (StringUtils.isEmpty(dhOrderModel.getPayUrl()) && paymentMethod.equals(Constants.PaymentMethod.MOMO)) {
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.MOMO_IS_NOT_AVAILABLE, HttpStatus.BAD_REQUEST);
+            }
+            CheckoutResponse checkoutResponse = findCheckoutResponse(paymentMethod, dhOrderModel.getPayUrl());
             List<DhCart> listCartsOfCurrentUser = cartRepository.findByUserId(optionalUser.get().getId());
             if (listCartsOfCurrentUser.isEmpty()) {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.NO_CART, HttpStatus.GONE);
@@ -83,23 +92,16 @@ public class OrderServiceImpl implements OrderService {
             orderRepository.save(dhOrder);
             log.info(String.format("Save order %s of user %s ", dhOrder.getId(), username));
             // momo transaction
-            Constants.PaymentMethod paymentMethod = Constants.PaymentMethod.getFromEnum(dhOrder.getPaymentMethod());
-            if (Objects.nonNull(paymentMethod) && paymentMethod.equals(Constants.PaymentMethod.MOMO)
+            if (paymentMethod.equals(Constants.PaymentMethod.MOMO)
                     && !StringUtils.isEmpty(dhOrderModel.getTransactionId()) && !StringUtils.isEmpty(dhOrderModel.getRequestId())) {
-                log.info(String.format("Process traction momo, order %s", dhOrder.getId()));
-                DhTransaction dhTransaction = new DhTransaction();
-                dhTransaction.setTransactionId(dhOrderModel.getTransactionId());
-                dhTransaction.setRequestId(dhOrderModel.getRequestId());
-                dhTransaction.setOrderId(dhOrder.getId());
-                dhTransaction.setPrice(dhOrder.getTotal());
-                dhTransaction.setIsPaid(false);
-                transactionRepository.save(dhTransaction);
+                saveMomoTransaction(dhOrderModel, dhOrder);
             }
             // send mail to customer un synchronous
             EmailPoolJob emailJob = new EmailPoolJob(Constants.JobType.EMAIL_ORDER, username, optionalUser.get().getEmail());
             emailJob.getCustoms().put("orderId", dhOrder.getId());
             EmailPoolWorker.pubJob(emailJob);
-            return ApiResponseUtil.getBaseSuccessStatus(null);
+            ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultWithOnlyData(Collections.singletonList(checkoutResponse));
+            return ApiResponseUtil.getBaseSuccessStatus(responseResult);
         } catch (Exception ex) {
             log.error(String.format("Save order %s error", dhOrderModel), ex);
             return ApiResponseUtil.getBaseFailureStatus();
@@ -121,7 +123,7 @@ public class OrderServiceImpl implements OrderService {
             ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultFromList(result, orders, allOrdersOfUser.size(), size);
             return ApiResponseUtil.getBaseSuccessStatus(responseResult);
         } catch (Exception ex) {
-            log.error("Error get all order, ", ex);
+            log.error("Error get all order for user, ", ex);
             return ApiResponseUtil.getBaseFailureStatus();
         }
     }
@@ -141,9 +143,9 @@ public class OrderServiceImpl implements OrderService {
             return ApiResponseUtil.getBaseFailureStatus();
         }
     }
-    
+
     @Override
-    public ResponseEntity<ApiResponse> getByOrderStatusWithPaging(int page, int size,int orderStatus) {
+    public ResponseEntity<ApiResponse> getByOrderStatusWithPaging(int page, int size, int orderStatus) {
         try {
             Pageable pageable = PageRequest.of(page, size);
             Page<DhOrder> pageOrders = orderRepository.findByOrderStatus(orderStatus, pageable);
@@ -153,7 +155,7 @@ public class OrderServiceImpl implements OrderService {
             ApiResponse.ApiResponseResult responseResult = ApiResponseUtil.mapResultFromList(orderDtos, pageOrders, totalOrders, size);
             return ApiResponseUtil.getBaseSuccessStatus(responseResult);
         } catch (Exception ex) {
-            log.error("Error get all order, ", ex);
+            log.error("Error get all order status, ", ex);
             return ApiResponseUtil.getBaseFailureStatus();
         }
     }
@@ -279,6 +281,26 @@ public class OrderServiceImpl implements OrderService {
             totalAmount = coupon.getTotal() > totalAmount ? totalAmount - coupon.getTotal() : 0;
         }
         dhOrder.setTotal(totalAmount);
+    }
+
+    private void saveMomoTransaction(DhOrderModel dhOrderModel, DhOrder dhOrder) {
+        log.info(String.format("Process traction momo, order %s", dhOrder.getId()));
+        DhTransaction dhTransaction = new DhTransaction();
+        dhTransaction.setTransactionId(dhOrderModel.getTransactionId());
+        dhTransaction.setRequestId(dhOrderModel.getRequestId());
+        dhTransaction.setOrderId(dhOrder.getId());
+        dhTransaction.setPrice(dhOrder.getTotal());
+        dhTransaction.setIsPaid(false);
+        transactionRepository.save(dhTransaction);
+    }
+
+    private CheckoutResponse findCheckoutResponse(Constants.PaymentMethod paymentMethod, String payUrl) {
+        switch (paymentMethod) {
+            case MOMO:
+                return CheckoutResponse.getSuccessMomoResponseWithPayUrl(payUrl);
+            default:
+                return CheckoutResponse.getSuccessCodResponse();
+        }
     }
 
     @Autowired
