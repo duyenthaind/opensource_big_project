@@ -30,4 +30,5 @@ public class DhOrderModel extends BaseModel {
     private Integer paymentMethod;
     private String transactionId;
     private String requestId;
+    private String payUrl;
 }

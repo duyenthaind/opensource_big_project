@@ -79,6 +79,8 @@ public class Constants {
         public static final String CART_QUANTITY_MUST_BE_NON_NULL = "you must provide a valid quantity to update cart";
         public static final String ACCOUNT_IS_NOT_FOUND = "we cannot find you account and data with it";
         public static final String ORDER_HAS_NO_PAYMENT_METHOD = "order has no payment method";
+        public static final String PAYMENT_METHOD_IS_NOT_SUPPORTED = "payment method is not supported";
+        public static final String MOMO_IS_NOT_AVAILABLE = "momo is not available right now";
     }
 
     public enum CustomMessage {
@@ -247,6 +249,10 @@ public class Constants {
                 }
             }
             return null;
+        }
+
+        public Integer getType() {
+            return type;
         }
     }
 
