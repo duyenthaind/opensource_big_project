@@ -64,7 +64,7 @@
 								<li class="blogFormatDate" data-value="${blog.date}">${blog.date}</li>
 							</ul>
 							<h5>
-								<a href="#">${blog.thumbnail}</a>
+								<a href="${server}/blog-details?id=${blog.id}">${blog.thumbnail}</a>
 							</h5>
 							<p>${blog.shortDescription}</p>
 						</div>

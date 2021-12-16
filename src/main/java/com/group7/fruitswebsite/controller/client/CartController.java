@@ -50,7 +50,7 @@ public class CartController {
             Optional<DhUser> user = userService.findByUserName(currentUser.getUsername());
             if (user.isPresent()) {
                 cartModel.setUserId(user.get().getId());
-                cartModel.setQuantity(1);
+                cartModel.setQuantity(cartModel.getQuantity());
                 return cartService.addCart(cartModel);
             } else {
                 return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.CART_IS_NOT_FOUND, HttpStatus.EXPECTATION_FAILED);

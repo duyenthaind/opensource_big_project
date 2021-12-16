@@ -71,7 +71,7 @@ function getFirstBlogPage(){
 							'<p>' + dataArr[i].thumbnail + '</p>'+
 						'</div>'+
 						'<div class="col-lg-1">'+
-							'<button class="btn btn-danger">Delete</button>'+
+							'<button class="btn btn-danger" onclick="showModalDeleteBlog(' + dataArr[i].id + ')">Delete</button>'+
 						'</div>'+
 					'</div>'+
 					'<br />';

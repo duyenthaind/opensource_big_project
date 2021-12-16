@@ -1,3 +1,33 @@
+function addCustomCart(id,quantity){
+	var qty = quantity;
+	var newQty = parseInt($("#customQuantity").val());
+	if(newQty > 1){
+		qty = newQty;
+	}
+	$.ajax({
+		url : "/user-carts/carts",
+		type:"POST",
+		data : JSON.stringify({
+			productId : id,
+			quantity : qty,
+		}),
+		dataType: 'json',
+        contentType: 'application/json',
+		success: function(responseData){
+			setDialog("Add item to cart success");
+			updateTotal();
+		},
+		error : function(jqXhr, textStatus, errorMessage) { // error
+			// callback
+			var contentType = jqXhr.getResponseHeader("Content-Type");
+		    if (jqXhr.status == 200 && contentType.toLowerCase().indexOf("text/html") >= 0) {
+		        // assume that our login has expired - reload our current page
+		        window.location.href = "/login";
+		    }
+		}
+	});
+}
+
 function addCart(id,quantity){
 	$.ajax({
 		url : "/user-carts/carts",
@@ -9,7 +39,7 @@ function addCart(id,quantity){
 		dataType: 'json',
         contentType: 'application/json',
 		success: function(responseData){
-			setDialog("Add item to cart cuccess");
+			setDialog("Add item to cart success");
 			updateTotal();
 		},
 		error : function(jqXhr, textStatus, errorMessage) { // error
@@ -19,6 +49,46 @@ function addCart(id,quantity){
 		        // assume that our login has expired - reload our current page
 		        window.location.href = "/login";
 		    }
+		}
+	});
+}
+
+function likeCart(id){
+	$.ajax({
+		url : "/liked/v1/api/liked?productId="+id,
+		type:"POST",
+		dataType: 'json',
+        contentType: 'application/json',
+		success: function(responseData){
+			setDialog("Add item to liked success");
+			updateTotalLiked();
+			if(responseData.status == 208){
+				setDialog(responseData.message);
+			}
+		},
+		error : function(jqXhr, textStatus, errorMessage) { // error
+			// callback
+			var contentType = jqXhr.getResponseHeader("Content-Type");
+		    if (jqXhr.status == 200 && contentType.toLowerCase().indexOf("text/html") >= 0) {
+		        // assume that our login has expired - reload our current page
+		        window.location.href = "/login";
+		    }
+		}
+	});
+}
+
+function updateTotalLiked(){
+	$.ajax({
+		url : "/liked/v1/api/likeds",
+		type:"GET",
+		dataType: 'json',
+        contentType: 'application/json',
+		success: function(responseData){
+			$("#likeTotal").html(responseData.result.data.length)
+		},
+		error : function(jqXhr, textStatus, errorMessage) { // error
+			// callback
+
 		}
 	});
 }
@@ -44,6 +114,70 @@ function shopCart(){
 	loadCart()
 }
 
+function likedCart(){
+	window.location.href = "/liked";
+	loadLiked();
+}
+
+function loadLiked(){
+	$("#tableLiked").empty();
+	console.log("hello")
+	$.ajax({
+		url : "/liked/v1/api/likeds",
+		type:"GET",
+		dataType: 'json',
+        contentType: 'application/json',
+		success: function(responseData){
+			var html = "";
+			var data = responseData.result.data;
+			for(var i=0;i<data.length;i++){
+				html += '<tr class="product_tr"><td><input type="hidden" value="'+data[i].productId+'" class="cartLikedId"/></td>'
+                                 +'   <td class="shoping__cart__item">'
+                                 +'       <img width="250px" height="100px" src="/uploads/'+ data[i].avatar +'" alt="">'
+                                 +'       <a style="cursor:pointer" href="/shop-details?productId='+data[i].productId+'"><h5>'+ data[i].name +'</h5></a>'
+                                 +'   </td>'
+                                 +'   <td class="shoping__cart__price">'
+                                  +'      '+ data[i].price +''
+                                 +'   </td>'
+                                   +' <td class="shoping__cart__item__close">'
+                                   +'     <span class="icon_close remove_cart remove_like" onclick="removeLike('+data[i].productId+',this)"></span>'
+                                   +' </td></tr>';
+			}
+			$("#tableLiked").append(html);
+			var index = 0;
+			var removeCart = $(".remove_like").on("click",function(){
+				index = removeCart.index(this);
+				var productId = document.getElementsByClassName("cartLikedId")[index].value;
+				$(".product_tr")[index].remove();
+				removeLike(productId);
+				updateTotalLiked();
+			});
+		},
+		error : function(jqXhr, textStatus, errorMessage) { // error
+			// callback
+
+		}
+	});
+}
+
+function removeLike(productId){
+	var id = parseInt(productId);
+	$.ajax({
+		url : "/liked/v1/api/likeds?productId="+id,
+		type:"DELETE",
+		dataType: 'json',
+        contentType: 'application/json',
+		success: function(responseData){
+			console.log(responseData);
+		},
+		error : function(jqXhr, textStatus, errorMessage) { // error
+			// callback
+
+		}
+	});
+}
+
+
 function loadCart(){
 	$("#tableCart").empty();
 	$.ajax({
@@ -58,7 +192,7 @@ function loadCart(){
 				html += '<tr class="product_tr"><td><input type="hidden" value="'+data[i].productId+'" class="cartProductId"/></td>'
                                  +'   <td class="shoping__cart__item">'
                                  +'       <img width="250px" height="100px" src="/uploads/'+ data[i].avatar +'" alt="">'
-                                 +'       <h5>'+ data[i].name +'</h5>'
+                                 +'       <a style="cursor:pointer" href="/shop-details?productId='+data[i].productId+'"><h5>'+ data[i].name +'</h5></a>'
                                  +'   </td>'
                                  +'   <td class="shoping__cart__price">'
                                   +'      '+ data[i].price +''
@@ -183,7 +317,8 @@ function updateCart(productId,quantity){
 	updateTotal()
 	loadCart();
 	cartTotal();
-	
+	updateTotalLiked();
+	loadLiked();
 })();
 
 

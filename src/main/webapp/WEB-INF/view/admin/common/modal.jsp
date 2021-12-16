@@ -710,6 +710,11 @@
 				<h5 class="modal-title">Order Product</h5>
 			</div>
 			<div class="modal-body" id="orderProductBody">
+				<ul class="list-group">
+					<li class="list-group-item" id="orderCustomerName"></li>
+					<li class="list-group-item" id="orderPhone"></li>
+					<li class="list-group-item"  id="orderAddress"></li>
+				</ul>
 				<table class="orderProductTable">
 					<thead>
 						<tr>
@@ -720,7 +725,7 @@
 						</tr>
 					</thead>
 					<tbody id="listOrderProduct">
-						
+
 					</tbody>
 				</table>
 			</div>

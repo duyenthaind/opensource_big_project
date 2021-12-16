@@ -93,7 +93,7 @@ public class CartServiceImpl implements CartService {
             Optional<DhCart> existedCart = cartRepository.findByUserIdAndProductId(cartModel.getUserId(), cartModel.getProductId());
             if (existedCart.isPresent()) {
                 DhCart currentCart = existedCart.get();
-                currentCart.setQuantity(currentCart.getQuantity() + 1);
+                currentCart.setQuantity(currentCart.getQuantity() + cartModel.getQuantity());
                 cartRepository.save(currentCart);
                 log.info(String.format("Update cart item for user %s", cartModel.getUserId()));
                 return ApiResponseUtil.getBaseSuccessStatus(null);
@@ -101,7 +101,7 @@ public class CartServiceImpl implements CartService {
             DhCart dhCart = objectMapper.readValue(objectMapper.writeValueAsString(cartModel), DhCart.class);
             dhCart.setCreatedDate(System.currentTimeMillis());
             dhCart.setCreatedBy(cartModel.getUserId());
-            dhCart.setQuantity(1);
+            dhCart.setQuantity(cartModel.getQuantity());
             Optional<DhProduct> product = productRepository.findById(cartModel.getProductId());
             if (product.isPresent()) {
                 dhCart.setName(product.get().getName());

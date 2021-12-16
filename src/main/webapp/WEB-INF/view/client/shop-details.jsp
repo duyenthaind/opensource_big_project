@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../variable.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!-- header -->
 <jsp:include page="/WEB-INF/view/client/common/header.jsp"></jsp:include>
 <!-- end header -->
@@ -14,8 +16,8 @@
 				<div class="breadcrumb__text">
 					<h2>${product.category.name}'s Package</h2>
 					<div class="breadcrumb__option">
-						<a href="/index">Home</a> <a href="/index">Vegetables</a>
-						<span>${product.category.name}'™s Package</span>
+						<a href="/index">Home</a> <a href="${server}/shop-grid?categoryId=${product.category.id}">${product.category.name}</a> <span>${product.name}'Â™s
+							Package</span>
 					</div>
 				</div>
 			</div>
@@ -50,24 +52,18 @@
 					<div class="product__details__quantity">
 						<div class="quantity">
 							<div class="pro-qty">
-								<input type="text" value="1">
+								<input type="text" id="customQuantity" value="1" onchange="changeQty()">
 							</div>
 						</div>
 					</div>
-					<a href="#" class="primary-btn">ADD TO CARD</a> <a href="#"
+					<a style="color: white; cursor: pointer;" class="primary-btn"
+						onClick="addCustomCart(${product.id},1)">ADD TO CARD</a> <a onclick="likeCart(${product.id})"
 						class="heart-icon"><span class="icon_heart_alt"></span></a>
 					<ul>
 						<li><b>Available</b> <span>${product.available}</span></li>
 						<li><b>Shipping</b> <span>01 day shipping. <samp>Free
 									pickup today</samp></span></li>
 						<li><b>Weight</b> <span>${product.weight} kg</span></li>
-						<li><b>Share on</b>
-							<div class="share">
-								<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-									class="fa fa-twitter"></i></a> <a href="#"><i
-									class="fa fa-instagram"></i></a> <a href="#"><i
-									class="fa fa-pinterest"></i></a>
-							</div></li>
 					</ul>
 				</div>
 			</div>
@@ -225,11 +221,11 @@
 									</div>
 								</div>
 							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 <!-- Product Details Section End -->
 
@@ -244,78 +240,27 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-3 col-md-4 col-sm-6">
-				<div class="product__item">
-					<div class="product__item__pic set-bg"
-						data-setbg="img/product/product-1.jpg">
-						<ul class="product__item__pic__hover">
-							<li><a href="#"><i class="fa fa-heart"></i></a></li>
-							<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-							<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-						</ul>
-					</div>
-					<div class="product__item__text">
-						<h6>
-							<a href="#">Crab Pool Security</a>
-						</h6>
-						<h5>$30.00</h5>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-4 col-sm-6">
-				<div class="product__item">
-					<div class="product__item__pic set-bg"
-						data-setbg="img/product/product-2.jpg">
-						<ul class="product__item__pic__hover">
-							<li><a href="#"><i class="fa fa-heart"></i></a></li>
-							<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-							<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-						</ul>
-					</div>
-					<div class="product__item__text">
-						<h6>
-							<a href="#">Crab Pool Security</a>
-						</h6>
-						<h5>$30.00</h5>
+			<c:forEach var="product" items="${top9Products1}">
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="product__item">
+						<div class="product__item__pic set-bg"
+							data-setbg="${uploadsDir}/${product.productImages[0]}">
+							<ul class="product__item__pic__hover">
+								<li><a onClick="likeCart(${product.id})"><i class="fa fa-heart"></i></a></li>
+								<li style="cursor: pointer;"><a onClick="addCart(${product.id},1)"><i
+										class="fa fa-shopping-cart"></i></a></li>
+							</ul>
+						</div>
+						<div class="product__item__text">
+							<h6>
+								<a href="${server}/shop-details?productId=${product.id}">${product.name}</a>
+							</h6>
+							<h5>$${product.price}</h5>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-lg-3 col-md-4 col-sm-6">
-				<div class="product__item">
-					<div class="product__item__pic set-bg"
-						data-setbg="img/product/product-3.jpg">
-						<ul class="product__item__pic__hover">
-							<li><a href="#"><i class="fa fa-heart"></i></a></li>
-							<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-							<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-						</ul>
-					</div>
-					<div class="product__item__text">
-						<h6>
-							<a href="#">Crab Pool Security</a>
-						</h6>
-						<h5>$30.00</h5>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-4 col-sm-6">
-				<div class="product__item">
-					<div class="product__item__pic set-bg"
-						data-setbg="img/product/product-7.jpg">
-						<ul class="product__item__pic__hover">
-							<li><a href="#"><i class="fa fa-heart"></i></a></li>
-							<li><a href="#"><i class="fa fa-retweet"></i></a></li>
-							<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-						</ul>
-					</div>
-					<div class="product__item__text">
-						<h6>
-							<a href="#">Crab Pool Security</a>
-						</h6>
-						<h5>$30.00</h5>
-					</div>
-				</div>
-			</div>
+			</c:forEach>
+
 		</div>
 	</div>
 </section>

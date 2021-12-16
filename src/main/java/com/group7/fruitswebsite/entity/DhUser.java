@@ -55,23 +55,8 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 	private Set<DhRole> dhRoles = new HashSet<>();
 
 	@JsonIgnore
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "dh_user_product", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "product_id") })
-	@JsonProperty(value = "products")
-	private Set<DhProduct> dhProducts = new HashSet<>();
-
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "dhUser")
 	private List<DhOrder> orders = new ArrayList<>();
-
-	public void likeProduct(DhProduct product) {
-		dhProducts.add(product);
-	}
-
-	public void unlikeProduct(DhProduct product) {
-		dhProducts.remove(product);
-	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -85,12 +70,11 @@ public class DhUser extends BaseEntity implements java.io.Serializable {
 		return Objects.equals(email, dhUser.email) && Objects.equals(password, dhUser.password)
 				&& Objects.equals(username, dhUser.username) && Objects.equals(dhRoles, dhUser.dhRoles)
 				&& Objects.equals(orders, dhUser.orders)
-				&& Objects.equals(avatar, dhUser.avatar)
-				&& Objects.equals(dhProducts, dhUser.dhProducts);
+				&& Objects.equals(avatar, dhUser.avatar);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(super.hashCode(), email, password, username, dhRoles, orders,avatar,dhProducts);
+		return Objects.hash(super.hashCode(), email, password, username, dhRoles, orders,avatar);
 	}
 }
