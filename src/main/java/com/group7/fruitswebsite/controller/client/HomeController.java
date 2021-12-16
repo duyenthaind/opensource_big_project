@@ -179,8 +179,7 @@ public class HomeController {
             	model.addAttribute("userOrder",user.get());
             	List<DhCartDto> listCartDtos = cartService.findAllCart(currentUser.getUsername());
             	model.addAttribute("cartOrder",listCartDtos);
-            } 
-            
+            }  
         }
         return "client/checkout";
     }

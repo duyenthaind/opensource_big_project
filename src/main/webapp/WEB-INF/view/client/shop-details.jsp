@@ -57,7 +57,7 @@
 						</div>
 					</div>
 					<a style="color: white; cursor: pointer;" class="primary-btn"
-						onClick="addCustomCart(${product.id},1)">ADD TO CARD</a> <a onclick="likeCart(${product.id})"
+						onClick="addCustomCart(${product.id},1)">ADD TO CARD</a> <a style="cursor: pointer;" onclick="likeCart(${product.id})"
 						class="heart-icon"><span class="icon_heart_alt"></span></a>
 					<ul>
 						<li><b>Available</b> <span>${product.available}</span></li>
