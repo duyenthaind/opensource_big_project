@@ -59,7 +59,7 @@
 						<div class="featured__item__pic set-bg"
 							data-setbg="${uploadsDir}/${product.productImages[0]}">
 							<ul class="featured__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
+								<li><a onclick="likeCart(${product.id})"><i class="fa fa-heart"></i></a></li>
 
 								<li><a onClick="addCart(${product.id},1)"><i
 										class="fa fa-shopping-cart"></i></a></li>

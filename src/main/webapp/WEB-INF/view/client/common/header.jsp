@@ -239,7 +239,7 @@ body {
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
-							<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+							<li style="cursor: pointer;" onclick="likedCart();"><a><i class="fa fa-heart"></i> <span id="likeTotal">0</span></a></li>
 							<li style="cursor: pointer;" onclick="shopCart();"><a><i class="fa fa-shopping-bag"></i> <span id="productTotal">0</span></a></li>
 						</ul>
 

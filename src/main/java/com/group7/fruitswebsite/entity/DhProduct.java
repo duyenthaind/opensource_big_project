@@ -14,7 +14,7 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties({"category", "orderProducts"})
 public class DhProduct extends BaseEntity implements java.io.Serializable {
-
+	
 	@Column(name = "name", length = 1000, nullable = false)
 	@JsonProperty(value = "name")
 	@JsonAlias(value = "productName")

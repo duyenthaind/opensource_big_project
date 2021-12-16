@@ -117,7 +117,7 @@
 											data-setbg="${uploadsDir}/${prodOrBSale.productImages[0]}">
 											<div class="product__discount__percent">-${prodOrBSale.salePercent}%</div>
 											<ul class="product__item__pic__hover">
-												<li><a href="#"><i class="fa fa-heart"></i></a></li>
+												<li><a onclick="likeCart(${product.id})"><i class="fa fa-heart"></i></a></li>
 												<li style="cursor: pointer;"><a onClick="addCart(${prodOrBSale.id},1)"><i
 														class="fa fa-shopping-cart"></i></a></li>
 											</ul>
@@ -170,7 +170,7 @@
 									<div class="product__item__pic set-bg"
 										data-setbg="${uploadsDir}/${prodByCategory.productImages[0]}">
 										<ul class="product__item__pic__hover">
-											<li><a href="#"><i class="fa fa-heart"></i></a></li>
+											<li><a onclick="likeCart(${product.id})"><i class="fa fa-heart"></i></a></li>
 											<li style="cursor: pointer;"><a onClick="addCart(${prodByCategory.id},1)"><i
 													class="fa fa-shopping-cart"></i></a></li>
 										</ul>
@@ -196,7 +196,7 @@
 									<div class="product__item__pic set-bg"
 										data-setbg="${uploadsDir}/${productSearch.productImages[0]}">
 										<ul class="product__item__pic__hover">
-											<li><a href="#"><i class="fa fa-heart"></i></a></li>
+											<li><a onclick="likeCart(${product.id})"><i class="fa fa-heart"></i></a></li>
 											<li style="cursor: pointer;"><a onClick="addCart(${productSearch.id},1)"><i
 													class="fa fa-shopping-cart"></i></a></li>
 										</ul>
@@ -222,7 +222,7 @@
 									<div class="product__item__pic set-bg"
 										data-setbg="${uploadsDir}/${productSearch.productImages[0]}">
 										<ul class="product__item__pic__hover">
-											<li><a href="#"><i class="fa fa-heart"></i></a></li>
+											<li><a onclick="likeCart(${product.id})"><i class="fa fa-heart"></i></a></li>
 											<li style="cursor: pointer;"><a onClick="addCart(${productSearch.id},1)"><i
 													class="fa fa-shopping-cart"></i></a></li>
 										</ul>

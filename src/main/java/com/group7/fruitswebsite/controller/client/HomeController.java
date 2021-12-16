@@ -197,6 +197,11 @@ public class HomeController {
     public String shoping_cart() {
         return "client/shoping-cart";
     }
+    
+    @GetMapping("/liked")
+    public String liked() {
+        return "client/liked";
+    }
 
     @GetMapping("/blog")
     public String blog(Model model) {

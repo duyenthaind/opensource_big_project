@@ -57,7 +57,7 @@
 						</div>
 					</div>
 					<a style="color: white; cursor: pointer;" class="primary-btn"
-						onClick="addCustomCart(${product.id},1)">ADD TO CARD</a> <a href="#"
+						onClick="addCustomCart(${product.id},1)">ADD TO CARD</a> <a onclick="likeCart(${product.id})"
 						class="heart-icon"><span class="icon_heart_alt"></span></a>
 					<ul>
 						<li><b>Available</b> <span>${product.available}</span></li>
@@ -246,7 +246,7 @@
 						<div class="product__item__pic set-bg"
 							data-setbg="${uploadsDir}/${product.productImages[0]}">
 							<ul class="product__item__pic__hover">
-								<li><a href="#"><i class="fa fa-heart"></i></a></li>
+								<li><a onClick="likeCart(${product.id})"><i class="fa fa-heart"></i></a></li>
 								<li style="cursor: pointer;"><a onClick="addCart(${product.id},1)"><i
 										class="fa fa-shopping-cart"></i></a></li>
 							</ul>
