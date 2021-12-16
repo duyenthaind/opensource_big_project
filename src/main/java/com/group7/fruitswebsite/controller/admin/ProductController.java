@@ -34,7 +34,6 @@ public class ProductController {
 
     @PostMapping("/products")
     public ResponseEntity<ApiResponse> addNewProduct(@ModelAttribute DhProductModel dhProductModel) {
-        log.debug(dhProductModel.toString());
         ImageService imageService = new ImageProductServiceImpl();
         List<String> imagePath = imageService.saveUploadedMultiFiles(dhProductModel.getFiles());
         dhProductModel.setPathUploadedAvatar(imagePath);
@@ -53,7 +52,6 @@ public class ProductController {
 
     @PutMapping("/products")
     public ResponseEntity<ApiResponse> updateProduct(@ModelAttribute DhProductModel dhProductModel) {
-        log.info(dhProductModel.toString());
         if (dhProductModel.getId() == null) {
             log.error(String.format("Drop all action with model %s because it has no id", dhProductModel));
             return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.PRODUCT_ID_IS_NOT_DEFINED, HttpStatus.FORBIDDEN);

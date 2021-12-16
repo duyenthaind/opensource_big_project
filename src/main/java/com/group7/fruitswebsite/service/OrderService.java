@@ -9,21 +9,23 @@ import org.springframework.http.ResponseEntity;
  * @author duyenthai
  */
 public interface OrderService {
-	ResponseEntity<ApiResponse> saveOne(DhOrderModel dhOrderModel);
+    ResponseEntity<ApiResponse> saveOne(DhOrderModel dhOrderModel);
 
-	ResponseEntity<ApiResponse> getAllForUser(String username, int page, int size);
+    ResponseEntity<ApiResponse> getAllForUser(String username, int page, int size);
 
-	ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
+    ResponseEntity<ApiResponse> getAllWithPaging(int page, int size);
 
-	ResponseEntity<ApiResponse> customUpdate(DhOrderModelUpdate orderModelUpdate);
+    ResponseEntity<ApiResponse> customUpdate(DhOrderModelUpdate orderModelUpdate);
 
-	ResponseEntity<ApiResponse> getOne(int orderId);
+    ResponseEntity<ApiResponse> getOne(int orderId);
 
-	ResponseEntity<ApiResponse> getOneForUser(int orderId, String username);
+    ResponseEntity<ApiResponse> getOneForUser(int orderId, String username);
 
-	ResponseEntity<ApiResponse> deleteOne(int orderId, String username);
+    ResponseEntity<ApiResponse> deleteOne(int orderId, String username);
 
-	ResponseEntity<ApiResponse> deleteOne(int orderId);
+    ResponseEntity<ApiResponse> deleteOne(int orderId);
+
+    Long calculateTotalAmountOfCurrentUser(String couponCode);
 
 	ResponseEntity<ApiResponse> getByOrderStatusWithPaging(int page, int size, int orderStatus);
 }

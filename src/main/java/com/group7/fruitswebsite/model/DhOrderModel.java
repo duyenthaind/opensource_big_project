@@ -28,4 +28,6 @@ public class DhOrderModel extends BaseModel {
     private String note;
     private String couponCode;
     private Integer paymentMethod;
+    private String transactionId;
+    private String requestId;
 }

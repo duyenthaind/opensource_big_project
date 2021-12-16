@@ -42,7 +42,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public ResponseEntity<ApiResponse> saveOne(DhCommentModel dhCommentModel) {
         try {
-            log.info(dhCommentModel);
             DhComment dhComment = objectMapper.readValue(objectMapper.writeValueAsString(dhCommentModel), DhComment.class);
             dhComment.setCreatedDate(System.currentTimeMillis());
             Optional<DhProduct> currentProduct = productRepository.findById(dhCommentModel.getProductId());
