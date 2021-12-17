@@ -74,18 +74,18 @@ $("#place_order").click(function(event){
 		    cache: false,
 		    timeout: 1000000,
 			success : function(jsonResult){
-				if(jsonResult.status == 200){			
+				if(jsonResult.status == 200){	
+					var data = jsonResult.result.data[0];
 					setDialog("Success");
-					let userinfo = JSON.parse(localStorage.userinfo);
-					window.location.href="/user-profile?username="+ userinfo.username +"";
 					
-					$("#home1").show();
-					$("#orderTableUser").hide();
-					$("#pageOrder").hide();
-					
-					$("#home1").hide();
-					$("#orderTableUser").show(); 
-					$("#pageOrder").show();
+					if(data.type == 2){
+						window.location.href=data.payUrl;
+					}
+					else{
+						let userinfo = JSON.parse(localStorage.userinfo);
+						window.location.href="/user-profile?username="+ userinfo.username +"";
+					}
+				
 					
 					$("#totalCartOrder").empty();
 					$("#totalCartOrder").html("$0");
