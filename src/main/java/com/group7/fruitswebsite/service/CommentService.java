@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
  * @author duyenthai
  */
 public interface CommentService {
-    ResponseEntity<ApiResponse> saveOne(DhCommentModel dhCommentModel);
+	ResponseEntity<ApiResponse> saveOne(DhCommentModel dhCommentModel,String username);
 
-    ResponseEntity<ApiResponse> getAll();
+    ResponseEntity<ApiResponse> getAll(Integer productId);
 
     ResponseEntity<ApiResponse> getAllForProductWithPaging(int productId, int page, int size);
 }

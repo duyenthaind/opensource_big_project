@@ -121,7 +121,6 @@ function likedCart(){
 
 function loadLiked(){
 	$("#tableLiked").empty();
-	console.log("hello")
 	$.ajax({
 		url : "/liked/v1/api/likeds",
 		type:"GET",
@@ -213,7 +212,7 @@ function loadCart(){
                                    +'     <span class="icon_close remove_cart"></span>'
                                    +' </td></tr>';
 			}
-			$("#tableCart").append(html);
+			$("#tableCart").html(html);
 			cartTotal();
 			var index = 0;
 			var proQty = $('.pro-qty');
@@ -223,6 +222,7 @@ function loadCart(){
 				var productId = document.getElementsByClassName("cartProductId")[index].value;
 				$(".product_tr")[index].remove();
 				remove(productId);
+				cartTotal();
 				cartTotal();
 			});
 			
@@ -266,14 +266,13 @@ function loadCart(){
 
 function remove(productId){
 	var id = parseInt(productId);
-	console.log(id);
 	$.ajax({
 		url : "/user-carts/carts?productId="+id,
 		type:"DELETE",
 		dataType: 'json',
         contentType: 'application/json',
 		success: function(responseData){
-			
+			loadCart();
 		},
 		error : function(jqXhr, textStatus, errorMessage) { // error
 			// callback
@@ -293,7 +292,6 @@ function cartTotal(){
 
 function updateCart(productId,quantity){
 	var id = parseInt(productId);
-	console.log(id);
 	$.ajax({
 		url : "/user-carts/carts",
 		type:"PUT",

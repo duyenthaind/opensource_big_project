@@ -179,14 +179,14 @@ public class HomeController {
             	model.addAttribute("userOrder",user.get());
             	List<DhCartDto> listCartDtos = cartService.findAllCart(currentUser.getUsername());
             	model.addAttribute("cartOrder",listCartDtos);
-            } 
-            
+            }  
         }
         return "client/checkout";
     }
 
     @GetMapping("/shop-details")
     public String shop_details(@RequestParam Integer productId, Model model) {
+    	model.addAttribute("productIdForComment",productId);
     	model.addAttribute("top9Products1", productService.getTopRandomProductsAsDto(4));
         model.addAttribute("product", productService.getOneProductsAsDto(productId));
         model.addAttribute("productImages", productService.getOneProductsAsDto(productId).getProductImages());
@@ -201,6 +201,21 @@ public class HomeController {
     @GetMapping("/liked")
     public String liked() {
         return "client/liked";
+    }
+    
+    @GetMapping("/purchase-result")
+    public String purchase() {
+        return "dialog/purchase-success";
+    }
+    
+    @GetMapping("/403")
+    public String permission() {
+        return "dialog/403";
+    }
+    
+    @GetMapping("/404")
+    public String page_not_found() {
+        return "dialog/404";
     }
 
     @GetMapping("/blog")
