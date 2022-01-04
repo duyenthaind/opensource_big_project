@@ -71,11 +71,12 @@ public class CheckoutController {
                 String requestId = UUID.randomUUID().toString();
                 String orderInfo = (new Date()).toString();
                 Long totalOrderAmount = orderService.calculateTotalAmountOfCurrentUser(dhOrderModel.getCouponCode());
+                long toMomoTotalAmount = totalOrderAmount == null ? 0 : totalOrderAmount * 23000L;
                 dhOrderModel.setTransactionId(transactionId);
                 dhOrderModel.setRequestId(requestId);
                 Environment momoEnvironment = MomoHelper.getMomoEnvironment();
                 CaptureMoMoResponse captureMoMoResponse = CaptureMoMo.process(momoEnvironment, transactionId, requestId,
-                        totalOrderAmount.toString(), orderInfo, ApplicationConfig.MOMO_RETURN_URL, ApplicationConfig.MOMO_NOTIFY_URL, StringUtils.EMPTY);
+                        toMomoTotalAmount + "", orderInfo, ApplicationConfig.MOMO_RETURN_URL, ApplicationConfig.MOMO_NOTIFY_URL, StringUtils.EMPTY);
                 if (Objects.nonNull(captureMoMoResponse)) {
                     dhOrderModel.setPayUrl(captureMoMoResponse.getPayUrl());
                 }

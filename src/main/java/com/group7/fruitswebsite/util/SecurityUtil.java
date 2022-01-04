@@ -12,7 +12,11 @@ public class SecurityUtil {
     }
 
     public static User getUserDetails() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (obj instanceof User) {
+            return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }
+        return null;
     }
 
 }

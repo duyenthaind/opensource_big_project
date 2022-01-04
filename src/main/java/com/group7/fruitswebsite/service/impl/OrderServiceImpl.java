@@ -56,6 +56,9 @@ public class OrderServiceImpl implements OrderService {
         try {
             DhOrder dhOrder = objectMapper.readValue(objectMapper.writeValueAsString(dhOrderModel), DhOrder.class);
             User currentUser = SecurityUtil.getUserDetails();
+            if (Objects.isNull(currentUser)) {
+                return ApiResponseUtil.getCustomStatusWithMessage(Constants.ApiMessage.ACCOUNT_IS_NOT_FOUND, HttpStatus.FORBIDDEN);
+            }
             String username = currentUser.getUsername();
             Optional<DhUser> optionalUser = userRepository.findByUsername(username);
             if (!optionalUser.isPresent()) {
@@ -238,6 +241,9 @@ public class OrderServiceImpl implements OrderService {
     public Long calculateTotalAmountOfCurrentUser(String couponCode) {
         try {
             User currentUser = SecurityUtil.getUserDetails();
+            if (Objects.isNull(currentUser)) {
+                return null;
+            }
             String username = currentUser.getUsername();
             Optional<DhUser> optionalUser = userRepository.findByUsername(username);
             if (!optionalUser.isPresent()) {
